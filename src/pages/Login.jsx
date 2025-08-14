@@ -1,6 +1,7 @@
+// Login.jsx
+import { Eye, EyeOff, Lock, LogIn, User } from "lucide-react";
 import { useState } from "react";
 import { LogIn, Eye, EyeOff, User, Lock } from "lucide-react";
-import { useNavigate } from "react-router-dom";
 
 export const Login = () => {
   const navigate = useNavigate();
@@ -9,13 +10,12 @@ export const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError("");
-    setSuccess("");
 
     try {
       const res = await fetch(
@@ -30,13 +30,12 @@ export const Login = () => {
       const data = await res.json();
 
       if (!res.ok) {
-        throw new Error(data.message || data.error || "Login failed");
+        throw new Error(data.message || data.error || "Ошибка входа");
       }
 
       setSuccess("Login successful!");
-      localStorage.setItem("token", data.token);
+      localStorage.setItem("token", data.token); // if API returns token
       console.log("Login response:", data);
-      navigate("/home");
     } catch (err) {
       setError(err.message);
     } finally {
@@ -51,6 +50,10 @@ export const Login = () => {
           onSubmit={handleSubmit}
           className="bg-white p-6 rounded-xl shadow-md w-full max-w-sm space-y-4"
         >
+          <h1 className="text-2xl font-bold text-center flex items-center justify-center gap-2">
+            <LogIn size={24} /> Login
+          </h1>
+
           {error && (
             <div className="bg-red-100 text-red-700 px-3 py-2 rounded text-sm">
               {error}
@@ -65,11 +68,9 @@ export const Login = () => {
           <div className="relative">
             <User className="absolute left-3 top-3 text-gray-400" size={18} />
             <input
-              type="tel"
-              placeholder="Номер телефона"
+              type="text"
+              placeholder="Login"
               value={login}
-              minLength={11}
-              maxLength={11}
               onChange={(e) => setLogin(e.target.value)}
               className="w-full pl-10 pr-3 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-300"
               required
@@ -80,10 +81,8 @@ export const Login = () => {
             <Lock className="absolute left-3 top-3 text-gray-400" size={18} />
             <input
               type={showPassword ? "text" : "password"}
-              placeholder="Пароль"
+              placeholder="Password"
               value={password}
-              minLength={6}
-              maxLength={20}
               onChange={(e) => setPassword(e.target.value)}
               className="w-full pl-10 pr-10 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-300"
               required
@@ -91,7 +90,7 @@ export const Login = () => {
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
-              className="absolute right-3 top-3 text-gray-500 hover:text-gray-700"
+              className="absolute right-3 top-2.5 text-gray-500 hover:text-gray-700"
             >
               {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
             </button>
@@ -105,11 +104,10 @@ export const Login = () => {
             {loading && (
               <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
             )}
-            <LogIn size={24} />
-            Войти
+            Login
           </button>
         </form>
       </div>
-    </>
+    </div>
   );
 };

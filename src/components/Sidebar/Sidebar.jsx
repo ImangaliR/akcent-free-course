@@ -7,11 +7,10 @@ export const SidebarNav = ({
   setCurrentLesson,
   isSidebarOpen,
   setIsSidebarOpen,
-  completedLessons = [], // массив ID завершенных уроков
+  completedLessons = [],
 }) => {
   const handleLessonSelect = (lessonId) => {
     setCurrentLesson(lessonId);
-    // Закрываем сайдбар на мобилке после выбора урока
     if (window.innerWidth < 1024) {
       setIsSidebarOpen(false);
     }
@@ -19,14 +18,12 @@ export const SidebarNav = ({
 
   return (
     <>
-      {/* Оверлей для мобилки */}
-      {/* Оверлей для мобилки с блюром */}
       {isSidebarOpen && (
         <div
           className="
-      lg:hidden fixed inset-0 z-30 
-      bg-black/10 backdrop-blur-sm transition-opacity
-    "
+              lg:hidden fixed inset-0 z-30 
+              bg-black/10 backdrop-blur-sm transition-opacity
+            "
           onClick={() => setIsSidebarOpen(false)}
         />
       )}
