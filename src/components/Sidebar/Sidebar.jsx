@@ -1,13 +1,16 @@
+// SidebarNav.jsx
 import { BookOpen, LogOut } from "lucide-react";
 
 export const SidebarNav = ({ lessons, currentLesson, setCurrentLesson }) => (
-  <aside className="w-64 bg-white shadow-lg flex-shrink-0 flex flex-col">
+  <aside className="w-64 bg-white shadow-lg flex-shrink-0 flex flex-col sticky top-0 h-screen">
     <div className="p-6 border-b">
       <h1 className="text-2xl font-bold text-gray-800">
         Русский язык для начинающих
       </h1>
     </div>
-    <nav className="mt-2">
+
+    {/* делаем список скроллируемым и занимающим всё оставшееся место */}
+    <nav className="mt-2 flex-1 overflow-y-auto">
       <p className="px-6 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wider">
         Уроки
       </p>
@@ -29,7 +32,8 @@ export const SidebarNav = ({ lessons, currentLesson, setCurrentLesson }) => (
         ))}
       </ul>
     </nav>
-    <div className="mt-auto p-6">
+
+    <div className="p-6">
       <div className="flex gap-2 w-fit items-center justify-center hover:text-red-600 transition-colors">
         <LogOut className="w-5 h-5 text-red-500" />
         <button className="text-red-500">Выход</button>

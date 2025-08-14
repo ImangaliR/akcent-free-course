@@ -1,18 +1,15 @@
-import React, { useState } from "react";
-import lessonData from "./data/lessonData";
-import { SidebarNav } from "./components/Sidebar/Sidebar";
+// App.jsx
+import { useState } from "react";
 import { Lesson } from "./components/Lesson/Lesson";
+import { SidebarNav } from "./components/Sidebar/Sidebar";
+import lessonData from "./data/lessonData";
 
 function App() {
   const [currentLessonId, setCurrentLessonId] = useState(1);
-
-  // Find the full lesson object based on the current ID
-  const activeLesson = lessonData.find(
-    (lesson) => lesson.id === currentLessonId
-  );
+  const activeLesson = lessonData.find((l) => l.id === currentLessonId);
 
   return (
-    <div className="min-h-screen bg-gray-100 font-sans text-gray-900 flex">
+    <div className="min-h-screen bg-gray-100 font-sans text-gray-900 flex items-start">
       <SidebarNav
         lessons={lessonData}
         currentLesson={currentLessonId}
