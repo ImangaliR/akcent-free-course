@@ -82,6 +82,8 @@ export const Login = () => {
               type={showPassword ? "text" : "password"}
               placeholder="Пароль"
               value={password}
+              minLength={6}
+              maxLength={20}
               onChange={(e) => setPassword(e.target.value)}
               className="w-full pl-10 pr-10 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-300"
               required
