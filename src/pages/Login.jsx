@@ -66,7 +66,7 @@ export const Login = () => {
             <User className="absolute left-3 top-3 text-gray-400" size={18} />
             <input
               type="text"
-              placeholder="Login"
+              placeholder="Номер телефона"
               value={login}
               onChange={(e) => setLogin(e.target.value)}
               className="w-full pl-10 pr-3 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-300"
@@ -78,7 +78,7 @@ export const Login = () => {
             <Lock className="absolute left-3 top-3 text-gray-400" size={18} />
             <input
               type={showPassword ? "text" : "password"}
-              placeholder="Password"
+              placeholder="Пароль   "
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className="w-full pl-10 pr-10 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-300"
