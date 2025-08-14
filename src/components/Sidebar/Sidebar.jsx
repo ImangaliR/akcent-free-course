@@ -4,12 +4,12 @@ export const SidebarNav = ({ lessons, currentLesson, setCurrentLesson }) => (
   <aside className="w-64 bg-white shadow-lg flex-shrink-0 flex flex-col">
     <div className="p-6 border-b">
       <h1 className="text-2xl font-bold text-gray-800">
-        Russian for Beginners
+        Русский язык для начинающих
       </h1>
     </div>
     <nav className="mt-2">
       <p className="px-6 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wider">
-        Lessons
+        Уроки
       </p>
       <ul>
         {lessons.map((lesson) => (

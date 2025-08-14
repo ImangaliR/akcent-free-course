@@ -1,10 +1,8 @@
 export const MultipleChoiceQuestion = ({ answers, handleAnswerChange }) => (
   <div>
-    <h3 className="text-xl font-semibold mb-1 text-gray-800">
-      Вопрос 2 (Question 2)
-    </h3>
+    <h3 className="text-xl font-semibold mb-1 text-gray-800">Вопрос 2</h3>
     <p className="text-gray-600 mb-6">
-      Which of the following are informal greetings? (Select all that apply)
+      Which of the following are informal greetings?
     </p>
     <div className="space-y-4">
       {["Привет", "Добрый день", "Здравствуй", "До свидания"].map(

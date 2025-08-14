@@ -1,8 +1,8 @@
 export const VideoLesson = ({ videoUrl, title }) => (
   <div>
-    <h3 className="text-2xl font-bold mb-4 text-gray-800">Watch the Video</h3>
+    <h3 className="text-2xl font-bold mb-4 text-gray-800">Посмотрите видео</h3>
     <p className="text-gray-600 mb-6">
-      Watch this short video to start the lesson.
+      Пожалуйста, посмотрите видео ниже, чтобы лучше понять материал урока.
     </p>
     <div className="aspect-w-16 aspect-h-9 rounded-lg overflow-hidden shadow-md">
       <iframe

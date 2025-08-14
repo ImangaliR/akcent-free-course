@@ -19,7 +19,7 @@ export const Pagination = ({
     </div>
     <div className="text-gray-500">
       {currentPage <= totalPages - 1
-        ? `Page ${currentPage} of ${totalPages - 1}`
+        ? `${currentPage} страница из ${totalPages - 1}`
         : ""}
     </div>
     <div>
