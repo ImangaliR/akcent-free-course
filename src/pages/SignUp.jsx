@@ -6,6 +6,7 @@ import {
   EyeOff,
   Lock,
   Mail,
+  Phone,
   User,
   UserPlus,
 } from "lucide-react";
@@ -25,10 +26,58 @@ export const SignUp = () => {
   const [success, setSuccess] = useState("");
   const navigate = useNavigate();
 
+  const formatPhoneNumber = (value) => {
+    const numbers = value.replace(/\D/g, "");
+    if (numbers.length === 0) return "";
+
+    let cleanNumbers = numbers;
+    if (numbers.startsWith("8")) {
+      cleanNumbers = "7" + numbers.slice(1);
+    }
+
+    if (cleanNumbers.startsWith("7")) {
+      const phoneDigits = cleanNumbers.slice(1);
+      const limitedDigits = phoneDigits.slice(0, 10);
+      let formatted = "+7";
+
+      if (limitedDigits.length > 0) {
+        formatted += " (" + limitedDigits.slice(0, 3);
+        if (limitedDigits.length > 3) {
+          formatted += ") " + limitedDigits.slice(3, 6);
+          if (limitedDigits.length > 6) {
+            formatted += " " + limitedDigits.slice(6, 8);
+            if (limitedDigits.length > 8) {
+              formatted += " " + limitedDigits.slice(8, 10);
+            }
+          }
+        }
+      }
+      return formatted;
+    }
+    return value;
+  };
+
+  const normalizePhoneNumber = (value) => {
+    let digitsOnly = value.replace(/\D/g, "");
+    if (digitsOnly.startsWith("87")) {
+      digitsOnly = "77" + digitsOnly.slice(2);
+    } else if (digitsOnly.startsWith("8") && !digitsOnly.startsWith("87")) {
+      digitsOnly = "77" + digitsOnly.slice(1);
+    } else if (
+      digitsOnly.startsWith("7") &&
+      digitsOnly.length === 11 &&
+      !digitsOnly.startsWith("77")
+    ) {
+      digitsOnly = "77" + digitsOnly.slice(1);
+    }
+    return digitsOnly;
+  };
+
   const handleChange = (e) => {
+    const { name, value } = e.target;
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value,
+      [name]: name === "login" ? formatPhoneNumber(value) : value,
     });
   };
 
@@ -62,17 +111,21 @@ export const SignUp = () => {
     setLoading(true);
 
     try {
+      const payload = {
+        ...formData,
+        login: normalizePhoneNumber(formData.login), // normalized here
+      };
+
       const res = await fetch(
         "https://us-central1-akcent-course.cloudfunctions.net/api/register",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(formData),
+          body: JSON.stringify(payload),
         }
       );
 
       const data = await res.json();
-
       if (!res.ok) {
         throw new Error(data.message || data.error || "Ошибка регистрации");
       }
@@ -80,13 +133,9 @@ export const SignUp = () => {
       setSuccess(
         "Регистрация прошла успешно! Перенаправляем на страницу активации..."
       );
-
-      // Сохраняем логин для страницы верификации
-      localStorage.setItem("pendingLogin", formData.login);
-
-      // Перенаправляем на страницу верификации через 2 секунды
+      localStorage.setItem("pendingLogin", payload.login);
       setTimeout(() => {
-        navigate("/verify", { state: { login: formData.login } });
+        navigate("/verify", { state: { login: payload.login } });
       }, 2000);
     } catch (err) {
       setError(err.message);
@@ -118,11 +167,6 @@ export const SignUp = () => {
       <div className="max-w-md w-full space-y-8">
         {/* Логотип и заголовок */}
         <div className="text-center">
-          <div className="flex justify-center mb-6">
-            <div className="bg-gradient-to-r from-purple-500 to-indigo-600 p-4 rounded-2xl shadow-lg">
-              <BookOpen className="w-8 h-8 text-white" />
-            </div>
-          </div>
           <h2 className="text-3xl font-bold text-gray-900 mb-2">
             Создать аккаунт
           </h2>
@@ -164,7 +208,7 @@ export const SignUp = () => {
                     placeholder="Иван"
                     value={formData.name}
                     onChange={handleChange}
-                    className="w-full pl-9 pr-3 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200 text-sm"
+                    className="w-full pl-9 pr-3 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 text-sm"
                     required
                   />
                 </div>
@@ -185,7 +229,7 @@ export const SignUp = () => {
                     placeholder="Петров"
                     value={formData.surname}
                     onChange={handleChange}
-                    className="w-full pl-9 pr-3 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200 text-sm"
+                    className="w-full pl-9 pr-3 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 text-sm"
                     required
                   />
                 </div>
@@ -194,19 +238,21 @@ export const SignUp = () => {
 
             {/* Логин */}
             <div className="space-y-2">
-              <label className="text-sm font-medium text-gray-700">Логин</label>
+              <label className="text-sm font-medium text-gray-700">
+                Номер телефона
+              </label>
               <div className="relative">
-                <Mail
+                <Phone
                   className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
                   size={18}
                 />
                 <input
                   type="text"
                   name="login"
-                  placeholder="Уникальный логин"
+                  placeholder="Введите ваш номер"
                   value={formData.login}
                   onChange={handleChange}
-                  className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200"
+                  className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
                   required
                 />
               </div>
@@ -228,7 +274,7 @@ export const SignUp = () => {
                   placeholder="Минимум 6 символов"
                   value={formData.password}
                   onChange={handleChange}
-                  className="w-full pl-10 pr-12 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200"
+                  className="w-full pl-10 pr-12 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
                   required
                 />
                 <button
@@ -273,7 +319,7 @@ export const SignUp = () => {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-gradient-to-r from-purple-500 to-indigo-600 text-white py-3 rounded-lg hover:from-purple-600 hover:to-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 transition-all duration-200 shadow-lg hover:shadow-xl"
+              className="w-full bg-blue-500 text-white py-3 rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 transition-all duration-200 shadow-lg hover:shadow-xl"
             >
               {loading ? (
                 <>
@@ -296,19 +342,12 @@ export const SignUp = () => {
               Уже есть аккаунт?{" "}
               <Link
                 to="/login"
-                className="text-purple-600 hover:text-purple-700 font-medium transition-colors"
+                className="text-blue-600 hover:text-blue-700 font-medium transition-colors"
               >
                 Войти
               </Link>
             </p>
           </div>
-        </div>
-
-        {/* Преимущества */}
-        <div className="text-center space-y-2">
-          <p className="text-sm text-gray-500">
-            🎯 Интерактивные уроки • 📚 Персональный прогресс • 🏆 Достижения
-          </p>
         </div>
       </div>
     </div>
