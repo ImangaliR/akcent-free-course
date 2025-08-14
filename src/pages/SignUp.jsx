@@ -4,7 +4,6 @@ import {
   Eye,
   EyeOff,
   Lock,
-  Mail,
   Phone,
   User,
   UserPlus,
