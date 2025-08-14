@@ -29,9 +29,7 @@ export const DialogueQuestion = ({ answers, handleAnswerChange }) => {
           <div className="p-2 bg-purple-100 rounded-lg">
             <MessageCircle className="w-5 h-5 text-purple-600" />
           </div>
-          <h3 className="text-xl font-semibold text-gray-800">
-            Диалог (Dialogue)
-          </h3>
+          <h3 className="text-xl font-semibold text-gray-800">Диалог</h3>
           <Users className="w-5 h-5 text-gray-400" />
         </div>
 

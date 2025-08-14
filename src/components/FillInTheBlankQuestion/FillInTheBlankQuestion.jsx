@@ -12,9 +12,7 @@ export const FillInTheBlankQuestion = ({ answers, handleAnswerChange }) => {
           <div className="p-2 bg-blue-100 rounded-lg">
             <HelpCircle className="w-5 h-5 text-blue-600" />
           </div>
-          <h3 className="text-xl font-semibold text-gray-800">
-            Грамматика (Grammar)
-          </h3>
+          <h3 className="text-xl font-semibold text-gray-800">Грамматика</h3>
         </div>
 
         {/* Индикатор статуса */}

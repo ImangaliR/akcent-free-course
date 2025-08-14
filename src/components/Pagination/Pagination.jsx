@@ -17,16 +17,16 @@ export const Pagination = ({
         Назад
       </button>
     </div>
-    <div className="text-gray-500">
+    {/* <div className="text-gray-500">
       {currentPage <= totalPages - 1
         ? `${currentPage} страница из ${totalPages - 1}`
         : ""}
-    </div>
+    </div> */}
     <div>
       {currentPage < totalPages - 1 && (
         <button
           onClick={() => setCurrentPage(currentPage + 1)}
-          className="px-6 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors"
+          className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
         >
           Далее
         </button>
@@ -40,16 +40,16 @@ export const Pagination = ({
         </button>
       )}
       {currentPage === totalPages && (
-        <div className="flex items-center gap-5">
+        <div className="flex items-center gap-2 md:gap-5">
           <button
             onClick={resetQuiz}
-            className="px-6 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors"
+            className="px-3 md:px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
           >
             Попробовать снова
           </button>
           <button
             onClick={() => setCurrentLesson(currentLesson + 1)}
-            className="px-6 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors"
+            className="px-3 md:px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
           >
             Перейти на следующий урок
           </button>

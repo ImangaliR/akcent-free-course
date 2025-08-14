@@ -161,7 +161,7 @@ export const Lesson = ({ lesson, setCurrentLesson, currentLesson }) => {
                 <h3 className="text-lg font-semibold text-blue-900 mb-3">
                   Тестирование
                 </h3>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-3 mb-4">
                   <div className="flex items-center gap-2 text-sm">
                     {getQuestionStatus("singleChoice") === "completed" ? (
                       <CheckCircle className="w-4 h-4 text-green-600" />
@@ -355,7 +355,7 @@ export const Lesson = ({ lesson, setCurrentLesson, currentLesson }) => {
         </div>
         <div className="w-full bg-gray-200 rounded-full h-2">
           <div
-            className="bg-indigo-600 h-2 rounded-full transition-all duration-300"
+            className="bg-blue-600 h-2 rounded-full transition-all duration-300"
             style={{ width: `${(currentPage / totalPages) * 100}%` }}
           />
         </div>
@@ -363,14 +363,14 @@ export const Lesson = ({ lesson, setCurrentLesson, currentLesson }) => {
 
       {/* Breadcrumb навигация */}
       <div className="mb-6">
-        <div className="flex items-center space-x-2 text-sm">
+        <div className="flex items-center space-x-1 sm:space-x-2 text-xs sm:text-sm overflow-x-auto scrollbar-hide">
           {Array.from({ length: totalPages }, (_, i) => i + 1).map(
             (pageNum, index) => (
-              <div key={pageNum} className="flex items-center">
+              <div key={pageNum} className="flex items-center flex-shrink-0">
                 <span
-                  className={`px-2 py-1 rounded transition-colors ${
+                  className={`px-2 py-1 rounded transition-colors whitespace-nowrap ${
                     pageNum === currentPage
-                      ? "bg-indigo-100 text-indigo-700 font-medium"
+                      ? "bg-blue-100 text-blue-700 font-medium"
                       : pageNum < currentPage
                       ? "text-green-600"
                       : "text-gray-400"
@@ -379,10 +379,24 @@ export const Lesson = ({ lesson, setCurrentLesson, currentLesson }) => {
                   {pageNum === currentPage && (
                     <Play className="w-3 h-3 inline mr-1" />
                   )}
-                  {getPageTitle(pageNum)}
+                  {/* Короткие названия для мобильных */}
+                  <span className="hidden sm:inline">
+                    {getPageTitle(pageNum)}
+                  </span>
+                  <span className="sm:hidden">
+                    {layoutMode === "compact"
+                      ? pageNum === 1
+                        ? "Видео"
+                        : pageNum === 2
+                        ? "Тест"
+                        : "Результат"
+                      : getPageTitle(pageNum)}
+                  </span>
                 </span>
                 {index < totalPages - 1 && (
-                  <span className="mx-2 text-gray-300">→</span>
+                  <span className="mx-1 sm:mx-2 text-gray-300 flex-shrink-0">
+                    →
+                  </span>
                 )}
               </div>
             )
@@ -398,7 +412,7 @@ export const Lesson = ({ lesson, setCurrentLesson, currentLesson }) => {
               onClick={() => handleLayoutChange("compact")}
               className={`flex items-center gap-2 px-3 py-2 rounded-md text-sm font-medium transition-all duration-200 ${
                 layoutMode === "compact"
-                  ? "bg-white text-indigo-600 shadow-sm"
+                  ? "bg-white text-blue-600 shadow-sm"
                   : "text-gray-600 hover:text-gray-800"
               }`}
               title="Компактный режим - все вопросы на одной странице"
@@ -411,7 +425,7 @@ export const Lesson = ({ lesson, setCurrentLesson, currentLesson }) => {
               onClick={() => handleLayoutChange("step")}
               className={`flex items-center gap-2 px-3 py-2 rounded-md text-sm font-medium transition-all duration-200 ${
                 layoutMode === "step"
-                  ? "bg-white text-indigo-600 shadow-sm"
+                  ? "bg-white text-blue-600 shadow-sm"
                   : "text-gray-600 hover:text-gray-800"
               }`}
               title="Пошаговый режим - по одному вопросу на странице"
