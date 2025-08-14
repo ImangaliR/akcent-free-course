@@ -5,14 +5,16 @@ export const FillInTheBlankQuestion = ({ answers, handleAnswerChange }) => {
   const hasContent = answers.fillInTheBlank.length > 0;
 
   return (
-    <div className="bg-gradient-to-br from-blue-50 to-indigo-50 p-6 rounded-xl border border-blue-100 transition-all duration-300 hover:shadow-md">
+    <div className="bg-gradient-to-br from-blue-50 to-indigo-50 p-3 md:p-6 rounded-xl border border-blue-100 transition-all duration-300 hover:shadow-md">
       {/* Заголовок с иконкой статуса */}
       <div className="flex items-center justify-between mb-3">
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-1 md:gap-3">
           <div className="p-2 bg-blue-100 rounded-lg">
-            <HelpCircle className="w-5 h-5 text-blue-600" />
+            <HelpCircle className="w-4 h-4 md:w-5 md:h-5 text-blue-600" />
           </div>
-          <h3 className="text-xl font-semibold text-gray-800">Грамматика</h3>
+          <h3 className="text-lg md:text-xl font-semibold text-gray-800">
+            Грамматика
+          </h3>
         </div>
 
         {/* Индикатор статуса */}
@@ -28,7 +30,7 @@ export const FillInTheBlankQuestion = ({ answers, handleAnswerChange }) => {
               <span className="text-sm font-medium">В процессе</span>
             </div>
           ) : (
-            <div className="px-2 py-1 bg-gray-100 rounded-full">
+            <div className="md:px-2 py-1 bg-gray-100 rounded-full text-center">
               <span className="text-xs text-gray-500">Не заполнено</span>
             </div>
           )}
@@ -50,14 +52,14 @@ export const FillInTheBlankQuestion = ({ answers, handleAnswerChange }) => {
           <div className="relative">
             <input
               type="text"
-              className={`w-40 px-4 py-3 text-center text-lg font-medium border-b-3 bg-transparent focus:outline-none transition-all duration-300 ${
+              className={`w-15 md:w-40  text-center text-lg font-medium bg-transparent focus:outline-none transition-all duration-300 ${
                 isAnswered
                   ? "border-green-500 text-green-700"
                   : hasContent
                   ? "border-amber-500 text-amber-700"
                   : "border-gray-300 text-gray-700 focus:border-indigo-500"
               }`}
-              placeholder="______"
+              placeholder="_________"
               value={answers.fillInTheBlank}
               onChange={(e) =>
                 handleAnswerChange("fillInTheBlank", e.target.value)
@@ -72,7 +74,7 @@ export const FillInTheBlankQuestion = ({ answers, handleAnswerChange }) => {
                   ? "w-full bg-green-500"
                   : hasContent
                   ? "w-3/4 bg-amber-500"
-                  : "w-0 bg-indigo-500"
+                  : "w-0 bg-blue-500"
               }`}
             />
           </div>

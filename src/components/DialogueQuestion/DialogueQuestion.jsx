@@ -22,12 +22,12 @@ export const DialogueQuestion = ({ answers, handleAnswerChange }) => {
   const isDialogueComplete = getDialogueProgress() === 100;
 
   return (
-    <div className="bg-gradient-to-br from-purple-50 to-pink-50 p-6 rounded-xl border border-purple-100 transition-all duration-300 hover:shadow-md">
+    <div className="bg-gradient-to-br from-purple-50 to-pink-50 p-3 md:p-6 rounded-xl border border-purple-100 transition-all duration-300 hover:shadow-md">
       {/* Заголовок с иконкой и статусом */}
       <div className="flex items-center justify-between mb-4">
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-1 md:gap-3">
           <div className="p-2 bg-purple-100 rounded-lg">
-            <MessageCircle className="w-5 h-5 text-purple-600" />
+            <MessageCircle className="w-4 h-4 md:w-5 md:h-5 text-purple-600" />
           </div>
           <h3 className="text-xl font-semibold text-gray-800">Диалог</h3>
           <Users className="w-5 h-5 text-gray-400" />
@@ -76,9 +76,9 @@ export const DialogueQuestion = ({ answers, handleAnswerChange }) => {
       <div className="bg-white rounded-lg p-6 shadow-sm border border-gray-100">
         <div className="space-y-6 text-lg">
           {/* Первая реплика - Анна */}
-          <div className="flex items-start gap-4">
-            <div className="flex items-center gap-2 w-20 flex-shrink-0">
-              <div className="w-8 h-8 bg-gradient-to-br from-pink-400 to-rose-400 rounded-full flex items-center justify-center text-white text-sm font-semibold">
+          <div className="flex items-start gap-2 md:gap-4">
+            <div className="flex items-center gap-1 md:gap-2 w-20 flex-shrink-0">
+              <div className="w-6 h-6 md:w-8 md:h-8 bg-gradient-to-br from-pink-400 to-rose-400 rounded-full flex items-center justify-center text-white text-sm font-semibold">
                 А
               </div>
               <span className="font-semibold text-gray-700 text-sm">Анна:</span>
@@ -98,7 +98,7 @@ export const DialogueQuestion = ({ answers, handleAnswerChange }) => {
                   }
                   onFocus={() => setFocusedField("blank1")}
                   onBlur={() => setFocusedField(null)}
-                  className={`w-32 px-3 py-2 text-center border-b-2 bg-transparent focus:outline-none transition-all duration-300 ${
+                  className={`w-32 px-3 py-2 text-center bg-transparent focus:outline-none transition-all duration-300 ${
                     getFieldStatus("blank1") === "completed"
                       ? "border-green-500 text-green-700"
                       : focusedField === "blank1"
@@ -114,9 +114,9 @@ export const DialogueQuestion = ({ answers, handleAnswerChange }) => {
           </div>
 
           {/* Вторая реплика - Иван */}
-          <div className="flex items-start gap-4">
-            <div className="flex items-center gap-2 w-20 flex-shrink-0">
-              <div className="w-8 h-8 bg-gradient-to-br from-blue-400 to-cyan-400 rounded-full flex items-center justify-center text-white text-sm font-semibold">
+          <div className="flex items-start gap-2 md:gap-4">
+            <div className="flex items-center gap-1 md:gap-2 w-20 flex-shrink-0">
+              <div className="w-6 h-6 md:w-8 md:h-8 bg-gradient-to-br from-blue-400 to-cyan-400 rounded-full flex items-center justify-center text-white text-sm font-semibold">
                 И
               </div>
               <span className="font-semibold text-gray-700 text-sm">Иван:</span>
@@ -137,7 +137,7 @@ export const DialogueQuestion = ({ answers, handleAnswerChange }) => {
                   }
                   onFocus={() => setFocusedField("blank2")}
                   onBlur={() => setFocusedField(null)}
-                  className={`w-32 px-3 py-2 text-center border-b-2 bg-transparent focus:outline-none transition-all duration-300 ${
+                  className={`w-32 px-3 py-2 text-center bg-transparent focus:outline-none transition-all duration-300 ${
                     getFieldStatus("blank2") === "completed"
                       ? "border-green-500 text-green-700"
                       : focusedField === "blank2"
@@ -153,9 +153,9 @@ export const DialogueQuestion = ({ answers, handleAnswerChange }) => {
           </div>
 
           {/* Третья реплика - Анна */}
-          <div className="flex items-start gap-4">
-            <div className="flex items-center gap-2 w-20 flex-shrink-0">
-              <div className="w-8 h-8 bg-gradient-to-br from-pink-400 to-rose-400 rounded-full flex items-center justify-center text-white text-sm font-semibold">
+          <div className="flex items-start gap-2 md:gap-4">
+            <div className="flex items-center gap-1 md:gap-2 w-20 flex-shrink-0">
+              <div className="w-6 h-6 md:w-8 md:h-8 bg-gradient-to-br from-pink-400 to-rose-400 rounded-full flex items-center justify-center text-white text-sm font-semibold">
                 А
               </div>
               <span className="font-semibold text-gray-700 text-sm">Анна:</span>
@@ -175,7 +175,7 @@ export const DialogueQuestion = ({ answers, handleAnswerChange }) => {
                   }
                   onFocus={() => setFocusedField("blank3")}
                   onBlur={() => setFocusedField(null)}
-                  className={`w-32 px-3 py-2 text-center border-b-2 bg-transparent focus:outline-none transition-all duration-300 ${
+                  className={`w-32 px-3 py-2 text-center bg-transparent focus:outline-none transition-all duration-300 ${
                     getFieldStatus("blank3") === "completed"
                       ? "border-green-500 text-green-700"
                       : focusedField === "blank3"
