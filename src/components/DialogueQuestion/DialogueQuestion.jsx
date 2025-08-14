@@ -52,9 +52,6 @@ export const DialogueQuestion = ({ answers, handleAnswerChange }) => {
 
       {/* Инструкция */}
       <div className="mb-6">
-        <p className="text-gray-600 mb-3">
-          Complete the dialogue using the words you've learned.
-        </p>
         <div className="flex items-center gap-2 text-sm text-purple-600 bg-purple-50 px-3 py-2 rounded-md border-l-4 border-purple-400">
           <Volume2 className="w-4 h-4" />
           <span>Создайте естественный диалог между Анной и Иваном</span>

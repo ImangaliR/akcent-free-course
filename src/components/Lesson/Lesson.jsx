@@ -70,20 +70,6 @@ export const Lesson = ({ lesson, setCurrentLesson, currentLesson }) => {
     }
   };
 
-  // Подсчет общего прогресса заполнения
-  const getOverallProgress = () => {
-    const statuses = [
-      getQuestionStatus("singleChoice"),
-      getQuestionStatus("multipleChoice"),
-      getQuestionStatus("fillInTheBlank"),
-      getQuestionStatus("dialogue"),
-    ];
-    const completed = statuses.filter(
-      (status) => status === "completed"
-    ).length;
-    return (completed / 4) * 100;
-  };
-
   const handleAnswerChange = (type, value) => {
     if (type === "multipleChoice") {
       setAnswers((prev) => ({
@@ -156,53 +142,7 @@ export const Lesson = ({ lesson, setCurrentLesson, currentLesson }) => {
           );
         case 2:
           return (
-            <div className="transition-all duration-300 ease-in-out space-y-8">
-              <div className="bg-blue-50 p-4 rounded-lg border border-blue-200">
-                <h3 className="text-lg font-semibold text-blue-900 mb-3">
-                  Тестирование
-                </h3>
-                <div className="grid grid-cols-1 md:grid-cols-4 gap-2 md:gap-3 mb-4">
-                  <div className="flex items-center gap-2 text-sm">
-                    {getQuestionStatus("singleChoice") === "completed" ? (
-                      <CheckCircle className="w-4 h-4 text-green-600" />
-                    ) : (
-                      <Circle className="w-4 h-4 text-gray-400" />
-                    )}
-                    <span className="text-gray-700">Одиночный выбор</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-sm">
-                    {getQuestionStatus("multipleChoice") === "completed" ? (
-                      <CheckCircle className="w-4 h-4 text-green-600" />
-                    ) : (
-                      <Circle className="w-4 h-4 text-gray-400" />
-                    )}
-                    <span className="text-gray-700">Множественный выбор</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-sm">
-                    {getQuestionStatus("fillInTheBlank") === "completed" ? (
-                      <CheckCircle className="w-4 h-4 text-green-600" />
-                    ) : (
-                      <Circle className="w-4 h-4 text-gray-400" />
-                    )}
-                    <span className="text-gray-700">Заполнить пропуски</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-sm">
-                    {getQuestionStatus("dialogue") === "completed" ? (
-                      <CheckCircle className="w-4 h-4 text-green-600" />
-                    ) : (
-                      <Circle className="w-4 h-4 text-gray-400" />
-                    )}
-                    <span className="text-gray-700">Диалог</span>
-                  </div>
-                </div>
-                <div className="bg-gray-200 rounded-full h-2">
-                  <div
-                    className="bg-green-600 h-2 rounded-full transition-all duration-500"
-                    style={{ width: `${getOverallProgress()}%` }}
-                  />
-                </div>
-              </div>
-
+            <div className="grid gap-5">
               <SingleChoiceQuestion
                 answers={answers}
                 handleAnswerChange={handleAnswerChange}
@@ -358,49 +298,6 @@ export const Lesson = ({ lesson, setCurrentLesson, currentLesson }) => {
             className="bg-blue-600 h-2 rounded-full transition-all duration-300"
             style={{ width: `${(currentPage / totalPages) * 100}%` }}
           />
-        </div>
-      </div>
-
-      {/* Breadcrumb навигация */}
-      <div className="mb-6">
-        <div className="flex items-center space-x-1 sm:space-x-2 text-xs sm:text-sm overflow-x-auto scrollbar-hide">
-          {Array.from({ length: totalPages }, (_, i) => i + 1).map(
-            (pageNum, index) => (
-              <div key={pageNum} className="flex items-center flex-shrink-0">
-                <span
-                  className={`px-2 py-1 rounded transition-colors whitespace-nowrap ${
-                    pageNum === currentPage
-                      ? "bg-blue-100 text-blue-700 font-medium"
-                      : pageNum < currentPage
-                      ? "text-green-600"
-                      : "text-gray-400"
-                  }`}
-                >
-                  {pageNum === currentPage && (
-                    <Play className="w-3 h-3 inline mr-1" />
-                  )}
-                  {/* Короткие названия для мобильных */}
-                  <span className="hidden sm:inline">
-                    {getPageTitle(pageNum)}
-                  </span>
-                  <span className="sm:hidden">
-                    {layoutMode === "compact"
-                      ? pageNum === 1
-                        ? "Видео"
-                        : pageNum === 2
-                        ? "Тест"
-                        : "Результат"
-                      : getPageTitle(pageNum)}
-                  </span>
-                </span>
-                {index < totalPages - 1 && (
-                  <span className="mx-1 sm:mx-2 text-gray-300 flex-shrink-0">
-                    →
-                  </span>
-                )}
-              </div>
-            )
-          )}
         </div>
       </div>
 

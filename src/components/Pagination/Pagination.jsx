@@ -1,3 +1,5 @@
+import { RefreshCcwIcon } from "lucide-react";
+
 export const Pagination = ({
   currentPage,
   totalPages,
@@ -12,21 +14,16 @@ export const Pagination = ({
       <button
         disabled={currentPage <= 1}
         onClick={() => setCurrentPage(currentPage - 1)}
-        className="px-6 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors"
+        className="text-sm md:text-base px-6 py-2 mr-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors"
       >
         Назад
       </button>
     </div>
-    {/* <div className="text-gray-500">
-      {currentPage <= totalPages - 1
-        ? `${currentPage} страница из ${totalPages - 1}`
-        : ""}
-    </div> */}
     <div>
       {currentPage < totalPages - 1 && (
         <button
           onClick={() => setCurrentPage(currentPage + 1)}
-          className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+          className="text-sm md:text-base px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
         >
           Далее
         </button>
@@ -34,7 +31,7 @@ export const Pagination = ({
       {currentPage === totalPages - 1 && (
         <button
           onClick={handleSubmit}
-          className="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
+          className="text-sm md:text-base px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
         >
           Отправить
         </button>
@@ -43,15 +40,16 @@ export const Pagination = ({
         <div className="flex items-center gap-2 md:gap-5">
           <button
             onClick={resetQuiz}
-            className="px-3 md:px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+            className="flex items-center gap-2 text-sm md:text-base text-white px-3 md:px-6 py-2 bg-blue-600 rounded-lg transition-colors"
           >
-            Попробовать снова
+            <RefreshCcwIcon className="w-4 h-4" />
+            <span className="hidden md:inline">Повторить снова</span>
           </button>
           <button
             onClick={() => setCurrentLesson(currentLesson + 1)}
-            className="px-3 md:px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+            className="text-sm md:text-base px-3 md:px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
           >
-            Перейти на следующий урок
+            Cледующий урок
           </button>
         </div>
       )}
