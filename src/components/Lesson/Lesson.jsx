@@ -404,7 +404,7 @@ export const Lesson = ({ lesson, setCurrentLesson, currentLesson }) => {
               title="Компактный режим - все вопросы на одной странице"
             >
               <Rows className="w-4 h-4" />
-              <span>Все сразу</span>
+              <span>Лист</span>
             </button>
 
             <button
