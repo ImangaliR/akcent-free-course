@@ -163,13 +163,19 @@ export const Lesson = ({ lesson, setCurrentLesson, currentLesson }) => {
   };
 
   const handleLayoutChange = (mode) => {
+    if (currentPage === totalPages) return;
     setLayoutMode(mode);
-    setCurrentPage(2);
+
+    if (mode === "compact" && currentPage > 2) {
+      setCurrentPage(2);
+    } else if (mode === "step" && currentPage > 5) {
+      setCurrentPage(2);
+    }
   };
 
   return (
     <div className="w-full bg-white p-6 sm:p-8 rounded-xl shadow-lg min-h-[550px] flex flex-col justify-between">
-      {currentPage >= 2 && (
+      {currentPage >= 2 && currentPage !== totalPages && (
         <div className="flex justify-end mb-4">
           <div className="flex justify-end mb-4 gap-2">
             <button
