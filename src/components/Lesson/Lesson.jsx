@@ -161,7 +161,7 @@ export const Lesson = ({ lesson, setCurrentLesson, currentLesson }) => {
                 <h3 className="text-lg font-semibold text-blue-900 mb-3">
                   Тестирование
                 </h3>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-3 mb-4">
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-2 md:gap-3 mb-4">
                   <div className="flex items-center gap-2 text-sm">
                     {getQuestionStatus("singleChoice") === "completed" ? (
                       <CheckCircle className="w-4 h-4 text-green-600" />
@@ -195,7 +195,7 @@ export const Lesson = ({ lesson, setCurrentLesson, currentLesson }) => {
                     <span className="text-gray-700">Диалог</span>
                   </div>
                 </div>
-                <div className="w-full bg-gray-200 rounded-full h-2">
+                <div className="bg-gray-200 rounded-full h-2">
                   <div
                     className="bg-green-600 h-2 rounded-full transition-all duration-500"
                     style={{ width: `${getOverallProgress()}%` }}
@@ -353,7 +353,7 @@ export const Lesson = ({ lesson, setCurrentLesson, currentLesson }) => {
             {currentPage} из {totalPages}
           </span>
         </div>
-        <div className="w-full bg-gray-200 rounded-full h-2">
+        <div className="bg-gray-200 rounded-full h-2">
           <div
             className="bg-blue-600 h-2 rounded-full transition-all duration-300"
             style={{ width: `${(currentPage / totalPages) * 100}%` }}
