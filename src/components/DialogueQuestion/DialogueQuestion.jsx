@@ -19,16 +19,6 @@ export const DialogueQuestion = ({ answers, handleAnswerChange }) => {
     return (completed / fields.length) * 100;
   };
 
-  // Подсказки для каждого поля
-  const getHint = (fieldName) => {
-    const hints = {
-      blank1: "Приветствие (например: Привет, Здравствуй)",
-      blank2: "Вопрос о самочувствии (например: дела, жизнь)",
-      blank3: "Ответ на вопрос о самочувствии (например: Хорошо, Отлично)",
-    };
-    return hints[fieldName];
-  };
-
   const isDialogueComplete = getDialogueProgress() === 100;
 
   return (
@@ -69,7 +59,7 @@ export const DialogueQuestion = ({ answers, handleAnswerChange }) => {
         </p>
         <div className="flex items-center gap-2 text-sm text-purple-600 bg-purple-50 px-3 py-2 rounded-md border-l-4 border-purple-400">
           <Volume2 className="w-4 h-4" />
-          <span>💬 Создайте естественный диалог между Анной и Иваном</span>
+          <span>Создайте естественный диалог между Анной и Иваном</span>
         </div>
       </div>
 
@@ -123,22 +113,10 @@ export const DialogueQuestion = ({ answers, handleAnswerChange }) => {
                   placeholder="______"
                   autoComplete="off"
                 />
-
-                {/* Индикатор статуса */}
-                {getFieldStatus("blank1") === "completed" && (
-                  <CheckCircle className="absolute -right-6 top-1/2 transform -translate-y-1/2 w-4 h-4 text-green-500" />
-                )}
               </div>
               <span className="text-gray-700">, Иван!</span>
             </div>
           </div>
-
-          {/* Подсказка для первого поля */}
-          {focusedField === "blank1" && (
-            <div className="ml-24 text-xs text-purple-600 bg-purple-50 px-3 py-2 rounded-md animate-fade-in">
-              💡 {getHint("blank1")}
-            </div>
-          )}
 
           {/* Вторая реплика - Иван */}
           <div className="flex items-start gap-4">
@@ -174,21 +152,10 @@ export const DialogueQuestion = ({ answers, handleAnswerChange }) => {
                   placeholder="______"
                   autoComplete="off"
                 />
-
-                {getFieldStatus("blank2") === "completed" && (
-                  <CheckCircle className="absolute -right-6 top-1/2 transform -translate-y-1/2 w-4 h-4 text-green-500" />
-                )}
               </div>
               <span className="text-gray-700">?</span>
             </div>
           </div>
-
-          {/* Подсказка для второго поля */}
-          {focusedField === "blank2" && (
-            <div className="ml-24 text-xs text-purple-600 bg-purple-50 px-3 py-2 rounded-md animate-fade-in">
-              💡 {getHint("blank2")}
-            </div>
-          )}
 
           {/* Третья реплика - Анна */}
           <div className="flex items-start gap-4">
@@ -223,21 +190,10 @@ export const DialogueQuestion = ({ answers, handleAnswerChange }) => {
                   placeholder="______"
                   autoComplete="off"
                 />
-
-                {getFieldStatus("blank3") === "completed" && (
-                  <CheckCircle className="absolute -right-6 top-1/2 transform -translate-y-1/2 w-4 h-4 text-green-500" />
-                )}
               </div>
               <span className="text-gray-700">, хорошо. А у тебя?</span>
             </div>
           </div>
-
-          {/* Подсказка для третьего поля */}
-          {focusedField === "blank3" && (
-            <div className="ml-24 text-xs text-purple-600 bg-purple-50 px-3 py-2 rounded-md animate-fade-in">
-              💡 {getHint("blank3")}
-            </div>
-          )}
         </div>
 
         {/* Завершающее сообщение */}

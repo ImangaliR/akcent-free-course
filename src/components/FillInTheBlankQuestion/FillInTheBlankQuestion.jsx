@@ -42,9 +42,6 @@ export const FillInTheBlankQuestion = ({ answers, handleAnswerChange }) => {
         <p className="text-gray-600 mb-2">
           Fill in the blank. The word for "good" or "well" is...
         </p>
-        <div className="text-sm text-blue-600 bg-blue-50 px-3 py-2 rounded-md border-l-4 border-blue-400">
-          💡 Подсказка: Подумайте о том, как по-русски сказать "всё хорошо"
-        </div>
       </div>
 
       {/* Основное поле ввода */}

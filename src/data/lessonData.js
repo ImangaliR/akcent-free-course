@@ -3,7 +3,7 @@ const lessonData = [
     id: 1,
     title: "Greetings",
     description: "Learn the most common ways to greet someone in Russian.",
-    videoUrl: "https://www.youtube.com/embed/wJ-B_e5bV4s",
+    videoUrl: "https://youtu.be/5cSYSrNJLkg?si=RnL6eNJ3opEtb3aE",
     quiz: {
       correctAnswers: {
         singleChoice: "b",
