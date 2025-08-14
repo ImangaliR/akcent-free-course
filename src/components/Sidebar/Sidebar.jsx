@@ -1,5 +1,5 @@
-// SidebarNav.jsx (улучшенная версия)
 import { BookOpen, CheckCircle, Clock, LogOut, X } from "lucide-react";
+import { useAuth } from "../../context/AuthContext"; // Добавить этот импорт
 
 export const SidebarNav = ({
   lessons,
@@ -9,10 +9,19 @@ export const SidebarNav = ({
   setIsSidebarOpen,
   completedLessons = [],
 }) => {
+  const { logout } = useAuth(); // Добавить этот хук
+
   const handleLessonSelect = (lessonId) => {
     setCurrentLesson(lessonId);
     if (window.innerWidth < 1024) {
       setIsSidebarOpen(false);
+    }
+  };
+
+  const handleLogout = () => {
+    // Можно добавить подтверждение
+    if (window.confirm("Вы уверены, что хотите выйти?")) {
+      logout();
     }
   };
 
@@ -144,7 +153,10 @@ export const SidebarNav = ({
 
         {/* Футер с кнопкой выхода */}
         <div className="p-6 border-t border-gray-100">
-          <button className="flex items-center gap-3 w-full px-3 py-2 text-red-500 hover:bg-red-50 hover:text-red-600 rounded-lg transition-colors group">
+          <button
+            onClick={handleLogout}
+            className="flex items-center gap-3 w-full px-3 py-2 text-red-500 hover:bg-red-50 hover:text-red-600 rounded-lg transition-colors group"
+          >
             <LogOut className="w-5 h-5 group-hover:scale-110 transition-transform" />
             <span className="text-sm font-medium">Выход</span>
           </button>

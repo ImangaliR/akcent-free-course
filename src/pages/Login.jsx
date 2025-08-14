@@ -1,6 +1,7 @@
 import { Eye, EyeOff, Lock, LogIn, Phone } from "lucide-react";
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext"; // Добавить этот импорт
 
 // Format phone number while typing
 const formatPhoneNumber = (value) => {
@@ -58,6 +59,11 @@ export const Login = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  const location = useLocation(); // Добавить этот хук
+  const { login: authLogin } = useAuth(); // Добавить этот хук
+
+  // Путь для редиректа после успешного входа
+  const from = location.state?.from?.pathname || "/home";
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -85,11 +91,13 @@ export const Login = () => {
         throw new Error(data.message || data.error || "Ошибка входа");
       }
 
+      // Используем метод login из контекста вместо прямого сохранения в localStorage
       if (data.token) {
-        localStorage.setItem("token", data.token);
+        authLogin(data.token, data.user); // Изменить эту строку
       }
 
-      navigate("/home");
+      // Перенаправляем на страницу, с которой пришел пользователь, или на главную
+      navigate(from, { replace: true }); // Изменить эту строку
     } catch (err) {
       setError(err.message);
     } finally {
