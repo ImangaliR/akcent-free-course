@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { LogIn, Eye, EyeOff, User, Lock } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 export const Login = () => {
+  const navigate = useNavigate();
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -32,8 +34,9 @@ export const Login = () => {
       }
 
       setSuccess("Login successful!");
-      localStorage.setItem("token", data.token); // if API returns token
+      localStorage.setItem("token", data.token);
       console.log("Login response:", data);
+      navigate("/home");
     } catch (err) {
       setError(err.message);
     } finally {
@@ -48,10 +51,6 @@ export const Login = () => {
           onSubmit={handleSubmit}
           className="bg-white p-6 rounded-xl shadow-md w-full max-w-sm space-y-4"
         >
-          <h1 className="text-2xl font-bold text-center flex items-center justify-center gap-2">
-            <LogIn size={24} /> Login
-          </h1>
-
           {error && (
             <div className="bg-red-100 text-red-700 px-3 py-2 rounded text-sm">
               {error}
@@ -102,7 +101,8 @@ export const Login = () => {
             {loading && (
               <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
             )}
-            Login
+            <LogIn size={24} />
+            Войти
           </button>
         </form>
       </div>
