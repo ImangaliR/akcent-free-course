@@ -6,8 +6,10 @@ import { FillInTheBlankQuestion } from "../FillInTheBlankQuestion/FillInTheBlank
 import { DialogueQuestion } from "../DialogueQuestion/DialogueQuestion";
 import { ResultsPage } from "../../pages/Results";
 import { Pagination } from "../Pagination/Pagination";
+import { LayoutGrid, Rows } from "lucide-react";
 
 export const Lesson = ({ lesson, setCurrentLesson, currentLesson }) => {
+  const [layoutMode, setLayoutMode] = useState("compact");
   const [currentPage, setCurrentPage] = useState(1);
   const [answers, setAnswers] = useState({
     singleChoice: "",
@@ -16,7 +18,7 @@ export const Lesson = ({ lesson, setCurrentLesson, currentLesson }) => {
     dialogue: { blank1: "", blank2: "", blank3: "" },
   });
   const [score, setScore] = useState(null);
-  const totalPages = 6;
+  const totalPages = layoutMode === "compact" ? 3 : 6;
 
   const { correctAnswers, totalScore } = lesson.quiz;
 
@@ -82,47 +84,123 @@ export const Lesson = ({ lesson, setCurrentLesson, currentLesson }) => {
   };
 
   const renderPage = () => {
-    switch (currentPage) {
-      case 1:
-        return <VideoLesson videoUrl={lesson.videoUrl} title={lesson.title} />;
-      case 2:
-        return (
-          <SingleChoiceQuestion
-            answers={answers}
-            handleAnswerChange={handleAnswerChange}
-          />
-        );
-      case 3:
-        return (
-          <MultipleChoiceQuestion
-            answers={answers}
-            handleAnswerChange={handleAnswerChange}
-          />
-        );
-      case 4:
-        return (
-          <FillInTheBlankQuestion
-            answers={answers}
-            handleAnswerChange={handleAnswerChange}
-          />
-        );
-      case 5:
-        return (
-          <DialogueQuestion
-            answers={answers}
-            handleAnswerChange={handleAnswerChange}
-          />
-        );
-      case 6:
-        return <ResultsPage score={score} totalScore={totalScore} />;
-      default:
-        return <VideoLesson videoUrl={lesson.videoUrl} title={lesson.title} />;
+    if (layoutMode === "compact") {
+      switch (currentPage) {
+        case 1:
+          return (
+            <VideoLesson videoUrl={lesson.videoUrl} title={lesson.title} />
+          );
+        case 2:
+          return (
+            <>
+              <SingleChoiceQuestion
+                answers={answers}
+                handleAnswerChange={handleAnswerChange}
+              />
+              <MultipleChoiceQuestion
+                answers={answers}
+                handleAnswerChange={handleAnswerChange}
+              />
+              <FillInTheBlankQuestion
+                answers={answers}
+                handleAnswerChange={handleAnswerChange}
+              />
+              <DialogueQuestion
+                answers={answers}
+                handleAnswerChange={handleAnswerChange}
+              />
+            </>
+          );
+        case 3:
+          return <ResultsPage score={score} totalScore={totalScore} />;
+        default:
+          return (
+            <VideoLesson videoUrl={lesson.videoUrl} title={lesson.title} />
+          );
+      }
+    } else {
+      switch (currentPage) {
+        case 1:
+          return (
+            <VideoLesson videoUrl={lesson.videoUrl} title={lesson.title} />
+          );
+        case 2:
+          return (
+            <SingleChoiceQuestion
+              answers={answers}
+              handleAnswerChange={handleAnswerChange}
+            />
+          );
+        case 3:
+          return (
+            <MultipleChoiceQuestion
+              answers={answers}
+              handleAnswerChange={handleAnswerChange}
+            />
+          );
+        case 4:
+          return (
+            <FillInTheBlankQuestion
+              answers={answers}
+              handleAnswerChange={handleAnswerChange}
+            />
+          );
+        case 5:
+          return (
+            <DialogueQuestion
+              answers={answers}
+              handleAnswerChange={handleAnswerChange}
+            />
+          );
+        case 6:
+          return <ResultsPage score={score} totalScore={totalScore} />;
+        default:
+          return (
+            <VideoLesson videoUrl={lesson.videoUrl} title={lesson.title} />
+          );
+      }
     }
+  };
+
+  const handleLayoutChange = (mode) => {
+    setLayoutMode(mode);
+    setCurrentPage(2);
   };
 
   return (
     <div className="w-full bg-white p-6 sm:p-8 rounded-xl shadow-lg min-h-[550px] flex flex-col justify-between">
+      {currentPage >= 2 && (
+        <div className="flex justify-end mb-4">
+          <div className="flex justify-end mb-4 gap-2">
+            <button
+              onClick={() => handleLayoutChange("compact")}
+              className={`p-2 border rounded-lg transition-colors ${
+                layoutMode === "compact"
+                  ? "bg-indigo-50 text-indigo-600 border-indigo-300"
+                  : "text-gray-400 hover:text-gray-600"
+              }`}
+              title="Compact Mode"
+            >
+              <Rows className="w-5 h-5" />
+            </button>
+
+            <button
+              onClick={() => handleLayoutChange("step")}
+              className={`p-2 border rounded-lg transition-colors ${
+                layoutMode === "step"
+                  ? "bg-indigo-50 text-indigo-600 border-indigo-300"
+                  : "text-gray-400 hover:text-gray-600"
+              }`}
+              title="Step-by-Step Mode"
+            >
+              <LayoutGrid className="w-5 h-5" />
+            </button>
+          </div>
+        </div>
+      )}
+
       {renderPage()}
+
       <Pagination
         currentPage={currentPage}
         totalPages={totalPages}
