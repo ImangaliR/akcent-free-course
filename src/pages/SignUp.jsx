@@ -1,12 +1,10 @@
 import {
   ArrowRight,
-  BookOpen,
   Check,
   Eye,
   EyeOff,
   Lock,
   Mail,
-  Phone,
   User,
   UserPlus,
 } from "lucide-react";
