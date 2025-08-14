@@ -1,6 +1,56 @@
 import { Eye, EyeOff, Lock, LogIn, Phone } from "lucide-react";
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext"; // Добавить этот импорт
+
+// Format phone number while typing
+const formatPhoneNumber = (value) => {
+  const numbers = value.replace(/\D/g, "");
+  if (numbers.length === 0) return "";
+
+  let cleanNumbers = numbers;
+  if (numbers.startsWith("8")) {
+    cleanNumbers = "7" + numbers.slice(1);
+  }
+
+  if (cleanNumbers.startsWith("7")) {
+    const phoneDigits = cleanNumbers.slice(1);
+    const limitedDigits = phoneDigits.slice(0, 10);
+    let formatted = "+7";
+
+    if (limitedDigits.length > 0) {
+      formatted += " (" + limitedDigits.slice(0, 3);
+      if (limitedDigits.length > 3) {
+        formatted += ") " + limitedDigits.slice(3, 6);
+        if (limitedDigits.length > 6) {
+          formatted += " " + limitedDigits.slice(6, 8);
+          if (limitedDigits.length > 8) {
+            formatted += " " + limitedDigits.slice(8, 10);
+          }
+        }
+      }
+    }
+    return formatted;
+  }
+  return value;
+};
+
+// Normalize before sending
+const normalizePhoneNumber = (value) => {
+  let digitsOnly = value.replace(/\D/g, "");
+  if (digitsOnly.startsWith("87")) {
+    digitsOnly = "77" + digitsOnly.slice(2);
+  } else if (digitsOnly.startsWith("8") && !digitsOnly.startsWith("87")) {
+    digitsOnly = "77" + digitsOnly.slice(1);
+  } else if (
+    digitsOnly.startsWith("7") &&
+    digitsOnly.length === 11 &&
+    !digitsOnly.startsWith("77")
+  ) {
+    digitsOnly = "77" + digitsOnly.slice(1);
+  }
+  return digitsOnly;
+};
 
 export const Login = () => {
   const [login, setLogin] = useState("");
@@ -41,13 +91,13 @@ export const Login = () => {
         throw new Error(data.message || data.error || "Ошибка входа");
       }
 
-      // Сохраняем токен
+      // Используем метод login из контекста вместо прямого сохранения в localStorage
       if (data.token) {
         authLogin(data.token, data.user); // Изменить эту строку
       }
 
-      // Перенаправляем на главную страницу
-      navigate("/home");
+      // Перенаправляем на страницу, с которой пришел пользователь, или на главную
+      navigate(from, { replace: true }); // Изменить эту строку
     } catch (err) {
       setError(err.message);
     } finally {
