@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { Lesson } from "./components/Lesson/Lesson";
-import { Header } from "./components/Sidebar/Header";
-import { SidebarNav } from "./components/Sidebar/Sidebar";
-import lessonData from "./data/lessonData";
+import { Lesson } from "../components/Lesson/Lesson";
+import { Header } from "../components/Sidebar/Header";
+import { SidebarNav } from "../components/Sidebar/Sidebar";
+import lessonData from "../data/lessonData";
 
 export const Home = () => {
   const [currentLessonId, setCurrentLessonId] = useState(1);
