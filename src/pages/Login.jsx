@@ -65,9 +65,11 @@ export const Login = () => {
           <div className="relative">
             <User className="absolute left-3 top-3 text-gray-400" size={18} />
             <input
-              type="text"
+              type="tel"
               placeholder="Номер телефона"
               value={login}
+              minLength={11}
+              maxLength={11}
               onChange={(e) => setLogin(e.target.value)}
               className="w-full pl-10 pr-3 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-300"
               required
@@ -78,7 +80,7 @@ export const Login = () => {
             <Lock className="absolute left-3 top-3 text-gray-400" size={18} />
             <input
               type={showPassword ? "text" : "password"}
-              placeholder="Пароль   "
+              placeholder="Пароль"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className="w-full pl-10 pr-10 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-300"
@@ -87,7 +89,7 @@ export const Login = () => {
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
-              className="absolute right-3 top-2.5 text-gray-500 hover:text-gray-700"
+              className="absolute right-3 top-3 text-gray-500 hover:text-gray-700"
             >
               {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
             </button>
