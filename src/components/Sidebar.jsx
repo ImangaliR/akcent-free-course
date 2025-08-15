@@ -1,5 +1,5 @@
 import { BookOpen, CheckCircle, Clock, LogOut, X } from "lucide-react";
-import { useAuth } from "../../context/AuthContext"; // Добавить этот импорт
+import { useAuth } from "../context/AuthContext"; // Добавить этот импорт
 
 export const SidebarNav = ({
   lessons,
@@ -31,7 +31,7 @@ export const SidebarNav = ({
         <div
           className="
               lg:hidden fixed inset-0 z-30 
-              bg-black/10 backdrop-blur-sm transition-opacity
+              bg-black/10 backdrop-blur-xs transition-opacity
             "
           onClick={() => setIsSidebarOpen(false)}
         />
