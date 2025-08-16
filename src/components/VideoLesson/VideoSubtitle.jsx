@@ -120,7 +120,7 @@ export const SubtitlePanel = ({
       <div ref={listRef} className="flex-1 overflow-y-auto max-h-96">
         {pastSubtitles.length === 0 ? (
           <div className="p-4 text-sm text-gray-500">
-            Пока ничего не сказано 🙊
+            {/* Пока ничего не сказано */}
           </div>
         ) : (
           pastSubtitles.map((subtitle) => (

@@ -1,0 +1,8 @@
+{
+  "type": "video",
+  "id": "v1",
+  "title": "Введение в курс русского языка",
+  "mediaUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+  "minWatchPct": 0.8,
+  "transcript": "Добро пожаловать в курс русского языка для начинающих. Меня зовут Анна, и я ваш преподаватель. В этом курсе мы изучим основы русского языка: алфавит, произношение, базовую лексику и грамматику."
+}

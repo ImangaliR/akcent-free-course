@@ -1,11 +1,11 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-import { ProtectedRoute } from "./components/ProtectedRoute";
-import { PublicRoute } from "./components/PublicRoute";
+import { Verify } from "./auth/ActivatePage";
+import { Login } from "./auth/Login";
+import { SignUp } from "./auth/SignUp";
+import { ProtectedRoute } from "./utils/ProtectedRoute";
+import { PublicRoute } from "./utils/PublicRoute";
 import { AuthProvider } from "./context/AuthContext";
-import { Verify } from "./pages/ActivatePage";
-import { Home } from "./pages/Home";
-import { Login } from "./pages/Login";
-import { SignUp } from "./pages/SignUp";
+import { Home } from "./Home";
 
 function App() {
   return (

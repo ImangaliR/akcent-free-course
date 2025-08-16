@@ -1,0 +1,47 @@
+{
+  "videoId": "v6",
+  "subtitles": [
+    {
+      "id": 1,
+      "start": 0,
+      "end": 3,
+      "russian": "<<<Заключительные слова>>>",
+      "english": "<<<Concluding words>>>",
+      "words": [
+        {
+          "word": "<<<слово1>>>",
+          "translation": "<<<translation1>>>",
+          "start": 0,
+          "end": 0.8
+        },
+        {
+          "word": "<<<слово2>>>",
+          "translation": "<<<translation2>>>",
+          "start": 1,
+          "end": 2.2
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "start": 4,
+      "end": 7,
+      "russian": "<<<Благодарность и завершение>>>",
+      "english": "<<<Thanks and completion>>>",
+      "words": [
+        {
+          "word": "<<<слово3>>>",
+          "translation": "<<<translation3>>>",
+          "start": 4,
+          "end": 5.1
+        },
+        {
+          "word": "<<<слово4>>>",
+          "translation": "<<<translation4>>>",
+          "start": 5.3,
+          "end": 6.7
+        }
+      ]
+    }
+  ]
+}

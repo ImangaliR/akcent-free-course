@@ -1,0 +1,47 @@
+{
+  "videoId": "v4",
+  "subtitles": [
+    {
+      "id": 1,
+      "start": 0,
+      "end": 4.5,
+      "russian": "<<<Теоретический материал часть 3>>>",
+      "english": "<<<Theoretical material part 3>>>",
+      "words": [
+        {
+          "word": "<<<слово1>>>",
+          "translation": "<<<translation1>>>",
+          "start": 0,
+          "end": 1.3
+        },
+        {
+          "word": "<<<слово2>>>",
+          "translation": "<<<translation2>>>",
+          "start": 1.5,
+          "end": 2.8
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "start": 5.5,
+      "end": 9.5,
+      "russian": "<<<Практические примеры>>>",
+      "english": "<<<Practical examples>>>",
+      "words": [
+        {
+          "word": "<<<слово3>>>",
+          "translation": "<<<translation3>>>",
+          "start": 5.5,
+          "end": 6.7
+        },
+        {
+          "word": "<<<слово4>>>",
+          "translation": "<<<translation4>>>",
+          "start": 6.9,
+          "end": 8.5
+        }
+      ]
+    }
+  ]
+}

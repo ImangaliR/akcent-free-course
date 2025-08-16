@@ -1,0 +1,47 @@
+{
+  "videoId": "v2",
+  "subtitles": [
+    {
+      "id": 1,
+      "start": 0,
+      "end": 4,
+      "russian": "<<<Теоретический материал часть 1>>>",
+      "english": "<<<Theoretical material part 1>>>",
+      "words": [
+        {
+          "word": "<<<слово1>>>",
+          "translation": "<<<translation1>>>",
+          "start": 0,
+          "end": 1.2
+        },
+        {
+          "word": "<<<слово2>>>",
+          "translation": "<<<translation2>>>",
+          "start": 1.4,
+          "end": 2.6
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "start": 5,
+      "end": 9,
+      "russian": "<<<Продолжение теории>>>",
+      "english": "<<<Theory continuation>>>",
+      "words": [
+        {
+          "word": "<<<слово3>>>",
+          "translation": "<<<translation3>>>",
+          "start": 5,
+          "end": 6.2
+        },
+        {
+          "word": "<<<слово4>>>",
+          "translation": "<<<translation4>>>",
+          "start": 6.4,
+          "end": 7.8
+        }
+      ]
+    }
+  ]
+}

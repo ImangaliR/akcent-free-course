@@ -1,8 +1,8 @@
 import { Dialog } from "@headlessui/react";
 import { useMemo, useState } from "react";
-import owlIcon from "../assets/horse.svg"; // твой файл-талисман
-import rocketIcon from "../assets/rocket.svg";
-import { useAuth } from "../context/AuthContext";
+import owlIcon from "../../assets/horse.svg";
+import rocketIcon from "../../assets/rocket.svg";
+import { useAuth } from "../../context/AuthContext";
 
 // Конфиг шагов
 const stepConfig = [
