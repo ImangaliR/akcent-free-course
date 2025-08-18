@@ -1,11 +1,19 @@
 import { CheckCircle, XCircle } from "lucide-react";
 import { useState } from "react";
 
-export const StoryTask = ({ lesson, onStepComplete }) => {
-  const [selectedOption, setSelectedOption] = useState(null);
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  const [showFeedback, setShowFeedback] = useState(false);
-  const [isCompleted, setIsCompleted] = useState(false);
+export const StoryTask = ({ lesson, onStepComplete, previousAnswer }) => {
+  const [selectedOption, setSelectedOption] = useState(
+    previousAnswer?.selectedAnswer || null
+  );
+  const [isSubmitted, setIsSubmitted] = useState(
+    previousAnswer?.completed || false
+  );
+  const [showFeedback, setShowFeedback] = useState(
+    previousAnswer?.completed || false
+  );
+  const [isCompleted, setIsCompleted] = useState(
+    previousAnswer?.completed || false
+  );
 
   const handleOptionSelect = (index) => {
     if (isSubmitted) return;
@@ -20,24 +28,15 @@ export const StoryTask = ({ lesson, onStepComplete }) => {
 
     const isCorrect = selectedOption === lesson.answer;
 
-    if (isCorrect) {
-      // If correct, complete after showing feedback
-      setTimeout(() => {
-        setIsCompleted(true);
-        onStepComplete?.("storytask", {
-          completed: true,
-          correct: isCorrect,
-          selectedAnswer: selectedOption,
-          correctAnswer: lesson.answer,
-          attempts: 1,
-        });
-      }, 1500);
-    } else {
-      // If incorrect, just show the retry option immediately
-      setTimeout(() => {
-        setIsCompleted(true);
-      }, 1000);
-    }
+    // Сразу завершаем без задержек
+    setIsCompleted(true);
+    onStepComplete?.("storytask", {
+      completed: true,
+      correct: isCorrect,
+      selectedAnswer: selectedOption,
+      correctAnswer: lesson.answer,
+      attempts: 1,
+    });
   };
 
   const handleTryAgain = () => {
@@ -54,7 +53,6 @@ export const StoryTask = ({ lesson, onStepComplete }) => {
         : "border-gray-300 hover:border-gray-400 hover:bg-gray-50";
     }
 
-    // Only highlight the selected option when submitted
     if (index === selectedOption) {
       if (selectedOption === lesson.answer) {
         return "border-green-500 bg-green-50";
@@ -66,37 +64,75 @@ export const StoryTask = ({ lesson, onStepComplete }) => {
     return "border-gray-300 bg-gray-100";
   };
 
+  const getLocationIcon = () => {
+    switch (lesson.location) {
+      case "office":
+        return "🏢";
+      case "metro":
+        return "🚇";
+      case "park":
+        return "🌳";
+      default:
+        return "📍";
+    }
+  };
+
   return (
     <div className="mx-auto">
       <div className="bg-white rounded-lg shadow-lg p-8">
-        {/* Story Section */}
+        {/* Локация и фокус */}
+        {lesson.location && (
+          <div className="mb-4">
+            <div className="flex items-center gap-2 text-sm text-gray-600">
+              <span className="text-lg">{getLocationIcon()}</span>
+              <span className="capitalize">
+                {lesson.location === "office"
+                  ? "Офис"
+                  : lesson.location === "metro"
+                  ? "Метро"
+                  : lesson.location === "park"
+                  ? "Парк"
+                  : "Локация"}
+              </span>
+              {lesson.focus && (
+                <span className="ml-4 bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">
+                  Фокус: {lesson.focus}
+                </span>
+              )}
+            </div>
+          </div>
+        )}
+
+        {/* История */}
         <div className="mb-8">
           <div className="bg-blue-50 rounded-lg p-6 mb-6">
             <h3 className="text-lg font-semibold text-blue-900 mb-3">Оқиға</h3>
             <p className="text-blue-800 text-lg leading-relaxed">
               {lesson.story}
             </p>
-            {/* Image */}
             {lesson.media && (
               <div className="mt-6">
                 <img
                   src={lesson.media}
-                  alt="question image"
-                  className="w-90 h-60 "
+                  alt="story illustration"
+                  className="w-full max-w-md h-60 object-cover rounded-lg"
+                  onError={(e) => {
+                    e.target.style.display = "none";
+                  }}
                 />
               </div>
             )}
           </div>
         </div>
 
-        {/* Question */}
+        {/* Вопрос */}
         <div className="mb-6">
           <h4 className="text-xl font-semibold text-gray-800 mb-4">
             {lesson.question}
           </h4>
         </div>
 
-        {/* Options */}
+        {/* Варианты ответов */}
         <div className="space-y-3 mb-6">
           {lesson.options.map((option, index) => (
             <button
@@ -120,13 +156,11 @@ export const StoryTask = ({ lesson, onStepComplete }) => {
                   )}
                 </div>
                 <span className="text-lg">{option}</span>
-                {/* Only show checkmark for correct answers */}
                 {isSubmitted &&
                   index === selectedOption &&
                   selectedOption === lesson.answer && (
                     <CheckCircle className="ml-auto text-green-600" size={20} />
                   )}
-                {/* Show X mark for incorrect selected answer */}
                 {isSubmitted &&
                   index === selectedOption &&
                   selectedOption !== lesson.answer && (
@@ -137,7 +171,7 @@ export const StoryTask = ({ lesson, onStepComplete }) => {
           ))}
         </div>
 
-        {/* Simplified Feedback */}
+        {/* Обратная связь */}
         {showFeedback && (
           <div
             className={`p-4 rounded-lg mb-6 ${
@@ -157,10 +191,15 @@ export const StoryTask = ({ lesson, onStepComplete }) => {
                 ? "Правильно! Отличная работа!"
                 : "Неправильно. Попробуйте еще раз."}
             </p>
+            {lesson.explanation && selectedOption === lesson.answer && (
+              <p className="text-green-700 text-sm mt-2">
+                {lesson.explanation}
+              </p>
+            )}
           </div>
         )}
 
-        {/* Action Buttons */}
+        {/* Кнопки действий */}
         <div className="flex justify-end gap-3">
           {!isSubmitted ? (
             <button
@@ -174,11 +213,6 @@ export const StoryTask = ({ lesson, onStepComplete }) => {
             >
               Проверить ответ
             </button>
-          ) : !isCompleted ? (
-            <div className="flex items-center text-blue-600">
-              <div className="w-4 h-4 border-2 border-blue-600 border-t-transparent rounded-full animate-spin mr-2"></div>
-              Проверяем...
-            </div>
           ) : selectedOption !== lesson.answer ? (
             <button
               onClick={handleTryAgain}
@@ -189,7 +223,7 @@ export const StoryTask = ({ lesson, onStepComplete }) => {
           ) : (
             <div className="flex items-center text-green-600 font-medium">
               <CheckCircle size={20} className="mr-2" />
-              Отлично!
+              Отлично! Задание завершено
             </div>
           )}
         </div>
