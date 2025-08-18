@@ -1,190 +1,153 @@
+import { Info, X } from "lucide-react";
 import { useEffect, useState } from "react";
-import { AudioTask } from "./AudioTask";
-import { StoryTask } from "./StoryTask";
-import { CheckCircle, Info } from "lucide-react";
 
-export const InfoCard = ({ lesson, onStepComplete }) => {
+export const InfoCardModal = ({
+  lesson,
+  isOpen,
+  onClose,
+  onComplete,
+  autoCloseDelay = 7000,
+}) => {
   const [isRead, setIsRead] = useState(false);
+  const [timeLeft, setTimeLeft] = useState(autoCloseDelay / 1000);
+  const [showModal, setShowModal] = useState(false);
 
+  // Handle modal visibility
   useEffect(() => {
-    // Automatically mark as completed after 3 seconds
-    const timer = setTimeout(() => {
-      setIsRead(true);
-      onStepComplete?.("infocard", {
-        completed: true,
-        timeSpent: 3,
+    if (isOpen) {
+      setShowModal(true);
+      setTimeLeft(autoCloseDelay / 1000);
+    } else {
+      setShowModal(false);
+      setIsRead(false);
+    }
+  }, [isOpen, autoCloseDelay]);
+
+  // Handle countdown and auto-close
+  useEffect(() => {
+    if (!showModal || isRead) return;
+
+    const interval = setInterval(() => {
+      setTimeLeft((prev) => {
+        if (prev <= 1) {
+          handleClose(true); // Auto-close
+          return 0;
+        }
+        return prev - 1;
       });
-    }, 6000);
+    }, 1000);
 
-    return () => clearTimeout(timer);
-  }, [onStepComplete]);
+    return () => clearInterval(interval);
+  }, [showModal, isRead]);
 
-  const handleMarkAsRead = () => {
+  const handleClose = (isAutoClose = false) => {
     setIsRead(true);
-    onStepComplete?.("infocard", {
+    setShowModal(false);
+
+    // Mark as completed
+    onComplete?.("infocard", {
       completed: true,
-      timeSpent: Date.now() / 1000,
+      autoCompleted: isAutoClose,
+      timeSpent: autoCloseDelay / 1000 - timeLeft,
+      readMethod: isAutoClose ? "auto" : "manual",
     });
+
+    // Close with slight delay for better UX
+    setTimeout(() => {
+      onClose?.();
+    }, 100);
   };
 
+  // Don't render if not open
+  if (!isOpen || !showModal) return null;
+
   return (
-    <div className="mx-auto">
-      <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-        {/* Header */}
-        <div className="bg-blue-500 p-6 text-white">
-          <div className="flex items-center">
-            <Info size={24} className="mr-3" />
-            <h3 className="text-xl font-semibold">Пайдалы ақпарат</h3>
-          </div>
-        </div>
+    <>
+      {/* Backdrop */}
+      <div
+        className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 transition-opacity duration-300"
+        onClick={() => handleClose(false)}
+      />
 
-        {/* Content */}
-        <div className="p-8">
-          {/* Image if provided */}
-          {lesson.media && (
-            <div className="mb-6 text-center">
-              <img
-                src={lesson.media}
-                alt={lesson.title}
-                className="max-w-md mx-auto rounded-lg shadow-md"
-                onError={(e) => {
-                  e.target.style.display = "none";
-                }}
-              />
-            </div>
-          )}
-
-          {/* Text content */}
-          <div className="text-center">
-            <div className="bg-blue-50 rounded-lg p-6 mb-6">
-              <p className="text-lg text-gray-800 leading-relaxed">
-                {lesson.text}
-              </p>
-            </div>
-
-            {/* Completion indicator */}
-            {isRead ? (
-              <div className="flex items-center justify-center text-green-600 font-medium">
-                <CheckCircle size={20} className="mr-2" />
-                Ақпарат оқылды
-              </div>
-            ) : (
-              <div className="space-y-4">
-                <div className="flex items-center justify-center text-gray-500">
-                  <div className="w-4 h-4 border-2 border-blue-600 border-t-transparent rounded-full animate-spin mr-2"></div>
-                  Ақпарат оқылуда...
+      {/* Modal */}
+      <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+        <div
+          className="bg-white rounded-xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-hidden transform transition-all duration-300 scale-100"
+          onClick={(e) => e.stopPropagation()}
+        >
+          {/* Header */}
+          <div className="bg-gradient-to-r from-blue-500 to-indigo-600 p-6 text-white relative">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center">
+                <div className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center mr-3">
+                  <Info size={20} />
                 </div>
+                <div>
+                  <h3 className="text-xl font-semibold">Пайдалы ақпарат</h3>
+                  <p className="text-blue-100 text-sm mt-1">Қызықты факт</p>
+                </div>
+              </div>
+
+              {/* Close button and timer */}
+              <div className="flex items-center gap-3">
+                {!isRead && (
+                  <div className="bg-white/20 rounded-full px-3 py-1 text-sm font-medium">
+                    {timeLeft}с
+                  </div>
+                )}
                 <button
-                  onClick={handleMarkAsRead}
-                  className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm"
+                  onClick={() => handleClose(false)}
+                  className="w-8 h-8 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center transition-colors"
                 >
-                  Оқылды деп белгілеу
+                  <X size={16} />
                 </button>
+              </div>
+            </div>
+
+            {/* Progress bar */}
+            {!isRead && (
+              <div className="absolute bottom-0 left-0 right-0 h-1 bg-white/20">
+                <div
+                  className="h-full bg-white transition-all duration-1000 ease-linear"
+                  style={{
+                    width: `${
+                      ((autoCloseDelay / 1000 - timeLeft) /
+                        (autoCloseDelay / 1000)) *
+                      100
+                    }%`,
+                  }}
+                />
               </div>
             )}
           </div>
+
+          {/* Content */}
+          <div className="p-8 overflow-y-auto max-h-[calc(90vh-140px)]">
+            {/* Image if provided */}
+            {lesson?.media && (
+              <div className="mb-6 text-center">
+                <img
+                  src={lesson.media}
+                  alt={lesson?.title || "Info image"}
+                  className="max-w-md mx-auto rounded-lg shadow-md"
+                  onError={(e) => {
+                    e.target.style.display = "none";
+                  }}
+                />
+              </div>
+            )}
+
+            {/* Text content */}
+            <div className="text-center">
+              <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-6 mb-6 border border-blue-100">
+                <p className="text-lg text-gray-800 leading-relaxed">
+                  {lesson?.text || "Информационный контент"}
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-  );
-};
-
-// Demo component showing all task types
-export const TaskDemo = () => {
-  const [completedTasks, setCompletedTasks] = useState(new Set());
-
-  const handleTaskComplete = (taskId, completionData) => {
-    console.log(`Task ${taskId} completed:`, completionData);
-    setCompletedTasks((prev) => new Set([...prev, taskId]));
-  };
-
-  const sampleStoryTask = {
-    id: "t1",
-    type: "storytask",
-    title: "Первый диалог",
-    story: "Анна приехала в кафе.",
-    question: "Что она должна сказать бариста?",
-    options: ["Я хочу кофе", "Дай мне кофе", "Кофе, пожалуйста"],
-    answer: 2,
-    feedback: [
-      "Близко, но не хватает вежливости.",
-      "Это звучит грубо.",
-      "Правильно! Вежливая форма.",
-    ],
-  };
-
-  const sampleAudioTask = {
-    id: "t2",
-    type: "audiotask",
-    title: "Аудирование в кафе",
-    audio: "/media/audio/cafe-order.mp3",
-    question: "Что заказала Анна?",
-    options: ["Чай", "Кофе", "Сок"],
-    answer: 1,
-  };
-
-  const sampleInfoCard = {
-    id: "inf-1",
-    type: "infocard",
-    title: "Факт о курсе",
-    text: "Наш курс помогает заговорить по-русски всего за 15 минут в день!",
-    media: "/media/images/fact1.png",
-  };
-
-  return (
-    <div className="min-h-screen bg-gray-100 py-8">
-      <div className="container mx-auto px-4">
-        <h1 className="text-3xl font-bold text-center mb-8 text-gray-800">
-          Демонстрация компонентов курса
-        </h1>
-
-        <div className="space-y-12">
-          <div>
-            <h2 className="text-2xl font-semibold mb-4 text-gray-700">
-              Story Task
-            </h2>
-            <StoryTask
-              lesson={sampleStoryTask}
-              onStepComplete={(type, data) =>
-                handleTaskComplete(sampleStoryTask.id, data)
-              }
-            />
-          </div>
-
-          <div>
-            <h2 className="text-2xl font-semibold mb-4 text-gray-700">
-              Audio Task
-            </h2>
-            <AudioTask
-              lesson={sampleAudioTask}
-              onStepComplete={(type, data) =>
-                handleTaskComplete(sampleAudioTask.id, data)
-              }
-            />
-          </div>
-
-          <div>
-            <h2 className="text-2xl font-semibold mb-4 text-gray-700">
-              Info Card
-            </h2>
-            <InfoCard
-              lesson={sampleInfoCard}
-              onStepComplete={(type, data) =>
-                handleTaskComplete(sampleInfoCard.id, data)
-              }
-            />
-          </div>
-        </div>
-
-        <div className="mt-12 p-4 bg-white rounded-lg shadow">
-          <h3 className="font-semibold mb-2">Completed Tasks:</h3>
-          <p className="text-gray-600">
-            {completedTasks.size > 0
-              ? Array.from(completedTasks).join(", ")
-              : "No tasks completed yet"}
-          </p>
-        </div>
-      </div>
-    </div>
+    </>
   );
 };

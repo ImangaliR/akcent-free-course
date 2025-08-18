@@ -1,4 +1,3 @@
-// Home.jsx - обновленная версия
 import { useEffect, useState } from "react";
 import { CourseNavigation } from "./components/CourseNavigation";
 import { Header } from "./components/Header";
@@ -8,7 +7,6 @@ import { SidebarNav } from "./components/Sidebar";
 import { useAuth } from "./context/AuthContext";
 import { CourseProvider, useCourse } from "./context/CourseContext";
 
-// Внутренний компонент с доступом к CourseContext
 const HomeContent = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [currentBlockCompleted, setCurrentBlockCompleted] = useState(false);

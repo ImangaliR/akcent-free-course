@@ -1,3 +1,5 @@
+// Updated SidebarNav.jsx that accounts for InfoCard modals
+
 import {
   BookOpen,
   CheckCircle,
@@ -5,15 +7,15 @@ import {
   ChevronRight,
   Clock,
   FileText,
+  Info,
   LogOut,
+  PenTool,
   Play,
   Users,
-  X,
   Volume2,
-  Info,
-  PenTool,
+  X,
 } from "lucide-react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import { useCourse } from "../context/CourseContext";
 
@@ -24,6 +26,7 @@ export const SidebarNav = ({ isSidebarOpen, setIsSidebarOpen }) => {
     currentBlockIndex,
     completedBlocks,
     goToBlock,
+    // eslint-disable-next-line no-unused-vars
     getCurrentBlock,
   } = useCourse();
 
@@ -33,7 +36,7 @@ export const SidebarNav = ({ isSidebarOpen, setIsSidebarOpen }) => {
     conclusion: true,
   });
 
-  // Group course blocks into logical modules
+  // Group course blocks into logical modules, excluding InfoCard blocks from navigation
   const organizeBlocks = () => {
     if (!courseManifest?.sequence)
       return { intro: [], main: [], conclusion: [] };
@@ -45,9 +48,19 @@ export const SidebarNav = ({ isSidebarOpen, setIsSidebarOpen }) => {
       conclusion: [],
     };
 
+    // Filter out InfoCard blocks as they are now modal-only
+    const navigableBlocks = blocks.filter((block) => {
+      const lowerRef = block.ref.toLowerCase();
+      return !lowerRef.includes("inf"); // Exclude info cards from navigation
+    });
+
     // First, identify video blocks to determine which is the 6th video
-    const videoBlocks = blocks
-      .map((block, index) => ({ block, index }))
+    const videoBlocks = navigableBlocks
+      .map((block, index) => ({
+        block,
+        originalIndex: blocks.indexOf(block),
+        index,
+      }))
       .filter(({ block }) => {
         const lowerRef = block.ref.toLowerCase();
         return (
@@ -58,10 +71,11 @@ export const SidebarNav = ({ isSidebarOpen, setIsSidebarOpen }) => {
         );
       });
 
-    blocks.forEach((block, index) => {
+    navigableBlocks.forEach((block, index) => {
+      const originalIndex = blocks.indexOf(block);
       const blockInfo = {
         ...block,
-        index,
+        index: originalIndex, // Keep original index for navigation
         id: block.ref.split("/")[1].split(".")[0],
       };
 
@@ -77,12 +91,12 @@ export const SidebarNav = ({ isSidebarOpen, setIsSidebarOpen }) => {
       // 2nd-5th videos (v2-v5) and all other blocks → main
       // 6th video (v6) → conclusion
       if (index === 0 && isVideo) {
-        // First block and it's a video → intro
+        // First navigable block and it's a video → intro
         organized.intro.push(blockInfo);
       } else if (isVideo && videoBlocks.length >= 6) {
         // If this is the 6th video (last video) → conclusion
         const videoIndex = videoBlocks.findIndex(
-          ({ index: vIndex }) => vIndex === index
+          ({ originalIndex: vIndex }) => vIndex === originalIndex
         );
         if (videoIndex === videoBlocks.length - 1 && videoBlocks.length >= 6) {
           organized.conclusion.push(blockInfo);
@@ -177,9 +191,18 @@ export const SidebarNav = ({ isSidebarOpen, setIsSidebarOpen }) => {
   const getBlockTitle = (ref, index) => {
     const typeInfo = getBlockTypeInfo(ref);
 
-    // Get video blocks to determine video numbering
-    const videoBlocks = courseManifest.sequence
-      .map((block, idx) => ({ block, index: idx }))
+    // Get video blocks to determine video numbering (excluding InfoCards)
+    const navigableBlocks = courseManifest.sequence.filter((block) => {
+      const lowerRef = block.ref.toLowerCase();
+      return !lowerRef.includes("inf");
+    });
+
+    const videoBlocks = navigableBlocks
+      // eslint-disable-next-line no-unused-vars
+      .map((block, idx) => ({
+        block,
+        index: courseManifest.sequence.indexOf(block),
+      }))
       .filter(({ block }) => {
         const lowerRef = block.ref.toLowerCase();
         return (
@@ -216,40 +239,40 @@ export const SidebarNav = ({ isSidebarOpen, setIsSidebarOpen }) => {
       return `Урок ${videoCount}: Видео`;
     }
     if (typeInfo.type === "task") {
-      // Count task blocks before this one
+      // Count task blocks before this one (excluding InfoCards)
       const taskCount =
-        courseManifest.sequence
-          .slice(0, index)
-          .filter(
-            (block) => block.ref.includes("task") || block.ref.includes("t")
-          ).length + 1;
+        courseManifest.sequence.slice(0, index).filter((block) => {
+          const lowerRef = block.ref.toLowerCase();
+          return (
+            !lowerRef.includes("inf") &&
+            (lowerRef.includes("task") || lowerRef.includes("t"))
+          );
+        }).length + 1;
 
       return `Задание ${taskCount}`;
     }
-    if (typeInfo.type === "info") {
-      // Count info blocks before this one
-      const infoCount =
-        courseManifest.sequence
-          .slice(0, index)
-          .filter((block) => block.ref.includes("inf")).length + 1;
-
-      return `Факт ${infoCount}`;
-    }
     if (typeInfo.type === "audio") {
-      // Count audio blocks before this one
+      // Count audio blocks before this one (excluding InfoCards)
       const audioCount =
-        courseManifest.sequence
-          .slice(0, index)
-          .filter((block) => block.ref.includes("audio")).length + 1;
+        courseManifest.sequence.slice(0, index).filter((block) => {
+          const lowerRef = block.ref.toLowerCase();
+          return !lowerRef.includes("inf") && lowerRef.includes("audio");
+        }).length + 1;
 
       return `Аудирование ${audioCount}`;
     }
 
-    return `Блок ${index + 1}`;
+    return `${typeInfo.label}`;
   };
 
   const getTotalBlocks = () => {
-    return courseManifest?.sequence?.length || 0;
+    // Only count navigable blocks (exclude InfoCards)
+    return (
+      courseManifest?.sequence?.filter((block) => {
+        const lowerRef = block.ref.toLowerCase();
+        return !lowerRef.includes("inf");
+      }).length || 0
+    );
   };
 
   const isBlockCompleted = (blockRef) => {
@@ -274,12 +297,12 @@ export const SidebarNav = ({ isSidebarOpen, setIsSidebarOpen }) => {
     if (typeof blockData === "object") {
       // For video blocks, check multiple possible indicators
       // First check if 'watched' field exists and is true
-      if (blockData.hasOwnProperty("watched")) {
+      if (Object.prototype.hasOwnProperty.call(blockData, "watched")) {
         return blockData.watched === true;
       }
 
       // Also check for 'completed' field
-      if (blockData.hasOwnProperty("completed")) {
+      if (Object.prototype.hasOwnProperty.call(blockData, "completed")) {
         return blockData.completed === true;
       }
 
@@ -312,8 +335,14 @@ export const SidebarNav = ({ isSidebarOpen, setIsSidebarOpen }) => {
   const getCompletedCount = () => {
     if (!completedBlocks || !courseManifest?.sequence) return 0;
 
-    // Get all valid block references from the current course
-    const validBlockRefs = courseManifest.sequence.map((block) => block.ref);
+    // Get all valid block references from the current course (excluding InfoCards)
+    const validBlockRefs = courseManifest.sequence
+      .filter((block) => {
+        const lowerRef = block.ref.toLowerCase();
+        return !lowerRef.includes("inf");
+      })
+      .map((block) => block.ref);
+
     let completedCount = 0;
 
     if (completedBlocks.has && typeof completedBlocks.has === "function") {
@@ -356,13 +385,13 @@ export const SidebarNav = ({ isSidebarOpen, setIsSidebarOpen }) => {
           ) {
             completedCount++;
           }
-        } else if (Boolean(blockData)) {
+        } else if (blockData) {
           completedCount++;
         }
       });
     }
 
-    return completedCount + 1;
+    return completedCount;
   };
 
   const moduleData = {
@@ -617,18 +646,6 @@ export const SidebarNav = ({ isSidebarOpen, setIsSidebarOpen }) => {
               {getTotalBlocks()}тен {getCompletedCount()} блок аяқталды
             </div>
           </div>
-
-          {/* Текущий блок */}
-          {/* {getCurrentBlock() && (
-            <div className="mt-3 p-2 bg-white rounded-lg border">
-              <div className="text-xs font-medium text-gray-700 mb-1">
-                Текущий блок:
-              </div>
-              <div className="text-sm text-gray-600">
-                {getBlockTitle(getCurrentBlock().ref, currentBlockIndex)}
-              </div>
-            </div>
-          )} */}
         </div>
 
         {/* Футер с кнопкой выхода */}

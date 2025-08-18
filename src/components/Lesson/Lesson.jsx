@@ -1,25 +1,30 @@
-import { useEffect, useState } from "react";
 import { CheckCircle, Clock, Edit3 } from "lucide-react";
+import { useEffect, useState } from "react";
 import { useCourse } from "../../context/CourseContext";
-import { StoryTask } from "../Tasks/StoryTask";
+import { useInfoCardModal } from "../../hooks/useModal";
 import { AudioTask } from "../Tasks/AudioTask";
-import { InfoCard } from "../Tasks/InfoCard";
-import { VideoLessonWithSubtitles } from "../VideoLesson/VideoLesson";
-import { MatchTask } from "../Tasks/MatchTask";
 import { ImageQuiz } from "../Tasks/ImageQuiz";
+import { InfoCardModal } from "../Tasks/InfoCard";
+import { MatchTask } from "../Tasks/MatchTask";
+import { StoryTask } from "../Tasks/StoryTask";
+import { VideoLessonWithSubtitles } from "../VideoLesson/VideoLesson";
 
 export const Lesson = ({ currentBlockRef, onBlockComplete }) => {
   const [loading, setLoading] = useState(true);
   const [blockData, setBlockData] = useState(null);
   const [error, setError] = useState(null);
+  const [pendingInfoCard, setPendingInfoCard] = useState(null);
 
-  // Get methods from your existing context
+  const { isOpen, currentInfoCard, showInfoCard, hideInfoCard } =
+    useInfoCardModal();
+
   const {
     getUserAnswer,
     hasUserAnswer,
     getBlockStatus,
     updateAnswer,
     completeBlock,
+    courseManifest,
   } = useCourse();
 
   const userAnswer = getUserAnswer(currentBlockRef);
@@ -53,11 +58,9 @@ export const Lesson = ({ currentBlockRef, onBlockComplete }) => {
     loadBlockData();
   }, [currentBlockRef]);
 
-  // Enhanced block completion handler with answer storage
   const handleBlockComplete = async (blockType, completionData = {}) => {
     console.log(`Блок ${blockData?.id} завершен:`, completionData);
 
-    // Store the completion data as user answer
     const answerData = {
       blockType,
       blockId: blockData?.id,
@@ -65,14 +68,52 @@ export const Lesson = ({ currentBlockRef, onBlockComplete }) => {
       ...completionData,
     };
 
-    // Use your existing completeBlock method
     await completeBlock(blockData?.id, answerData);
-
-    // Call the original callback
     onBlockComplete?.(blockData?.id, answerData);
+
+    // Показываем InfoCard модал если есть pending InfoCard (после заданий)
+    if (pendingInfoCard && shouldShowInfoCardAfter(blockType)) {
+      showInfoCard(pendingInfoCard, 2000); // 2 секунды задержка
+    }
   };
 
-  // Handle answer updates (for draft saves)
+  // Проверка на наличие InfoCard после текущего блока
+  useEffect(() => {
+    const checkForInfoCard = async () => {
+      if (!courseManifest?.sequence || !currentBlockRef) return;
+
+      const currentIndex = courseManifest.sequence.findIndex(
+        (block) => block.ref === currentBlockRef
+      );
+
+      if (currentIndex === -1) return;
+
+      const nextBlock = courseManifest.sequence[currentIndex + 1];
+
+      if (nextBlock && nextBlock.ref.toLowerCase().includes("inf")) {
+        try {
+          const response = await fetch(`/content/${nextBlock.ref}`);
+          if (response.ok) {
+            const infoCardData = await response.json();
+            setPendingInfoCard(infoCardData);
+          }
+        } catch (err) {
+          console.warn("Failed to load info card:", err);
+        }
+      } else {
+        setPendingInfoCard(null);
+      }
+    };
+
+    checkForInfoCard();
+  }, [currentBlockRef, courseManifest]);
+
+  // Добавьте эту функцию
+  const shouldShowInfoCardAfter = (blockType) => {
+    const taskTypes = ["storytask", "audiotask", "matchtask", "imagequiz"];
+    return taskTypes.includes(blockType);
+  };
+
   const handleAnswerUpdate = (answerData) => {
     updateAnswer(currentBlockRef, {
       blockType: blockData?.type,
@@ -347,6 +388,22 @@ export const Lesson = ({ currentBlockRef, onBlockComplete }) => {
     );
   };
 
+  const handleInfoCardComplete = (type, data) => {
+    console.log("InfoCard completed:", data);
+
+    if (pendingInfoCard) {
+      completeBlock(pendingInfoCard.id, {
+        blockType: "infocard",
+        blockId: pendingInfoCard.id,
+        blockRef: `blocks/${pendingInfoCard.id}.json`,
+        ...data,
+      });
+    }
+
+    hideInfoCard();
+    setPendingInfoCard(null);
+  };
+
   const renderImageQuizAnswer = () => {
     if (!userAnswer.selectedOption) return null;
 
@@ -431,93 +488,6 @@ export const Lesson = ({ currentBlockRef, onBlockComplete }) => {
       </div>
     );
   };
-
-  // Render video answer (watch progress)
-  /* const renderVideoAnswer = () => {
-    if (
-      !userAnswer.watchProgress &&
-      !userAnswer.completed &&
-      !userAnswer.progress
-    )
-      return null;
-
-    const progress = userAnswer.watchProgress || userAnswer.progress || 0;
-
-    return (
-      <div className="space-y-3">
-        <div>
-          <p className="text-sm font-medium text-gray-700 mb-2">
-            Прогресс просмотра:
-          </p>
-          <div className="bg-white rounded-lg p-3 border">
-            <div className="flex items-center justify-between mb-2">
-              <span className="text-sm text-gray-600">Просмотрено:</span>
-              <span className="font-medium text-gray-800">
-                {Math.round(progress)}%
-              </span>
-            </div>
-            <div className="w-full bg-gray-200 rounded-full h-2">
-              <div
-                className="bg-blue-500 h-2 rounded-full transition-all duration-300"
-                style={{ width: `${progress}%` }}
-              ></div>
-            </div>
-          </div>
-        </div>
-
-        {(userAnswer.completed || progress >= 90) && (
-          <div className="flex items-center gap-2">
-            <CheckCircle className="w-4 h-4 text-green-600" />
-            <span className="text-sm font-medium text-green-800">
-              Видео просмотрено{" "}
-              {progress >= 100 ? "полностью" : "почти полностью"}
-            </span>
-          </div>
-        )}
-
-        {userAnswer.watchTime && (
-          <div className="text-xs text-gray-500">
-            Время просмотра: {Math.round(userAnswer.watchTime / 1000)} секунд
-          </div>
-        )}
-      </div>
-    );
-  }; */
-
-  // Render info card answer
-  /* const renderInfoCardAnswer = () => {
-    if (!userAnswer.timeSpent && !userAnswer.completed && !userAnswer.readTime)
-      return null;
-
-    return (
-      <div className="space-y-3">
-        {(userAnswer.timeSpent || userAnswer.readTime) && (
-          <div>
-            <p className="text-sm font-medium text-gray-700 mb-2">
-              Время изучения:
-            </p>
-            <div className="bg-white rounded-lg p-3 border">
-              <p className="text-gray-800">
-                {Math.round(
-                  (userAnswer.timeSpent || userAnswer.readTime) / 1000
-                )}{" "}
-                секунд
-              </p>
-            </div>
-          </div>
-        )}
-
-        {userAnswer.completed && (
-          <div className="flex items-center gap-2">
-            <CheckCircle className="w-4 h-4 text-green-600" />
-            <span className="text-sm font-medium text-green-800">
-              Информация изучена
-            </span>
-          </div>
-        )}
-      </div>
-    );
-  }; */
 
   // Loading state
   if (loading) {
@@ -702,13 +672,18 @@ export const Lesson = ({ currentBlockRef, onBlockComplete }) => {
         </div>
       </div>
 
-      {/* Answer Summary */}
-      {/* {renderAnswerSummary()} */}
-
       {/* Main content */}
       <div className="bg-white rounded-xl shadow-lg min-h-[600px]">
         <div className="p-6">{renderBlockContent()}</div>
       </div>
+
+      <InfoCardModal
+        lesson={currentInfoCard}
+        isOpen={isOpen}
+        onClose={hideInfoCard}
+        onComplete={handleInfoCardComplete}
+        autoCloseDelay={7000}
+      />
     </div>
   );
 };
