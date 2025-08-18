@@ -27,6 +27,55 @@ export const CourseNavigation = ({ currentBlockCompleted = false }) => {
 
   const currentBlock = getCurrentBlock();
 
+  // Enhanced helper function to safely check if a block is completed
+  const isBlockCompleted = (blockRef) => {
+    // Check both old completion tracking and new answer-based completion
+    if (!completedBlocks) return false;
+
+    // Check old array-based completion
+    if (
+      completedBlocks.includes &&
+      typeof completedBlocks.includes === "function"
+    ) {
+      if (completedBlocks.includes(blockRef)) return true;
+    }
+
+    // Check Set-based completion
+    if (completedBlocks.has && typeof completedBlocks.has === "function") {
+      if (completedBlocks.has(blockRef)) return true;
+    }
+
+    // Check object-based completion
+    if (completedBlocks[blockRef]) return true;
+
+    // NEW: Check answer-based completion
+    const blockStatus = getBlockStatus(blockRef);
+    return blockStatus === "completed";
+  };
+
+  // Enhanced helper function to get completed count
+  const getCompletedCount = () => {
+    if (!completedBlocks || !courseManifest?.sequence) return 0;
+
+    const validBlockRefs = courseManifest.sequence.map((b) => b.ref);
+
+    // Normalize to array of refs
+    let completedArray = [];
+    if (completedBlocks.size !== undefined) {
+      completedArray = Array.from(completedBlocks);
+    } else if (completedBlocks.length !== undefined) {
+      completedArray = completedBlocks;
+    } else if (typeof completedBlocks === "object") {
+      completedArray = Object.keys(completedBlocks);
+    }
+
+    // Only count blocks that exist in this course
+    return (
+      completedArray.filter((ref) => validBlockRefs.includes(ref)).length + 1
+    );
+  };
+
+  // NEW: Get answer status for a block
   const getAnswerStatus = (blockRef) => {
     const status = getBlockStatus(blockRef);
     const hasAnswer = hasUserAnswer(blockRef);

@@ -110,10 +110,10 @@ export const Login = () => {
       <div className="max-w-md w-full space-y-8">
         <div className="text-center">
           <h2 className="text-3xl font-bold text-gray-900 mb-2">
-            Добро пожаловать
+            Қош келдіңіз!
           </h2>
           <p className="text-gray-600">
-            Войдите в свой аккаунт для продолжения обучения
+            Оқуды жалғастыру үшін тіркелгіңізге кіріңіз
           </p>
         </div>
 
@@ -129,7 +129,7 @@ export const Login = () => {
             {/* Phone number */}
             <div className="space-y-2">
               <label className="text-sm font-medium text-gray-700">
-                Номер телефона
+                Телефон нөмері
               </label>
               <div className="relative">
                 <Phone
@@ -138,7 +138,7 @@ export const Login = () => {
                 />
                 <input
                   type="tel"
-                  placeholder="Введите ваш номер"
+                  placeholder="Нөміріңізді енгізіңіз"
                   value={login}
                   onChange={(e) => setLogin(formatPhoneNumber(e.target.value))}
                   className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-200"
@@ -159,7 +159,7 @@ export const Login = () => {
                 />
                 <input
                   type={showPassword ? "text" : "password"}
-                  placeholder="Введите ваш пароль"
+                  placeholder="Пароліңізді енгізіңіз"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   className="w-full pl-10 pr-12 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-200"
@@ -184,12 +184,12 @@ export const Login = () => {
               {loading ? (
                 <>
                   <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                  <span>Входим...</span>
+                  <span>Кірілуде...</span>
                 </>
               ) : (
                 <>
                   <LogIn size={18} />
-                  <span>Войти</span>
+                  <span>Кіру</span>
                 </>
               )}
             </button>
@@ -197,12 +197,12 @@ export const Login = () => {
 
           <div className="mt-6 pt-6 border-t border-gray-100">
             <p className="text-center text-gray-600">
-              Нет аккаунта?{" "}
+              Аккаунт жоқпа?{" "}
               <Link
                 to="/signup"
                 className="text-blue-600 hover:text-blue-700 font-medium transition-colors"
               >
-                Зарегистрироваться
+                Тіркелу
               </Link>
             </p>
           </div>

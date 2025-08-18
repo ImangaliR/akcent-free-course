@@ -9,6 +9,8 @@ import {
   UserPlus,
 } from "lucide-react";
 import { useState } from "react";
+import { FaFemale } from "react-icons/fa";
+import { MdFemale, MdMale } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
 
 export const SignUp = () => {
@@ -17,6 +19,7 @@ export const SignUp = () => {
     surname: "",
     login: "",
     password: "",
+    gender: "male",
   });
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -166,10 +169,10 @@ export const SignUp = () => {
         {/* Логотип и заголовок */}
         <div className="text-center">
           <h2 className="text-3xl font-bold text-gray-900 mb-2">
-            Создать аккаунт
+            Аккаунт жасау
           </h2>
           <p className="text-gray-600">
-            Присоединяйтесь к нам и начните изучать русский язык
+            Бізге қосылыңыз және орыс тілін үйренуді бастаңыз
           </p>
         </div>
 
@@ -194,7 +197,7 @@ export const SignUp = () => {
             {/* Имя и Фамилия в одной строке */}
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
-                <label className="text-sm font-medium text-gray-700">Имя</label>
+                <label className="text-sm font-medium text-gray-700">Аты</label>
                 <div className="relative">
                   <User
                     className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
@@ -214,7 +217,7 @@ export const SignUp = () => {
 
               <div className="space-y-2">
                 <label className="text-sm font-medium text-gray-700">
-                  Фамилия
+                  Жөні
                 </label>
                 <div className="relative">
                   <User
@@ -237,7 +240,7 @@ export const SignUp = () => {
             {/* Логин */}
             <div className="space-y-2">
               <label className="text-sm font-medium text-gray-700">
-                Номер телефона
+                Телефон нөмері
               </label>
               <div className="relative">
                 <Phone
@@ -247,7 +250,7 @@ export const SignUp = () => {
                 <input
                   type="text"
                   name="login"
-                  placeholder="Введите ваш номер"
+                  placeholder="Нөміріңізді енгізіңіз"
                   value={formData.login}
                   onChange={handleChange}
                   className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
@@ -269,7 +272,7 @@ export const SignUp = () => {
                 <input
                   type={showPassword ? "text" : "password"}
                   name="password"
-                  placeholder="Минимум 6 символов"
+                  placeholder="Кемінде 6 символ"
                   value={formData.password}
                   onChange={handleChange}
                   className="w-full pl-10 pr-12 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
@@ -288,7 +291,7 @@ export const SignUp = () => {
               {formData.password && (
                 <div className="space-y-2">
                   <div className="flex items-center justify-between text-xs">
-                    <span className="text-gray-500">Сила пароля</span>
+                    <span className="text-gray-500">Пароль күштілігі</span>
                     <span
                       className={`font-medium ${
                         passwordStrength.strength === 100
@@ -313,6 +316,27 @@ export const SignUp = () => {
               )}
             </div>
 
+            {/* Гендер */}
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-gray-700">Жыныс</label>
+              <div className="flex items-center gap-2">
+                {formData.gender === "male" ? (
+                  <MdMale className="w-6 h-6" />
+                ) : (
+                  <MdFemale className="w-6 h-6" />
+                )}
+                <select
+                  name="gender"
+                  value={formData.gender}
+                  onChange={handleChange}
+                  className="border-1 border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200 text-sm"
+                >
+                  <option value="male">Еркек</option>
+                  <option value="female">Әйел</option>
+                </select>
+              </div>
+            </div>
+
             {/* Кнопка регистрации */}
             <button
               type="submit"
@@ -322,12 +346,12 @@ export const SignUp = () => {
               {loading ? (
                 <>
                   <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                  <span>Регистрируем...</span>
+                  <span>Аккаунт тіркелуде...</span>
                 </>
               ) : (
                 <>
                   <UserPlus size={18} />
-                  <span>Создать аккаунт</span>
+                  <span>Аккаунт жасау</span>
                   <ArrowRight size={18} />
                 </>
               )}
@@ -337,12 +361,12 @@ export const SignUp = () => {
           {/* Ссылка на вход */}
           <div className="mt-6 pt-6 border-t border-gray-100">
             <p className="text-center text-gray-600">
-              Уже есть аккаунт?{" "}
+              Аккаунтыңыз барма?{" "}
               <Link
                 to="/login"
                 className="text-blue-600 hover:text-blue-700 font-medium transition-colors"
               >
-                Войти
+                Кіру
               </Link>
             </p>
           </div>
