@@ -74,9 +74,7 @@ export const CourseNavigation = ({ currentBlockCompleted = false }) => {
     }
 
     // Only count blocks that exist in this course
-    return (
-      completedArray.filter((ref) => validBlockRefs.includes(ref)).length + 1
-    );
+    return completedArray.filter((ref) => validBlockRefs.includes(ref)).length;
   };
 
   // NEW: Get answer status for a block

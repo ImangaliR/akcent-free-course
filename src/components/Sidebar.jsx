@@ -362,7 +362,7 @@ export const SidebarNav = ({ isSidebarOpen, setIsSidebarOpen }) => {
       });
     }
 
-    return completedCount + 1;
+    return completedCount;
   };
 
   const moduleData = {
