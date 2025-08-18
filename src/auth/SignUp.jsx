@@ -19,7 +19,7 @@ export const SignUp = () => {
     surname: "",
     login: "",
     password: "",
-    gender: "Мужской",
+    gender: "male",
   });
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -320,7 +320,7 @@ export const SignUp = () => {
             <div className="space-y-2">
               <label className="text-sm font-medium text-gray-700">Жыныс</label>
               <div className="flex items-center gap-2">
-                {formData.gender === "Мужской" ? (
+                {formData.gender === "male" ? (
                   <MdMale className="w-6 h-6" />
                 ) : (
                   <MdFemale className="w-6 h-6" />
@@ -331,8 +331,8 @@ export const SignUp = () => {
                   onChange={handleChange}
                   className="border-1 border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200 text-sm"
                 >
-                  <option value="Мужской">Еркек</option>
-                  <option value="Женский">Әйел</option>
+                  <option value="male">Еркек</option>
+                  <option value="female">Әйел</option>
                 </select>
               </div>
             </div>

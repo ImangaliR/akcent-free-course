@@ -28,7 +28,7 @@ export const Verify = () => {
     );
 
     if (!userLogin) {
-      setError("Логин не найден. Пожалуйста, пройдите регистрацию заново.");
+      setError("Логин табылмады. Өтініш, тіркеуді қайтадан өтіңіз.");
     }
   }, [userLogin, location.state]);
 
@@ -92,12 +92,12 @@ export const Verify = () => {
     const verificationCode = code.join("");
 
     if (verificationCode.length !== 6) {
-      setError("Введите полный 6-значный код");
+      setError("6-символды кодты енгізіңіз.");
       return;
     }
 
     if (!userLogin) {
-      setError("Логин не найден. Пожалуйста, пройдите регистрацию заново.");
+      setError("Логин табылмады. Өтініш, тіркеуді қайтадан өтіңіз.");
       return;
     }
 
@@ -125,10 +125,12 @@ export const Verify = () => {
       const data = await res.json();
 
       if (!res.ok) {
-        throw new Error(data.message || data.error || "Ошибка верификации");
+        throw new Error(
+          data.message || data.error || "Верификациядан қате кетті"
+        );
       }
 
-      setSuccess("Верификация прошла успешно!");
+      setSuccess("Верификация сәтті өтті!");
 
       // Сохраняем токен если он есть
       if (data.token) {
@@ -157,16 +159,11 @@ export const Verify = () => {
       <div className="max-w-md w-full space-y-8">
         {/* Логотип и заголовок */}
         <div className="text-center">
-          <div className="flex justify-center mb-6">
-            <div className="bg-gradient-to-r from-green-500 to-blue-600 p-4 rounded-2xl shadow-lg">
-              <Shield className="w-8 h-8 text-white" />
-            </div>
-          </div>
           <h2 className="text-3xl font-bold text-gray-900 mb-2">
-            Подтверждение аккаунта
+            Аккаунтты растау
           </h2>
           <p className="text-gray-600 mb-4">
-            Мы отправили 6-значный код подтверждения в WhatsApp
+            Біз сізге 6-символдық растау кодын WhatsApp-қа жібердік
           </p>
 
           {/* WhatsApp информация */}
@@ -176,11 +173,11 @@ export const Verify = () => {
               <span className="font-medium">WhatsApp</span>
             </div>
             <p className="text-sm text-green-600">
-              Проверьте сообщения в WhatsApp для получения кода активации
+              Растау кодын алу үшін WhatsApp хабарламаларыңызды тексеріңіз
             </p>
             {userLogin && (
               <p className="text-xs text-green-500 mt-2">
-                Для аккаунта: <span className="font-mono">{userLogin}</span>
+                Аккаунт нөмірі: <span className="font-mono">{userLogin}</span>
               </p>
             )}
           </div>
@@ -207,7 +204,7 @@ export const Verify = () => {
             {/* Поля для ввода кода */}
             <div className="space-y-4">
               <label className="block text-sm font-medium text-gray-700 text-center">
-                Введите код из WhatsApp
+                WhatsApp-қа келген кодты енгізіңіз
               </label>
 
               <div className="flex justify-center gap-3">
@@ -229,7 +226,7 @@ export const Verify = () => {
               </div>
 
               <p className="text-xs text-gray-500 text-center">
-                Можете вставить весь код сразу в первое поле
+                Бүкіл кодты бірден бірінші өріске қоюға болады.
               </p>
             </div>
 
@@ -237,17 +234,17 @@ export const Verify = () => {
             <button
               type="submit"
               disabled={loading || code.join("").length !== 6}
-              className="w-full bg-gradient-to-r from-green-500 to-blue-600 text-white py-3 rounded-lg hover:from-green-600 hover:to-blue-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 transition-all duration-200 shadow-lg hover:shadow-xl"
+              className="w-full bg-green-500 text-white py-3 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 transition-all duration-200 shadow-lg hover:shadow-xl"
             >
               {loading ? (
                 <>
                   <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                  <span>Проверяем...</span>
+                  <span>Тексерілуде...</span>
                 </>
               ) : (
                 <>
                   <Shield size={18} />
-                  <span>Подтвердить</span>
+                  <span>Растау</span>
                   <ArrowRight size={18} />
                 </>
               )}
@@ -258,23 +255,15 @@ export const Verify = () => {
           <div className="mt-4 text-center">
             <details className="text-sm text-gray-500">
               <summary className="cursor-pointer hover:text-gray-700 transition-colors">
-                Не получили код?
+                Кодты таппадыңызба?
               </summary>
               <div className="mt-2 space-y-1 text-xs">
-                <p>• Проверьте папку "Спам" в WhatsApp</p>
-                <p>• Убедитесь, что у вас стабильное интернет-соединение</p>
-                <p>• Попробуйте запросить код повторно</p>
+                <p>• WhatsApp "Спам" қалтаңызды тексеріңіз</p>
+                <p>• Тұрақты интернет байланысы бар екеніне көз жеткізіңіз</p>
+                <p>• Кодты қайта сұрап көріңіз</p>
               </div>
             </details>
           </div>
-        </div>
-
-        {/* Информация о безопасности */}
-        <div className="text-center">
-          <p className="text-xs text-gray-500 flex items-center justify-center gap-1">
-            <Shield className="w-3 h-3" />
-            Ваши данные защищены и не передаются третьим лицам
-          </p>
         </div>
       </div>
     </div>
