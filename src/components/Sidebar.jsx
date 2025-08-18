@@ -119,7 +119,7 @@ export const SidebarNav = ({ isSidebarOpen, setIsSidebarOpen }) => {
   };
 
   const handleLogout = () => {
-    if (window.confirm("Вы уверены, что хотите выйти?")) {
+    if (window.confirm("Шыққыңыз келетініне сенімдісіз бе?")) {
       logout();
     }
   };
@@ -135,21 +135,21 @@ export const SidebarNav = ({ isSidebarOpen, setIsSidebarOpen }) => {
     ) {
       return {
         type: "video",
-        label: "Видеоурок",
+        label: "Бейне сабақ>",
         icon: <Play className="w-4 h-4" />,
       };
     }
     if (lowerRef.includes("task") || lowerRef.includes("t")) {
       return {
         type: "task",
-        label: "Практическое задание",
+        label: "Практикалық тапсырма",
         icon: <PenTool className="w-4 h-4" />,
       };
     }
     if (lowerRef.includes("audio")) {
       return {
         type: "audio",
-        label: "Аудирование",
+        label: "Тыңдау",
         icon: <Volume2 className="w-4 h-4" />,
       };
     }
@@ -167,7 +167,7 @@ export const SidebarNav = ({ isSidebarOpen, setIsSidebarOpen }) => {
     ) {
       return {
         type: "welcome",
-        label: "Приветствие",
+        label: "Сәлем",
         icon: <Play className="w-4 h-4" />,
       };
     }
@@ -386,21 +386,21 @@ export const SidebarNav = ({ isSidebarOpen, setIsSidebarOpen }) => {
   const moduleData = {
     intro: {
       id: "intro",
-      title: "Введение в курс",
+      title: "Курсқа кіріспе",
       icon: <Play className="w-4 h-4" />,
       blocks: organizedBlocks.intro,
       color: "blue",
     },
     main: {
       id: "main",
-      title: "Основные уроки",
+      title: "Негізгі сабақтар",
       icon: <BookOpen className="w-4 h-4" />,
       blocks: organizedBlocks.main,
       color: "indigo",
     },
     conclusion: {
       id: "conclusion",
-      title: "Заключение курса",
+      title: "Курсты қорытындылау",
       icon: <Users className="w-4 h-4" />,
       blocks: organizedBlocks.conclusion,
       color: "purple",
@@ -418,7 +418,7 @@ export const SidebarNav = ({ isSidebarOpen, setIsSidebarOpen }) => {
       <aside className="fixed inset-y-0 left-0 z-50 w-64 bg-white shadow-lg flex-shrink-0 flex items-center justify-center">
         <div className="text-center">
           <div className="w-8 h-8 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-gray-600">Загрузка курса...</p>
+          <p className="text-gray-600">Курс жүктелуде...</p>
         </div>
       </aside>
     );
@@ -450,7 +450,7 @@ export const SidebarNav = ({ isSidebarOpen, setIsSidebarOpen }) => {
                 {courseManifest.title || "Русский язык"}
               </h1>
               <span className="text-sm font-normal text-gray-600">
-                для начинающих
+                бастауыш курс
               </span>
             </div>
 

@@ -50,7 +50,7 @@ export const CourseProvider = ({ children }) => {
         // Fallback манифест для тестирования
         const fallbackManifest = {
           courseId: "ru-demo-01",
-          title: "Демо-курс русского языка",
+          title: "Орыс тілі",
           locale: "ru",
           sequence: [
             { ref: "blocks/v1.video.json" },
