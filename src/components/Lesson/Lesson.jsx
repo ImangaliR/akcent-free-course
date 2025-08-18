@@ -8,6 +8,7 @@ import { InfoCardModal } from "../Tasks/InfoCard";
 import { MatchTask } from "../Tasks/MatchTask";
 import { StoryTask } from "../Tasks/StoryTask";
 import { VideoLessonWithSubtitles } from "../VideoLesson/VideoLesson";
+import MultiBlankTask from "../Tasks/MultiBlankTask";
 
 export const Lesson = ({ currentBlockRef, onBlockComplete }) => {
   const [loading, setLoading] = useState(true);
@@ -569,6 +570,8 @@ export const Lesson = ({ currentBlockRef, onBlockComplete }) => {
         return <MatchTask {...commonProps} />;
       case "imagequiz":
         return <ImageQuiz {...commonProps} />;
+      case "multiblanktask":
+        return <MultiBlankTask {...commonProps} />;
       default:
         return (
           <div className="bg-gray-50 rounded-lg p-8 text-center">

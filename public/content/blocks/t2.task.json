@@ -1,0 +1,30 @@
+{
+  "id": "t2",
+  "type": "multiblanktask",
+  "title": "Выберите правильные слова",
+  "story": "— {{blank1}} do I get to the station?\n— Go {{blank2}} — the station is that green building over there.",
+  "question": "Заполните пропуски подходящими словами.",
+  "blanks": [
+    {
+      "id": "blank1",
+      "options": ["Where", "How", "When"],
+      "answer": 1,
+      "feedback": [
+        "«Where do I get to the station?» — грамматически неверно в таком контексте.",
+        "Правильно! «How do I get to the station?» — как пройти/доехать.",
+        "«When do I get to the station?» — это вопрос о времени, не подходит."
+      ]
+    },
+    {
+      "id": "blank2",
+      "options": ["straight", "yesterday", "happy"],
+      "answer": 0,
+      "feedback": [
+        "Правильно! «Go straight» — иди прямо.",
+        "«Go yesterday» — бессмысленно.",
+        "«Go happy» — бессмысленно."
+      ]
+    }
+  ],
+  "media": "../../../public/content/media/images/task6.png"
+}

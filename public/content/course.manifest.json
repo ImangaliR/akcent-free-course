@@ -7,6 +7,7 @@
 
     { "ref": "blocks/v2.video.json" },
     { "ref": "blocks/t1.task.json" },
+    { "ref": "blocks/t2.task.json" },
     { "ref": "blocks/inf-1.json" },
 
     { "ref": "blocks/v3.video.json" },
