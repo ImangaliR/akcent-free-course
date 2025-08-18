@@ -9,13 +9,13 @@ const stepConfig = [
   { id: 1, title: "Қош келдіңіз!", type: "welcome" },
   {
     id: 2,
-    title: "Сіздің оқудағы мақсатыңыз қандай?",
+    title: "Орыс тілін оқудағы мақсатыңыз қандай?",
     subtitle: "Неліктен тілді үйреніп жатқаныңызды айтыңыз.",
     type: "single_choice",
     field: "goal",
     options: [
-      { id: "goal_1", text: "Айтылымды жақсартуе", value: "pronunciation" },
-      { id: "goal_2", text: "Емтиханға дайындалыңыз", value: "exam" },
+      { id: "goal_1", text: "Айтылымды жақсарту", value: "pronunciation" },
+      { id: "goal_2", text: "Емтиханға дайындық", value: "exam" },
       { id: "goal_3", text: "Жұмыс/мансап үшін", value: "career" },
       { id: "goal_4", text: "Саяхатқа арналған", value: "travel" },
       { id: "goal_5", text: "Жалпы даму", value: "general" },
@@ -28,12 +28,10 @@ const stepConfig = [
     type: "single_choice",
     field: "level",
     options: [
-      { id: "lvl_a1", text: "A1 — Бастауыш", value: "A1" },
-      { id: "lvl_a2", text: "A2 — Негіз", value: "A2" },
-      { id: "lvl_b1", text: "B1 — Орташа", value: "B1" },
-      { id: "lvl_b2", text: "B2 — Орташадан жоғары", value: "B2" },
-      { id: "lvl_c1", text: "C1 — Жетілдірілген", value: "C1" },
-      { id: "lvl_c2", text: "C2 — Иелену", value: "C2" },
+      { id: "lvl_a1", text: "Нөлдік", value: "A1" },
+      { id: "lvl_a2", text: "Бастауыш", value: "A2" },
+      { id: "lvl_b1", text: "Орташа", value: "B1" },
+      { id: "lvl_b2", text: "Орташадан жоғары", value: "B2" },
     ],
   },
   {
@@ -85,23 +83,66 @@ const WelcomeStep = ({ onNext }) => (
   </div>
 );
 
+const LevelWifiIcon = ({ level }) => {
+  const totalBars = 4;
+  return (
+    <div className="flex items-end gap-0.5">
+      {Array.from({ length: totalBars }).map((_, i) => {
+        const bar = i + 1;
+        const isActive = bar <= level;
+
+        return (
+          <div
+            key={i}
+            className={`w-1.5 rounded-sm ${
+              isActive ? "bg-blue-600" : "bg-gray-300"
+            }`}
+            style={{
+              height: `${6 + i * 4}px`, // bar heights: 6, 10, 14, 18px
+            }}
+          />
+        );
+      })}
+    </div>
+  );
+};
+
 const QuestionStep = ({ stepData, onSelect, selectedValue }) => (
   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-    {stepData.options.map((option) => (
-      <button
-        key={option.id}
-        onClick={() => onSelect(stepData.field, option.value)}
-        className={`w-full text-left px-4 py-3 sm:px-6 sm:py-4 border-2 rounded-xl transition-all duration-200 ease-in-out cursor-pointer
+    {stepData.options.map((option) => {
+      const isLevel = option.id?.startsWith("lvl_");
+
+      return (
+        <button
+          key={option.id}
+          onClick={() => onSelect(stepData.field, option.value)}
+          className={`w-full text-left px-6 ${
+            isLevel ? "py-2" : "py-3"
+          } border-2 rounded-xl transition-all duration-200 ease-in-out cursor-pointer
           ${
             selectedValue === option.value
               ? "bg-green-50 text-green-700 border-green-500 shadow-lg"
               : "bg-white text-gray-800 border-gray-300 hover:border-green-400"
           }
+          ${
+            isLevel ? "sm:col-span-2" : ""
+          }  /* <-- make lvl_* span full row on sm+ */
         `}
-      >
-        {option.text}
-      </button>
-    ))}
+        >
+          {isLevel ? (
+            <div className="flex items-center gap-5">
+              {option.id === "lvl_a1" && <LevelWifiIcon level={1} />}
+              {option.id === "lvl_a2" && <LevelWifiIcon level={2} />}
+              {option.id === "lvl_b1" && <LevelWifiIcon level={3} />}
+              {option.id === "lvl_b2" && <LevelWifiIcon level={4} />}
+              <span>{option.text}</span>
+            </div>
+          ) : (
+            option.text
+          )}
+        </button>
+      );
+    })}
   </div>
 );
 
