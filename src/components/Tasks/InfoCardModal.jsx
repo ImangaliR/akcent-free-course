@@ -6,7 +6,7 @@ export const InfoCardModal = ({
   isOpen,
   onClose,
   onComplete,
-  autoCloseDelay = 7000,
+  autoCloseDelay = 3000,
 }) => {
   const [isRead, setIsRead] = useState(false);
   const [timeLeft, setTimeLeft] = useState(autoCloseDelay / 1000);

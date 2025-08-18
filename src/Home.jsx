@@ -12,41 +12,49 @@ const HomeContent = () => {
   const [currentBlockCompleted, setCurrentBlockCompleted] = useState(false);
 
   const { showWelcomeModal } = useAuth();
-  const { getCurrentBlock, loading, error } = useCourse();
+  const { getCurrentBlock, loading, error, goToNextBlock, canGoNext } =
+    useCourse();
 
+  // Обработка завершения блока
+  const handleBlockComplete = async (blockId, completionData) => {
+    console.log(`Блок завершен:`, blockId, completionData);
+    setCurrentBlockCompleted(true);
+
+    // Автопереход только для InfoCard
+    if (completionData.autoAdvance && canGoNext()) {
+      setTimeout(async () => {
+        await goToNextBlock();
+        setCurrentBlockCompleted(false);
+      }, 500);
+    }
+  };
+
+  // Сброс при смене блока
+  useEffect(() => {
+    setCurrentBlockCompleted(false);
+  }, [getCurrentBlock()?.ref]);
+
+  // Обработчики
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth >= 1024) {
-        setIsSidebarOpen(false);
-      }
+      if (window.innerWidth >= 1024) setIsSidebarOpen(false);
     };
-
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
-  useEffect(() => {
     const handleEscape = (e) => {
       if (e.key === "Escape" && isSidebarOpen && !showWelcomeModal) {
         setIsSidebarOpen(false);
       }
     };
 
+    window.addEventListener("resize", handleResize);
     document.addEventListener("keydown", handleEscape);
-    return () => document.removeEventListener("keydown", handleEscape);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      document.removeEventListener("keydown", handleEscape);
+    };
   }, [isSidebarOpen, showWelcomeModal]);
 
-  // Обработка завершения блока
-  const handleBlockComplete = (blockId, completionData) => {
-    console.log(`Блок ${blockId} завершен:`, completionData);
-    setCurrentBlockCompleted(true);
-  };
-
-  // Сброс состояния завершения при смене блока
-  useEffect(() => {
-    setCurrentBlockCompleted(false);
-  }, [getCurrentBlock()?.ref]);
-
+  // Loading
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-100 flex items-center justify-center">
@@ -58,32 +66,20 @@ const HomeContent = () => {
     );
   }
 
+  // Error
   if (error) {
     return (
       <div className="min-h-screen bg-gray-100 flex items-center justify-center">
         <div className="text-center">
-          <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
-            <svg
-              className="w-8 h-8 text-red-600"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-            >
-              <path
-                fillRule="evenodd"
-                d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
-                clipRule="evenodd"
-              />
-            </svg>
-          </div>
-          <h3 className="text-lg font-semibold text-gray-800 mb-2">
-            Ошибка загрузки курса
+          <h3 className="text-lg font-semibold text-red-600 mb-2">
+            Ошибка загрузки
           </h3>
           <p className="text-gray-600 mb-4">{error}</p>
           <button
             onClick={() => window.location.reload()}
-            className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+            className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
           >
-            Попробовать снова
+            Перезагрузить
           </button>
         </div>
       </div>
@@ -110,7 +106,6 @@ const HomeContent = () => {
 
           <main className="flex-1 lg:ml-64">
             <div className="p-4 sm:p-6 lg:p-8">
-              {/* Основной контент */}
               <div className="mb-6">
                 <Lesson
                   currentBlockRef={currentBlock?.ref}
@@ -118,7 +113,6 @@ const HomeContent = () => {
                 />
               </div>
 
-              {/* Навигация курса */}
               <CourseNavigation currentBlockCompleted={currentBlockCompleted} />
             </div>
           </main>
@@ -128,7 +122,6 @@ const HomeContent = () => {
   );
 };
 
-// Главный компонент с провайдером
 export const Home = () => {
   return (
     <CourseProvider>
