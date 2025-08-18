@@ -110,6 +110,8 @@ export const Lesson = ({ currentBlockRef, onBlockComplete }) => {
         return <AudioTask {...props} />;
       case "matchtask":
         return <MatchTask {...props} />;
+      case "multiblanktask":
+        return <MultiBlankTask {...props} />;
       case "imagequiz":
         return <ImageQuiz {...props} />;
       case "infocard":
@@ -174,108 +176,6 @@ export const Lesson = ({ currentBlockRef, onBlockComplete }) => {
     );
   }
 
-<<<<<<< HEAD
-  // Render content based on block type
-  const renderBlockContent = () => {
-    const commonProps = {
-      lesson: blockData,
-      onStepComplete: handleBlockComplete,
-      onAnswerUpdate: handleAnswerUpdate,
-      previousAnswer: userAnswer, // Pass previous answer to components
-    };
-
-    switch (blockData?.type) {
-      case "video":
-        return <VideoLessonWithSubtitles {...commonProps} />;
-      case "storytask":
-        return <StoryTask {...commonProps} />;
-      case "audiotask":
-        return <AudioTask {...commonProps} />;
-      case "infocard":
-        return <InfoCard {...commonProps} />;
-      case "matchtask":
-        return <MatchTask {...commonProps} />;
-      case "imagequiz":
-        return <ImageQuiz {...commonProps} />;
-      case "multiblanktask":
-        return <MultiBlankTask {...commonProps} />;
-      default:
-        return (
-          <div className="bg-gray-50 rounded-lg p-8 text-center">
-            <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
-              <svg
-                className="w-8 h-8 text-gray-600"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M4 4a2 2 0 012-2h8a2 2 0 012 2v12a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 0v12h8V4H6z"
-                  clipRule="evenodd"
-                />
-              </svg>
-            </div>
-            <h3 className="text-lg font-semibold text-gray-800 mb-2">
-              {blockData?.title || "Контент"}
-            </h3>
-            <p className="text-gray-600 mb-4">
-              Тип: {blockData?.type || "неизвестен"}
-            </p>
-            <p className="text-sm text-gray-500">
-              Компонент для этого типа контента будет добавлен позже
-            </p>
-          </div>
-        );
-    }
-  };
-
-  const getTypeLabel = (type) => {
-    switch (type) {
-      case "video":
-        return "Видео";
-      case "storytask":
-        return "Задание";
-      case "audiotask":
-        return "Аудирование";
-      case "infocard":
-        return "Инфокарточка";
-      case "matchtask":
-        return "Сопоставление";
-      case "imagequiz":
-        return "Квиз с изображениями";
-      default:
-        return type;
-    }
-  };
-
-  const getStatusColor = (status) => {
-    switch (status) {
-      case "completed":
-        return "bg-green-500";
-      case "draft":
-        return "bg-yellow-500";
-      case "in_progress":
-        return "bg-blue-500";
-      default:
-        return "bg-gray-400";
-    }
-  };
-
-  const getStatusLabel = (status) => {
-    switch (status) {
-      case "completed":
-        return "Завершен";
-      case "draft":
-        return "Черновик";
-      case "in_progress":
-        return "В процессе";
-      default:
-        return "Не начат";
-    }
-  };
-
-=======
->>>>>>> 10e1ef8c7d6425caf45efb272e246dfa57f0dd80
   return (
     <div className="w-full">
       {/* Заголовок */}
