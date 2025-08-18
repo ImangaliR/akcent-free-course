@@ -96,7 +96,7 @@ const HomeContent = () => {
     <>
       {showWelcomeModal && <WelcomeModal />}
 
-      <div className="min-h-screen bg-gray-100 font-sans text-gray-900">
+      <div className="font-['Futura'] min-h-screen bg-gray-100 text-gray-900">
         <Header
           isSidebarOpen={isSidebarOpen}
           setIsSidebarOpen={setIsSidebarOpen}
