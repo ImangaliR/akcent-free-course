@@ -2,12 +2,12 @@
   "id": "t2",
   "type": "multiblanktask",
   "title": "Выберите правильные слова",
-  "story": "— {{blank1}} do I get to the station?\n— Go {{blank2}} — the station is that green building over there.",
-  "question": "Заполните пропуски подходящими словами.",
+  "story": "Айжан: {{blank1}} я могу добратся до метро?\nАрман: Иди {{blank2}} до станции, это вон то зеленое здание.",
+  "question": "Бос орындарға керекті сөздерді қойыңыз.",
   "blanks": [
     {
       "id": "blank1",
-      "options": ["Where", "How", "When"],
+      "options": ["Куда", "Как", "Когда"],
       "answer": 1,
       "feedback": [
         "«Where do I get to the station?» — грамматически неверно в таком контексте.",
@@ -17,7 +17,7 @@
     },
     {
       "id": "blank2",
-      "options": ["straight", "yesterday", "happy"],
+      "options": ["Прямо", "Вчера", "Счастливо"],
       "answer": 0,
       "feedback": [
         "Правильно! «Go straight» — иди прямо.",
