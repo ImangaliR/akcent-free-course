@@ -6,49 +6,74 @@ import { useAuth } from "../../context/AuthContext";
 
 // Конфиг шагов
 const stepConfig = [
-  { id: 1, title: "Добро пожаловать!", type: "welcome" },
+  { id: 1, title: "Қош келдіңіз!", type: "welcome" },
   {
     id: 2,
-    title: "Какова ваша цель изучения?",
-    subtitle: "Расскажите, зачем вы изучаете язык",
+    title: "Сіздің оқудағы мақсатыңыз қандай?",
+    subtitle: "Неліктен тілді үйреніп жатқаныңызды айтыңыз.",
     type: "single_choice",
     field: "goal",
     options: [
-      { id: "goal_1", text: "Улучшить произношение", value: "pronunciation" },
-      { id: "goal_2", text: "Подготовиться к экзамену", value: "exam" },
-      { id: "goal_3", text: "Для работы/карьеры", value: "career" },
-      { id: "goal_4", text: "Для путешествий", value: "travel" },
-      { id: "goal_5", text: "Общее развитие", value: "general" },
+      { id: "goal_1", text: "Айтылымды жақсартуе", value: "pronunciation" },
+      { id: "goal_2", text: "Емтиханға дайындалыңыз", value: "exam" },
+      { id: "goal_3", text: "Жұмыс/мансап үшін", value: "career" },
+      { id: "goal_4", text: "Саяхатқа арналған", value: "travel" },
+      { id: "goal_5", text: "Жалпы даму", value: "general" },
     ],
   },
   {
     id: 3,
-    title: "Какой у вас уровень подготовки?",
-    subtitle: "Оцените свой текущий уровень",
+    title: "Сіздің дайындық деңгейіңіз қандай?",
+    subtitle: "Ағымдағы деңгейіңізді бағалаңыз",
     type: "single_choice",
     field: "level",
     options: [
-      { id: "lvl_a1", text: "A1 — Начальный", value: "A1" },
-      { id: "lvl_a2", text: "A2 — Базовый", value: "A2" },
-      { id: "lvl_b1", text: "B1 — Средний", value: "B1" },
-      { id: "lvl_b2", text: "B2 — Выше среднего", value: "B2" },
-      { id: "lvl_c1", text: "C1 — Продвинутый", value: "C1" },
-      { id: "lvl_c2", text: "C2 — Владение", value: "C2" },
+      { id: "lvl_a1", text: "A1 — Бастауыш", value: "A1" },
+      { id: "lvl_a2", text: "A2 — Негіз", value: "A2" },
+      { id: "lvl_b1", text: "B1 — Орташа", value: "B1" },
+      { id: "lvl_b2", text: "B2 — Орташадан жоғары", value: "B2" },
+      { id: "lvl_c1", text: "C1 — Жетілдірілген", value: "C1" },
+      { id: "lvl_c2", text: "C2 — Иелену", value: "C2" },
     ],
   },
   {
     id: 4,
-    title: "Сколько вам лет?",
-    type: "age",
-    field: "age",
-    placeholder: "Введите ваш возраст",
+    title: "Сіз үшін ең қиын нәрсе не?",
+    subtitle: "Негізгі «ауырсыну нүктесін» таңдаңыз",
+    type: "single_choice",
+    field: "painPoint",
+    options: [
+      { id: "pain_1", text: "Сөздерді жаттау", value: "vocabulary" },
+      { id: "pain_2", text: "Грамматика", value: "grammar" },
+      { id: "pain_3", text: "Айтылуы", value: "pronunciation" },
+      { id: "pain_4", text: "Тыңдап түсіну", value: "listening" },
+      { id: "pain_5", text: "Ауызша сөйлеу", value: "speaking" },
+    ],
   },
   {
     id: 5,
+    title: "Жасыңыз нешеде?",
+    type: "age",
+    field: "age",
+    placeholder: "Жасыңызды енгізіңіз",
+  },
+  {
+    id: 6,
     title: "Ваш email",
     type: "email",
     field: "email",
     placeholder: "your@email.com",
+  },
+  {
+    id: 7,
+    title: "Кеіпкеріңіздің жынысын таңдаңыз",
+    subtitle: "Бұл оқу тәжірибесін жекелендіруге көмектеседі.",
+    type: "single_choice",
+    field: "characterGender",
+    options: [
+      { id: "char_m", text: "Еркек", value: "male", icon: "male" },
+      { id: "char_f", text: "Әйел", value: "female", icon: "female" },
+    ],
   },
 ];
 
@@ -60,13 +85,13 @@ const WelcomeStep = ({ onNext }) => (
       className="mx-auto mb-6 w-20 h-20 sm:w-28 sm:h-28 animate-pulse"
     />
     <p className="text-gray-600 mb-6">
-      Несколько быстрых вопросов помогут нам настроить идеальный курс для вас
+      Бірнеше жылдам сұрақтар сізге тамаша курсты реттеуге көмектеседі.
     </p>
     <button
       onClick={onNext}
       className="bg-green-500 hover:bg-green-600 text-white font-medium py-3 px-8 rounded-lg transition duration-200 shadow-md transform hover:scale-105"
     >
-      Начать
+      Бастау
     </button>
   </div>
 );
@@ -358,7 +383,7 @@ export const WelcomeModal = () => {
                 disabled={loading || currentStep === 0}
                 className="flex-1 px-4 py-3 sm:px-6 sm:py-4 border-2 border-gray-300 text-gray-700 font-semibold rounded-xl hover:bg-gray-50 disabled:opacity-50 transition duration-200"
               >
-                Назад
+                Артқа
               </button>
 
               <button
@@ -389,12 +414,12 @@ export const WelcomeModal = () => {
                         d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938л3-2.647z"
                       />
                     </svg>
-                    Сохранение...
+                    Сақтау...
                   </>
                 ) : currentStep === totalSteps - 1 ? (
-                  "Завершить"
+                  "Аяқтау"
                 ) : (
-                  "Продолжить"
+                  "Алға"
                 )}
               </button>
             </div>
