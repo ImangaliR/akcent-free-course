@@ -5,9 +5,9 @@ import { AudioTask } from "../Tasks/AudioTask";
 import { ImageQuiz } from "../Tasks/ImageQuiz";
 import { InfoCardModal } from "../Tasks/InfoCardModal";
 import { MatchTask } from "../Tasks/MatchTask";
+import MultiBlankTask from "../Tasks/MultiBlankTask";
 import { StoryTask } from "../Tasks/StoryTask";
 import { VideoLessonWithSubtitles } from "../VideoLesson/VideoLesson";
-import MultiBlankTask from "../Tasks/MultiBlankTask";
 
 export const Lesson = ({ currentBlockRef, onBlockComplete }) => {
   const [loading, setLoading] = useState(true);
@@ -182,7 +182,6 @@ export const Lesson = ({ currentBlockRef, onBlockComplete }) => {
       <div className="bg-white rounded-xl shadow-lg mb-6 p-6">
         <h2 className="text-2xl font-bold text-gray-800">{blockData.title}</h2>
         <div className="flex items-center gap-3 mt-2">
-          <span className="text-sm text-gray-500">ID: {blockData.id}</span>
           <span className="bg-gray-100 px-2 py-1 rounded text-xs">
             {blockData.type}
           </span>

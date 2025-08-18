@@ -1,5 +1,3 @@
-// Updated SidebarNav.jsx that accounts for InfoCard modals
-
 import {
   BookOpen,
   CheckCircle,
@@ -36,7 +34,6 @@ export const SidebarNav = ({ isSidebarOpen, setIsSidebarOpen }) => {
     conclusion: true,
   });
 
-  // Group course blocks into logical modules, excluding InfoCard blocks from navigation
   const organizeBlocks = () => {
     if (!courseManifest?.sequence)
       return { intro: [], main: [], conclusion: [] };
@@ -48,13 +45,11 @@ export const SidebarNav = ({ isSidebarOpen, setIsSidebarOpen }) => {
       conclusion: [],
     };
 
-    // Filter out InfoCard blocks as they are now modal-only
     const navigableBlocks = blocks.filter((block) => {
       const lowerRef = block.ref.toLowerCase();
       return !lowerRef.includes("inf"); // Exclude info cards from navigation
     });
 
-    // First, identify video blocks to determine which is the 6th video
     const videoBlocks = navigableBlocks
       .map((block, index) => ({
         block,
@@ -86,12 +81,7 @@ export const SidebarNav = ({ isSidebarOpen, setIsSidebarOpen }) => {
         lowerRef.match(/v\d/) ||
         lowerRef.includes("/v");
 
-      // Position-based organization:
-      // 1st video (v1) → intro
-      // 2nd-5th videos (v2-v5) and all other blocks → main
-      // 6th video (v6) → conclusion
       if (index === 0 && isVideo) {
-        // First navigable block and it's a video → intro
         organized.intro.push(blockInfo);
       } else if (isVideo && videoBlocks.length >= 6) {
         // If this is the 6th video (last video) → conclusion
@@ -266,7 +256,6 @@ export const SidebarNav = ({ isSidebarOpen, setIsSidebarOpen }) => {
   };
 
   const getTotalBlocks = () => {
-    // Only count navigable blocks (exclude InfoCards)
     return (
       courseManifest?.sequence?.filter((block) => {
         const lowerRef = block.ref.toLowerCase();
@@ -463,9 +452,6 @@ export const SidebarNav = ({ isSidebarOpen, setIsSidebarOpen }) => {
               <span className="text-sm font-normal text-gray-600">
                 для начинающих
               </span>
-              <div className="text-xs text-gray-500 mt-1">
-                ID: {courseManifest.courseId}
-              </div>
             </div>
 
             <button
@@ -525,7 +511,6 @@ export const SidebarNav = ({ isSidebarOpen, setIsSidebarOpen }) => {
                   </div>
                 </button>
 
-                {/* Содержимое модуля */}
                 {expandedModules[module.id] && (
                   <div className="bg-white">
                     {module.blocks.length === 0 ? (
@@ -569,7 +554,6 @@ export const SidebarNav = ({ isSidebarOpen, setIsSidebarOpen }) => {
                               }
                             `}
                           >
-                            {/* Иконка статуса */}
                             <div className="flex-shrink-0">
                               {isCompleted ? (
                                 <CheckCircle className="w-4 h-4 text-green-500" />
@@ -582,7 +566,6 @@ export const SidebarNav = ({ isSidebarOpen, setIsSidebarOpen }) => {
                               )}
                             </div>
 
-                            {/* Содержимое */}
                             <div className="flex-1 min-w-0">
                               <div className="font-medium truncate">
                                 {getBlockTitle(block.ref, block.index)}
@@ -592,12 +575,6 @@ export const SidebarNav = ({ isSidebarOpen, setIsSidebarOpen }) => {
                               </div>
                             </div>
 
-                            {/* Номер блока */}
-                            <div className="text-xs text-gray-400 font-mono">
-                              {block.index + 1}
-                            </div>
-
-                            {/* Индикатор активного элемента */}
                             {isActive && (
                               <div className="w-2 h-2 bg-indigo-500 rounded-full flex-shrink-0" />
                             )}

@@ -11,5 +11,5 @@
     "Это звучит грубо.",
     "Правильно! Вежливая форма."
   ],
-  "media": "../../../public/content/media/images/task1.png"
+  "media": "/content/media/images/task1.png"
 }
