@@ -24,7 +24,7 @@ export const CourseProvider = ({ children }) => {
   const API_BASE =
     "https://us-central1-akcent-course.cloudfunctions.net/api/storage";
   const token =
-    "8eef074d9cfac3b76180386c3db8371875d9ad5f24b58cd2938e4c845fa9f921"; // Твой токен
+    "de45bc9585ecc10d64510bc0fe76bf48843ebf299bc90a24c7bbbc6e8296af5e"; // Твой токен
 
   // Загрузка манифеста курса
   useEffect(() => {
