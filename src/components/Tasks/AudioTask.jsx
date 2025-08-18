@@ -74,14 +74,17 @@ export const AudioTask = ({ lesson, onStepComplete }) => {
         : "border-gray-300 hover:border-gray-400 hover:bg-gray-50";
     }
 
-    if (index === lesson.answer) {
+    // If correct and selected → show green
+    if (index === selectedOption && selectedOption === lesson.answer) {
       return "border-green-500 bg-green-50";
     }
 
+    // If wrong and selected → show red
     if (index === selectedOption && selectedOption !== lesson.answer) {
       return "border-red-500 bg-red-50";
     }
 
+    // Other options → neutral
     return "border-gray-300 bg-gray-100";
   };
 
@@ -89,7 +92,7 @@ export const AudioTask = ({ lesson, onStepComplete }) => {
     <div className="mx-auto">
       <div className="bg-white rounded-lg shadow-lg p-8">
         {/* Audio Player */}
-        <div className="mb-8">
+        <div className="mb-4">
           <div className="bg-purple-50 rounded-lg p-6 text-center">
             <div className="mb-4">
               <Volume2 className="mx-auto text-purple-600 mb-2" size={32} />
@@ -105,12 +108,12 @@ export const AudioTask = ({ lesson, onStepComplete }) => {
               {isPlaying ? (
                 <>
                   <Pause size={20} className="mr-2" />
-                  Пауза
+                  Тоқтау
                 </>
               ) : (
                 <>
                   <Play size={20} className="mr-2" />
-                  {hasPlayedAudio ? "Прослушать еще раз" : "Прослушать"}
+                  {hasPlayedAudio ? "Қайта тыңдау" : "Тыңдау"}
                 </>
               )}
             </button>
@@ -118,6 +121,14 @@ export const AudioTask = ({ lesson, onStepComplete }) => {
             <audio ref={audioRef} src={lesson.audio} />
           </div>
         </div>
+
+        {!hasPlayedAudio && (
+          <div className="mb-4 p-3 bg-yellow-50 rounded-lg border border-yellow-200">
+            <p className="text-sm text-yellow-800">
+              💡 Алдымен аудионы тыңдап, сұраққа жауап беріңіз
+            </p>
+          </div>
+        )}
 
         {/* Question */}
         <div className="mb-6">
@@ -150,9 +161,11 @@ export const AudioTask = ({ lesson, onStepComplete }) => {
                   )}
                 </div>
                 <span className="text-lg">{option}</span>
-                {isSubmitted && index === lesson.answer && (
-                  <CheckCircle className="ml-auto text-green-600" size={20} />
-                )}
+                {isSubmitted &&
+                  index === selectedOption &&
+                  selectedOption === lesson.answer && (
+                    <CheckCircle className="ml-auto text-green-600" size={20} />
+                  )}
               </div>
             </button>
           ))}
@@ -169,8 +182,8 @@ export const AudioTask = ({ lesson, onStepComplete }) => {
           >
             <p className="font-medium">
               {selectedOption === lesson.answer
-                ? "Правильно! Отличная работа!"
-                : "Неправильно. Попробуйте еще раз!"}
+                ? "Дұрыс! Жарайсың!"
+                : "Қате. Қайтадан көр!"}
             </p>
           </div>
         )}
@@ -197,7 +210,7 @@ export const AudioTask = ({ lesson, onStepComplete }) => {
           ) : selectedOption !== lesson.answer ? (
             <button
               onClick={handleTryAgain}
-              className="px-6 py-3 bg-orange-600 text-white rounded-lg font-medium hover:bg-orange-700 transition-colors"
+              className="px-6 py-3 bg-blue-500 text-white rounded-lg font-medium hover:bg-blue-600 transition-colors"
             >
               Қайтадан көру
             </button>
@@ -208,14 +221,6 @@ export const AudioTask = ({ lesson, onStepComplete }) => {
             </div>
           )}
         </div>
-
-        {!hasPlayedAudio && (
-          <div className="mt-4 p-3 bg-yellow-50 rounded-lg border border-yellow-200">
-            <p className="text-sm text-yellow-800">
-              💡 Алдымен аудионы тыңдап, сұраққа жауап беріңіз
-            </p>
-          </div>
-        )}
       </div>
     </div>
   );

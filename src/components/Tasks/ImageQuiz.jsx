@@ -116,15 +116,6 @@ export const ImageQuiz = ({ lesson, onStepComplete, previousAnswer }) => {
               >
                 {isCorrect ? lesson.feedback.correct : lesson.feedback.wrong}
               </p>
-              {/* {!isCorrect && (
-                <p className="text-sm text-gray-600 mt-1">
-                  Правильный ответ:{" "}
-                  {
-                    lesson.options.find((opt) => opt.id === lesson.answer)
-                      ?.label
-                  }
-                </p>
-              )} */}
             </div>
           </div>
         </div>
@@ -135,7 +126,7 @@ export const ImageQuiz = ({ lesson, onStepComplete, previousAnswer }) => {
         {lesson.options.map((option) => (
           <div
             key={option.id}
-            className={`relative p-4 rounded-xl border-2 transition-all duration-200 ${getOptionStyle(
+            className={`relative p-3 rounded-xl border-2 transition-all duration-200 ${getOptionStyle(
               option.id
             )} ${isCompleted ? "" : "cursor-pointer"}`}
             onClick={() => handleOptionClick(option.id)}
@@ -146,7 +137,7 @@ export const ImageQuiz = ({ lesson, onStepComplete, previousAnswer }) => {
             </div>
 
             {/* Image container */}
-            <div className="aspect-square mb-3 bg-gray-100 rounded-lg overflow-hidden">
+            <div className="w-full h-full aspect-square bg-gray-100 rounded-lg overflow-hidden">
               <img
                 src={`/images/${option.image}`}
                 alt={option.label}
@@ -157,13 +148,6 @@ export const ImageQuiz = ({ lesson, onStepComplete, previousAnswer }) => {
                   e.target.nextElementSibling.style.display = "flex";
                 }}
               />
-              {/* Fallback placeholder */}
-              <div
-                className="w-full h-full bg-gray-200 flex items-center justify-center text-gray-500 text-sm"
-                style={{ display: "none" }}
-              >
-                {option.label}
-              </div>
             </div>
 
             {/* Selection indicator */}
@@ -182,7 +166,7 @@ export const ImageQuiz = ({ lesson, onStepComplete, previousAnswer }) => {
             className="flex items-center gap-2 px-6 py-3 border-2 border-gray-300 text-gray-700 rounded-xl hover:bg-gray-50 hover:border-gray-400 transition-all duration-200"
           >
             <RotateCcw className="w-4 h-4" />
-            Try again
+            Қайтадан көру
           </button>
         </div>
       )}

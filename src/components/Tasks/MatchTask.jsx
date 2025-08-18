@@ -265,7 +265,7 @@ export const MatchTask = ({ lesson, onStepComplete, previousAnswer }) => {
         </h2>
         <p className="text-gray-600 text-lg">{lesson.question}</p>
         <p className="text-sm text-gray-500 mt-2">
-          Tap on words to connect matching pairs
+          Сәйкес жұптарды қосу үшін сөздерді түртіңіз
         </p>
       </div>
 
@@ -273,7 +273,7 @@ export const MatchTask = ({ lesson, onStepComplete, previousAnswer }) => {
       <div className="mb-8">
         <div className="flex justify-between items-center mb-2">
           <span className="text-sm text-gray-600">
-            Progress: {Object.keys(matches).length} of {lesson.pairs.length}
+            Прогресс: {Object.keys(matches).length} / {lesson.pairs.length}
           </span>
           {showResults && (
             <span
@@ -285,7 +285,7 @@ export const MatchTask = ({ lesson, onStepComplete, previousAnswer }) => {
                   : "text-red-600"
               }`}
             >
-              Result: {score}%
+              Нәтиже: {score}%
             </span>
           )}
         </div>
@@ -312,7 +312,7 @@ export const MatchTask = ({ lesson, onStepComplete, previousAnswer }) => {
               <span className="w-8 h-8 bg-blue-100 text-blue-800 rounded-full text-sm flex items-center justify-center font-bold">
                 KZ
               </span>
-              Sentences
+              Сөйлемдер
             </h3>
             <div className="space-y-3">
               {shuffledSentences.map((pair, index) => {
@@ -343,17 +343,6 @@ export const MatchTask = ({ lesson, onStepComplete, previousAnswer }) => {
                       <span className="font-medium text-gray-800 pr-4">
                         {pair.sentence}
                       </span>
-
-                      {/* NEW: immediate correct/incorrect indicator */}
-                      {/* {isMatched && (
-                        <div className="ml-2">
-                          {isCorrectMatch ? (
-                            <Check className="w-5 h-5 text-green-600" />
-                          ) : (
-                            <X className="w-5 h-5 text-red-600" />
-                          )}
-                        </div>
-                      )} */}
                     </div>
 
                     {/* Remove connection button */}
@@ -380,7 +369,7 @@ export const MatchTask = ({ lesson, onStepComplete, previousAnswer }) => {
               <span className="w-8 h-8 bg-green-100 text-green-800 rounded-full text-sm flex items-center justify-center font-bold">
                 RU
               </span>
-              Translations
+              Аудармасы
             </h3>
             <div className="space-y-3">
               {shuffledTranslations.map((pair, index) => {
@@ -446,7 +435,7 @@ export const MatchTask = ({ lesson, onStepComplete, previousAnswer }) => {
           className="flex items-center gap-2 px-6 py-3 border-2 border-gray-300 text-gray-700 rounded-xl hover:bg-gray-50 hover:border-gray-400 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
         >
           <RotateCcw className="w-4 h-4" />
-          {isCompleted ? "Try again" : "Reset"}
+          {isCompleted ? "Қайтадан көру" : "Тапсырманы қайта бастау"}
         </button>
       </div>
     </div>
