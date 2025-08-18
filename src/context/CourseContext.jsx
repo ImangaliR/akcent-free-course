@@ -15,12 +15,14 @@ export const CourseProvider = ({ children }) => {
   const [courseManifest, setCourseManifest] = useState(null);
   const [currentBlockIndex, setCurrentBlockIndex] = useState(0);
   const [completedBlocks, setCompletedBlocks] = useState([]);
+  // NEW: Add user answers storage
+  const [userAnswers, setUserAnswers] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   // API endpoints для твоего бэкенда
   const API_BASE =
-    "https://us-central1-accent-course.cloudfunctions.net/api/storage";
+    "https://us-central1-akcent-course.cloudfunctions.net/api/storage";
   const token =
     "8eef074d9cfac3b76180386c3db8371875d9ad5f24b58cd2938e4c845fa9f921"; // Твой токен
 
@@ -70,19 +72,33 @@ export const CourseProvider = ({ children }) => {
     loadCourseManifest();
   }, []);
 
-  // Загрузка прогресса пользователя
+  // Enhanced: Load both progress and answers
   const loadUserProgress = async () => {
     try {
-      const response = await fetch(
+      // Load progress
+      const progressResponse = await fetch(
         `${API_BASE}?token=${token}&key=course_progress`
       );
 
-      if (response.ok) {
-        const data = await response.json();
+      if (progressResponse.ok) {
+        const data = await progressResponse.json();
         if (data.value) {
           const progress = JSON.parse(data.value);
           setCurrentBlockIndex(progress.currentBlockIndex || 0);
           setCompletedBlocks(progress.completedBlocks || []);
+        }
+      }
+
+      // NEW: Load user answers
+      const answersResponse = await fetch(
+        `${API_BASE}?token=${token}&key=user_answers`
+      );
+
+      if (answersResponse.ok) {
+        const answersData = await answersResponse.json();
+        if (answersData.value) {
+          const answers = JSON.parse(answersData.value);
+          setUserAnswers(answers || {});
         }
       }
     } catch (err) {
@@ -90,9 +106,10 @@ export const CourseProvider = ({ children }) => {
     }
   };
 
-  // Сохранение прогресса на бэкенд
-  const saveUserProgress = async (blockIndex, completed) => {
+  // Enhanced: Save both progress and answers
+  const saveUserProgress = async (blockIndex, completed, answers = null) => {
     try {
+      // Save progress (existing functionality)
       const progress = {
         currentBlockIndex: blockIndex,
         completedBlocks: completed,
@@ -110,8 +127,42 @@ export const CourseProvider = ({ children }) => {
           value: JSON.stringify(progress),
         }),
       });
+
+      // NEW: Save answers if provided
+      if (answers !== null) {
+        await fetch(API_BASE, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            token,
+            key: "user_answers",
+            value: JSON.stringify(answers),
+          }),
+        });
+      }
     } catch (err) {
       console.error("Ошибка сохранения прогресса:", err);
+    }
+  };
+
+  // NEW: Save user answers separately (for real-time saving)
+  const saveUserAnswers = async (answers) => {
+    try {
+      await fetch(API_BASE, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          token,
+          key: "user_answers",
+          value: JSON.stringify(answers),
+        }),
+      });
+    } catch (err) {
+      console.error("Ошибка сохранения ответов:", err);
     }
   };
 
@@ -142,14 +193,66 @@ export const CourseProvider = ({ children }) => {
     await saveUserProgress(index, completedBlocks);
   };
 
-  // Отметка блока как завершенного
-  const completeBlock = async (blockId) => {
+  // Enhanced: Complete block with answer data
+  const completeBlock = async (blockId, answerData = null) => {
     const newCompleted = [...completedBlocks];
     if (!newCompleted.includes(blockId)) {
       newCompleted.push(blockId);
       setCompletedBlocks(newCompleted);
+    }
+
+    // NEW: Save answer data if provided
+    if (answerData) {
+      const currentBlock = getCurrentBlock();
+      const blockRef = currentBlock?.ref || blockId;
+
+      const newAnswers = {
+        ...userAnswers,
+        [blockRef]: {
+          ...answerData,
+          completedAt: new Date().toISOString(),
+          completed: true,
+        },
+      };
+
+      setUserAnswers(newAnswers);
+      await saveUserProgress(currentBlockIndex, newCompleted, newAnswers);
+    } else {
       await saveUserProgress(currentBlockIndex, newCompleted);
     }
+  };
+
+  // NEW: Update answer without completing (for draft saves)
+  const updateAnswer = async (blockRef, answerData) => {
+    const newAnswers = {
+      ...userAnswers,
+      [blockRef]: {
+        ...answerData,
+        updatedAt: new Date().toISOString(),
+        isDraft: true,
+      },
+    };
+
+    setUserAnswers(newAnswers);
+
+    // Debounced save to avoid too many API calls
+    if (updateAnswer.timeoutId) {
+      clearTimeout(updateAnswer.timeoutId);
+    }
+
+    updateAnswer.timeoutId = setTimeout(async () => {
+      await saveUserAnswers(newAnswers);
+    }, 2000); // Save after 2 seconds of inactivity
+  };
+
+  // NEW: Get user's answer for a specific block
+  const getUserAnswer = (blockRef) => {
+    return userAnswers[blockRef] || null;
+  };
+
+  // NEW: Check if user has answered a specific block
+  const hasUserAnswer = (blockRef) => {
+    return blockRef in userAnswers && userAnswers[blockRef] !== null;
   };
 
   // Получение текущего блока
@@ -176,27 +279,53 @@ export const CourseProvider = ({ children }) => {
     return completedBlocks.includes(blockId);
   };
 
+  // NEW: Enhanced block completion check using blockRef
+  const isBlockCompletedByRef = (blockRef) => {
+    // Check if block is in completed list by ID
+    const blockAnswer = getUserAnswer(blockRef);
+    return blockAnswer?.completed === true;
+  };
+
+  // NEW: Get completion status with answer data
+  const getBlockStatus = (blockRef) => {
+    const answer = getUserAnswer(blockRef);
+    if (!answer) return "not_started";
+    if (answer.completed) return "completed";
+    if (answer.isDraft) return "draft";
+    return "in_progress";
+  };
+
   const value = {
-    // Состояние
+    // Existing state
     courseManifest,
     currentBlockIndex,
     completedBlocks,
     loading,
     error,
 
-    // Методы навигации
+    // NEW: Answer-related state
+    userAnswers,
+
+    // Existing navigation methods
     goToNextBlock,
     goToPreviousBlock,
     goToBlock,
-    completeBlock,
+    completeBlock, // Enhanced with answer support
 
-    // Утилиты
+    // Existing utilities
     getCurrentBlock,
     canGoNext,
     canGoPrevious,
     isBlockCompleted,
 
-    // Прогресс
+    // NEW: Answer-related methods
+    updateAnswer,
+    getUserAnswer,
+    hasUserAnswer,
+    isBlockCompletedByRef,
+    getBlockStatus,
+
+    // Existing progress calculation
     progress: courseManifest
       ? Math.round(
           (completedBlocks.length / courseManifest.sequence.length) * 100

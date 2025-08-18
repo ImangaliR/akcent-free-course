@@ -9,63 +9,96 @@ import {
   Play,
   Users,
   X,
+  Volume2,
+  Info,
+  PenTool,
 } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useAuth } from "../context/AuthContext";
+import { useCourse } from "../context/CourseContext";
 
 export const SidebarNav = ({ isSidebarOpen, setIsSidebarOpen }) => {
   const { logout } = useAuth();
+  const {
+    courseManifest,
+    currentBlockIndex,
+    completedBlocks,
+    goToBlock,
+    getCurrentBlock,
+  } = useCourse();
+
   const [expandedModules, setExpandedModules] = useState({
-    intro: false,
-    main: false,
-    conclusion: false,
+    intro: true,
+    main: true,
+    conclusion: true,
   });
 
-  const [currentItem, setCurrentItem] = useState(null);
-  const [completedItems, setCompletedItems] = useState([]);
+  // Group course blocks into logical modules
+  const organizeBlocks = () => {
+    if (!courseManifest?.sequence)
+      return { intro: [], main: [], conclusion: [] };
 
-  // Мок данные курса
-  const courseData = {
-    intro: {
-      id: "intro",
-      title: "Введение в курс",
-      icon: <Play className="w-4 h-4" />,
-      items: [
-        {
-          id: "intro-video",
-          title: 'Видео материал "Введение"',
-          type: "video",
-        },
-      ],
-    },
-    main: {
-      id: "main",
-      title: "Основной блок",
-      icon: <BookOpen className="w-4 h-4" />,
-      items: [
-        { id: "theory-1", title: "Теория 1", type: "video" },
-        { id: "practice-1", title: "Практика 1", type: "task" },
-        { id: "theory-2", title: "Теория 2", type: "video" },
-        { id: "practice-2", title: "Практика 2", type: "task" },
-        { id: "theory-3", title: "Теория 3", type: "video" },
-        { id: "practice-3", title: "Практика 3", type: "task" },
-        { id: "theory-4", title: "Теория 4", type: "video" },
-        { id: "practice-4", title: "Практика 4", type: "task" },
-      ],
-    },
-    conclusion: {
-      id: "conclusion",
-      title: "Заключение курса",
-      icon: <Users className="w-4 h-4" />,
-      items: [
-        {
-          id: "conclusion-video",
-          title: "Заключительное видео",
-          type: "video",
-        },
-      ],
-    },
+    const blocks = courseManifest.sequence;
+    const organized = {
+      intro: [],
+      main: [],
+      conclusion: [],
+    };
+
+    // First, identify video blocks to determine which is the 6th video
+    const videoBlocks = blocks
+      .map((block, index) => ({ block, index }))
+      .filter(({ block }) => {
+        const lowerRef = block.ref.toLowerCase();
+        return (
+          lowerRef.includes("video") ||
+          lowerRef.includes(".mp4") ||
+          lowerRef.match(/v\d/) ||
+          lowerRef.includes("/v")
+        );
+      });
+
+    blocks.forEach((block, index) => {
+      const blockInfo = {
+        ...block,
+        index,
+        id: block.ref.split("/")[1].split(".")[0],
+      };
+
+      const lowerRef = block.ref.toLowerCase();
+      const isVideo =
+        lowerRef.includes("video") ||
+        lowerRef.includes(".mp4") ||
+        lowerRef.match(/v\d/) ||
+        lowerRef.includes("/v");
+
+      // Position-based organization:
+      // 1st video (v1) → intro
+      // 2nd-5th videos (v2-v5) and all other blocks → main
+      // 6th video (v6) → conclusion
+      if (index === 0 && isVideo) {
+        // First block and it's a video → intro
+        organized.intro.push(blockInfo);
+      } else if (isVideo && videoBlocks.length >= 6) {
+        // If this is the 6th video (last video) → conclusion
+        const videoIndex = videoBlocks.findIndex(
+          ({ index: vIndex }) => vIndex === index
+        );
+        if (videoIndex === videoBlocks.length - 1 && videoBlocks.length >= 6) {
+          organized.conclusion.push(blockInfo);
+        } else {
+          organized.main.push(blockInfo);
+        }
+      } else {
+        // Everything else → main
+        organized.main.push(blockInfo);
+      }
+    });
+
+    return organized;
   };
+
+  const organizedBlocks = organizeBlocks();
 
   const handleModuleToggle = (moduleId) => {
     setExpandedModules((prev) => ({
@@ -74,8 +107,8 @@ export const SidebarNav = ({ isSidebarOpen, setIsSidebarOpen }) => {
     }));
   };
 
-  const handleItemSelect = (itemId) => {
-    setCurrentItem(itemId);
+  const handleItemSelect = (blockIndex) => {
+    goToBlock(blockIndex);
     if (window.innerWidth < 1024) {
       setIsSidebarOpen(false);
     }
@@ -87,23 +120,291 @@ export const SidebarNav = ({ isSidebarOpen, setIsSidebarOpen }) => {
     }
   };
 
-  const getItemIcon = (type) => {
-    switch (type) {
-      case "video":
-        return <Play className="w-4 h-4" />;
-      case "task":
-        return <FileText className="w-4 h-4" />;
-      default:
-        return <BookOpen className="w-4 h-4" />;
+  const getBlockTypeInfo = (ref) => {
+    const lowerRef = ref.toLowerCase();
+
+    if (
+      lowerRef.includes("video") ||
+      lowerRef.includes(".mp4") ||
+      lowerRef.match(/v\d/) ||
+      lowerRef.includes("/v")
+    ) {
+      return {
+        type: "video",
+        label: "Видеоурок",
+        icon: <Play className="w-4 h-4" />,
+      };
     }
+    if (lowerRef.includes("task") || lowerRef.includes("t")) {
+      return {
+        type: "task",
+        label: "Практическое задание",
+        icon: <PenTool className="w-4 h-4" />,
+      };
+    }
+    if (lowerRef.includes("audio")) {
+      return {
+        type: "audio",
+        label: "Аудирование",
+        icon: <Volume2 className="w-4 h-4" />,
+      };
+    }
+    if (lowerRef.includes("inf")) {
+      return {
+        type: "info",
+        label: "Инфокарточка",
+        icon: <Info className="w-4 h-4" />,
+      };
+    }
+    if (
+      lowerRef.includes("welcome") ||
+      lowerRef.includes("intro") ||
+      lowerRef.includes("приветств")
+    ) {
+      return {
+        type: "welcome",
+        label: "Приветствие",
+        icon: <Play className="w-4 h-4" />,
+      };
+    }
+    return {
+      type: "unknown",
+      label: "Блок",
+      icon: <FileText className="w-4 h-4" />,
+    };
   };
 
-  const getTotalItems = () => {
-    return Object.values(courseData).reduce(
-      (total, module) => total + module.items.length,
-      0
-    );
+  const getBlockTitle = (ref, index) => {
+    const typeInfo = getBlockTypeInfo(ref);
+
+    // Get video blocks to determine video numbering
+    const videoBlocks = courseManifest.sequence
+      .map((block, idx) => ({ block, index: idx }))
+      .filter(({ block }) => {
+        const lowerRef = block.ref.toLowerCase();
+        return (
+          lowerRef.includes("video") ||
+          lowerRef.includes(".mp4") ||
+          lowerRef.match(/v\d/) ||
+          lowerRef.includes("/v")
+        );
+      });
+
+    // Position-based titles
+    if (index === 0 && typeInfo.type === "video") {
+      return "Добро пожаловать в курс";
+    }
+
+    // Check if this is the last video (6th video) → conclusion
+    if (typeInfo.type === "video" && videoBlocks.length >= 6) {
+      const videoIndex = videoBlocks.findIndex(
+        ({ index: vIndex }) => vIndex === index
+      );
+      if (videoIndex === videoBlocks.length - 1) {
+        return "Заключение курса";
+      }
+    }
+
+    // For all other blocks, number them based on their position and type
+    if (typeInfo.type === "video") {
+      // Count how many video blocks come before this one (excluding intro video at index 0)
+      const videoCount =
+        videoBlocks
+          .slice(1) // Skip intro video
+          .findIndex(({ index: vIndex }) => vIndex === index) + 1;
+
+      return `Урок ${videoCount}: Видео`;
+    }
+    if (typeInfo.type === "task") {
+      // Count task blocks before this one
+      const taskCount =
+        courseManifest.sequence
+          .slice(0, index)
+          .filter(
+            (block) => block.ref.includes("task") || block.ref.includes("t")
+          ).length + 1;
+
+      return `Задание ${taskCount}`;
+    }
+    if (typeInfo.type === "info") {
+      // Count info blocks before this one
+      const infoCount =
+        courseManifest.sequence
+          .slice(0, index)
+          .filter((block) => block.ref.includes("inf")).length + 1;
+
+      return `Факт ${infoCount}`;
+    }
+    if (typeInfo.type === "audio") {
+      // Count audio blocks before this one
+      const audioCount =
+        courseManifest.sequence
+          .slice(0, index)
+          .filter((block) => block.ref.includes("audio")).length + 1;
+
+      return `Аудирование ${audioCount}`;
+    }
+
+    return `Блок ${index + 1}`;
   };
+
+  const getTotalBlocks = () => {
+    return courseManifest?.sequence?.length || 0;
+  };
+
+  const isBlockCompleted = (blockRef) => {
+    if (!completedBlocks) return false;
+
+    if (completedBlocks.has && typeof completedBlocks.has === "function") {
+      return completedBlocks.has(blockRef); // Set
+    }
+
+    if (
+      completedBlocks.includes &&
+      typeof completedBlocks.includes === "function"
+    ) {
+      return completedBlocks.includes(blockRef); // Array
+    }
+
+    // Object handling - check for completion status
+    const blockData = completedBlocks[blockRef];
+    if (!blockData) return false;
+
+    // If it's an object with completion data
+    if (typeof blockData === "object") {
+      // For video blocks, check multiple possible indicators
+      // First check if 'watched' field exists and is true
+      if (blockData.hasOwnProperty("watched")) {
+        return blockData.watched === true;
+      }
+
+      // Also check for 'completed' field
+      if (blockData.hasOwnProperty("completed")) {
+        return blockData.completed === true;
+      }
+
+      // For blocks that might have blockType specified as video
+      if (blockData.blockType === "video" && blockData.watched === true) {
+        return true;
+      }
+
+      // Check if it's a video block by reference and has watched=true
+      const lowerRef = blockRef.toLowerCase();
+      const isVideoBlock =
+        lowerRef.includes("video") ||
+        lowerRef.includes(".mp4") ||
+        lowerRef.match(/v\d/) ||
+        lowerRef.includes("/v");
+
+      if (isVideoBlock && blockData.watched === true) {
+        return true;
+      }
+
+      // Fallback: if object exists but no specific completion field, consider it completed
+      // This handles cases where the object exists but doesn't have expected fields
+      return true;
+    }
+
+    // If it's a simple boolean/truthy value
+    return Boolean(blockData);
+  };
+
+  const getCompletedCount = () => {
+    if (!completedBlocks || !courseManifest?.sequence) return 0;
+
+    // Get all valid block references from the current course
+    const validBlockRefs = courseManifest.sequence.map((block) => block.ref);
+    let completedCount = 0;
+
+    if (completedBlocks.has && typeof completedBlocks.has === "function") {
+      // Set - only count completed blocks that exist in current course
+      validBlockRefs.forEach((ref) => {
+        if (completedBlocks.has(ref)) {
+          completedCount++;
+        }
+      });
+    } else if (
+      completedBlocks.includes &&
+      typeof completedBlocks.includes === "function"
+    ) {
+      // Array - only count completed blocks that exist in current course
+      validBlockRefs.forEach((ref) => {
+        if (completedBlocks.includes(ref)) {
+          completedCount++;
+        }
+      });
+    } else {
+      // Object - only count completed blocks that exist in current course
+      validBlockRefs.forEach((ref) => {
+        const blockData = completedBlocks[ref];
+        if (!blockData) return;
+
+        if (typeof blockData === "object") {
+          const lowerRef = ref.toLowerCase();
+          const isVideoBlock =
+            lowerRef.includes("video") ||
+            lowerRef.includes(".mp4") ||
+            lowerRef.match(/v\d/) ||
+            lowerRef.includes("/v");
+
+          // Универсальная проверка
+          if (
+            blockData.watched === true ||
+            blockData.completed === true ||
+            (blockData.blockType === "video" && blockData.watched === true) ||
+            (isVideoBlock && blockData.watched === true)
+          ) {
+            completedCount++;
+          }
+        } else if (Boolean(blockData)) {
+          completedCount++;
+        }
+      });
+    }
+
+    return completedCount + 1;
+  };
+
+  const moduleData = {
+    intro: {
+      id: "intro",
+      title: "Введение в курс",
+      icon: <Play className="w-4 h-4" />,
+      blocks: organizedBlocks.intro,
+      color: "blue",
+    },
+    main: {
+      id: "main",
+      title: "Основные уроки",
+      icon: <BookOpen className="w-4 h-4" />,
+      blocks: organizedBlocks.main,
+      color: "indigo",
+    },
+    conclusion: {
+      id: "conclusion",
+      title: "Заключение курса",
+      icon: <Users className="w-4 h-4" />,
+      blocks: organizedBlocks.conclusion,
+      color: "purple",
+    },
+  };
+
+  // Always show intro and main modules, only hide conclusion if empty
+  const visibleModules = Object.values(moduleData).filter(
+    (module) =>
+      module.id === "intro" || module.id === "main" || module.blocks.length > 0
+  );
+
+  if (!courseManifest) {
+    return (
+      <aside className="fixed inset-y-0 left-0 z-50 w-64 bg-white shadow-lg flex-shrink-0 flex items-center justify-center">
+        <div className="text-center">
+          <div className="w-8 h-8 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <p className="text-gray-600">Загрузка курса...</p>
+        </div>
+      </aside>
+    );
+  }
 
   return (
     <>
@@ -126,13 +427,17 @@ export const SidebarNav = ({ isSidebarOpen, setIsSidebarOpen }) => {
         {/* Хедер сайдбара */}
         <div className="p-6 border-b bg-gradient-to-r from-indigo-50 to-purple-50">
           <div className="flex items-center justify-between">
-            <h1 className="text-xl font-bold text-gray-800 leading-tight">
-              Русский язык
-              <br />
+            <div>
+              <h1 className="text-xl font-bold text-gray-800 leading-tight">
+                {courseManifest.title || "Русский язык"}
+              </h1>
               <span className="text-sm font-normal text-gray-600">
                 для начинающих
               </span>
-            </h1>
+              <div className="text-xs text-gray-500 mt-1">
+                ID: {courseManifest.courseId}
+              </div>
+            </div>
 
             <button
               onClick={() => setIsSidebarOpen(false)}
@@ -149,12 +454,12 @@ export const SidebarNav = ({ isSidebarOpen, setIsSidebarOpen }) => {
           <div className="px-6 py-2 border-b border-gray-100 mb-4">
             <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider flex items-center gap-2">
               <BookOpen className="w-4 h-4" />
-              Модули курса
+              Курс мазмұны
             </p>
           </div>
 
           <div className="px-3 space-y-2">
-            {Object.values(courseData).map((module) => (
+            {visibleModules.map((module) => (
               <div
                 key={module.id}
                 className="border border-gray-200 rounded-lg overflow-hidden"
@@ -166,9 +471,20 @@ export const SidebarNav = ({ isSidebarOpen, setIsSidebarOpen }) => {
                 >
                   <div className="flex items-center gap-3">
                     {module.icon}
-                    <span className="font-medium text-gray-800">
-                      {module.title}
-                    </span>
+                    <div>
+                      <span className="font-medium text-gray-800 block">
+                        {module.title}
+                      </span>
+                      <span className="text-xs text-gray-500">
+                        {module.blocks.length === 0
+                          ? module.id === "intro"
+                            ? "Скоро..."
+                            : "0 блоков"
+                          : `${module.blocks.length} блок${
+                              module.blocks.length > 1 ? "ов" : ""
+                            }`}
+                      </span>
+                    </div>
                   </div>
 
                   <div className="flex items-center gap-2">
@@ -183,61 +499,83 @@ export const SidebarNav = ({ isSidebarOpen, setIsSidebarOpen }) => {
                 {/* Содержимое модуля */}
                 {expandedModules[module.id] && (
                   <div className="bg-white">
-                    {module.items.map((item, index) => {
-                      const isActive = currentItem === item.id;
-                      const isCompleted = completedItems.includes(item.id);
-
-                      return (
-                        <button
-                          key={item.id}
-                          onClick={() => handleItemSelect(item.id)}
-                          className={`
-                            w-full text-left px-4 py-3 text-sm transition-all duration-200 
-                            flex items-center gap-3 group border-l-4
-                            ${
-                              index !== module.items.length - 1
-                                ? "border-b border-gray-100"
-                                : ""
-                            }
-                            ${
-                              isActive
-                                ? "bg-indigo-50 text-indigo-700 border-l-indigo-500"
-                                : "text-gray-600 hover:bg-gray-50 hover:text-gray-800 border-l-transparent"
-                            }
-                          `}
-                        >
-                          {/* Иконка статуса */}
-                          <div className="flex-shrink-0">
-                            {isCompleted ? (
-                              <CheckCircle className="w-4 h-4 text-green-500" />
-                            ) : isActive ? (
-                              <Clock className="w-4 h-4 text-indigo-500" />
-                            ) : (
-                              <div className="text-gray-400 group-hover:text-gray-600">
-                                {getItemIcon(item.type)}
-                              </div>
-                            )}
-                          </div>
-
-                          {/* Содержимое */}
-                          <div className="flex-1 min-w-0">
-                            <div className="font-medium truncate">
-                              {item.title}
-                            </div>
-                            <div className="text-xs text-gray-500 truncate mt-0.5 capitalize">
-                              {item.type === "video"
-                                ? "Видеоурок"
-                                : "Практическое задание"}
-                            </div>
-                          </div>
-
-                          {/* Индикатор активного элемента */}
-                          {isActive && (
-                            <div className="w-2 h-2 bg-indigo-500 rounded-full flex-shrink-0" />
+                    {module.blocks.length === 0 ? (
+                      // Show placeholder for empty intro section
+                      <div className="px-4 py-6 text-center text-gray-500">
+                        <div className="mb-2">
+                          {module.id === "intro" ? (
+                            <Play className="w-8 h-8 mx-auto text-gray-300" />
+                          ) : (
+                            <BookOpen className="w-8 h-8 mx-auto text-gray-300" />
                           )}
-                        </button>
-                      );
-                    })}
+                        </div>
+                        <p className="text-sm">
+                          {module.id === "intro"
+                            ? "Приветственное видео скоро появится"
+                            : "Содержимое будет добавлено"}
+                        </p>
+                      </div>
+                    ) : (
+                      module.blocks.map((block, itemIndex) => {
+                        const isActive = currentBlockIndex === block.index;
+                        const isCompleted = isBlockCompleted(block.ref);
+                        const typeInfo = getBlockTypeInfo(block.ref);
+
+                        return (
+                          <button
+                            key={block.ref}
+                            onClick={() => handleItemSelect(block.index)}
+                            className={`
+                              w-full text-left px-4 py-3 text-sm transition-all duration-200 
+                              flex items-center gap-3 group border-l-4
+                              ${
+                                itemIndex !== module.blocks.length - 1
+                                  ? "border-b border-gray-100"
+                                  : ""
+                              }
+                              ${
+                                isActive
+                                  ? "bg-indigo-50 text-indigo-700 border-l-indigo-500"
+                                  : "text-gray-600 hover:bg-gray-50 hover:text-gray-800 border-l-transparent"
+                              }
+                            `}
+                          >
+                            {/* Иконка статуса */}
+                            <div className="flex-shrink-0">
+                              {isCompleted ? (
+                                <CheckCircle className="w-4 h-4 text-green-500" />
+                              ) : isActive ? (
+                                <Clock className="w-4 h-4 text-indigo-500" />
+                              ) : (
+                                <div className="text-gray-400 group-hover:text-gray-600">
+                                  {typeInfo.icon}
+                                </div>
+                              )}
+                            </div>
+
+                            {/* Содержимое */}
+                            <div className="flex-1 min-w-0">
+                              <div className="font-medium truncate">
+                                {getBlockTitle(block.ref, block.index)}
+                              </div>
+                              <div className="text-xs text-gray-500 truncate mt-0.5">
+                                {typeInfo.label}
+                              </div>
+                            </div>
+
+                            {/* Номер блока */}
+                            <div className="text-xs text-gray-400 font-mono">
+                              {block.index + 1}
+                            </div>
+
+                            {/* Индикатор активного элемента */}
+                            {isActive && (
+                              <div className="w-2 h-2 bg-indigo-500 rounded-full flex-shrink-0" />
+                            )}
+                          </button>
+                        );
+                      })
+                    )}
                   </div>
                 )}
               </div>
@@ -251,21 +589,46 @@ export const SidebarNav = ({ isSidebarOpen, setIsSidebarOpen }) => {
             <div className="flex items-center justify-between text-sm text-gray-600 mb-1">
               <span>Прогресс</span>
               <span>
-                {Math.round((completedItems.length / getTotalItems()) * 100)}%
+                {getTotalBlocks() > 0
+                  ? Math.min(
+                      100,
+                      Math.round((getCompletedCount() / getTotalBlocks()) * 100)
+                    )
+                  : 0}
+                %
               </span>
             </div>
             <div className="w-full bg-gray-200 rounded-full h-2">
               <div
-                className="bg-gradient-to-r from-indigo-500 to-purple-500 h-2 rounded-full transition-all duration-500"
+                className="bg-blue-500 h-2 rounded-full transition-all duration-500"
                 style={{
-                  width: `${(completedItems.length / getTotalItems()) * 100}%`,
+                  width: `${
+                    getTotalBlocks() > 0
+                      ? Math.min(
+                          100,
+                          (getCompletedCount() / getTotalBlocks()) * 100
+                        )
+                      : 0
+                  }%`,
                 }}
               />
             </div>
             <div className="text-xs text-gray-500 mt-1">
-              {completedItems.length} из {getTotalItems()} элементов завершено
+              {getTotalBlocks()}тен {getCompletedCount()} блок аяқталды
             </div>
           </div>
+
+          {/* Текущий блок */}
+          {/* {getCurrentBlock() && (
+            <div className="mt-3 p-2 bg-white rounded-lg border">
+              <div className="text-xs font-medium text-gray-700 mb-1">
+                Текущий блок:
+              </div>
+              <div className="text-sm text-gray-600">
+                {getBlockTitle(getCurrentBlock().ref, currentBlockIndex)}
+              </div>
+            </div>
+          )} */}
         </div>
 
         {/* Футер с кнопкой выхода */}
@@ -275,7 +638,7 @@ export const SidebarNav = ({ isSidebarOpen, setIsSidebarOpen }) => {
             className="flex items-center gap-3 w-full px-3 py-2 text-red-500 hover:bg-red-50 hover:text-red-600 rounded-lg transition-colors group"
           >
             <LogOut className="w-5 h-5 group-hover:scale-110 transition-transform" />
-            <span className="text-sm font-medium">Выход</span>
+            <span className="text-sm font-medium">Шығу</span>
           </button>
         </div>
       </aside>

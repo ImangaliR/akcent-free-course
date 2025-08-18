@@ -1,0 +1,43 @@
+{
+  "id": "preposition_task_1",
+  "type": "imagequiz",
+  "title": "Предлоги: зверек и коробка",
+  "question": "Нажмите на рисунок, где зверек находится НА коробке.",
+  "options": [
+    {
+      "id": "opt1",
+      "image": "../../../public/content/media/images/task3-4.png",
+      "label": "В коробке"
+    },
+    {
+      "id": "opt2",
+      "image": "../../../public/content/media/images/task3-1.png",
+      "label": "За коробкой"
+    },
+    {
+      "id": "opt3",
+      "image": "../../../public/content/media/images/task3-2.png",
+      "label": "У коробки"
+    },
+    {
+      "id": "opt4",
+      "image": "../../../public/content/media/images/task3-5.png",
+      "label": "Справа от коробки"
+    },
+    {
+      "id": "opt5",
+      "image": "../../../public/content/media/images/task3-3.png",
+      "label": "На коробке"
+    },
+    {
+      "id": "opt6",
+      "image": "../../../public/content/media/images/task3-6.png",
+      "label": "Под коробкой"
+    }
+  ],
+  "answer": "opt5",
+  "feedback": {
+    "correct": "Правильно! Зверек на коробке.",
+    "wrong": "Попробуйте ещё раз."
+  }
+}

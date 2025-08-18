@@ -1,0 +1,9 @@
+{
+  "id": "t2",
+  "type": "audiotask",
+  "title": "Аудирование в кафе",
+  "audio": "../../../public/content/media/audio/cafe-order.mp3",
+  "question": "Айжан не тапсырыс берді?",
+  "options": ["Чай", "Кофе", "Сок"],
+  "answer": 2
+}
