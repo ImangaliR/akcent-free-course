@@ -39,7 +39,7 @@ const stepConfig = [
   {
     id: 4,
     title: "Сіз үшін ең қиын нәрсе не?",
-    subtitle: "Негізгі «ауырсыну нүктесін» таңдаңыз",
+    subtitle: "Негізгі қиындықты таңдаңыз",
     type: "single_choice",
     field: "painPoint",
     options: [
@@ -63,17 +63,6 @@ const stepConfig = [
     type: "email",
     field: "email",
     placeholder: "your@email.com",
-  },
-  {
-    id: 7,
-    title: "Кеіпкеріңіздің жынысын таңдаңыз",
-    subtitle: "Бұл оқу тәжірибесін жекелендіруге көмектеседі.",
-    type: "single_choice",
-    field: "characterGender",
-    options: [
-      { id: "char_m", text: "Еркек", value: "male", icon: "male" },
-      { id: "char_f", text: "Әйел", value: "female", icon: "female" },
-    ],
   },
 ];
 
