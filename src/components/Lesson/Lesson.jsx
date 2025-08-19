@@ -2,10 +2,10 @@ import { useEffect, useState } from "react";
 import { useCourse } from "../../context/CourseContext";
 import { useInfoCardModal } from "../../hooks/useModal";
 import { StoryTaskRenderer } from "../StoryTaskRenderer";
+import { MatchTaskRenderer } from "../MatchTaskRenderer";
 import { AudioTask } from "../Tasks/AudioTask";
 import { ImageQuiz } from "../Tasks/ImageQuiz";
 import { InfoCardModal } from "../Tasks/InfoCardModal";
-import { MatchTask } from "../Tasks/MatchTask";
 import MultiBlankTask from "../Tasks/MultiBlankTask";
 import { UniversalQuiz } from "../Tasks/UniversalQuiz";
 import { VideoLessonWithSubtitles } from "../VideoLesson/VideoLesson";
@@ -93,16 +93,6 @@ export const Lesson = ({ currentBlockRef, onBlockComplete }) => {
     });
   };
 
-  // Проверка, является ли StoryTask квизом (несколько вопросов)
-  const isStoryTaskQuiz = (blockData) => {
-    return (
-      blockData?.type === "storytask" &&
-      blockData?.questions &&
-      Array.isArray(blockData.questions) &&
-      blockData.questions.length > 1
-    );
-  };
-
   // Рендер контента
   const renderContent = () => {
     const props = {
@@ -126,10 +116,18 @@ export const Lesson = ({ currentBlockRef, onBlockComplete }) => {
           />
         );
 
+      case "matchtask":
+        return (
+          <UniversalQuiz
+            lesson={blockData}
+            onStepComplete={handleBlockComplete}
+            taskType="matchtask"
+            TaskRenderer={MatchTaskRenderer}
+          />
+        );
+
       case "audiotask":
         return <AudioTask {...props} />;
-      case "matchtask":
-        return <MatchTask {...props} />;
       case "multiblanktask":
         return <MultiBlankTask {...props} />;
       case "imagequiz":

@@ -36,9 +36,18 @@ export const useQuizLogic = (allQuestions, onComplete, taskType) => {
         );
 
       case "matchtask":
-        return (
-          JSON.stringify(userAnswer?.sort()) ===
-          JSON.stringify(question.answer?.sort())
+        if (!userAnswer || typeof userAnswer !== "object") return false;
+        if (!question.answer || typeof question.answer !== "object")
+          return false;
+
+        // Сравниваем объекты соответствий
+        const userKeys = Object.keys(userAnswer).sort();
+        const correctKeys = Object.keys(question.answer).sort();
+
+        if (userKeys.length !== correctKeys.length) return false;
+
+        return userKeys.every(
+          (key) => userAnswer[key] === question.answer[key]
         );
 
       case "multiblanktask":
@@ -69,7 +78,9 @@ export const useQuizLogic = (allQuestions, onComplete, taskType) => {
         return answer && answer.toString().trim().length > 0;
 
       case "matchtask":
-        return answer && Object.keys(answer).length > 0;
+        return (
+          answer && typeof answer === "object" && Object.keys(answer).length > 0
+        );
 
       case "multiblanktask":
         return (
