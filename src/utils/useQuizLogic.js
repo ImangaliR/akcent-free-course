@@ -1,0 +1,255 @@
+import { useState } from "react";
+
+// ========================================
+// УНИВЕРСАЛЬНАЯ ЛОГИКА КВИЗА
+// ========================================
+export const useQuizLogic = (allQuestions, onComplete, taskType) => {
+  const needCorrect = Math.ceil(allQuestions.length * 0.8); // 80%
+
+  const [state, setState] = useState({
+    phase: "main", // 'main' | 'redemption' | 'done'
+    currentIndex: 0,
+    currentAnswer: null,
+    submitted: false,
+    showResult: false,
+
+    mainAnswers: [], // [{correct: true/false, question, userAnswer}]
+    wrongQuestions: [], // вопросы которые нужно переделать
+    redemptionIndex: 0,
+    redemptionAnswers: [],
+  });
+
+  // Проверка правильности ответа в зависимости от типа
+  const checkAnswer = (userAnswer, question, taskType) => {
+    switch (taskType) {
+      case "storytask":
+      case "imagequiz":
+        return userAnswer === question.answer;
+
+      case "audiotask":
+        if (typeof question.answer === "number") {
+          return userAnswer === question.answer;
+        }
+        return (
+          userAnswer?.toLowerCase().trim() ===
+          question.answer?.toLowerCase().trim()
+        );
+
+      case "matchtask":
+        return (
+          JSON.stringify(userAnswer?.sort()) ===
+          JSON.stringify(question.answer?.sort())
+        );
+
+      case "multiblanktask":
+        if (!Array.isArray(userAnswer) || !Array.isArray(question.answer))
+          return false;
+        return (
+          userAnswer.length === question.answer.length &&
+          userAnswer.every(
+            (ans, i) =>
+              ans?.toLowerCase().trim() ===
+              question.answer[i]?.toLowerCase().trim()
+          )
+        );
+
+      default:
+        return false;
+    }
+  };
+
+  // Проверка готовности ответа
+  const isAnswerReady = (answer, taskType) => {
+    switch (taskType) {
+      case "storytask":
+      case "imagequiz":
+        return answer !== null && answer !== undefined;
+
+      case "audiotask":
+        return answer && answer.toString().trim().length > 0;
+
+      case "matchtask":
+        return answer && Object.keys(answer).length > 0;
+
+      case "multiblanktask":
+        return (
+          Array.isArray(answer) &&
+          answer.every((item) => item && item.trim().length > 0)
+        );
+
+      default:
+        return false;
+    }
+  };
+
+  // Текущий вопрос
+  const getCurrentQuestion = () => {
+    if (state.phase === "main") {
+      return allQuestions[state.currentIndex];
+    } else {
+      return state.wrongQuestions[state.redemptionIndex];
+    }
+  };
+
+  // Статистика
+  const getStats = () => {
+    const mainCorrect = state.mainAnswers.filter((a) => a.correct).length;
+    const redemptionCorrect = state.redemptionAnswers.filter(
+      (a) => a.correct
+    ).length;
+    const total = mainCorrect + redemptionCorrect;
+
+    return {
+      mainCorrect,
+      redemptionCorrect,
+      total,
+      needed: needCorrect,
+      passed: total >= needCorrect,
+      percent: Math.round((total / allQuestions.length) * 100),
+      progress:
+        state.phase === "main"
+          ? `${state.currentIndex + 1}/${allQuestions.length}`
+          : `${state.redemptionIndex + 1}/${state.wrongQuestions.length}`,
+    };
+  };
+
+  // Установка ответа
+  const setAnswer = (answer) => {
+    if (state.submitted) return;
+    setState((prev) => ({ ...prev, currentAnswer: answer }));
+  };
+
+  // Отправка ответа
+  const submitAnswer = () => {
+    if (!isAnswerReady(state.currentAnswer, taskType)) return;
+
+    const currentQ = getCurrentQuestion();
+    const isCorrect = checkAnswer(state.currentAnswer, currentQ, taskType);
+
+    setState((prev) => ({
+      ...prev,
+      submitted: true,
+      showResult: true,
+    }));
+
+    // Добавляем ответ через небольшую задержку для UI
+    setTimeout(() => {
+      if (state.phase === "main") {
+        setState((prev) => ({
+          ...prev,
+          mainAnswers: [
+            ...prev.mainAnswers,
+            {
+              correct: isCorrect,
+              question: currentQ,
+              userAnswer: state.currentAnswer,
+            },
+          ],
+        }));
+      } else {
+        setState((prev) => ({
+          ...prev,
+          redemptionAnswers: [
+            ...prev.redemptionAnswers,
+            {
+              correct: isCorrect,
+              question: currentQ,
+              userAnswer: state.currentAnswer,
+            },
+          ],
+        }));
+      }
+    }, 100);
+  };
+
+  // Следующий вопрос
+  const nextQuestion = () => {
+    if (state.phase === "main") {
+      if (state.currentIndex < allQuestions.length - 1) {
+        setState((prev) => ({
+          ...prev,
+          currentIndex: prev.currentIndex + 1,
+          currentAnswer: null,
+          submitted: false,
+          showResult: false,
+        }));
+      } else {
+        finishMainRound();
+      }
+    } else {
+      const lastAnswer =
+        state.redemptionAnswers[state.redemptionAnswers.length - 1];
+
+      if (!lastAnswer.correct) {
+        setState((prev) => ({
+          ...prev,
+          currentAnswer: null,
+          submitted: false,
+          showResult: false,
+          redemptionAnswers: prev.redemptionAnswers.slice(0, -1),
+        }));
+      } else {
+        if (state.redemptionIndex < state.wrongQuestions.length - 1) {
+          setState((prev) => ({
+            ...prev,
+            redemptionIndex: prev.redemptionIndex + 1,
+            currentAnswer: null,
+            submitted: false,
+            showResult: false,
+          }));
+        } else {
+          finishQuiz();
+        }
+      }
+    }
+  };
+
+  // Завершение основного раунда
+  const finishMainRound = () => {
+    const correctCount = state.mainAnswers.filter((a) => a.correct).length;
+
+    if (correctCount >= needCorrect) {
+      finishQuiz();
+    } else {
+      const wrongQuestions = state.mainAnswers
+        .filter((a) => !a.correct)
+        .map((a) => a.question);
+
+      setState((prev) => ({
+        ...prev,
+        phase: "redemption",
+        wrongQuestions,
+        redemptionIndex: 0,
+        currentAnswer: null,
+        submitted: false,
+        showResult: false,
+      }));
+    }
+  };
+
+  // Завершение квиза
+  const finishQuiz = () => {
+    setState((prev) => ({ ...prev, phase: "done" }));
+
+    const stats = getStats();
+    onComplete?.(taskType, {
+      completed: true,
+      passed: stats.passed,
+      mainAnswers: state.mainAnswers,
+      redemptionAnswers: state.redemptionAnswers,
+      totalCorrect: stats.total,
+      totalQuestions: allQuestions.length,
+      passRate: stats.percent,
+    });
+  };
+
+  return {
+    state,
+    stats: getStats(),
+    currentQuestion: getCurrentQuestion(),
+    setAnswer,
+    submitAnswer,
+    nextQuestion,
+    isAnswerReady: (answer) => isAnswerReady(answer, taskType),
+  };
+};
