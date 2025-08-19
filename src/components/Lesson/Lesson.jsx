@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import { useCourse } from "../../context/CourseContext";
 import { useInfoCardModal } from "../../hooks/useModal";
+import { StoryTaskRenderer } from "../StoryTaskRenderer";
 import { AudioTask } from "../Tasks/AudioTask";
 import { ImageQuiz } from "../Tasks/ImageQuiz";
 import { InfoCardModal } from "../Tasks/InfoCardModal";
 import { MatchTask } from "../Tasks/MatchTask";
 import MultiBlankTask from "../Tasks/MultiBlankTask";
-import { StoryTaskQuizEngine } from "../Tasks/StoryTaskQuizEngine";
+import { UniversalQuiz } from "../Tasks/UniversalQuiz";
 import { VideoLessonWithSubtitles } from "../VideoLesson/VideoLesson";
 
 export const Lesson = ({ currentBlockRef, onBlockComplete }) => {
@@ -116,7 +117,14 @@ export const Lesson = ({ currentBlockRef, onBlockComplete }) => {
         return <VideoLessonWithSubtitles {...props} />;
 
       case "storytask":
-        return <StoryTaskQuizEngine {...props} />;
+        return (
+          <UniversalQuiz
+            lesson={blockData}
+            onStepComplete={handleBlockComplete}
+            taskType="storytask"
+            TaskRenderer={StoryTaskRenderer}
+          />
+        );
 
       case "audiotask":
         return <AudioTask {...props} />;
@@ -197,14 +205,10 @@ export const Lesson = ({ currentBlockRef, onBlockComplete }) => {
           <span className="bg-gray-100 px-2 py-1 rounded text-xs">
             {blockData.type}
           </span>
-          {isStoryTaskQuiz(blockData) && (
-            <span className="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">
-              Квиз: {blockData.questions.length} вопросов
-            </span>
-          )}
-          {blockData.type === "storytask" && !blockData.questions && (
-            <span className="bg-green-100 text-green-800 px-2 py-1 rounded text-xs">
-              Одиночный вопрос
+
+          {blockData.enableQuizMode && (
+            <span className="bg-purple-100 text-purple-800 px-2 py-1 rounded text-xs">
+              Режим квиза
             </span>
           )}
         </div>

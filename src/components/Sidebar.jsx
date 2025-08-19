@@ -443,7 +443,7 @@ export const SidebarNav = ({ isSidebarOpen, setIsSidebarOpen }) => {
         `}
       >
         {/* Хедер сайдбара */}
-        <div className="p-6 border-b bg-gradient-to-r from-indigo-50 to-purple-50">
+        <div className="p-6 border-b bg-blue-100">
           <div className="flex items-center justify-between">
             <div>
               <h1 className="text-xl font-bold text-gray-800 leading-tight">
