@@ -1,9 +1,69 @@
 {
-  "id": "t2",
+  "id": "audio-listening-quiz-1",
   "type": "audiotask",
-  "title": "Аудирование в кафе",
-  "audio": "../../../public/content/media/audio/cafe-order.mp3",
-  "question": "Айжан не тапсырыс берді?",
-  "options": ["Чай", "Кофе", "Сок"],
-  "answer": 2
+  "title": "Аудирование: В кафе и других местах",
+  "description": "Квиз на 7 аудио вопросов. Нужно набрать минимум 80% для прохождения.",
+  "questions": [
+    {
+      "id": "t1",
+      "audio": "../../../public/content/media/audio/cafe-order.mp3",
+      "question": "Айжан не тапсырыс берді?",
+      "options": ["Чай", "Кофе", "Сок"],
+      "answer": 2,
+      "explanation": "В аудио четко слышно, что Айжан заказывает сок."
+    },
+    {
+      "id": "t2",
+      "audio": "../../../public/content/media/audio/metro-announcement.mp3",
+      "question": "Қай станцияға келесі тоқтау?",
+      "options": ["Алмалы", "Райымбек", "Жібек жолы"],
+      "answer": 0,
+      "explanation": "В объявлении говорится о следующей остановке Алмалы."
+    },
+    {
+      "id": "t3",
+      "audio": "../../../public/content/media/audio/weather-forecast.mp3",
+      "question": "Ертең ауа райы қандай болады?",
+      "options": ["Жаңбырлы", "Күнді", "Қарлы"],
+      "answer": 1,
+      "explanation": "В прогнозе погоды сказано, что завтра будет солнечно."
+    },
+    {
+      "id": "t4",
+      "audio": "../../../public/content/media/audio/office-meeting.mp3",
+      "question": "Жиналыс қашан басталады?",
+      "options": ["Сағат 2-де", "Сағат 3-те", "Сағат 4-те"],
+      "answer": 1,
+      "explanation": "В аудио четко указано время начала встречи в 3 часа."
+    },
+    {
+      "id": "t5",
+      "audio": "../../../public/content/media/audio/phone-conversation.mp3",
+      "question": "Арман қайда барады?",
+      "options": ["Дүкенге", "Үйге", "Жұмысқа"],
+      "answer": 0,
+      "explanation": "В телефонном разговоре Арман говорит, что идет в магазин."
+    },
+    {
+      "id": "t6",
+      "audio": "../../../public/content/media/audio/taxi-ride.mp3",
+      "question": "Такси қанша тұрады?",
+      "options": ["500 теңге", "700 теңге", "1000 теңге"],
+      "answer": 1,
+      "explanation": "Водитель такси называет цену 700 тенге."
+    },
+    {
+      "id": "t7",
+      "audio": "../../../public/content/media/audio/restaurant-reservation.mp3",
+      "question": "Үстел неше адамға брондалған?",
+      "options": ["2 адамға", "4 адамға", "6 адамға"],
+      "answer": 1,
+      "explanation": "В разговоре о бронировании упоминается стол на 4 человека."
+    }
+  ],
+  "minimumPassRate": 0.8,
+  "totalQuestions": 7,
+  "requiredCorrect": 6,
+  "difficulty": "beginner",
+  "estimatedTime": "15-20 минут"
 }

@@ -1,5 +1,5 @@
 // Verify.jsx
-import { AlertCircle, ArrowRight, CheckCircle, Shield } from "lucide-react";
+import { AlertCircle, ArrowRight, CheckCircle } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { FaWhatsapp } from "react-icons/fa";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -177,7 +177,7 @@ export const Verify = () => {
             </p>
             {userLogin && (
               <p className="text-xs text-green-500 mt-2">
-                Аккаунт нөмірі: <span className="font-mono">{userLogin}</span>
+                Аккаунт нөмірі: <span className="font-mono">+{userLogin}</span>
               </p>
             )}
           </div>
@@ -224,10 +224,6 @@ export const Verify = () => {
                   />
                 ))}
               </div>
-
-              <p className="text-xs text-gray-500 text-center">
-                Бүкіл кодты бірден бірінші өріске қоюға болады.
-              </p>
             </div>
 
             {/* Кнопка подтверждения */}
@@ -243,27 +239,12 @@ export const Verify = () => {
                 </>
               ) : (
                 <>
-                  <Shield size={18} />
                   <span>Растау</span>
                   <ArrowRight size={18} />
                 </>
               )}
             </button>
           </form>
-
-          {/* Дополнительная помощь */}
-          <div className="mt-4 text-center">
-            <details className="text-sm text-gray-500">
-              <summary className="cursor-pointer hover:text-gray-700 transition-colors">
-                Кодты таппадыңызба?
-              </summary>
-              <div className="mt-2 space-y-1 text-xs">
-                <p>• WhatsApp "Спам" қалтаңызды тексеріңіз</p>
-                <p>• Тұрақты интернет байланысы бар екеніне көз жеткізіңіз</p>
-                <p>• Кодты қайта сұрап көріңіз</p>
-              </div>
-            </details>
-          </div>
         </div>
       </div>
     </div>

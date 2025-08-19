@@ -2,15 +2,12 @@ import { Award, CheckCircle, RotateCcw, Target } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useQuizLogic } from "../../utils/useQuizLogic";
 
-// ========================================
-// УНИВЕРСАЛЬНЫЙ КОМПОНЕНТ КВИЗА
-// ========================================
 export const UniversalQuiz = ({
   lesson,
   onStepComplete,
   taskType,
   TaskRenderer,
-  autoAdvanceMs = 4000, // добавляем пропс для автопродвижения
+  autoAdvanceMs = 1000,
 }) => {
   // Поддерживаем и старый формат и новый
   const allQuestions = lesson.questions || [lesson];

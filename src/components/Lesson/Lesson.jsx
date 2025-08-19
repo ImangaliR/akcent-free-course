@@ -2,11 +2,19 @@ import { useEffect, useState } from "react";
 import { useCourse } from "../../context/CourseContext";
 import { useInfoCardModal } from "../../hooks/useModal";
 import { StoryTaskRenderer } from "../StoryTaskRenderer";
+<<<<<<< HEAD
 import { MatchTaskRenderer } from "../MatchTaskRenderer";
 import { AudioTask } from "../Tasks/AudioTask";
 import { ImageQuiz } from "../Tasks/ImageQuiz";
 import { InfoCardModal } from "../Tasks/InfoCardModal";
 import MultiBlankTask from "../Tasks/MultiBlankTask";
+=======
+import { AudioTaskRenderer } from "../Tasks/AudioTaskRenderer";
+import { ImageQuiz } from "../Tasks/ImageQuiz";
+import { InfoCardModal } from "../Tasks/InfoCardModal";
+import { MatchTaskRenderer } from "../Tasks/MatchTaskRenderer";
+import { MultiBlankTaskRenderer } from "../Tasks/MultiBlankTaskRenderer";
+>>>>>>> c63cd58ebd4a7400bcef3e7bcec0f8a519e92b97
 import { UniversalQuiz } from "../Tasks/UniversalQuiz";
 import { VideoLessonWithSubtitles } from "../VideoLesson/VideoLesson";
 
@@ -127,9 +135,36 @@ export const Lesson = ({ currentBlockRef, onBlockComplete }) => {
         );
 
       case "audiotask":
+<<<<<<< HEAD
         return <AudioTask {...props} />;
+=======
+        return (
+          <UniversalQuiz
+            lesson={blockData}
+            onStepComplete={handleBlockComplete}
+            taskType="audiotask"
+            TaskRenderer={AudioTaskRenderer}
+          />
+        );
+      case "matchtask":
+        return (
+          <UniversalQuiz
+            lesson={blockData}
+            onStepComplete={handleBlockComplete}
+            taskType="matchtask"
+            TaskRenderer={MatchTaskRenderer}
+          />
+        );
+>>>>>>> c63cd58ebd4a7400bcef3e7bcec0f8a519e92b97
       case "multiblanktask":
-        return <MultiBlankTask {...props} />;
+        return (
+          <UniversalQuiz
+            lesson={blockData} // используем blockData как в storytask
+            onStepComplete={handleBlockComplete}
+            taskType="multiblanktask"
+            TaskRenderer={MultiBlankTaskRenderer}
+          />
+        );
       case "imagequiz":
         return <ImageQuiz {...props} />;
       case "infocard":
