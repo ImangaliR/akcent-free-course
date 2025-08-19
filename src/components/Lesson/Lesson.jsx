@@ -6,6 +6,7 @@ import { StoryTaskRenderer } from "../StoryTaskRenderer";
 import { AudioTaskRenderer } from "../Tasks/AudioTaskRenderer";
 import { MultiBlankTaskRenderer } from "../Tasks/MultiBlankTaskRenderer";
 import { ImageQuiz } from "../Tasks/ImageQuiz";
+import { ImageQuizRenderer } from "../Tasks/ImageQuizRenderer";
 import { InfoCardModal } from "../Tasks/InfoCardModal";
 import { UniversalQuiz } from "../Tasks/UniversalQuiz";
 import { VideoLessonWithSubtitles } from "../VideoLesson/VideoLesson";
@@ -31,7 +32,18 @@ export const Lesson = ({ currentBlockRef, onBlockComplete }) => {
         const response = await fetch(`/content/${currentBlockRef}`);
         if (!response.ok) throw new Error("Ошибка загрузки");
         const data = await response.json();
-        setBlockData(data);
+
+        // Handle the new JSON structure for imagequiz
+        if (data.questions && Array.isArray(data.questions)) {
+          // Keep the original structure but add question navigation metadata
+          setBlockData({
+            ...data, // Preserve the original type and other root properties
+            currentQuestionIndex: 0, // Track which question we're on
+            totalQuestions: data.questions.length,
+          });
+        } else {
+          setBlockData(data);
+        }
       } catch (err) {
         setError(err.message);
       } finally {
@@ -95,6 +107,8 @@ export const Lesson = ({ currentBlockRef, onBlockComplete }) => {
 
   // Рендер контента
   const renderContent = () => {
+    console.log("renderContent called with blockData:", blockData);
+
     const props = {
       lesson: blockData,
       onStepComplete: handleBlockComplete,
@@ -136,14 +150,21 @@ export const Lesson = ({ currentBlockRef, onBlockComplete }) => {
       case "multiblanktask":
         return (
           <UniversalQuiz
-            lesson={blockData} // используем blockData как в storytask
+            lesson={blockData}
             onStepComplete={handleBlockComplete}
             taskType="multiblanktask"
             TaskRenderer={MultiBlankTaskRenderer}
           />
         );
       case "imagequiz":
-        return <ImageQuiz {...props} />;
+        return (
+          <UniversalQuiz
+            lesson={blockData}
+            onStepComplete={handleBlockComplete}
+            taskType="imagequiz"
+            TaskRenderer={ImageQuizRenderer}
+          />
+        );
       case "infocard":
         return (
           <div className="bg-blue-50 rounded-lg p-8 text-center">
@@ -151,12 +172,16 @@ export const Lesson = ({ currentBlockRef, onBlockComplete }) => {
           </div>
         );
       default:
+        console.log("Falling to default case with blockData:", blockData);
         return (
           <div className="bg-gray-50 rounded-lg p-8 text-center">
             <h3 className="text-lg font-semibold text-gray-800 mb-2">
               {blockData?.title}
             </h3>
             <p className="text-gray-600">Тип: {blockData?.type}</p>
+            <pre className="text-xs text-gray-400 mt-4 text-left">
+              {JSON.stringify(blockData, null, 2)}
+            </pre>
           </div>
         );
     }
@@ -219,6 +244,13 @@ export const Lesson = ({ currentBlockRef, onBlockComplete }) => {
           {blockData.enableQuizMode && (
             <span className="bg-purple-100 text-purple-800 px-2 py-1 rounded text-xs">
               Режим квиза
+            </span>
+          )}
+
+          {/* Show question count for multi-question blocks */}
+          {blockData.totalQuestions && blockData.totalQuestions > 1 && (
+            <span className="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">
+              1 из {blockData.totalQuestions} вопросов
             </span>
           )}
         </div>
