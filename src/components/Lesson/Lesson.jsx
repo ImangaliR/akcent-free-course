@@ -4,9 +4,9 @@ import { useInfoCardModal } from "../../hooks/useModal";
 import { MatchTaskRenderer } from "../MatchTaskRenderer";
 import { StoryTaskRenderer } from "../StoryTaskRenderer";
 import { AudioTaskRenderer } from "../Tasks/AudioTaskRenderer";
-import { MultiBlankTaskRenderer } from "../Tasks/MultiBlankTaskRenderer";
 import { ImageQuiz } from "../Tasks/ImageQuiz";
 import { InfoCardModal } from "../Tasks/InfoCardModal";
+import { MultiBlankTaskRenderer } from "../Tasks/MultiBlankTaskRenderer";
 import { UniversalQuiz } from "../Tasks/UniversalQuiz";
 import { VideoLessonWithSubtitles } from "../VideoLesson/VideoLesson";
 
@@ -208,25 +208,21 @@ export const Lesson = ({ currentBlockRef, onBlockComplete }) => {
 
   return (
     <div className="w-full">
-      {/* Заголовок */}
-      <div className="bg-[#9C45FF] rounded-xl shadow-lg mb-6 p-4">
-        <h2 className="text-2xl font-bold text-white">{blockData.title}</h2>
-        <div className="flex items-center gap-3 mt-2">
-          <span className="bg-gray-100 px-2 py-1 rounded text-xs">
-            {blockData.type}
-          </span>
-
-          {blockData.enableQuizMode && (
-            <span className="bg-purple-100 text-purple-800 px-2 py-1 rounded text-xs">
-              Режим квиза
+      {/* Фиксированный заголовок */}
+      <div className="lg:sticky lg:top-0 lg:z-40 pb-4">
+        <div className="bg-gradient-to-r from-[#9C45FF] to-[#7C3AED] rounded-xl p-4">
+          <h2 className="text-2xl font-bold text-white">{blockData.title}</h2>
+          <div className="flex items-center gap-3 mt-2">
+            <span className="bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full text-xs text-white font-medium border border-white/30">
+              {blockData.type}
             </span>
-          )}
+          </div>
         </div>
       </div>
 
       {/* Контент */}
       <div className="bg-white rounded-xl shadow-lg min-h-[600px]">
-        <div className="p-2">{renderContent()}</div>
+        <div className="p-6">{renderContent()}</div>
       </div>
 
       {/* Модал InfoCard */}
