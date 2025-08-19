@@ -3,17 +3,10 @@ import { useCourse } from "../../context/CourseContext";
 import { useInfoCardModal } from "../../hooks/useModal";
 import { MatchTaskRenderer } from "../MatchTaskRenderer";
 import { StoryTaskRenderer } from "../StoryTaskRenderer";
-<<<<<<< HEAD
-import { MatchTaskRenderer } from "../MatchTaskRenderer";
-import { AudioTask } from "../Tasks/AudioTask";
-import { ImageQuiz } from "../Tasks/ImageQuiz";
-import { InfoCardModal } from "../Tasks/InfoCardModal";
-import MultiBlankTask from "../Tasks/MultiBlankTask";
-=======
 import { AudioTaskRenderer } from "../Tasks/AudioTaskRenderer";
+import { MultiBlankTaskRenderer } from "../Tasks/MultiBlankTaskRenderer";
 import { ImageQuiz } from "../Tasks/ImageQuiz";
 import { InfoCardModal } from "../Tasks/InfoCardModal";
-import { MultiBlankTaskRenderer } from "../Tasks/MultiBlankTaskRenderer";
 import { UniversalQuiz } from "../Tasks/UniversalQuiz";
 import { VideoLessonWithSubtitles } from "../VideoLesson/VideoLesson";
 
@@ -122,7 +115,6 @@ export const Lesson = ({ currentBlockRef, onBlockComplete }) => {
             TaskRenderer={StoryTaskRenderer}
           />
         );
-
       case "matchtask":
         return (
           <UniversalQuiz
@@ -132,9 +124,15 @@ export const Lesson = ({ currentBlockRef, onBlockComplete }) => {
             TaskRenderer={MatchTaskRenderer}
           />
         );
-
       case "audiotask":
-        return <AudioTaskRenderer {...props} />;
+        return (
+          <UniversalQuiz
+            lesson={blockData}
+            onStepComplete={handleBlockComplete}
+            taskType="audiotask"
+            TaskRenderer={AudioTaskRenderer}
+          />
+        );
       case "multiblanktask":
         return (
           <UniversalQuiz
