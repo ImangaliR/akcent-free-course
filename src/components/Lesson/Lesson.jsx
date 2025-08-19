@@ -241,18 +241,7 @@ export const Lesson = ({ currentBlockRef, onBlockComplete }) => {
             <span className="bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full text-xs text-white font-medium border border-white/30">
               {blockData.type}
             </span>
-<<<<<<< HEAD
           </div>
-=======
-          )}
-
-          {/* Show question count for multi-question blocks */}
-          {blockData.totalQuestions && blockData.totalQuestions > 1 && (
-            <span className="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">
-              1 из {blockData.totalQuestions} вопросов
-            </span>
-          )}
->>>>>>> 14c4dd5eb518f5774ebe1d82cdb5b23b4d8aeb3a
         </div>
       </div>
 
