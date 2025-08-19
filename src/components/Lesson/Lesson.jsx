@@ -6,7 +6,7 @@ import { ImageQuiz } from "../Tasks/ImageQuiz";
 import { InfoCardModal } from "../Tasks/InfoCardModal";
 import { MatchTask } from "../Tasks/MatchTask";
 import MultiBlankTask from "../Tasks/MultiBlankTask";
-import { StoryTask } from "../Tasks/StoryTask";
+import { StoryTaskQuizEngine } from "../Tasks/StoryTaskQuizEngine";
 import { VideoLessonWithSubtitles } from "../VideoLesson/VideoLesson";
 
 export const Lesson = ({ currentBlockRef, onBlockComplete }) => {
@@ -92,6 +92,16 @@ export const Lesson = ({ currentBlockRef, onBlockComplete }) => {
     });
   };
 
+  // Проверка, является ли StoryTask квизом (несколько вопросов)
+  const isStoryTaskQuiz = (blockData) => {
+    return (
+      blockData?.type === "storytask" &&
+      blockData?.questions &&
+      Array.isArray(blockData.questions) &&
+      blockData.questions.length > 1
+    );
+  };
+
   // Рендер контента
   const renderContent = () => {
     const props = {
@@ -104,8 +114,10 @@ export const Lesson = ({ currentBlockRef, onBlockComplete }) => {
     switch (blockData?.type) {
       case "video":
         return <VideoLessonWithSubtitles {...props} />;
+
       case "storytask":
-        return <StoryTask {...props} />;
+        return <StoryTaskQuizEngine {...props} />;
+
       case "audiotask":
         return <AudioTask {...props} />;
       case "matchtask":
@@ -185,6 +197,16 @@ export const Lesson = ({ currentBlockRef, onBlockComplete }) => {
           <span className="bg-gray-100 px-2 py-1 rounded text-xs">
             {blockData.type}
           </span>
+          {isStoryTaskQuiz(blockData) && (
+            <span className="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">
+              Квиз: {blockData.questions.length} вопросов
+            </span>
+          )}
+          {blockData.type === "storytask" && !blockData.questions && (
+            <span className="bg-green-100 text-green-800 px-2 py-1 rounded text-xs">
+              Одиночный вопрос
+            </span>
+          )}
         </div>
       </div>
 
