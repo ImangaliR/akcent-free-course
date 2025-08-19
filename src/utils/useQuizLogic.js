@@ -40,15 +40,10 @@ export const useQuizLogic = (allQuestions, onComplete, taskType) => {
         if (!question.answer || typeof question.answer !== "object")
           return false;
 
-<<<<<<< HEAD
         // Сравниваем объекты соответствий
         const userKeys = Object.keys(userAnswer).sort();
         const correctKeys = Object.keys(question.answer).sort();
 
-=======
-        const userKeys = Object.keys(userAnswer).sort();
-        const correctKeys = Object.keys(question.answer).sort();
->>>>>>> c63cd58ebd4a7400bcef3e7bcec0f8a519e92b97
         if (userKeys.length !== correctKeys.length) return false;
 
         return userKeys.every(
