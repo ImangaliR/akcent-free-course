@@ -1,273 +1,292 @@
-import { useState } from "react";
+// Updated useQuizLogic hook to properly handle imagequiz
 
-// ========================================
-// УНИВЕРСАЛЬНАЯ ЛОГИКА КВИЗА
-// ========================================
-export const useQuizLogic = (allQuestions, onComplete, taskType) => {
-  const needCorrect = Math.ceil(allQuestions.length * 0.8); // 80%
+import { useState, useCallback, useMemo } from "react";
+
+export const useQuizLogic = (allQuestions, onStepComplete, taskType) => {
+  // Normalize questions array - handle both single question and multi-question formats
+  const questions = useMemo(() => {
+    if (Array.isArray(allQuestions)) {
+      return allQuestions;
+    }
+    // For imagequiz and other multi-question types
+    if (allQuestions?.questions && Array.isArray(allQuestions.questions)) {
+      return allQuestions.questions;
+    }
+    // Single question format
+    return [allQuestions];
+  }, [allQuestions]);
 
   const [state, setState] = useState({
-    phase: "main",
+    phase: "main", // 'main' | 'redemption' | 'done'
     currentIndex: 0,
     currentAnswer: null,
     submitted: false,
     showResult: false,
-
-    mainAnswers: [], // [{correct: true/false, question, userAnswer}]
-    wrongQuestions: [], // вопросы которые нужно переделать
+    wrongQuestions: [],
     redemptionIndex: 0,
-    redemptionAnswers: [],
+    answers: [], // Store all answers for main phase
+    redemptionAnswers: [], // Store redemption answers
   });
 
-  // Проверка правильности ответа в зависимости от типа
-  const checkAnswer = (userAnswer, question, taskType) => {
-    switch (taskType) {
-      case "storytask":
-      case "imagequiz":
-        return userAnswer === question.answer;
-
-      case "audiotask":
-        if (typeof question.answer === "number") {
-          return userAnswer === question.answer;
-        }
-        return (
-          userAnswer?.toLowerCase().trim() ===
-          question.answer?.toLowerCase().trim()
-        );
-
-      case "matchtask":
-        if (!userAnswer || typeof userAnswer !== "object") return false;
-        if (!question.answer || typeof question.answer !== "object")
-          return false;
-
-        // Сравниваем объекты соответствий
-        const userKeys = Object.keys(userAnswer).sort();
-        const correctKeys = Object.keys(question.answer).sort();
-
-        if (userKeys.length !== correctKeys.length) return false;
-
-        return userKeys.every(
-          (key) => userAnswer[key] === question.answer[key]
-        );
-
-      case "multiblanktask":
-        if (!Array.isArray(userAnswer) || !Array.isArray(question.blanks)) {
-          return false;
-        }
-
-        // Проверяем, что все blanks заполнены и правильные
-        return (
-          userAnswer.length === question.blanks.length &&
-          userAnswer.every((selectedIndex, blankIndex) => {
-            const blank = question.blanks[blankIndex];
-            return (
-              selectedIndex !== null &&
-              selectedIndex !== undefined &&
-              selectedIndex === blank.answer
-            );
-          })
-        );
-
-      default:
-        return false;
-    }
-  };
-
-  // Проверка готовности ответа
-  const isAnswerReady = (answer, taskType) => {
-    switch (taskType) {
-      case "storytask":
-      case "imagequiz":
-        return answer !== null && answer !== undefined;
-
-      case "audiotask":
-        return answer !== null && answer !== undefined;
-
-      case "matchtask":
-        return (
-          answer && typeof answer === "object" && Object.keys(answer).length > 0
-        );
-
-      case "multiblanktask":
-        return (
-          Array.isArray(answer) &&
-          answer.length > 0 &&
-          answer.every((item) => item !== null && item !== undefined)
-        );
-
-      default:
-        return false;
-    }
-  };
-
-  // Текущий вопрос
-  const getCurrentQuestion = () => {
+  // Get current question
+  const currentQuestion = useMemo(() => {
     if (state.phase === "main") {
-      return allQuestions[state.currentIndex];
+      return questions[state.currentIndex];
     } else {
       return state.wrongQuestions[state.redemptionIndex];
     }
-  };
+  }, [
+    questions,
+    state.phase,
+    state.currentIndex,
+    state.wrongQuestions,
+    state.redemptionIndex,
+  ]);
 
-  // Статистика
-  const getStats = () => {
-    const mainCorrect = state.mainAnswers.filter((a) => a.correct).length;
+  // Check if answer is ready based on task type
+  const isAnswerReady = useCallback(
+    (answer) => {
+      if (!answer) return false;
+
+      switch (taskType) {
+        case "imagequiz":
+          return answer.selectedOption != null;
+        case "storytask":
+        case "audiotask":
+          return answer != null && answer !== "";
+        case "matchtask":
+          return Array.isArray(answer) && answer.length > 0;
+        case "multiblanktask":
+          return (
+            Array.isArray(answer) && answer.every((item) => item.value?.trim())
+          );
+        default:
+          return answer != null && answer !== "";
+      }
+    },
+    [taskType]
+  );
+
+  // Check if answer is correct based on task type
+  const isAnswerCorrect = useCallback(
+    (answer, question) => {
+      if (!answer || !question) return false;
+
+      switch (taskType) {
+        case "imagequiz":
+          return answer.selectedOption === question.answer;
+        case "storytask":
+        case "audiotask":
+          return answer === question.answer;
+        case "matchtask":
+          // For match tasks, check if all pairs are correct
+          return (
+            Array.isArray(answer) &&
+            answer.length === question.pairs?.length &&
+            answer.every((pair) => {
+              const correctPair = question.pairs.find(
+                (p) => p.left === pair.left
+              );
+              return correctPair && correctPair.right === pair.right;
+            })
+          );
+        case "multiblanktask":
+          return (
+            Array.isArray(answer) &&
+            answer.every(
+              (item, index) =>
+                item.value?.trim().toLowerCase() ===
+                question.blanks[index]?.answer?.toLowerCase()
+            )
+          );
+        default:
+          return answer === question.answer;
+      }
+    },
+    [taskType]
+  );
+
+  // Set answer
+  const setAnswer = useCallback((answer) => {
+    setState((prev) => ({
+      ...prev,
+      currentAnswer: answer,
+    }));
+  }, []);
+
+  // Submit answer
+  const submitAnswer = useCallback(() => {
+    if (!isAnswerReady(state.currentAnswer)) return;
+
+    const isCorrect = isAnswerCorrect(state.currentAnswer, currentQuestion);
+
+    setState((prev) => {
+      const newState = {
+        ...prev,
+        submitted: true,
+        showResult: true,
+      };
+
+      if (prev.phase === "main") {
+        newState.answers = [
+          ...prev.answers,
+          {
+            questionIndex: prev.currentIndex,
+            answer: prev.currentAnswer,
+            isCorrect,
+            question: currentQuestion,
+          },
+        ];
+      } else {
+        newState.redemptionAnswers = [
+          ...prev.redemptionAnswers,
+          {
+            questionIndex: prev.redemptionIndex,
+            answer: prev.currentAnswer,
+            isCorrect,
+            question: currentQuestion,
+          },
+        ];
+      }
+
+      return newState;
+    });
+  }, [state.currentAnswer, currentQuestion, isAnswerReady, isAnswerCorrect]);
+
+  // Next question
+  const nextQuestion = useCallback(() => {
+    setState((prev) => {
+      if (prev.phase === "main") {
+        const isLastQuestion = prev.currentIndex >= questions.length - 1;
+
+        if (isLastQuestion) {
+          // End of main phase - collect wrong questions
+          const wrongQuestions = prev.answers
+            .filter((a) => !a.isCorrect)
+            .map((a) => a.question);
+
+          const correctCount = prev.answers.filter((a) => a.isCorrect).length;
+          const passThreshold = Math.ceil(questions.length * 0.8);
+
+          if (correctCount >= passThreshold || wrongQuestions.length === 0) {
+            // Passed or no wrong questions - finish
+            return {
+              ...prev,
+              phase: "done",
+              wrongQuestions,
+            };
+          } else {
+            // Go to redemption phase
+            return {
+              ...prev,
+              phase: "redemption",
+              wrongQuestions,
+              redemptionIndex: 0,
+              currentAnswer: null,
+              submitted: false,
+              showResult: false,
+            };
+          }
+        } else {
+          // Next question in main phase
+          return {
+            ...prev,
+            currentIndex: prev.currentIndex + 1,
+            currentAnswer: null,
+            submitted: false,
+            showResult: false,
+          };
+        }
+      } else {
+        // Redemption phase
+        const currentAnswer =
+          prev.redemptionAnswers[prev.redemptionAnswers.length - 1];
+        const isLastRedemption =
+          prev.redemptionIndex >= prev.wrongQuestions.length - 1;
+
+        if (currentAnswer?.isCorrect) {
+          // Correct answer in redemption
+          if (isLastRedemption) {
+            // Last redemption question - finish
+            return {
+              ...prev,
+              phase: "done",
+            };
+          } else {
+            // Next redemption question
+            return {
+              ...prev,
+              redemptionIndex: prev.redemptionIndex + 1,
+              currentAnswer: null,
+              submitted: false,
+              showResult: false,
+            };
+          }
+        } else {
+          // Wrong answer - try again
+          return {
+            ...prev,
+            currentAnswer: null,
+            submitted: false,
+            showResult: false,
+          };
+        }
+      }
+    });
+  }, [questions]);
+
+  // Calculate stats
+  const stats = useMemo(() => {
+    const mainCorrect = state.answers.filter((a) => a.isCorrect).length;
     const redemptionCorrect = state.redemptionAnswers.filter(
-      (a) => a.correct
+      (a) => a.isCorrect
     ).length;
     const total = mainCorrect + redemptionCorrect;
+    const needed = Math.ceil(questions.length * 0.8);
+    const passed = total >= needed;
+    const percent = Math.round((total / questions.length) * 100);
+
+    let progress = "";
+    if (state.phase === "main") {
+      progress = `${state.currentIndex + 1}/${questions.length}`;
+    } else if (state.phase === "redemption") {
+      progress = `${state.redemptionIndex + 1}/${state.wrongQuestions.length}`;
+    }
 
     return {
       mainCorrect,
       redemptionCorrect,
       total,
-      needed: needCorrect,
-      passed: total >= needCorrect,
-      percent: Math.round((total / allQuestions.length) * 100),
-      progress:
-        state.phase === "main"
-          ? `${state.currentIndex + 1}/${allQuestions.length}`
-          : `${state.redemptionIndex + 1}/${state.wrongQuestions.length}`,
+      needed,
+      passed,
+      percent,
+      progress,
     };
-  };
+  }, [state, questions.length]);
 
-  // Установка ответа
-  const setAnswer = (answer) => {
-    if (state.submitted) return;
-    setState((prev) => ({ ...prev, currentAnswer: answer }));
-  };
-
-  // Отправка ответа
-  const submitAnswer = () => {
-    if (!isAnswerReady(state.currentAnswer, taskType)) return;
-
-    const currentQ = getCurrentQuestion();
-    const isCorrect = checkAnswer(state.currentAnswer, currentQ, taskType);
-
-    setState((prev) => ({
-      ...prev,
-      submitted: true,
-      showResult: true,
-    }));
-
-    // Добавляем ответ через небольшую задержку для UI
-    setTimeout(() => {
-      if (state.phase === "main") {
-        setState((prev) => ({
-          ...prev,
-          mainAnswers: [
-            ...prev.mainAnswers,
-            {
-              correct: isCorrect,
-              question: currentQ,
-              userAnswer: state.currentAnswer,
-            },
-          ],
-        }));
-      } else {
-        setState((prev) => ({
-          ...prev,
-          redemptionAnswers: [
-            ...prev.redemptionAnswers,
-            {
-              correct: isCorrect,
-              question: currentQ,
-              userAnswer: state.currentAnswer,
-            },
-          ],
-        }));
-      }
-    }, 100);
-  };
-
-  // Следующий вопрос
-  const nextQuestion = () => {
-    if (state.phase === "main") {
-      if (state.currentIndex < allQuestions.length - 1) {
-        setState((prev) => ({
-          ...prev,
-          currentIndex: prev.currentIndex + 1,
-          currentAnswer: null,
-          submitted: false,
-          showResult: false,
-        }));
-      } else {
-        finishMainRound();
-      }
-    } else {
-      const lastAnswer =
-        state.redemptionAnswers[state.redemptionAnswers.length - 1];
-
-      if (!lastAnswer.correct) {
-        setState((prev) => ({
-          ...prev,
-          currentAnswer: null,
-          submitted: false,
-          showResult: false,
-          redemptionAnswers: prev.redemptionAnswers.slice(0, -1),
-        }));
-      } else {
-        if (state.redemptionIndex < state.wrongQuestions.length - 1) {
-          setState((prev) => ({
-            ...prev,
-            redemptionIndex: prev.redemptionIndex + 1,
-            currentAnswer: null,
-            submitted: false,
-            showResult: false,
-          }));
-        } else {
-          finishQuiz();
-        }
-      }
-    }
-  };
-
-  // Завершение основного раунда
-  const finishMainRound = () => {
-    const correctCount = state.mainAnswers.filter((a) => a.correct).length;
-
-    if (correctCount >= needCorrect) {
-      finishQuiz();
-    } else {
-      const wrongQuestions = state.mainAnswers
-        .filter((a) => !a.correct)
-        .map((a) => a.question);
-
-      setState((prev) => ({
-        ...prev,
-        phase: "redemption",
-        wrongQuestions,
-        redemptionIndex: 0,
-        currentAnswer: null,
-        submitted: false,
-        showResult: false,
-      }));
-    }
-  };
-
-  // Завершение квиза
-  const finishQuiz = () => {
-    setState((prev) => ({ ...prev, phase: "done" }));
-
-    const stats = getStats();
-    onComplete?.(taskType, {
-      completed: true,
-      passed: stats.passed,
-      mainAnswers: state.mainAnswers,
+  // Complete quiz
+  const completeQuiz = useCallback(() => {
+    onStepComplete?.(taskType, {
+      answers: state.answers,
       redemptionAnswers: state.redemptionAnswers,
-      totalCorrect: stats.total,
-      totalQuestions: allQuestions.length,
-      passRate: stats.percent,
+      stats,
+      passed: stats.passed,
     });
-  };
+  }, [state.answers, state.redemptionAnswers, stats, onStepComplete, taskType]);
+
+  // Auto-complete when done
+  if (state.phase === "done" && stats.passed) {
+    setTimeout(completeQuiz, 100);
+  }
 
   return {
+    currentQuestion,
     state,
-    stats: getStats(),
-    currentQuestion: getCurrentQuestion(),
+    stats,
     setAnswer,
     submitAnswer,
     nextQuestion,
-    isAnswerReady: (answer) => isAnswerReady(answer, taskType),
+    isAnswerReady,
+    completeQuiz,
   };
 };

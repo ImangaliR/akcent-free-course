@@ -1,0 +1,157 @@
+import { useState, useEffect } from "react";
+import { CheckCircle, X } from "lucide-react";
+
+export const ImageQuizRenderer = ({
+  question,
+  currentAnswer,
+  onAnswerChange,
+  isSubmitted,
+}) => {
+  const [selectedOption, setSelectedOption] = useState(null);
+
+  // Debug logging
+  console.log("ImageQuizRenderer props:", {
+    question,
+    currentAnswer,
+    isSubmitted,
+  });
+
+  // Early return if no question data
+  if (!question) {
+    return (
+      <div className="mx-auto max-w-4xl text-center p-8">
+        <p className="text-gray-600">Loading question...</p>
+        <p className="text-xs text-gray-400 mt-2">
+          Question prop is: {JSON.stringify(question)}
+        </p>
+      </div>
+    );
+  }
+
+  // Load current answer on mount
+  useEffect(() => {
+    if (currentAnswer?.selectedOption) {
+      setSelectedOption(currentAnswer.selectedOption);
+    }
+  }, [currentAnswer]);
+
+  // Handle option selection
+  const handleOptionClick = (optionId) => {
+    if (isSubmitted || !question?.answer) return;
+
+    setSelectedOption(optionId);
+
+    // Update answer immediately
+    const answerData = {
+      selectedOption: optionId,
+      correctAnswer: question.answer,
+      isCorrect: optionId === question.answer,
+    };
+
+    onAnswerChange?.(answerData);
+  };
+
+  // Get styling for option based on state
+  const getOptionStyle = (optionId) => {
+    if (!isSubmitted) {
+      if (selectedOption === optionId) {
+        return "border-blue-500 bg-blue-50 shadow-lg transform scale-105";
+      }
+      return "border-gray-300 bg-white hover:border-blue-300 hover:bg-blue-50 hover:shadow-md cursor-pointer";
+    } else {
+      // Show results after submission
+      const isCorrect = selectedOption === question?.answer;
+
+      if (isCorrect) {
+        // Only highlight the correct option if user got it right
+        if (optionId === question?.answer) {
+          return "border-green-500 bg-green-50";
+        }
+        return "border-gray-300 bg-gray-50 opacity-60";
+      } else {
+        // User was wrong - only highlight their wrong choice, don't show correct answer
+        if (selectedOption === optionId) {
+          return "border-red-500 bg-red-50";
+        }
+        return "border-gray-300 bg-gray-50 opacity-60";
+      }
+    }
+  };
+
+  // Get icon for option based on state
+  const getOptionIcon = (optionId) => {
+    if (!isSubmitted) return null;
+
+    const isCorrect = selectedOption === question?.answer;
+
+    if (isCorrect && optionId === question?.answer) {
+      return <CheckCircle className="w-6 h-6 text-green-600" />;
+    } else if (!isCorrect && selectedOption === optionId) {
+      // Only show X for the wrong answer user selected, don't show correct answer
+      return <X className="w-6 h-6 text-red-600" />;
+    }
+    return null;
+  };
+
+  // Check if user's answer is correct
+  const isCorrect = selectedOption === question?.answer;
+
+  return (
+    <div className="mx-auto max-w-4xl">
+      {/* Header */}
+      <div className="text-center mb-8">
+        <h2 className="text-2xl font-bold text-gray-800 mb-3">
+          {question.title || "Image Quiz"}
+        </h2>
+        <p className="text-gray-600 text-lg">{question.question}</p>
+        {question.description && (
+          <p className="text-gray-500 text-base mt-2">{question.description}</p>
+        )}
+      </div>
+
+      {/* Options grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
+        {question.options?.map((option) => (
+          <div
+            key={option.id}
+            className={`relative p-3 rounded-xl border-2 transition-all duration-200 ${getOptionStyle(
+              option.id
+            )} ${isSubmitted ? "cursor-default" : "cursor-pointer"}`}
+            onClick={() => handleOptionClick(option.id)}
+          >
+            {/* Result icon */}
+            <div className="absolute top-3 right-3 z-10">
+              {getOptionIcon(option.id)}
+            </div>
+
+            {/* Image container */}
+            <div className="w-full aspect-square bg-gray-100 rounded-lg overflow-hidden">
+              <img
+                src={option.image}
+                alt={option.label || `Option ${option.id}`}
+                className="w-full h-full object-cover"
+                onError={(e) => {
+                  // Fallback for missing images
+                  e.target.style.display = "none";
+                  e.target.nextElementSibling.style.display = "flex";
+                }}
+              />
+              {/* Fallback div for missing images */}
+              <div
+                className="w-full h-full bg-gray-200 flex items-center justify-center text-gray-500 text-sm"
+                style={{ display: "none" }}
+              >
+                {option.label || `Option ${option.id}`}
+              </div>
+            </div>
+
+            {/* Selection indicator for non-submitted state */}
+            {!isSubmitted && selectedOption === option.id && (
+              <div className="absolute inset-0 border-4 border-blue-500 rounded-xl pointer-events-none"></div>
+            )}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
