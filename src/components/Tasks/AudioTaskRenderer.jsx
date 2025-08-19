@@ -19,6 +19,8 @@ export const AudioTaskRenderer = ({
   // Воспроизведение аудио
   const handlePlayAudio = () => {
     const audio = audioRef.current;
+    if (!audio) return;
+
     if (isPlaying) {
       audio.pause();
       setIsPlaying(false);
@@ -46,17 +48,26 @@ export const AudioTaskRenderer = ({
     };
   }, []);
 
-  // Сброс состояния при смене вопроса
+  // Сброс состояния при смене вопроса - добавляем проверку на question
   useEffect(() => {
     setHasPlayedAudio(false);
     setIsPlaying(false);
-  }, [question.id]);
+  }, [question?.id]);
 
   // Выбор опции
   const handleOptionSelect = (index) => {
     if (isSubmitted) return;
     onAnswerChange(index);
   };
+
+  // Проверяем наличие question
+  if (!question) {
+    return (
+      <div className="text-center p-8">
+        <p className="text-gray-500">Вопрос загружается...</p>
+      </div>
+    );
+  }
 
   return (
     <div>
@@ -67,7 +78,12 @@ export const AudioTaskRenderer = ({
 
           <button
             onClick={handlePlayAudio}
-            className="inline-flex items-center gap-2 bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors font-medium"
+            disabled={!question.audio}
+            className={`inline-flex items-center gap-2 px-6 py-3 rounded-lg transition-colors font-medium ${
+              question.audio
+                ? "bg-blue-600 text-white hover:bg-blue-700"
+                : "bg-gray-400 text-gray-200 cursor-not-allowed"
+            }`}
           >
             {isPlaying ? (
               <>
@@ -82,14 +98,14 @@ export const AudioTaskRenderer = ({
             )}
           </button>
 
-          <audio ref={audioRef} src={question.audio} />
+          {question.audio && <audio ref={audioRef} src={question.audio} />}
         </div>
       </div>
 
       {/* Вопрос */}
       <div className="mb-6">
         <h4 className="text-2xl font-semibold text-gray-800">
-          {question.question}
+          {question.question || "Вопрос не найден"}
         </h4>
       </div>
 
@@ -143,7 +159,7 @@ export const AudioTaskRenderer = ({
               </div>
             </button>
           );
-        })}
+        }) || []}
       </div>
 
       {/* Простая обратная связь */}

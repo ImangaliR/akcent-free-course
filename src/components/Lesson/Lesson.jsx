@@ -1,8 +1,15 @@
 import { useEffect, useState } from "react";
 import { useCourse } from "../../context/CourseContext";
 import { useInfoCardModal } from "../../hooks/useModal";
-import { StoryTaskRenderer } from "../StoryTaskRenderer";
 import { MatchTaskRenderer } from "../MatchTaskRenderer";
+import { StoryTaskRenderer } from "../StoryTaskRenderer";
+<<<<<<< HEAD
+import { MatchTaskRenderer } from "../MatchTaskRenderer";
+import { AudioTask } from "../Tasks/AudioTask";
+import { ImageQuiz } from "../Tasks/ImageQuiz";
+import { InfoCardModal } from "../Tasks/InfoCardModal";
+import MultiBlankTask from "../Tasks/MultiBlankTask";
+=======
 import { AudioTaskRenderer } from "../Tasks/AudioTaskRenderer";
 import { ImageQuiz } from "../Tasks/ImageQuiz";
 import { InfoCardModal } from "../Tasks/InfoCardModal";
