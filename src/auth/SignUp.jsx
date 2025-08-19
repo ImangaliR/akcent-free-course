@@ -1,15 +1,5 @@
-import {
-  ArrowRight,
-  Check,
-  Eye,
-  EyeOff,
-  Lock,
-  Phone,
-  User,
-  UserPlus,
-} from "lucide-react";
+import { Check, Eye, EyeOff, Lock, Phone, User, UserPlus } from "lucide-react";
 import { useState } from "react";
-import { FaFemale } from "react-icons/fa";
 import { MdFemale, MdMale } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -168,9 +158,7 @@ export const SignUp = () => {
       <div className="max-w-md w-full space-y-8">
         {/* Логотип и заголовок */}
         <div className="text-center">
-          <h2 className="text-3xl font-bold text-gray-900 mb-2">
-            Аккаунт жасау
-          </h2>
+          <h2 className="text-3xl font-bold text-gray-900 mb-2">Тіркелу</h2>
           <p className="text-gray-600">
             Бізге қосылыңыз және орыс тілін үйренуді бастаңыз
           </p>
@@ -197,7 +185,9 @@ export const SignUp = () => {
             {/* Имя и Фамилия в одной строке */}
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
-                <label className="text-sm font-medium text-gray-700">Аты</label>
+                <label className="text-sm font-medium text-gray-700">
+                  Есімі
+                </label>
                 <div className="relative">
                   <User
                     className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
@@ -206,7 +196,7 @@ export const SignUp = () => {
                   <input
                     type="text"
                     name="name"
-                    placeholder="Иван"
+                    placeholder="Есіміңізді енгізіңіз"
                     value={formData.name}
                     onChange={handleChange}
                     className="w-full pl-9 pr-3 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 text-sm"
@@ -217,7 +207,7 @@ export const SignUp = () => {
 
               <div className="space-y-2">
                 <label className="text-sm font-medium text-gray-700">
-                  Жөні
+                  Тегі
                 </label>
                 <div className="relative">
                   <User
@@ -227,7 +217,7 @@ export const SignUp = () => {
                   <input
                     type="text"
                     name="surname"
-                    placeholder="Петров"
+                    placeholder="Тегіңізді енгізіңіз"
                     value={formData.surname}
                     onChange={handleChange}
                     className="w-full pl-9 pr-3 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 text-sm"
@@ -318,22 +308,35 @@ export const SignUp = () => {
 
             {/* Гендер */}
             <div className="space-y-2">
-              <label className="text-sm font-medium text-gray-700">Жыныс</label>
-              <div className="flex items-center gap-2">
-                {formData.gender === "male" ? (
-                  <MdMale className="w-6 h-6" />
-                ) : (
-                  <MdFemale className="w-6 h-6" />
-                )}
-                <select
-                  name="gender"
-                  value={formData.gender}
-                  onChange={handleChange}
-                  className="border-1 border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200 text-sm"
+              <label className="text-sm font-medium text-gray-700 mb-6">
+                Жыныс
+              </label>
+              <div className="grid grid-cols-2 gap-3">
+                <button
+                  type="button"
+                  onClick={() => setFormData({ ...formData, gender: "male" })}
+                  className={`flex items-center justify-center gap-2 p-3 border-2 rounded-lg transition-all duration-200 ${
+                    formData.gender === "male"
+                      ? "border-blue-500 bg-blue-50 text-blue-700"
+                      : "border-gray-300 bg-white text-gray-600 hover:border-gray-400"
+                  }`}
                 >
-                  <option value="male">Еркек</option>
-                  <option value="female">Әйел</option>
-                </select>
+                  <MdMale className="w-5 h-5" />
+                  <span className="text-sm font-medium">Еркек</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => setFormData({ ...formData, gender: "female" })}
+                  className={`flex items-center justify-center gap-2 p-3 border-2 rounded-lg transition-all duration-200 ${
+                    formData.gender === "female"
+                      ? "border-pink-500 bg-pink-50 text-pink-700"
+                      : "border-gray-300 bg-white text-gray-600 hover:border-gray-400"
+                  }`}
+                >
+                  <MdFemale className="w-5 h-5" />
+                  <span className="text-sm font-medium">Әйел</span>
+                </button>
               </div>
             </div>
 
@@ -350,9 +353,8 @@ export const SignUp = () => {
                 </>
               ) : (
                 <>
+                  <span>Тіркелу</span>
                   <UserPlus size={18} />
-                  <span>Аккаунт жасау</span>
-                  <ArrowRight size={18} />
                 </>
               )}
             </button>

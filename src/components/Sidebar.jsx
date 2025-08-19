@@ -6,6 +6,7 @@ import {
   Clock,
   FileText,
   Info,
+  Lock,
   LogOut,
   PenTool,
   Play,
@@ -102,6 +103,31 @@ export const SidebarNav = ({ isSidebarOpen, setIsSidebarOpen }) => {
     return organized;
   };
 
+  const isBlockAccessible = (blockIndex) => {
+    // Первый блок всегда доступен
+    if (blockIndex === 0) return true;
+
+    // Получаем все навигируемые блоки (исключая InfoCards)
+    const navigableBlocks = courseManifest.sequence
+      .map((block, index) => ({ ...block, originalIndex: index }))
+      .filter((block) => {
+        const lowerRef = block.ref.toLowerCase();
+        return !lowerRef.includes("inf");
+      });
+
+    // Находим текущий блок среди навигируемых
+    const currentNavigableIndex = navigableBlocks.findIndex(
+      (block) => block.originalIndex === blockIndex
+    );
+
+    if (currentNavigableIndex === -1) return false;
+    if (currentNavigableIndex === 0) return true;
+
+    // Проверяем, завершен ли предыдущий навигируемый блок
+    const previousBlock = navigableBlocks[currentNavigableIndex - 1];
+    return isBlockCompleted(previousBlock.ref);
+  };
+
   const organizedBlocks = organizeBlocks();
 
   const handleModuleToggle = (moduleId) => {
@@ -111,7 +137,12 @@ export const SidebarNav = ({ isSidebarOpen, setIsSidebarOpen }) => {
     }));
   };
 
-  const handleItemSelect = (blockIndex) => {
+  const handleItemSelect = (blockIndex, isAccessible) => {
+    // Блокируем переход, если блок недоступен
+    if (!isAccessible) {
+      return;
+    }
+
     goToBlock(blockIndex);
     if (window.innerWidth < 1024) {
       setIsSidebarOpen(false);
@@ -533,34 +564,48 @@ export const SidebarNav = ({ isSidebarOpen, setIsSidebarOpen }) => {
                       module.blocks.map((block, itemIndex) => {
                         const isActive = currentBlockIndex === block.index;
                         const isCompleted = isBlockCompleted(block.ref);
+                        const isAccessible = isBlockAccessible(block.index);
                         const typeInfo = getBlockTypeInfo(block.ref);
 
                         return (
                           <button
                             key={block.ref}
-                            onClick={() => handleItemSelect(block.index)}
+                            onClick={() =>
+                              handleItemSelect(block.index, isAccessible)
+                            }
+                            disabled={!isAccessible}
                             className={`
-                              w-full text-left px-4 py-3 text-sm transition-all duration-200 
-                              flex items-center gap-3 group border-l-4
-                              ${
-                                itemIndex !== module.blocks.length - 1
-                                  ? "border-b border-gray-100"
-                                  : ""
-                              }
-                              ${
-                                isActive
-                                  ? "bg-indigo-50 text-indigo-700 border-l-indigo-500"
-                                  : "text-gray-600 hover:bg-gray-50 hover:text-gray-800 border-l-transparent"
-                              }
-                            `}
+        w-full text-left px-4 py-3 text-sm transition-all duration-200 
+        flex items-center gap-3 group border-l-4
+        ${
+          itemIndex !== module.blocks.length - 1
+            ? "border-b border-gray-100"
+            : ""
+        }
+        ${
+          isActive
+            ? "bg-indigo-50 text-indigo-700 border-l-indigo-500"
+            : isAccessible
+            ? "text-gray-600 hover:bg-gray-50 hover:text-gray-800 border-l-transparent"
+            : "text-gray-400 border-l-transparent cursor-not-allowed opacity-50"
+        }
+      `}
                           >
                             <div className="flex-shrink-0">
                               {isCompleted ? (
                                 <CheckCircle className="w-4 h-4 text-green-500" />
                               ) : isActive ? (
                                 <Clock className="w-4 h-4 text-indigo-500" />
+                              ) : !isAccessible ? (
+                                <Lock className="w-4 h-4 text-gray-400" />
                               ) : (
-                                <div className="text-gray-400 group-hover:text-gray-600">
+                                <div
+                                  className={`${
+                                    isAccessible
+                                      ? "text-gray-400 group-hover:text-gray-600"
+                                      : "text-gray-300"
+                                  }`}
+                                >
                                   {typeInfo.icon}
                                 </div>
                               )}

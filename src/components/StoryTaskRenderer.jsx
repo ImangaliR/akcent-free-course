@@ -59,10 +59,18 @@ export const StoryTaskRenderer = ({
         return "border-2 bg-red-500 text-white hover:bg-red-600";
       return "border-2 bg-gray-100 text-gray-700";
     }
+
+    // ВОТ ЗДЕСЬ НУЖНО ИЗМЕНИТЬ:
     if (isSelected) {
-      return `border-2 ${theme.base} ${theme.text} bg-opacity-90 shadow-md`;
+      return `border-3 ${theme.badge.replace(
+        "bg-",
+        "bg-"
+      )} ${theme.badge.replace(
+        "bg-",
+        "border-"
+      )} text-white shadow-lg transform scale-[1.02]`;
     }
-    return `border-2 ${theme.base} ${theme.text}`;
+    return `border-2 ${theme.base} ${theme.text} hover:shadow-md`;
   };
 
   return (
@@ -143,9 +151,7 @@ export const StoryTaskRenderer = ({
               aria-pressed={isSelected}
             >
               {/* Option text */}
-              <span className="align-middle text-base md:text-lg">
-                {option}
-              </span>
+              <span className="align-middle text-lg md:text-lg">{option}</span>
 
               {/* Correct/Incorrect icon на правой стороне (только для выбранного) */}
               {showIcon && (
@@ -176,7 +182,7 @@ export const StoryTaskRenderer = ({
           }`}
         >
           <p className={`font-medium ${isCorrect ? "text-green-800" : ""}`}>
-            {isCorrect ? "Дұрыс! ✅" : ""}
+            {isCorrect ? "Дұрыс!" : ""}
           </p>
           {isCorrect && question.explanation && (
             <p className="text-green-700 text-sm mt-2">

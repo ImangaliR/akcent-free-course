@@ -7,7 +7,7 @@ export const useQuizLogic = (allQuestions, onComplete, taskType) => {
   const needCorrect = Math.ceil(allQuestions.length * 0.8); // 80%
 
   const [state, setState] = useState({
-    phase: "main", // 'main' | 'redemption' | 'done'
+    phase: "main",
     currentIndex: 0,
     currentAnswer: null,
     submitted: false,
@@ -36,21 +36,34 @@ export const useQuizLogic = (allQuestions, onComplete, taskType) => {
         );
 
       case "matchtask":
-        return (
-          JSON.stringify(userAnswer?.sort()) ===
-          JSON.stringify(question.answer?.sort())
+        if (!userAnswer || typeof userAnswer !== "object") return false;
+        if (!question.answer || typeof question.answer !== "object")
+          return false;
+
+        const userKeys = Object.keys(userAnswer).sort();
+        const correctKeys = Object.keys(question.answer).sort();
+        if (userKeys.length !== correctKeys.length) return false;
+
+        return userKeys.every(
+          (key) => userAnswer[key] === question.answer[key]
         );
 
       case "multiblanktask":
-        if (!Array.isArray(userAnswer) || !Array.isArray(question.answer))
+        if (!Array.isArray(userAnswer) || !Array.isArray(question.blanks)) {
           return false;
+        }
+
+        // Проверяем, что все blanks заполнены и правильные
         return (
-          userAnswer.length === question.answer.length &&
-          userAnswer.every(
-            (ans, i) =>
-              ans?.toLowerCase().trim() ===
-              question.answer[i]?.toLowerCase().trim()
-          )
+          userAnswer.length === question.blanks.length &&
+          userAnswer.every((selectedIndex, blankIndex) => {
+            const blank = question.blanks[blankIndex];
+            return (
+              selectedIndex !== null &&
+              selectedIndex !== undefined &&
+              selectedIndex === blank.answer
+            );
+          })
         );
 
       default:
@@ -66,15 +79,18 @@ export const useQuizLogic = (allQuestions, onComplete, taskType) => {
         return answer !== null && answer !== undefined;
 
       case "audiotask":
-        return answer && answer.toString().trim().length > 0;
+        return answer !== null && answer !== undefined;
 
       case "matchtask":
-        return answer && Object.keys(answer).length > 0;
+        return (
+          answer && typeof answer === "object" && Object.keys(answer).length > 0
+        );
 
       case "multiblanktask":
         return (
           Array.isArray(answer) &&
-          answer.every((item) => item && item.trim().length > 0)
+          answer.length > 0 &&
+          answer.every((item) => item !== null && item !== undefined)
         );
 
       default:

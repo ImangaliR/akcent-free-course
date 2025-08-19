@@ -2,11 +2,11 @@ import { useEffect, useState } from "react";
 import { useCourse } from "../../context/CourseContext";
 import { useInfoCardModal } from "../../hooks/useModal";
 import { StoryTaskRenderer } from "../StoryTaskRenderer";
-import { AudioTask } from "../Tasks/AudioTask";
+import { AudioTaskRenderer } from "../Tasks/AudioTaskRenderer";
 import { ImageQuiz } from "../Tasks/ImageQuiz";
 import { InfoCardModal } from "../Tasks/InfoCardModal";
-import { MatchTask } from "../Tasks/MatchTask";
-import MultiBlankTask from "../Tasks/MultiBlankTask";
+import { MatchTaskRenderer } from "../Tasks/MatchTaskRenderer";
+import { MultiBlankTaskRenderer } from "../Tasks/MultiBlankTaskRenderer";
 import { UniversalQuiz } from "../Tasks/UniversalQuiz";
 import { VideoLessonWithSubtitles } from "../VideoLesson/VideoLesson";
 
@@ -127,11 +127,32 @@ export const Lesson = ({ currentBlockRef, onBlockComplete }) => {
         );
 
       case "audiotask":
-        return <AudioTask {...props} />;
+        return (
+          <UniversalQuiz
+            lesson={blockData}
+            onStepComplete={handleBlockComplete}
+            taskType="audiotask"
+            TaskRenderer={AudioTaskRenderer}
+          />
+        );
       case "matchtask":
-        return <MatchTask {...props} />;
+        return (
+          <UniversalQuiz
+            lesson={blockData}
+            onStepComplete={handleBlockComplete}
+            taskType="matchtask"
+            TaskRenderer={MatchTaskRenderer}
+          />
+        );
       case "multiblanktask":
-        return <MultiBlankTask {...props} />;
+        return (
+          <UniversalQuiz
+            lesson={blockData} // используем blockData как в storytask
+            onStepComplete={handleBlockComplete}
+            taskType="multiblanktask"
+            TaskRenderer={MultiBlankTaskRenderer}
+          />
+        );
       case "imagequiz":
         return <ImageQuiz {...props} />;
       case "infocard":
