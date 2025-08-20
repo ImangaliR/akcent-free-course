@@ -145,7 +145,11 @@ export const Verify = () => {
         navigate("/login");
       }, 1500);
     } catch (err) {
-      setError(err.message);
+      setError(
+        err.message === "Invalid verification code"
+          ? "Растау коды қате"
+          : err.message
+      );
       // Очищаем код при ошибке
       setCode(["", "", "", "", "", ""]);
       inputRefs.current[0].focus();
@@ -156,13 +160,13 @@ export const Verify = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-50 via-white to-blue-50 flex items-center justify-center p-4">
-      <div className="max-w-md w-full space-y-8">
+      <div className="max-w-md w-full space-y-4 md:space-y-8">
         {/* Логотип и заголовок */}
         <div className="text-center">
-          <h2 className="text-3xl font-bold text-gray-900 mb-2">
+          <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">
             Аккаунтты растау
           </h2>
-          <p className="text-gray-600 mb-4">
+          <p className="text-sm md:text-base text-gray-600 mb-4">
             Біз сізге 6-символдық растау кодын WhatsApp-қа жібердік
           </p>
 
@@ -172,7 +176,7 @@ export const Verify = () => {
               <FaWhatsapp className="w-5 h-5" />
               <span className="font-medium">WhatsApp</span>
             </div>
-            <p className="text-sm text-green-600">
+            <p className="text-xs md:text-sm text-green-600">
               Растау кодын алу үшін WhatsApp хабарламаларыңызды тексеріңіз
             </p>
             {userLogin && (
@@ -203,7 +207,7 @@ export const Verify = () => {
 
             {/* Поля для ввода кода */}
             <div className="space-y-4">
-              <label className="block text-sm font-medium text-gray-700 text-center">
+              <label className="block text-xs md:text-sm font-medium text-gray-700 text-center">
                 WhatsApp-қа келген кодты енгізіңіз
               </label>
 
@@ -219,7 +223,7 @@ export const Verify = () => {
                     onChange={(e) => handleCodeChange(index, e.target.value)}
                     onKeyDown={(e) => handleKeyDown(index, e)}
                     onPaste={index === 0 ? handlePaste : undefined}
-                    className="w-12 h-12 text-center text-xl font-bold border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200"
+                    className="w-9 h-9 md:w-12 md:h-12 text-center md:text-xl md:font-bold border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200"
                     disabled={loading}
                   />
                 ))}
@@ -230,7 +234,7 @@ export const Verify = () => {
             <button
               type="submit"
               disabled={loading || code.join("").length !== 6}
-              className="w-full bg-green-500 text-white py-3 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 transition-all duration-200 shadow-lg hover:shadow-xl"
+              className="w-full bg-green-500 text-sm md:text-base text-white py-3 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 transition-all duration-200 shadow-lg hover:shadow-xl"
             >
               {loading ? (
                 <>

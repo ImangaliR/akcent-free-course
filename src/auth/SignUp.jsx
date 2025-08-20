@@ -121,15 +121,17 @@ export const SignUp = () => {
         throw new Error(data.message || data.error || "Ошибка регистрации");
       }
 
-      setSuccess(
-        "Регистрация прошла успешно! Перенаправляем на страницу активации..."
-      );
+      setSuccess("Тіркеу сәтті өтті! Сізді растау бетіне бағыттаймыз...");
       localStorage.setItem("pendingLogin", payload.login);
       setTimeout(() => {
         navigate("/verify", { state: { login: payload.login } });
       }, 2000);
     } catch (err) {
-      setError(err.message);
+      setError(
+        err.message === "User with this login already exists"
+          ? "Бұндай нөмірмен аккаунт тіркелген"
+          : err.message
+      );
     } finally {
       setLoading(false);
     }
@@ -155,18 +157,20 @@ export const SignUp = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-indigo-50 flex items-center justify-center p-4">
-      <div className="max-w-md w-full space-y-8">
+      <div className="max-w-md w-full space-y-5 md:space-y-8">
         {/* Логотип и заголовок */}
         <div className="text-center">
-          <h2 className="text-3xl font-bold text-gray-900 mb-2">Тіркелу</h2>
-          <p className="text-gray-600">
+          <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">
+            Тіркелу
+          </h2>
+          <p className="text-sm md:text-base text-gray-600">
             Бізге қосылыңыз және орыс тілін үйренуді бастаңыз
           </p>
         </div>
 
         {/* Форма регистрации */}
-        <div className="bg-white p-8 rounded-2xl shadow-xl border border-gray-100">
-          <form onSubmit={handleSubmit} className="space-y-5">
+        <div className="bg-white p-6 md:p-8 rounded-2xl shadow-xl border border-gray-100">
+          <form onSubmit={handleSubmit} className="space-y-3 md:space-y-5">
             {/* Сообщения */}
             {error && (
               <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg flex items-center gap-2">
@@ -362,7 +366,7 @@ export const SignUp = () => {
 
           {/* Ссылка на вход */}
           <div className="mt-6 pt-6 border-t border-gray-100">
-            <p className="text-center text-gray-600">
+            <p className="text-sm md:text-base text-center text-gray-600">
               Аккаунтыңыз барма?{" "}
               <Link
                 to="/login"
