@@ -79,7 +79,7 @@ export const UniversalQuiz = ({
             </h3>
             <p className="text-gray-600">
               {quiz.stats.passed
-                ? `Сіз ${quiz.stats.percent}% нәтижемен сынақтан сәтті өттіңіз`
+                ? `Сіз ${quiz.stats.percent}% нәтижемен тапсырмалардан сәтті өттіңіз`
                 : `Нәтиже: ${quiz.stats.percent}%. Керек: 80%`}
             </p>
           </div>
@@ -121,20 +121,20 @@ export const UniversalQuiz = ({
           <div className="flex items-center justify-between mb-4">
             <div className="text-xs md:text-sm text-gray-600">
               {quiz.state.phase === "main" ? (
-                <span>Негізгі айналым: {quiz.stats.progress}</span>
+                <span> {quiz.stats.progress}</span>
               ) : (
                 <div className="flex items-center gap-2">
                   <RotateCcw size={16} className="text-orange-500" />
-                  <span>Қатені түзеу: {quiz.stats.progress}</span>
+                  <span>{quiz.stats.progress}</span>
                 </div>
               )}
             </div>
-            <div className="text-xs md:text-sm font-medium">
+            {/* <div className="text-xs md:text-sm font-medium">
               Дұрыс: {quiz.stats.total}/{allQuestions.length}
               <span className="text-gray-500 ml-2">
                 (керек: {quiz.stats.needed})
               </span>
-            </div>
+            </div> */}
           </div>
 
           {/* Прогресс бар */}
@@ -185,7 +185,7 @@ export const UniversalQuiz = ({
                   : "bg-gray-300 text-gray-500 cursor-not-allowed"
               }`}
             >
-              Жауапты тексеріңіз
+              Тексеру
             </button>
           ) : (
             <button

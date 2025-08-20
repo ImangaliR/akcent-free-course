@@ -17,6 +17,7 @@ export const MatchTaskRenderer = ({
       ? [...question.rightItems].sort(() => Math.random() - 0.5)
       : [];
   });
+  const [fixedPositions, setFixedPositions] = useState(new Set());
   const containerRef = useRef(null);
 
   const pieceBg = (isMatched, isCorrectMatch, isSelected) => {
@@ -39,7 +40,11 @@ export const MatchTaskRenderer = ({
 
   useEffect(() => {
     setMatches(currentAnswer || {});
-  }, [currentAnswer]);
+    setRightItemsOrder((prevOrder) => {
+      return [...question.rightItems].sort(() => Math.random() - 0.5);
+    });
+    setFixedPositions(new Set());
+  }, [currentAnswer, question]);
 
   const handleItemClick = (item, type) => {
     if (isSubmitted) return;
@@ -73,6 +78,7 @@ export const MatchTaskRenderer = ({
       rightId = selectedItem;
     }
 
+    // Remove any existing matches for these items
     Object.keys(newMatches).forEach((key) => {
       if (newMatches[key] === rightId || key === leftId) {
         delete newMatches[key];
@@ -85,7 +91,7 @@ export const MatchTaskRenderer = ({
 
     if (isMatchCorrect(leftId, rightId)) {
       flushSync(() => {
-        moveRightItemToPosition(leftId, rightId);
+        moveRightItemToCorrectPosition(leftId, rightId);
       });
     }
 
@@ -93,7 +99,7 @@ export const MatchTaskRenderer = ({
     setSelectedType(null);
   };
 
-  const moveRightItemToPosition = (leftId, rightId) => {
+  const moveRightItemToCorrectPosition = (leftId, rightId) => {
     const leftIndex = question.leftItems.findIndex(
       (item) => item.id === leftId
     );
@@ -106,11 +112,14 @@ export const MatchTaskRenderer = ({
 
       if (currentRightIndex !== -1 && leftIndex !== -1) {
         const [rightItem] = newOrder.splice(currentRightIndex, 1);
-        newOrder.splice(leftIndex, 0, rightItem);
+        newOrder.unshift(rightItem); // Move the matched right item to the top
       }
 
       return newOrder;
     });
+
+    // Fix this item in its correct position
+    setFixedPositions((prev) => new Set([...prev, rightId]));
   };
 
   const removeMatch = (leftId) => {
@@ -122,14 +131,36 @@ export const MatchTaskRenderer = ({
     onAnswerChange(newMatches);
 
     if (rightId) {
+      // Remove from fixed positions
+      setFixedPositions((prev) => {
+        const newSet = new Set(prev);
+        newSet.delete(rightId);
+        return newSet;
+      });
+
+      // Only move unmatched items around
       setTimeout(() => {
         setRightItemsOrder((prevOrder) => {
           const rightItem = prevOrder.find((item) => item.id === rightId);
           if (rightItem) {
             const newOrder = prevOrder.filter((item) => item.id !== rightId);
-            const randomIndex = Math.floor(
-              Math.random() * (newOrder.length + 1)
-            );
+
+            // Find available positions (not occupied by fixed items)
+            const availablePositions = [];
+            for (let i = 0; i <= newOrder.length; i++) {
+              const itemAtPosition = newOrder[i];
+              if (!itemAtPosition || !fixedPositions.has(itemAtPosition.id)) {
+                availablePositions.push(i);
+              }
+            }
+
+            const randomIndex =
+              availablePositions.length > 0
+                ? availablePositions[
+                    Math.floor(Math.random() * availablePositions.length)
+                  ]
+                : Math.floor(Math.random() * (newOrder.length + 1));
+
             newOrder.splice(randomIndex, 0, rightItem);
             return newOrder;
           }
@@ -214,41 +245,50 @@ export const MatchTaskRenderer = ({
     isMatched,
     isSelected,
     isCorrectMatch,
-  }) => (
-    <div
-      className={`w-fit md:w-full h-40px md:h-60px relative transform transition-all duration-500 hover:scale-105 cursor-pointer ${
-        isSubmitted ? "cursor-default hover:scale-100" : ""
-      }`}
-      style={{ transform: `translateY(0)` }}
-      onClick={() => handleItemClick(item.id, "right")}
-    >
-      <div
-        className={[
-          "relative w-full text-left rounded-md px-3 py-2 pl-9 md:pl-12 md:px-8 md:py-4 transition-colors overflow-visible",
-          pieceBg(isMatched, isCorrectMatch, isSelected),
-          "before:content-[''] before:absolute before:-left-3 before:top-1/2 before:-translate-y-1/2",
-          "before:w-6 before:h-6 before:rounded-full before:bg-white dark:before:bg-white",
-          isMatched
-            ? isCorrectMatch
-              ? "before:border-r-1 before:border-green-500 before:border-t-0 before:border-b-0 before:border-l-0"
-              : "after:bg-sky-100 before:border-r-1 before:border-red-500 before:border-t-0 before:border-b-0 before:border-l-0"
-            : "after:bg-blue-50 hover:bg-blue-100 hover:after:bg-blue-100",
-          pieceBorder(isMatched, isCorrectMatch),
-        ].join(" ")}
-      >
-        <span className="font-semibold text-gray-700 text-sm md:text-base ml-2">
-          {item.text}
-        </span>
+  }) => {
+    const isFixed = fixedPositions.has(item.id);
 
-        {/* Индикатор правильной позиции */}
-        {isPositionCorrect(index, index) && (
-          <div className="absolute -right-2 -top-2 w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
-            <CheckCircle className="w-4 h-4 text-white" />
-          </div>
-        )}
+    return (
+      <div
+        className={`w-fit md:w-full h-40px md:h-60px relative transform transition-all duration-500 hover:scale-105 cursor-pointer ${
+          isSubmitted ? "cursor-default hover:scale-100" : ""
+        }`}
+        style={{
+          transform: `translateY(0)`, // Keep the Y transform fixed
+          position: isFixed ? "absolute" : "relative", // Use absolute for matched items
+          top: isFixed ? "0" : "", // Fix position if it's matched
+          left: isFixed ? "0" : "", // Fix position if it's matched
+        }}
+        onClick={() => handleItemClick(item.id, "right")}
+      >
+        <div
+          className={[
+            "relative w-full text-left rounded-md px-3 py-2 pl-9 md:pl-12 md:px-8 md:py-4 transition-colors overflow-visible",
+            pieceBg(isMatched, isCorrectMatch, isSelected),
+            "before:content-[''] before:absolute before:-left-3 before:top-1/2 before:-translate-y-1/2",
+            "before:w-6 before:h-6 before:rounded-full before:bg-white dark:before:bg-white",
+            isMatched
+              ? isCorrectMatch
+                ? "before:border-r-1 before:border-green-500 before:border-t-0 before:border-b-0 before:border-l-0"
+                : "after:bg-sky-100 before:border-r-1 before:border-red-500 before:border-t-0 before:border-b-0 before:border-l-0"
+              : "after:bg-blue-50 hover:bg-blue-100 hover:after:bg-blue-100",
+            pieceBorder(isMatched, isCorrectMatch),
+          ].join(" ")}
+        >
+          <span className="font-semibold text-gray-700 text-sm md:text-base ml-2">
+            {item.text}
+          </span>
+
+          {/* Correct position indicator */}
+          {isPositionCorrect(index, index) && (
+            <div className="absolute -right-2 -top-2 w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
+              <CheckCircle className="w-4 h-4 text-white" />
+            </div>
+          )}
+        </div>
       </div>
-    </div>
-  );
+    );
+  };
 
   return (
     <div className="mx-auto">
@@ -314,7 +354,7 @@ export const MatchTaskRenderer = ({
             <motion.div
               layout
               transition={{
-                layout: { duration: 0.7, ease: [0.22, 1, 0.36, 1] }, // slow + smooth
+                layout: { duration: 0.7, ease: [0.22, 1, 0.36, 1] },
               }}
               className="space-y-4"
             >
@@ -325,12 +365,13 @@ export const MatchTaskRenderer = ({
                 const isCorrectMatch = isMatched
                   ? isMatchCorrect(matchedLeftId, item.id)
                   : null;
+                const isFixed = fixedPositions.has(item.id);
 
                 return (
                   <motion.div
                     key={item.id}
                     data-right={item.id}
-                    layout="position" // animate position only (more predictable)
+                    layout="position" // Allow for smooth transitions on layout change
                     transition={{
                       layout: { duration: 0.7, ease: [0.22, 1, 0.36, 1] },
                     }}
@@ -341,7 +382,7 @@ export const MatchTaskRenderer = ({
                       }
                       animate={{
                         scale: isCorrectMatch ? [1, 1.04, 1] : 1,
-                        x: isCorrectMatch ? -JOIN_SHIFT_RIGHT : 0,
+                        x: 0, // No movement
                       }}
                       transition={{
                         scale: {
