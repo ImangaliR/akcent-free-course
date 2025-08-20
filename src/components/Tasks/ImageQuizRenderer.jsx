@@ -92,18 +92,18 @@ export const ImageQuizRenderer = ({
   return (
     <div className="mx-auto max-w-4xl">
       {/* Header */}
-      <div className="text-center mb-8">
-        <h2 className="text-xl md:text-2xl font-bold text-gray-800 mb-3">
-          {question.title || "Image Quiz"}
+      <div className="text-center mb-4">
+        <h2 className="text-xl md:text-2xl font-bold text-gray-800 mb-1">
+          {question.title || "Найди правильный рисунок"}
         </h2>
         <p className="text-gray-600 md:text-lg">{question.question}</p>
         {question.description && (
-          <p className="text-gray-500 text-base mt-2">{question.description}</p>
+          <p className="text-gray-500 text-base mt-1">{question.description}</p>
         )}
       </div>
 
       {/* Options grid */}
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4 mb-6 place-items-center ">
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4 place-items-center ">
         {question.options?.map((option) => (
           <div
             key={option.id}

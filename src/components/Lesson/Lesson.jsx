@@ -246,7 +246,7 @@ export const Lesson = ({ currentBlockRef, onBlockComplete }) => {
 
       {/* Контент */}
       <div className="bg-white rounded-xl shadow-lg">
-        <div className="p-3 md:p-6">{renderContent()}</div>
+        <div className="p-3 md:p-5">{renderContent()}</div>
       </div>
 
       {/* Модал InfoCard */}

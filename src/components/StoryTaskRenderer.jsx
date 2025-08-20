@@ -77,7 +77,7 @@ export const StoryTaskRenderer = ({
     <div>
       {/* Локация и фокус */}
       {question.location && (
-        <div className="mb-4">
+        <div className="mb-2 md:mb-3">
           <div className="flex items-center gap-2 text-sm text-gray-600">
             <span className="text-lg">{getLocationIcon()}</span>
             <span className="capitalize">
@@ -95,10 +95,12 @@ export const StoryTaskRenderer = ({
 
       {/* История */}
       {question.story && (
-        <div className="mb-8">
-          <div className="bg-blue-50 rounded-lg p-3 md:p-6 mb-6">
-            <h3 className="text-lg font-semibold text-blue-900 mb-3">Оқиға</h3>
-            <p className="text-blue-800 text-lg leading-relaxed">
+        <div className="mb-3">
+          <div className="bg-blue-50 rounded-lg p-3 md:p-4 md:mb-3">
+            <h3 className="text-lg font-semibold text-blue-900 mb-1 md:mb-3">
+              Оқиға
+            </h3>
+            <p className="text-blue-800 md:text-lg leading-relaxed">
               {question.story}
             </p>
             {question.media && (
@@ -118,14 +120,14 @@ export const StoryTaskRenderer = ({
       )}
 
       {/* Вопрос */}
-      <div className="mb-6 rounded-lg md:p-4">
+      <div className="mb-3 rounded-lg p-1 md:p-4">
         <h4 className="text-xl md:text-3xl font-semibold text-gray-800">
           {question.question}
         </h4>
       </div>
 
       {/* Варианты ответов — responsive grid как в Quizizz */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-3">
         {question.options?.map((option, index) => {
           const isSelected = currentAnswer === index;
           const showIcon = isSubmitted && isSelected;

@@ -105,7 +105,7 @@ export const UniversalQuiz = ({
 
   return (
     <div className="mx-auto">
-      <div className="bg-white rounded-lg p-3 md:p-8">
+      <div className="bg-white rounded-lg px-3 md:px-6 py-1">
         {/* Прогресс и статистика */}
         <div className="mb-6">
           <div className="flex items-center justify-between mb-4">
