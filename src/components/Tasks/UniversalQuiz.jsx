@@ -11,8 +11,9 @@ export const UniversalQuiz = ({
 }) => {
   // Поддерживаем и старый формат и новый
   const allQuestions = lesson.questions || [lesson];
+  const quizId = lesson.id || `${taskType}_${allQuestions.length}`;
 
-  const quiz = useQuizLogic(allQuestions, onStepComplete, taskType);
+  const quiz = useQuizLogic(allQuestions, onStepComplete, taskType, quizId);
 
   // ---- auto-advance timer ----
   const [autoAdvanceLeftMs, setAutoAdvanceLeftMs] = useState(null);

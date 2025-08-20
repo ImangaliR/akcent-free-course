@@ -344,10 +344,10 @@ export const WelcomeModal = () => {
             </div>
 
             {/* Заголовок */}
-            <div className="text-center mb-5 sm:mb-8">
+            <div className="text-center mt-2">
               <Dialog.Title
                 as="h2"
-                className="text-2xl sm:text-3xl font-extrabold text-gray-800 mb-2"
+                className="text-2xl sm:text-3xl font-extrabold text-gray-800"
               >
                 {currentStepData.title}
               </Dialog.Title>

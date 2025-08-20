@@ -2,8 +2,16 @@
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 
-export const useQuizLogic = (allQuestions, onStepComplete, taskType) => {
+export const useQuizLogic = (
+  allQuestions,
+  onStepComplete,
+  taskType,
+  quizId
+) => {
   // Normalize questions array - handle both single question and multi-question formats
+
+  const storageKey = `quiz_progress_${quizId || taskType}`;
+
   const questions = useMemo(() => {
     if (Array.isArray(allQuestions)) {
       return allQuestions;
@@ -15,17 +23,68 @@ export const useQuizLogic = (allQuestions, onStepComplete, taskType) => {
     // Single question format
     return [allQuestions];
   }, [allQuestions]);
+  const loadSavedState = useCallback(() => {
+    try {
+      const saved = localStorage.getItem(storageKey);
+      if (saved) {
+        const parsedState = JSON.parse(saved);
+        if (
+          parsedState.questionsLength === questions.length &&
+          parsedState.taskType === taskType
+        ) {
+          return parsedState.state;
+        }
+      }
+    } catch (error) {
+      console.warn("Error loading quiz state:", error);
+    }
+    return null;
+  }, [storageKey, questions.length, taskType]);
 
-  const [state, setState] = useState({
-    phase: "main", // 'main' | 'redemption' | 'done'
-    currentIndex: 0,
-    currentAnswer: null,
-    submitted: false,
-    showResult: false,
-    wrongQuestions: [],
-    redemptionIndex: 0,
-    answers: [], // Store all answers for main phase
-    redemptionAnswers: [], // Store redemption answers
+  const saveState = useCallback(
+    (newState) => {
+      try {
+        const dataToSave = {
+          state: newState,
+          questionsLength: questions.length,
+          taskType: taskType,
+          timestamp: Date.now(),
+        };
+        localStorage.setItem(storageKey, JSON.stringify(dataToSave));
+      } catch (error) {
+        console.warn("Error saving quiz state:", error);
+      }
+    },
+    [storageKey, questions.length, taskType]
+  );
+  () => {
+    if (Array.isArray(allQuestions)) {
+      return allQuestions;
+    }
+    // For imagequiz and other multi-question types
+    if (allQuestions?.questions && Array.isArray(allQuestions.questions)) {
+      return allQuestions.questions;
+    }
+    // Single question format
+    return [allQuestions];
+  },
+    [allQuestions];
+
+  const [state, setState] = useState(() => {
+    const savedState = loadSavedState();
+    return (
+      savedState || {
+        phase: "main", // 'main' | 'redemption' | 'done'
+        currentIndex: 0,
+        currentAnswer: null,
+        submitted: false,
+        showResult: false,
+        wrongQuestions: [],
+        redemptionIndex: 0,
+        answers: [], // Store all answers for main phase
+        redemptionAnswers: [], // Store redemption answers
+      }
+    );
   });
 
   // Get current question
@@ -299,6 +358,16 @@ export const useQuizLogic = (allQuestions, onStepComplete, taskType) => {
       }
     });
   }, [questions]);
+
+  useEffect(() => {
+    if (state.phase !== "done") {
+      saveState(state);
+    } else {
+      try {
+        localStorage.removeItem(storageKey);
+      } catch (error) {}
+    }
+  }, [state, saveState, storageKey]); // ← storageKey добавлен в зависимости
 
   // Calculate stats
   const stats = useMemo(() => {

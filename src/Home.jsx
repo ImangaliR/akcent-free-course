@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { CourseNavigation } from "./components/CourseNavigation";
 import { Header } from "./components/Header";
 import { Lesson } from "./components/Lesson/Lesson";
+import LogoutModal from "./components/modals/LogoutModal";
 import { WelcomeModal } from "./components/modals/WelcomeModal";
 import { SidebarNav } from "./components/Sidebar";
 import { useAuth } from "./context/AuthContext";
@@ -10,14 +11,14 @@ import { CourseProvider, useCourse } from "./context/CourseContext";
 const HomeContent = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [currentBlockCompleted, setCurrentBlockCompleted] = useState(false);
+  const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
 
-  const { showWelcomeModal } = useAuth();
+  const { showWelcomeModal, logout } = useAuth();
   const { getCurrentBlock, loading, error, goToNextBlock, canGoNext } =
     useCourse();
 
   // Обработка завершения блока
   const handleBlockComplete = async (blockId, completionData) => {
-    console.log(`Блок завершен:`, blockId, completionData);
     setCurrentBlockCompleted(true);
 
     // Автопереход только для InfoCard
@@ -27,6 +28,19 @@ const HomeContent = () => {
         setCurrentBlockCompleted(false);
       }, 500);
     }
+  };
+
+  const handleLogoutRequest = () => {
+    setIsLogoutModalOpen(true);
+  };
+
+  const handleConfirmLogout = () => {
+    logout();
+    setIsLogoutModalOpen(false);
+  };
+
+  const handleCloseLogoutModal = () => {
+    setIsLogoutModalOpen(false);
   };
 
   // Сброс при смене блока
@@ -40,8 +54,12 @@ const HomeContent = () => {
       if (window.innerWidth >= 1024) setIsSidebarOpen(false);
     };
     const handleEscape = (e) => {
-      if (e.key === "Escape" && isSidebarOpen && !showWelcomeModal) {
-        setIsSidebarOpen(false);
+      if (e.key === "Escape") {
+        if (isLogoutModalOpen) {
+          setIsLogoutModalOpen(false);
+        } else if (isSidebarOpen && !showWelcomeModal) {
+          setIsSidebarOpen(false);
+        }
       }
     };
 
@@ -52,7 +70,7 @@ const HomeContent = () => {
       window.removeEventListener("resize", handleResize);
       document.removeEventListener("keydown", handleEscape);
     };
-  }, [isSidebarOpen, showWelcomeModal]);
+  }, [isSidebarOpen, showWelcomeModal, isLogoutModalOpen]);
 
   // Loading
   if (loading) {
@@ -92,6 +110,12 @@ const HomeContent = () => {
     <>
       {showWelcomeModal && <WelcomeModal />}
 
+      <LogoutModal
+        isOpen={isLogoutModalOpen}
+        onClose={handleCloseLogoutModal}
+        onConfirm={handleConfirmLogout}
+      />
+
       <div className="font-['FuturaPT'] min-h-screen bg-gray-100 text-gray-900">
         <Header
           isSidebarOpen={isSidebarOpen}
@@ -102,6 +126,7 @@ const HomeContent = () => {
           <SidebarNav
             isSidebarOpen={isSidebarOpen}
             setIsSidebarOpen={setIsSidebarOpen}
+            onLogoutRequest={handleLogoutRequest} // Передайте обработчик
           />
 
           <main className="flex-1 lg:ml-64">

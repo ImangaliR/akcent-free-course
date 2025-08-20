@@ -18,7 +18,11 @@ import { useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import { useCourse } from "../context/CourseContext";
 
-export const SidebarNav = ({ isSidebarOpen, setIsSidebarOpen }) => {
+export const SidebarNav = ({
+  isSidebarOpen,
+  setIsSidebarOpen,
+  onLogoutRequest,
+}) => {
   const { logout } = useAuth();
   const {
     courseManifest,
@@ -152,9 +156,7 @@ export const SidebarNav = ({ isSidebarOpen, setIsSidebarOpen }) => {
   };
 
   const handleLogout = () => {
-    if (window.confirm("Шыққыңыз келетініне сенімдісіз бе?")) {
-      logout();
-    }
+    onLogoutRequest(); // Вызываем функцию из пропсов
   };
 
   const getBlockTypeInfo = (ref) => {
