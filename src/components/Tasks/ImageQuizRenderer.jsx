@@ -93,23 +93,30 @@ export const ImageQuizRenderer = ({
     <div className="mx-auto max-w-4xl">
       {/* Header */}
       <div className="text-center mb-4">
-        <h2 className="text-xl md:text-2xl font-bold text-gray-800 mb-1">
+        <h2 className="text-xl md:text-2xl font-bold text-gray-800">
           {question.title || "Найди правильный рисунок"}
         </h2>
-        <p className="text-gray-600 md:text-lg">{question.question}</p>
+        <p className="text-gray-600 md:text-lg mb-6 md:mb-8">
+          {question.question}
+        </p>
         {question.description && (
-          <p className="text-gray-500 text-base mt-1">{question.description}</p>
+          <p className="text-gray-500 text-base">{question.description}</p>
         )}
       </div>
 
       {/* Options grid */}
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4 place-items-center ">
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-3 place-items-center ">
         {question.options?.map((option) => (
           <div
             key={option.id}
-            className={`relative w-[150px] md:w-[220px] aspect-square md:p-1 rounded-lg border-2 transition-all duration-200 ${getOptionStyle(
+            className={`relative w-[150px] md:w-[220px] aspect-square rounded-2xl border-2 transition-all duration-200 ${getOptionStyle(
               option.id
-            )} ${isSubmitted ? "cursor-default" : "cursor-pointer"}`}
+            )} ${
+              !isSubmitted &&
+              selectedOption === option.id && (
+                <div className="absolute inset-0 border-2 border-blue-500 rounded-2xl  pointer-events-none"></div>
+              )
+            }${isSubmitted ? "cursor-default" : "cursor-pointer"} `}
             onClick={() => handleOptionClick(option.id)}
           >
             {/* Result icon */}
@@ -117,11 +124,11 @@ export const ImageQuizRenderer = ({
               {getOptionIcon(option.id)}
             </div>
 
-            <div className="w-full h-full bg-[#FEF9F2] rounded overflow-hidden">
+            <div className="w-full h-full bg-[#FEF9F2] overflow-hidden rounded-2xl">
               <img
                 src={option.image}
                 alt={option.label || `Option ${option.id}`}
-                className="w-full h-full object-contain p-1.5"
+                className="w-full h-full object-contain"
                 onError={(e) => {
                   e.target.style.display = "none";
                   e.target.nextElementSibling.style.display = "flex";
@@ -134,10 +141,6 @@ export const ImageQuizRenderer = ({
                 {option.label || `Option ${option.id}`}
               </div>
             </div>
-
-            {!isSubmitted && selectedOption === option.id && (
-              <div className="absolute inset-0 border-2 border-blue-500 rounded-lg pointer-events-none"></div>
-            )}
           </div>
         ))}
       </div>
