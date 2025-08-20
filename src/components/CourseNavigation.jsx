@@ -73,7 +73,6 @@ export const CourseNavigation = ({ currentBlockCompleted = false }) => {
                 <ChevronLeft className="w-5 h-5" />
                 <div className="text-left">
                   <div className="text-sm">Артқа</div>
-                  <div className="text-xs text-gray-500">Назад</div>
                 </div>
               </button>
             ) : (
@@ -81,7 +80,7 @@ export const CourseNavigation = ({ currentBlockCompleted = false }) => {
                 <ChevronLeft className="w-5 h-5" />
                 <div>
                   <div>Артқа</div>
-                  <div className="text-xs">Первый блок</div>
+                  <div className="text-xs">Бірінші блок</div>
                 </div>
               </div>
             )}
@@ -92,7 +91,7 @@ export const CourseNavigation = ({ currentBlockCompleted = false }) => {
             <div className="text-sm md:text-base font-semibold md:font-bold text-gray-800">
               {currentNumber} / {totalBlocks}
             </div>
-            <div className="text-xs md:text-xs text-gray-500">блоков</div>
+            <div className="text-xs md:text-xs text-gray-500">блок</div>
           </div>
 
           {/* Кнопка вперед */}
@@ -114,7 +113,6 @@ export const CourseNavigation = ({ currentBlockCompleted = false }) => {
                   {currentBlockCompleted ? (
                     <>
                       <div className="text-sm">Алға</div>
-                      <div className="text-xs opacity-90">Вперед</div>
                     </>
                   ) : (
                     <>
@@ -122,7 +120,6 @@ export const CourseNavigation = ({ currentBlockCompleted = false }) => {
                         <Play className="w-4 h-4" />
                         Аяқтау
                       </div>
-                      <div className="text-xs">Завершить</div>
                     </>
                   )}
                 </div>
@@ -135,7 +132,6 @@ export const CourseNavigation = ({ currentBlockCompleted = false }) => {
                     <CheckCircle className="w-4 h-4" />
                     Аяқталды!
                   </div>
-                  <div className="text-xs opacity-90">Завершено</div>
                 </div>
               </div>
             )}
