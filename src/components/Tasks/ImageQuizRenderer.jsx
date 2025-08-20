@@ -103,7 +103,7 @@ export const ImageQuizRenderer = ({
       </div>
 
       {/* Options grid */}
-      <div className="w-fit grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4 mb-6 place-items-center ">
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4 mb-6 place-items-center ">
         {question.options?.map((option) => (
           <div
             key={option.id}
