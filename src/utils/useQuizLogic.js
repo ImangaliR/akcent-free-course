@@ -1,4 +1,4 @@
-// Updated useQuizLogic hook to properly handle imagequiz
+// Universal useQuizLogic hook that works with all task types
 
 import { useState, useCallback, useMemo } from "react";
 
@@ -43,11 +43,22 @@ export const useQuizLogic = (allQuestions, onStepComplete, taskType) => {
     state.redemptionIndex,
   ]);
 
-  // Check if answer is ready based on task type
+  // Universal answer readiness check - delegates to answer itself if it has isReady method
   const isAnswerReady = useCallback(
     (answer) => {
       if (!answer) return false;
 
+      // If answer has its own isReady method, use it
+      if (typeof answer?.isReady === "function") {
+        return answer.isReady();
+      }
+
+      // If answer has explicit isComplete property, use it
+      if (typeof answer?.isComplete === "boolean") {
+        return answer.isComplete;
+      }
+
+      // Fallback to task-specific logic
       switch (taskType) {
         case "imagequiz":
           return answer.selectedOption != null;
@@ -58,20 +69,35 @@ export const useQuizLogic = (allQuestions, onStepComplete, taskType) => {
           return Array.isArray(answer) && answer.length > 0;
         case "multiblanktask":
           return (
-            Array.isArray(answer) && answer.every((item) => item.value?.trim())
+            Array.isArray(answer) &&
+            answer.every(
+              (item) => item && typeof item === "object" && item.value?.trim()
+            )
           );
         default:
+          // Generic check for simple values
           return answer != null && answer !== "";
       }
     },
     [taskType]
   );
 
-  // Check if answer is correct based on task type
+  // Universal correctness check - delegates to answer itself if it has isCorrect method
   const isAnswerCorrect = useCallback(
     (answer, question) => {
       if (!answer || !question) return false;
 
+      // If answer has its own isCorrect property, use it
+      if (typeof answer?.isCorrect === "boolean") {
+        return answer.isCorrect;
+      }
+
+      // If answer has its own checkCorrectness method, use it
+      if (typeof answer?.checkCorrectness === "function") {
+        return answer.checkCorrectness(question);
+      }
+
+      // Fallback to task-specific logic
       switch (taskType) {
         case "imagequiz":
           return answer.selectedOption === question.answer;
@@ -91,13 +117,22 @@ export const useQuizLogic = (allQuestions, onStepComplete, taskType) => {
             })
           );
         case "multiblanktask":
+          // Check if all blanks are filled correctly
+          if (!Array.isArray(answer) || !Array.isArray(question.blanks)) {
+            return false;
+          }
+
           return (
-            Array.isArray(answer) &&
-            answer.every(
-              (item, index) =>
-                item.value?.trim().toLowerCase() ===
-                question.blanks[index]?.answer?.toLowerCase()
-            )
+            answer.length === question.blanks.length &&
+            answer.every((item, index) => {
+              const blank = question.blanks[index];
+              if (!item || !blank) return false;
+
+              const userAnswer = item.value?.trim().toLowerCase();
+              const correctAnswer = blank.answer?.trim().toLowerCase();
+
+              return userAnswer === correctAnswer;
+            })
           );
         default:
           return answer === question.answer;
