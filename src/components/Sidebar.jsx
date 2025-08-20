@@ -168,7 +168,7 @@ export const SidebarNav = ({ isSidebarOpen, setIsSidebarOpen }) => {
     ) {
       return {
         type: "video",
-        label: "Бейне сабақ>",
+        label: "Бейне сабақ",
         icon: <Play className="w-4 h-4" />,
       };
     }
@@ -238,7 +238,7 @@ export const SidebarNav = ({ isSidebarOpen, setIsSidebarOpen }) => {
 
     // Position-based titles
     if (index === 0 && typeInfo.type === "video") {
-      return "Добро пожаловать в курс";
+      return "Курсқа қош келдіңіз!";
     }
 
     // Check if this is the last video (6th video) → conclusion
@@ -247,7 +247,7 @@ export const SidebarNav = ({ isSidebarOpen, setIsSidebarOpen }) => {
         ({ index: vIndex }) => vIndex === index
       );
       if (videoIndex === videoBlocks.length - 1) {
-        return "Заключение курса";
+        return "Курс қорытындысы";
       }
     }
 
@@ -259,7 +259,7 @@ export const SidebarNav = ({ isSidebarOpen, setIsSidebarOpen }) => {
           .slice(1) // Skip intro video
           .findIndex(({ index: vIndex }) => vIndex === index) + 1;
 
-      return `Урок ${videoCount}: Видео`;
+      return `${videoCount}ші сабақ: Бейне жазба`;
     }
     if (typeInfo.type === "task") {
       // Count task blocks before this one (excluding InfoCards)
@@ -272,7 +272,7 @@ export const SidebarNav = ({ isSidebarOpen, setIsSidebarOpen }) => {
           );
         }).length + 1;
 
-      return `Задание ${taskCount}`;
+      return `Тапсырма`;
     }
     if (typeInfo.type === "audio") {
       // Count audio blocks before this one (excluding InfoCards)
