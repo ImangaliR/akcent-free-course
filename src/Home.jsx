@@ -78,7 +78,7 @@ const HomeContent = () => {
       <div className="min-h-screen bg-gray-100 flex items-center justify-center">
         <div className="text-center">
           <div className="w-8 h-8 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-gray-600">Загружаем курс...</p>
+          <p className="text-gray-600">Курс жүктелуде...</p>
         </div>
       </div>
     );
@@ -116,7 +116,7 @@ const HomeContent = () => {
         onConfirm={handleConfirmLogout}
       />
 
-      <div className="font-['FuturaPT'] min-h-screen bg-gray-100 text-gray-900">
+      <div className="font-['FuturaPT'] min-h-screen bg-[#f1f2f7] text-gray-900">
         <Header
           isSidebarOpen={isSidebarOpen}
           setIsSidebarOpen={setIsSidebarOpen}

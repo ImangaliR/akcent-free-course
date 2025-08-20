@@ -96,40 +96,11 @@ export const VideoLessonWithSubtitles = ({ lesson, onStepComplete }) => {
       <div className="flex flex-col lg:flex-row gap-4 lg:gap-6 h-full">
         {/* Видео область */}
         <div className="w-full lg:flex-1">
-          <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-            {/* Заголовок */}
-            <div className="p-3 sm:p-4 border-b">
-              <h3 className="text-lg sm:text-xl font-bold text-gray-800 leading-tight">
-                {lesson.title}
-              </h3>
-              {lesson.description && (
-                <p className="text-gray-600 text-sm mt-1 line-clamp-2 sm:line-clamp-none">
-                  {lesson.description}
-                </p>
-              )}
-
-              {/* Статусы */}
-              <div className="flex flex-wrap items-center gap-3 mt-2">
-                {videoWatched && (
-                  <div className="flex items-center gap-2 text-green-600">
-                    <div className="w-2 h-2 bg-green-500 rounded-full" />
-                    <span className="text-sm">Видео просмотрено</span>
-                  </div>
-                )}
-                {subtitlesLoading && (
-                  <div className="flex items-center gap-2 text-blue-600">
-                    <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse" />
-                    <span className="text-sm">Загрузка субтитров...</span>
-                  </div>
-                )}
-              </div>
-            </div>
-
-            {/* Видео плеер с нативными контролами */}
+          <div className="bg-white rounded-3xl shadow-lg overflow-hidden">
             <div className="relative bg-black">
               <video
                 ref={videoRef}
-                className="w-full h-auto max-h-[50vh] sm:max-h-[60vh] lg:max-h-none object-contain"
+                className="w-full h-auto max-h-[70vh] sm:max-h-[60vh] lg:max-h-none object-contain"
                 controls
                 autoPlay
                 preload="metadata"

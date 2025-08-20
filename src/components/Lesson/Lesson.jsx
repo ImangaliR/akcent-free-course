@@ -231,8 +231,8 @@ export const Lesson = ({ currentBlockRef, onBlockComplete }) => {
   return (
     <div className="w-full">
       {/* Фиксированный заголовок */}
-      <div className="lg:sticky lg:top-0 lg:z-40 mt-1">
-        <div className="bg-gradient-to-r from-[#9C45FF] to-[#7C3AED] rounded-xl p-4">
+      <div className="lg:sticky lg:top-0 lg:z-40 mt-1 mb-4">
+        <div className="bg-[#9C45FF] rounded-xl p-4">
           <h2 className="text-lg md:text-2xl font-bold text-white">
             {blockData.title}
           </h2>
@@ -240,7 +240,7 @@ export const Lesson = ({ currentBlockRef, onBlockComplete }) => {
       </div>
 
       {/* Контент */}
-      <div className="bg-white rounded-xl shadow-lg">
+      <div className="bg-white rounded-xl">
         <div className="p-3 md:p-5">{renderContent()}</div>
       </div>
 

@@ -72,7 +72,6 @@ export const CourseProvider = ({ children }) => {
     loadCourseManifest();
   }, []);
 
-  // Enhanced: Load both progress and answers
   const loadUserProgress = async () => {
     try {
       // Load progress

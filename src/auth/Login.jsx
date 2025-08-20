@@ -101,7 +101,7 @@ export const Login = () => {
     } catch (err) {
       setError(
         err.message === "Invalid password"
-          ? "Қате пароль"
+          ? "Қате құпиясөз"
           : err.message === "User not found"
           ? "Бұндай аккаунт жоқ"
           : "Кіру кезінде қате"
