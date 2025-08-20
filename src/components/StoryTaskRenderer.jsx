@@ -89,15 +89,9 @@ export const StoryTaskRenderer = ({
                 ? "Саябақ"
                 : "Орналасқан жері"}
             </span>
-            {question.focus && (
-              <span className="ml-4 bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">
-                Фокус: {question.focus}
-              </span>
-            )}
           </div>
         </div>
       )}
-
       {/* История */}
       {question.story && (
         <div className="mb-8">

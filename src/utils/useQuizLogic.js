@@ -1,6 +1,6 @@
-// Universal useQuizLogic hook that works with all task types
+// Исправленный useQuizLogic hook
 
-import { useState, useCallback, useMemo } from "react";
+import { useCallback, useMemo, useState } from "react";
 
 export const useQuizLogic = (allQuestions, onStepComplete, taskType) => {
   // Normalize questions array - handle both single question and multi-question formats
@@ -43,10 +43,13 @@ export const useQuizLogic = (allQuestions, onStepComplete, taskType) => {
     state.redemptionIndex,
   ]);
 
-  // Universal answer readiness check - delegates to answer itself if it has isReady method
+  // ИСПРАВЛЕННАЯ функция isAnswerReady - более гибкая проверка
   const isAnswerReady = useCallback(
     (answer) => {
-      if (!answer) return false;
+      // Null и undefined не готовы
+      if (answer === null || answer === undefined) {
+        return false;
+      }
 
       // If answer has its own isReady method, use it
       if (typeof answer?.isReady === "function") {
@@ -58,25 +61,51 @@ export const useQuizLogic = (allQuestions, onStepComplete, taskType) => {
         return answer.isComplete;
       }
 
-      // Fallback to task-specific logic
+      // Task-specific logic с улучшенными проверками
       switch (taskType) {
         case "imagequiz":
-          return answer.selectedOption != null;
+          // Для imagequiz проверяем наличие selectedOption (включая 0)
+          return (
+            typeof answer === "object" &&
+            answer !== null &&
+            "selectedOption" in answer &&
+            answer.selectedOption !== null &&
+            answer.selectedOption !== undefined
+          );
+
         case "storytask":
         case "audiotask":
-          return answer != null && answer !== "";
+          // Для storytask и audiotask answer это индекс выбранного варианта (число)
+          return typeof answer === "number" && answer >= 0;
+
         case "matchtask":
-          return Array.isArray(answer) && answer.length > 0;
+          // Для match задач проверяем объект с соответствиями
+          return (
+            typeof answer === "object" &&
+            answer !== null &&
+            Object.keys(answer).length > 0
+          );
+
         case "multiblanktask":
+          // Для multiblank проверяем массив с выбранными опциями
           return (
             Array.isArray(answer) &&
-            answer.every(
-              (item) => item && typeof item === "object" && item.value?.trim()
-            )
+            answer.length > 0 &&
+            answer.every((item) => item !== null && item !== undefined)
           );
+
         default:
-          // Generic check for simple values
-          return answer != null && answer !== "";
+          // Общая проверка для неизвестных типов
+          // Разрешаем 0, false как валидные ответы
+          if (typeof answer === "number" || typeof answer === "boolean") {
+            return true;
+          }
+          // Для строк проверяем что не пустая
+          if (typeof answer === "string") {
+            return answer.trim().length > 0;
+          }
+          // Для объектов и массивов просто проверяем что не null
+          return answer != null;
       }
     },
     [taskType]
@@ -103,35 +132,32 @@ export const useQuizLogic = (allQuestions, onStepComplete, taskType) => {
           return answer.selectedOption === question.answer;
         case "storytask":
         case "audiotask":
+          // Для storytask и audiotask сравниваем индекс с правильным ответом
           return answer === question.answer;
         case "matchtask":
-          // For match tasks, check if all pairs are correct
+          // Для match задач проверяем правильность соответствий
+          if (typeof answer !== "object" || !answer || !question.answer) {
+            return false;
+          }
+
+          // Проверяем что все соответствия правильные
           return (
-            Array.isArray(answer) &&
-            answer.length === question.pairs?.length &&
-            answer.every((pair) => {
-              const correctPair = question.pairs.find(
-                (p) => p.left === pair.left
-              );
-              return correctPair && correctPair.right === pair.right;
-            })
+            Object.keys(answer).every(
+              (leftId) => answer[leftId] === question.answer[leftId]
+            ) &&
+            Object.keys(answer).length === Object.keys(question.answer).length
           );
         case "multiblanktask":
-          // Check if all blanks are filled correctly
+          // Проверяем правильность выбранных опций для каждого бланка
           if (!Array.isArray(answer) || !Array.isArray(question.blanks)) {
             return false;
           }
 
           return (
             answer.length === question.blanks.length &&
-            answer.every((item, index) => {
-              const blank = question.blanks[index];
-              if (!item || !blank) return false;
-
-              const userAnswer = item.value?.trim().toLowerCase();
-              const correctAnswer = blank.answer?.trim().toLowerCase();
-
-              return userAnswer === correctAnswer;
+            answer.every((selectedOptionIndex, blankIndex) => {
+              const blank = question.blanks[blankIndex];
+              return selectedOptionIndex === blank.correctOption;
             })
           );
         default:

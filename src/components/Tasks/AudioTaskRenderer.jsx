@@ -116,15 +116,6 @@ export const AudioTaskRenderer = ({
     return `${minutes}:${seconds.toString().padStart(2, "0")}`;
   };
 
-  // Debug: выведем в консоль что получили
-  console.log("AudioTaskRenderer received:", {
-    question,
-    currentAnswer,
-    isSubmitted,
-    showFeedback,
-    isCorrect,
-  });
-
   return (
     <div className="mx-auto max-w-4xl">
       {/* Заголовок */}

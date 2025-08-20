@@ -258,10 +258,7 @@ export const MatchTaskRenderer = ({
         <h4 className="text-2xl font-bold text-gray-800 mb-3">
           {question.question}
         </h4>
-        <p className="text-sm text-gray-500 mt-2">
-          Сәйкес жұптарды қосу үшін сөздерді түртіңіз. Дұрыс жауаптар өз
-          орындарына жылжиды.
-        </p>
+      
       </div>
 
       {/* Main puzzle area */}

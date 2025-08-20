@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
 import { CheckCircle, X } from "lucide-react";
+import { useEffect, useState } from "react";
 
 export const ImageQuizRenderer = ({
   question,
@@ -8,13 +8,6 @@ export const ImageQuizRenderer = ({
   isSubmitted,
 }) => {
   const [selectedOption, setSelectedOption] = useState(null);
-
-  // Debug logging
-  console.log("ImageQuizRenderer props:", {
-    question,
-    currentAnswer,
-    isSubmitted,
-  });
 
   // Early return if no question data
   if (!question) {
@@ -110,44 +103,40 @@ export const ImageQuizRenderer = ({
       </div>
 
       {/* Options grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6 place-items-center">
         {question.options?.map((option) => (
           <div
             key={option.id}
-            className={`relative p-3 rounded-xl border-2 transition-all duration-200 ${getOptionStyle(
+            className={`relative w-[200px] aspect-square p-1.5 rounded-lg border-2 transition-all duration-200 ${getOptionStyle(
               option.id
             )} ${isSubmitted ? "cursor-default" : "cursor-pointer"}`}
             onClick={() => handleOptionClick(option.id)}
           >
             {/* Result icon */}
-            <div className="absolute top-3 right-3 z-10">
+            <div className="absolute top-1.5 right-1.5 z-10">
               {getOptionIcon(option.id)}
             </div>
 
-            {/* Image container */}
-            <div className="w-full aspect-square bg-gray-100 rounded-lg overflow-hidden">
+            <div className="w-full h-full bg-white rounded overflow-hidden">
               <img
                 src={option.image}
                 alt={option.label || `Option ${option.id}`}
-                className="w-full h-full object-cover"
+                className="w-full h-full object-contain p-1.5"
                 onError={(e) => {
-                  // Fallback for missing images
                   e.target.style.display = "none";
                   e.target.nextElementSibling.style.display = "flex";
                 }}
               />
-              {/* Fallback div for missing images */}
               <div
-                className="w-full h-full bg-gray-200 flex items-center justify-center text-gray-500 text-sm"
+                className="w-full h-full bg-gray-200 flex items-center justify-center text-gray-500 text-xs"
                 style={{ display: "none" }}
               >
                 {option.label || `Option ${option.id}`}
               </div>
             </div>
 
-            {/* Selection indicator for non-submitted state */}
             {!isSubmitted && selectedOption === option.id && (
-              <div className="absolute inset-0 border-4 border-blue-500 rounded-xl pointer-events-none"></div>
+              <div className="absolute inset-0 border-2 border-blue-500 rounded-lg pointer-events-none"></div>
             )}
           </div>
         ))}
