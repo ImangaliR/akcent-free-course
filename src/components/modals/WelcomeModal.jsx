@@ -76,7 +76,7 @@ const WelcomeStep = ({ onNext }) => (
     </p>
     <button
       onClick={onNext}
-      className="bg-green-500 hover:bg-green-600 text-white font-medium py-3 px-8 rounded-lg transition duration-200 shadow-md transform hover:scale-105"
+      className="bg-[#9C45FF] hover:bg-purple-600 text-white font-medium py-3 px-8 rounded-lg transition duration-200 shadow-md transform hover:scale-105"
     >
       Бастау
     </button>
@@ -95,7 +95,7 @@ const LevelWifiIcon = ({ level }) => {
           <div
             key={i}
             className={`w-1.5 rounded-sm ${
-              isActive ? "bg-blue-600" : "bg-gray-300"
+              isActive ? "bg-[#9C45FF]" : "bg-gray-300"
             }`}
             style={{
               height: `${6 + i * 4}px`, // bar heights: 6, 10, 14, 18px
@@ -116,13 +116,13 @@ const QuestionStep = ({ stepData, onSelect, selectedValue }) => (
         <button
           key={option.id}
           onClick={() => onSelect(stepData.field, option.value)}
-          className={`w-full text-left px-6 ${
+          className={`w-full text-sm md:text-base text-left px-6 ${
             isLevel ? "py-2" : "py-3"
           } border-2 rounded-xl transition-all duration-200 ease-in-out cursor-pointer
           ${
             selectedValue === option.value
-              ? "bg-green-50 text-green-700 border-green-500 shadow-lg"
-              : "bg-white text-gray-800 border-gray-300 hover:border-green-400"
+              ? "bg-purple-50 text-purple-700 border-[#9C45FF] shadow-lg"
+              : "bg-white text-gray-800 border-gray-300 hover:border-purple-400"
           }
           ${
             isLevel ? "sm:col-span-2" : ""
@@ -315,7 +315,7 @@ export const WelcomeModal = () => {
         */}
         <div
           className="
-            relative w-[92vw] max-w-[800px] h-[85vh]
+            relative w-[92vw] max-w-[800px]
             sm:w-[800px] sm:h-[600px]
             transform overflow-hidden rounded-2xl bg-white text-left align-middle shadow-2xl transition-all
             flex flex-col
@@ -326,7 +326,7 @@ export const WelcomeModal = () => {
             {/* Прогресс */}
             <div className="h-2 bg-gray-200 rounded-full mb-4">
               <div
-                className="h-full rounded-full bg-gradient-to-r from-green-400 to-green-600 transition-all duration-500 ease-out"
+                className="h-full rounded-full bg-gradient-to-r from-[#9C45FF] to-purple-600 transition-all duration-500 ease-out"
                 style={{ width: `${((currentStep + 1) / totalSteps) * 100}%` }}
               />
             </div>
@@ -344,15 +344,15 @@ export const WelcomeModal = () => {
             </div>
 
             {/* Заголовок */}
-            <div className="text-center mt-2">
+            <div className="text-center my-2 space-y-1">
               <Dialog.Title
                 as="h2"
-                className="text-2xl sm:text-3xl font-extrabold text-gray-800"
+                className="text-xl sm:text-3xl font-extrabold text-gray-800"
               >
                 {currentStepData.title}
               </Dialog.Title>
               {currentStepData.subtitle && (
-                <Dialog.Description className="text-gray-600 text-sm sm:text-base">
+                <Dialog.Description className="text-gray-600 text-xs sm:text-base">
                   {currentStepData.subtitle}
                 </Dialog.Description>
               )}
@@ -420,7 +420,7 @@ export const WelcomeModal = () => {
                 type="button"
                 onClick={handleNext}
                 disabled={loading || !isStepValid}
-                className="flex-1 bg-green-500 hover:bg-green-600 disabled:bg-gray-400 text-white font-semibold py-3 sm:py-4 px-4 sm:px-6 rounded-xl transition duration-200 flex items-center justify-center shadow-lg transform hover:scale-105 disabled:transform-none"
+                className="flex-1 bg-[#9C45FF] hover:bg-purple-600 disabled:bg-gray-400 text-white font-semibold py-3 sm:py-4 px-4 sm:px-6 rounded-xl transition duration-200 flex items-center justify-center shadow-lg transform hover:scale-105 disabled:transform-none"
               >
                 {loading ? (
                   <>
