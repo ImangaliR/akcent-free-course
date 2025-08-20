@@ -104,7 +104,7 @@ export const CourseNavigation = ({ currentBlockCompleted = false }) => {
                   flex items-center gap-3 px-4 py-3 rounded-lg font-medium w-full justify-end transition-all
                   ${
                     currentBlockCompleted
-                      ? "bg-blue-500 text-white hover:bg-blue-700 shadow-lg"
+                      ? "bg-[#6976F8] text-white hover:bg-[#5661E0] shadow-lg"
                       : "bg-gray-300 text-gray-500 cursor-not-allowed"
                   }
                 `}
@@ -118,7 +118,7 @@ export const CourseNavigation = ({ currentBlockCompleted = false }) => {
                     <>
                       <div className="text-sm flex items-center gap-2 justify-end">
                         <Play className="w-4 h-4" />
-                        Аяқтау
+                        Келесі
                       </div>
                     </>
                   )}

@@ -101,10 +101,11 @@ export const AudioTaskRenderer = ({
   };
 
   // Проверяем наличие question
+  // Проверяем наличие question
   if (!question) {
     return (
-      <div className="text-center p-8">
-        <p className="text-gray-500">Вопрос загружается...</p>
+      <div className="flex items-center justify-center min-h-[200px]">
+        <p className="text-gray-400">Загрузка...</p>
       </div>
     );
   }
@@ -117,52 +118,51 @@ export const AudioTaskRenderer = ({
   };
 
   return (
-    <div className="mx-auto max-w-4xl">
+    <div className="max-w-2xl mx-auto space-y-6">
       {/* Заголовок */}
-      <div className="text-center mb-6">
-        <h4 className="text-xl md:text-2xl font-bold text-gray-800 mb-3">
-          {question.question || "Аудио тапсырма"}
-        </h4>
-        <p className="text-sm text-gray-500">
-          Аудионы тыңдап, дұрыс жауапты таңдаңыз
-        </p>
-      </div>
+      {question.question && (
+        <div className="text-center">
+          <h4 className="text-lg font-medium text-gray-800">
+            {question.question}
+          </h4>
+        </div>
+      )}
 
       {/* Аудио плеер */}
-      <div className="mb-6">
-        <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-5 text-center border border-blue-100">
-          <Volume2 className="mx-auto text-blue-600 mb-4" size={32} />
+      <div className="bg-white rounded-xl border border-gray-100 p-6">
+        <div className="text-center space-y-4">
+          <Volume2 className="mx-auto text-gray-400" size={24} />
 
           <button
             onClick={handlePlayAudio}
             disabled={!question.audio}
-            className={`inline-flex items-center gap-3 px-4 py-2 md:px-6 md:py-3 rounded-xl transition-all md:font-semibold md:text-lg shadow-md ${
+            className={`inline-flex items-center gap-2 px-6 py-3 rounded-lg font-medium transition-colors ${
               question.audio
-                ? "bg-blue-600 text-white hover:bg-blue-700 hover:shadow-lg transform hover:scale-105"
-                : "bg-gray-400 text-gray-200 cursor-not-allowed"
+                ? "bg-[#ED8A2E] text-white hover:bg-[#D6761F]"
+                : "bg-gray-100 text-gray-400 cursor-not-allowed"
             }`}
           >
             {isPlaying ? (
               <>
-                <Pause size={20} />
+                <Pause size={16} />
                 Тоқтату
               </>
             ) : (
               <>
-                <Play size={20} />
-                {hasPlayedAudio ? "Қайта тыңдау" : "Тыңдау"}
+                <Play size={16} />
+                Тыңдау
               </>
             )}
           </button>
 
-          {/* Прогресс бар */}
+          {/* Прогресс */}
           {hasPlayedAudio && duration > 0 && (
-            <div className="mt-4 max-w-md mx-auto">
-              <div className="flex items-center gap-2 text-sm text-gray-600 mb-2">
+            <div className="max-w-xs mx-auto">
+              <div className="flex items-center gap-2 text-xs text-gray-500 mb-2">
                 <span>{formatTime(currentTime)}</span>
-                <div className="flex-1 bg-blue-200 rounded-full h-2 overflow-hidden">
+                <div className="flex-1 bg-gray-200 rounded-full h-1">
                   <div
-                    className="bg-blue-600 h-full transition-all duration-200"
+                    className="bg-[#6976F8] h-full rounded-full transition-all"
                     style={{ width: `${(currentTime / duration) * 100}%` }}
                   />
                 </div>
@@ -174,100 +174,54 @@ export const AudioTaskRenderer = ({
           {question.audio && (
             <audio ref={audioRef} src={question.audio} preload="metadata" />
           )}
-
-          {/* Debug info */}
-          {!question.audio && (
-            <p className="text-red-500 text-sm mt-2">
-              Нет аудио файла. Получен: {JSON.stringify(question.audio)}
-            </p>
-          )}
         </div>
       </div>
 
       {/* Варианты ответов */}
-      <div className="space-y-4 mb-6">
-        {question.options?.length > 0 ? (
-          question.options.map((option, index) => {
+      {question.options?.length > 0 && (
+        <div className="space-y-2">
+          {question.options.map((option, index) => {
             const isSelected = currentAnswer === index;
-            const isCorrectOption = index === question.answer;
-            const showCorrectAnswer =
-              showFeedback && isCorrectOption && isSelected;
-            const showIncorrectAnswer =
-              showFeedback && isSelected && !isCorrectOption;
+            const isCorrect = index === question.answer;
+            const showResult = showFeedback && isSelected;
 
             return (
               <button
                 key={index}
                 onClick={() => handleOptionSelect(index)}
                 disabled={isSubmitted}
-                className={`w-full text-left p-3 md:p-4 rounded-xl border-2 transition-all duration-200 ${
-                  !isSubmitted
-                    ? isSelected
-                      ? "border-blue-500 bg-blue-50 shadow-md transform scale-[1.02]"
-                      : "border-gray-200 hover:border-blue-300 hover:bg-blue-25 hover:shadow-sm"
-                    : showCorrectAnswer
-                    ? "border-green-500 bg-green-50 shadow-lg"
-                    : showIncorrectAnswer
-                    ? "border-red-500 bg-red-50 shadow-lg"
+                className={`w-full text-left p-4 rounded-lg border transition-all ${
+                  showResult
+                    ? isCorrect
+                      ? "border-green-400 bg-green-50 text-green-800"
+                      : "border-red-400 bg-red-50 text-red-800"
                     : isSelected
-                    ? "border-gray-300 bg-gray-50"
-                    : "border-gray-200 bg-gray-25"
-                } ${isSubmitted ? "cursor-not-allowed" : "cursor-pointer"}`}
+                    ? "border-blue-400 bg-blue-50 text-[#6976F8]"
+                    : "border-gray-200 bg-white hover:border-gray-300 text-gray-700"
+                } ${
+                  isSubmitted
+                    ? "cursor-default"
+                    : "cursor-pointer hover:shadow-sm"
+                }`}
               >
-                <div className="flex items-center gap-4">
-                  {/* Радио кнопка с улучшенным дизайном */}
-                  <div className="relative">
-                    <div
-                      className={`w-6 h-6 rounded-full border-2 transition-all ${
-                        isSelected
-                          ? showFeedback
-                            ? isCorrectOption
-                              ? "border-green-500 bg-green-500"
-                              : "border-red-500 bg-red-500"
-                            : "border-blue-500 bg-blue-500"
-                          : "border-gray-400"
-                      }`}
-                    >
-                      {isSelected && (
-                        <div className="absolute inset-1 rounded-full bg-white" />
-                      )}
-                    </div>
-                  </div>
+                <div className="flex items-center justify-between">
+                  <span className="font-medium">{option}</span>
 
-                  <span className="md:text-lg md:font-medium flex-1">
-                    {option}
-                  </span>
-
-                  {/* Иконки результата */}
-                  {showFeedback && (
-                    <div className="flex items-center gap-2">
-                      {showCorrectAnswer && (
-                        <div className="flex items-center gap-1 text-green-600">
-                          <CheckCircle size={22} />
-                          <span className="text-sm font-medium">Дұрыс</span>
-                        </div>
-                      )}
-                      {showIncorrectAnswer && (
-                        <div className="flex items-center gap-1 text-red-600">
-                          <XCircle size={22} />
-                          <span className="text-sm font-medium">Қате</span>
-                        </div>
+                  {showResult && (
+                    <div className="flex items-center gap-1">
+                      {isCorrect ? (
+                        <CheckCircle size={16} className="text-green-600" />
+                      ) : (
+                        <XCircle size={16} className="text-red-600" />
                       )}
                     </div>
                   )}
                 </div>
               </button>
             );
-          })
-        ) : (
-          <div className="text-center p-8 bg-red-50 rounded-lg">
-            <p className="text-red-600">Варианты ответов не найдены</p>
-            <p className="text-sm text-gray-500 mt-2">
-              Получено: {JSON.stringify(question.options)}
-            </p>
-          </div>
-        )}
-      </div>
+          })}
+        </div>
+      )}
     </div>
   );
 };

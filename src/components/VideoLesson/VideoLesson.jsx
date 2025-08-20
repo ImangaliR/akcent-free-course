@@ -96,7 +96,7 @@ export const VideoLessonWithSubtitles = ({ lesson, onStepComplete }) => {
       <div className="flex flex-col lg:flex-row gap-4 lg:gap-6 h-full">
         {/* Видео область */}
         <div className="w-full lg:flex-1">
-          <div className="bg-white rounded-3xl shadow-lg overflow-hidden">
+          <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
             <div className="relative bg-black">
               <video
                 ref={videoRef}
@@ -113,6 +113,23 @@ export const VideoLessonWithSubtitles = ({ lesson, onStepComplete }) => {
                 <source src={lesson.mediaUrl} type="video/mp4" />
                 Ваш браузер не поддерживает видео HTML5.
               </video>
+            </div>
+
+            {/* Заголовок и транскрипт */}
+            <div className="p-4 lg:p-6">
+              {lesson.title && (
+                <h2 className="text-xl lg:text-2xl font-bold text-gray-900 mb-3">
+                  {lesson.title}
+                </h2>
+              )}
+              {lesson.transcript && (
+                <div className="text-gray-700 leading-relaxed">
+                  <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-2">
+                    Транскрипт
+                  </h3>
+                  <p className="text-base">{lesson.transcript}</p>
+                </div>
+              )}
             </div>
           </div>
         </div>

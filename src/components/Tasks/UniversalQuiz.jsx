@@ -1,5 +1,8 @@
-import { Award, CheckCircle, RotateCcw, Target } from "lucide-react";
+import Lottie from "lottie-react";
+import { RotateCcw, Target } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import successAnim from "../../assets/congrats.json";
+// import ClapAudio from "../../assets/sound.mp3";
 import { useQuizLogic } from "../../utils/useQuizLogic";
 
 export const UniversalQuiz = ({
@@ -18,6 +21,13 @@ export const UniversalQuiz = ({
   // ---- auto-advance timer ----
   const [autoAdvanceLeftMs, setAutoAdvanceLeftMs] = useState(null);
   const tickRef = useRef(null);
+
+  // useEffect(() => {
+  //   if (quiz.stats.passed) {
+  //     const audio = new Audio(ClapAudio); // путь к звуку
+  //     audio.play();
+  //   }
+  // }, [quiz.stats.passed]);
 
   const clearAutoAdvance = () => {
     if (tickRef.current) {
@@ -53,10 +63,14 @@ export const UniversalQuiz = ({
   if (quiz.state.phase === "done") {
     return (
       <div className="mx-auto">
-        <div className="bg-white rounded-lg shadow-lg p-6 md:p-8 text-center">
-          <div className="mb-6">
+        <div className="bg-white  p-0 md:p-0 text-center">
+          <div className="mb-0">
             {quiz.stats.passed ? (
-              <Award className="w-16 h-16 text-yellow-500 mx-auto mb-4" />
+              <Lottie
+                animationData={successAnim}
+                loop={true}
+                className="w-72 h-72 mx-auto "
+              />
             ) : (
               <Target className="w-16 h-16 text-gray-400 mx-auto mb-4" />
             )}
@@ -70,7 +84,7 @@ export const UniversalQuiz = ({
             </p>
           </div>
 
-          <div className="bg-gray-50 rounded-lg p-4 md:p-6 mb-6">
+          <div className=" rounded-lg p-4 md:p-6 mb-6">
             <div className="grid grid-cols-2 gap-4 text-sm">
               <div>
                 <div className="font-medium text-gray-700">Негізгі айналым</div>
@@ -93,11 +107,6 @@ export const UniversalQuiz = ({
                 {quiz.stats.total}/{allQuestions.length}
               </div>
             </div>
-          </div>
-
-          <div className="flex items-center justify-center text-green-600 font-medium">
-            <CheckCircle size={20} className="mr-2" />
-            Тапсырма аяқталды
           </div>
         </div>
       </div>
@@ -132,7 +141,7 @@ export const UniversalQuiz = ({
           <div className="w-full bg-gray-200 rounded-full h-2">
             <div
               className={`h-2 rounded-full transition-all ${
-                quiz.stats.passed ? "bg-green-500" : "bg-blue-500"
+                quiz.stats.passed ? "bg-green-500" : "bg-green-500"
               }`}
               style={{
                 width: `${Math.min(
@@ -172,7 +181,7 @@ export const UniversalQuiz = ({
               disabled={!quiz.isAnswerReady(quiz.state.currentAnswer)}
               className={`px-4 md:px-6 py-3 rounded-lg font-medium transition-colors ${
                 quiz.isAnswerReady(quiz.state.currentAnswer)
-                  ? "bg-blue-600 text-white hover:bg-blue-700"
+                  ? "bg-[#9C45FF] text-white hover:bg-[#7E2AD9]"
                   : "bg-gray-300 text-gray-500 cursor-not-allowed"
               }`}
             >
@@ -184,12 +193,12 @@ export const UniversalQuiz = ({
                 clearAutoAdvance();
                 quiz.nextQuestion();
               }}
-              className="relative overflow-hidden flex items-center px-3 md:px-6 py-3 bg-blue-500 hover:bg-blue-600 text-white rounded-lg font-medium transition-colors"
+              className="relative overflow-hidden flex items-center px-3 md:px-6 py-3 bg-[#9C45FF] hover:bg-[#7E2AD9] text-white rounded-lg font-medium transition-colors"
             >
               {/* background progress filler */}
               {autoAdvanceLeftMs !== null && (
                 <div
-                  className="absolute left-0 top-0 h-full bg-blue-600 transition-all"
+                  className="absolute left-0 top-0 h-full bg-[#7E2AD9] transition-all"
                   style={{
                     width: `${
                       100 - (autoAdvanceLeftMs / autoAdvanceMs) * 100
