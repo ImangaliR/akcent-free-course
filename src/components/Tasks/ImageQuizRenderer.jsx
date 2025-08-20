@@ -93,21 +93,21 @@ export const ImageQuizRenderer = ({
     <div className="mx-auto max-w-4xl">
       {/* Header */}
       <div className="text-center mb-8">
-        <h2 className="text-2xl font-bold text-gray-800 mb-3">
+        <h2 className="text-xl md:text-2xl font-bold text-gray-800 mb-3">
           {question.title || "Image Quiz"}
         </h2>
-        <p className="text-gray-600 text-lg">{question.question}</p>
+        <p className="text-gray-600 md:text-lg">{question.question}</p>
         {question.description && (
           <p className="text-gray-500 text-base mt-2">{question.description}</p>
         )}
       </div>
 
       {/* Options grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6 place-items-center">
+      <div className="w-fit grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4 mb-6 place-items-center ">
         {question.options?.map((option) => (
           <div
             key={option.id}
-            className={`relative w-[200px] aspect-square p-1.5 rounded-lg border-2 transition-all duration-200 ${getOptionStyle(
+            className={`relative w-[150px] md:w-[220px] aspect-square md:p-1.5 rounded-lg border-2 transition-all duration-200 ${getOptionStyle(
               option.id
             )} ${isSubmitted ? "cursor-default" : "cursor-pointer"}`}
             onClick={() => handleOptionClick(option.id)}

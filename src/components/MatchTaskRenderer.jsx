@@ -168,15 +168,14 @@ export const MatchTaskRenderer = ({
 
   const LeftPuzzlePiece = ({ item, isMatched, isSelected, isCorrectMatch }) => (
     <div
-      className={`relative transform transition-all duration-500 hover:scale-105 cursor-pointer ${
+      className={`w-fit md:w-full h-40px md:h-60px relative transform transition-all duration-500 hover:scale-105 cursor-pointer ${
         isSubmitted ? "cursor-default hover:scale-100" : ""
       }`}
-      style={{ width: "100%", height: "60px" }}
       onClick={() => handleItemClick(item.id, "left")}
     >
       <div
         className={[
-          "relative w-full text-left rounded-md px-8 pr-12 py-4 overflow-visible",
+          "relative w-full text-left rounded-md px-3 py-2 pr-9 md:px-8 md:pr-12 md:py-4 overflow-visible",
           pieceBg(isMatched, isCorrectMatch, isSelected),
           "after:content-[''] after:absolute after:-right-3 after:top-1/2 after:-translate-y-1/2",
           "after:w-7 after:h-7 after:rounded-full",
@@ -190,7 +189,7 @@ export const MatchTaskRenderer = ({
           pieceBorder(isMatched, isCorrectMatch),
         ].join(" ")}
       >
-        <span className="font-semibold text-gray-700 text-base">
+        <span className="font-semibold text-gray-700 text-sm md:text-base">
           {item.text}
         </span>
 
@@ -217,15 +216,15 @@ export const MatchTaskRenderer = ({
     isCorrectMatch,
   }) => (
     <div
-      className={`relative transform transition-all duration-500 hover:scale-105 cursor-pointer ${
+      className={`w-fit md:w-full h-40px md:h-60px relative transform transition-all duration-500 hover:scale-105 cursor-pointer ${
         isSubmitted ? "cursor-default hover:scale-100" : ""
       }`}
-      style={{ width: "100%", height: "60px", transform: `translateY(0)` }}
+      style={{ transform: `translateY(0)` }}
       onClick={() => handleItemClick(item.id, "right")}
     >
       <div
         className={[
-          "relative w-full text-left rounded-md px-8 pr-12 py-4 transition-colors overflow-visible",
+          "relative w-full text-left rounded-md px-3 py-2 pl-9 md:pl-12 md:px-8 md:py-4 transition-colors overflow-visible",
           pieceBg(isMatched, isCorrectMatch, isSelected),
           "before:content-[''] before:absolute before:-left-3 before:top-1/2 before:-translate-y-1/2",
           "before:w-6 before:h-6 before:rounded-full before:bg-white dark:before:bg-white",
@@ -237,7 +236,7 @@ export const MatchTaskRenderer = ({
           pieceBorder(isMatched, isCorrectMatch),
         ].join(" ")}
       >
-        <span className="font-semibold text-gray-700 text-base ml-2">
+        <span className="font-semibold text-gray-700 text-sm md:text-base ml-2">
           {item.text}
         </span>
 
@@ -252,25 +251,24 @@ export const MatchTaskRenderer = ({
   );
 
   return (
-    <div className="mx-auto max-w-6xl">
+    <div className="mx-auto">
       {/* Header */}
-      <div className="text-center mb-8">
-        <h4 className="text-2xl font-bold text-gray-800 mb-3">
+      <div className="text-center mb-6">
+        <h4 className="text-xl md:text-2xl font-bold text-gray-800 mb-3">
           {question.question}
         </h4>
-      
       </div>
 
       {/* Main puzzle area */}
       <div
-        className="relative rounded-xl p-8 border border-gray-200"
+        className="relative rounded-xl p-2 md:p-8 border border-gray-200"
         ref={containerRef}
       >
-        <div className="grid lg:grid-cols-2 gap-12">
+        <div className="grid grid-cols-2 gap-12">
           {/* Left fixed */}
           <div>
-            <h3 className="text-lg font-semibold text-gray-800 mb-6 flex items-center gap-2">
-              <div className="w-8 h-8 bg-blue-500 text-white rounded-lg text-sm flex items-center justify-center font-bold">
+            <h3 className="md:text-lg md:font-semibold text-gray-800 mb-6 flex items-center gap-2">
+              <div className="w-6 h-6 md:w-8 md:h-8 bg-blue-600 text-white rounded-lg text-sm flex items-center justify-center font-bold">
                 🧩
               </div>
               Сол жақ бөлік
@@ -307,8 +305,8 @@ export const MatchTaskRenderer = ({
 
           {/* Right movable */}
           <div>
-            <h3 className="text-lg font-semibold text-gray-800 mb-6 flex items-center gap-2">
-              <div className="w-8 h-8 bg-green-500 text-white rounded-lg text-sm flex items-center justify-center font-bold">
+            <h3 className="md:text-lg md:font-semibold text-gray-800 mb-6 flex items-center gap-2">
+              <div className="w-6 h-6 md:w-8 md:h-8 bg-indigo-600 text-white rounded-lg text-sm flex items-center justify-center font-bold">
                 🧩
               </div>
               Оң жақ бөлік

@@ -88,11 +88,11 @@ export const CourseNavigation = ({ currentBlockCompleted = false }) => {
           </div>
 
           {/* Текущий блок */}
-          <div className="text-center px-6">
-            <div className="font-bold text-gray-800">
+          <div className="text-center px-1 md:px-6">
+            <div className="text-sm md:text-base font-semibold md:font-bold text-gray-800">
               {currentNumber} / {totalBlocks}
             </div>
-            <div className="text-xs text-gray-500">блоков</div>
+            <div className="text-xs md:text-xs text-gray-500">блоков</div>
           </div>
 
           {/* Кнопка вперед */}

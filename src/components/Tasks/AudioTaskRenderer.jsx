@@ -119,8 +119,8 @@ export const AudioTaskRenderer = ({
   return (
     <div className="mx-auto max-w-4xl">
       {/* Заголовок */}
-      <div className="text-center mb-8">
-        <h4 className="text-2xl font-bold text-gray-800 mb-3">
+      <div className="text-center mb-6">
+        <h4 className="text-xl md:text-2xl font-bold text-gray-800 mb-3">
           {question.question || "Аудио тапсырма"}
         </h4>
         <p className="text-sm text-gray-500">
@@ -129,14 +129,14 @@ export const AudioTaskRenderer = ({
       </div>
 
       {/* Аудио плеер */}
-      <div className="mb-8">
-        <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-8 text-center border border-blue-100">
+      <div className="mb-6">
+        <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-5 text-center border border-blue-100">
           <Volume2 className="mx-auto text-blue-600 mb-4" size={32} />
 
           <button
             onClick={handlePlayAudio}
             disabled={!question.audio}
-            className={`inline-flex items-center gap-3 px-8 py-4 rounded-xl transition-all font-semibold text-lg shadow-md ${
+            className={`inline-flex items-center gap-3 px-4 py-2 md:px-6 md:py-3 rounded-xl transition-all md:font-semibold md:text-lg shadow-md ${
               question.audio
                 ? "bg-blue-600 text-white hover:bg-blue-700 hover:shadow-lg transform hover:scale-105"
                 : "bg-gray-400 text-gray-200 cursor-not-allowed"
@@ -200,7 +200,7 @@ export const AudioTaskRenderer = ({
                 key={index}
                 onClick={() => handleOptionSelect(index)}
                 disabled={isSubmitted}
-                className={`w-full text-left p-5 rounded-xl border-2 transition-all duration-200 ${
+                className={`w-full text-left p-3 md:p-4 rounded-xl border-2 transition-all duration-200 ${
                   !isSubmitted
                     ? isSelected
                       ? "border-blue-500 bg-blue-50 shadow-md transform scale-[1.02]"
@@ -234,7 +234,9 @@ export const AudioTaskRenderer = ({
                     </div>
                   </div>
 
-                  <span className="text-lg font-medium flex-1">{option}</span>
+                  <span className="md:text-lg md:font-medium flex-1">
+                    {option}
+                  </span>
 
                   {/* Иконки результата */}
                   {showFeedback && (

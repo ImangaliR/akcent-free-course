@@ -189,12 +189,19 @@ export const MultiBlankTaskRenderer = ({
 
   return (
     <div>
+      {/* Вопрос */}
+      <div className="mb-6">
+        <h4 className="text-xl md:text-2xl font-semibold text-gray-800">
+          {question.question}
+        </h4>
+      </div>
+
       {/* История с пропусками */}
       {question.story && (
         <div className="mb-8">
-          <div className="bg-blue-50 rounded-lg p-6 mb-6">
+          <div className="bg-blue-50 rounded-lg p-3 md:p-6 mb-6">
             <h3 className="text-lg font-semibold text-blue-900 mb-3">Оқиға</h3>
-            <p className="text-blue-800 text-lg leading-relaxed whitespace-pre-wrap">
+            <p className="text-blue-800 md:text-lg leading-relaxed whitespace-pre-wrap">
               {storyTokens.map((token, tokenIndex) => {
                 if (token.type === "text") {
                   return <span key={tokenIndex}>{token.value}</span>;
@@ -238,7 +245,7 @@ export const MultiBlankTaskRenderer = ({
                     onClick={() => openMenuFor(blankIndex)}
                     disabled={isSubmitted}
                     className={`
-                      mx-1 px-3 py-1.5 rounded-2xl border-2 align-middle transition-all shadow-sm
+                      mx-1 px-2 py-1 md:px-3 md:py-1.5 rounded-2xl border-2 align-middle transition-all shadow-sm
                       ${
                         !isAnswered && !isSubmitted
                           ? "border-gray-300 text-gray-500 bg-white hover:border-blue-300 hover:bg-blue-50"
@@ -284,13 +291,6 @@ export const MultiBlankTaskRenderer = ({
           </div>
         </div>
       )}
-
-      {/* Вопрос */}
-      <div className="mb-6">
-        <h4 className="text-2xl font-semibold text-gray-800">
-          {question.question}
-        </h4>
-      </div>
 
       {/* Обратная связь */}
       {showFeedback && (
@@ -353,7 +353,7 @@ export const MultiBlankTaskRenderer = ({
                     <span className="inline-flex w-6 h-6 items-center justify-center text-xs font-medium rounded-full bg-gradient-to-br from-blue-100 to-blue-200 text-blue-700 group-hover:from-blue-200 group-hover:to-blue-300 group-hover:text-blue-800 transition-all duration-200 flex-shrink-0">
                       {optionIndex + 1}
                     </span>
-                    <span className="text-sm text-gray-700 group-hover:text-gray-900 transition-colors duration-200">
+                    <span className="text-xs md:text-sm text-gray-700 group-hover:text-gray-900 transition-colors duration-200">
                       {option}
                     </span>
                   </div>

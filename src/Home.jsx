@@ -98,15 +98,15 @@ const HomeContent = () => {
           setIsSidebarOpen={setIsSidebarOpen}
         />
 
-        <div className="flex">
+        <div className="md:flex">
           <SidebarNav
             isSidebarOpen={isSidebarOpen}
             setIsSidebarOpen={setIsSidebarOpen}
           />
 
           <main className="flex-1 lg:ml-64">
-            <div className="p-4 sm:p-6 lg:p-8">
-              <div className="mb-6">
+            <div className="px-4 sm:px-6 lg:px-8">
+              <div className="mb-2 md:mb-6">
                 <Lesson
                   currentBlockRef={currentBlock?.ref}
                   onBlockComplete={handleBlockComplete}

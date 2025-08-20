@@ -51,8 +51,8 @@ export const UniversalQuiz = ({
   // Экран завершения
   if (quiz.state.phase === "done") {
     return (
-      <div className="mx-auto max-w-3xl">
-        <div className="bg-white rounded-lg shadow-lg p-8 text-center">
+      <div className="mx-auto">
+        <div className="bg-white rounded-lg shadow-lg p-6 md:p-8 text-center">
           <div className="mb-6">
             {quiz.stats.passed ? (
               <Award className="w-16 h-16 text-yellow-500 mx-auto mb-4" />
@@ -69,7 +69,7 @@ export const UniversalQuiz = ({
             </p>
           </div>
 
-          <div className="bg-gray-50 rounded-lg p-6 mb-6">
+          <div className="bg-gray-50 rounded-lg p-4 md:p-6 mb-6">
             <div className="grid grid-cols-2 gap-4 text-sm">
               <div>
                 <div className="font-medium text-gray-700">Негізгі айналым</div>
@@ -105,11 +105,11 @@ export const UniversalQuiz = ({
 
   return (
     <div className="mx-auto">
-      <div className="bg-white rounded-lg  p-8">
+      <div className="bg-white rounded-lg p-3 md:p-8">
         {/* Прогресс и статистика */}
         <div className="mb-6">
           <div className="flex items-center justify-between mb-4">
-            <div className="text-sm text-gray-600">
+            <div className="text-xs md:text-sm text-gray-600">
               {quiz.state.phase === "main" ? (
                 <span>Негізгі айналым: {quiz.stats.progress}</span>
               ) : (
@@ -119,7 +119,7 @@ export const UniversalQuiz = ({
                 </div>
               )}
             </div>
-            <div className="text-sm font-medium">
+            <div className="text-xs md:text-sm font-medium">
               Дұрыс: {quiz.stats.total}/{allQuestions.length}
               <span className="text-gray-500 ml-2">
                 (керек: {quiz.stats.needed})
@@ -161,12 +161,12 @@ export const UniversalQuiz = ({
         </div>
 
         {/* Кнопки */}
-        <div className="flex justify-end gap-3">
+        <div className="flex justify-center gap-3 text-sm md:text-base">
           {!quiz.state.submitted ? (
             <button
               onClick={quiz.submitAnswer}
               disabled={!quiz.isAnswerReady(quiz.state.currentAnswer)}
-              className={`px-6 py-3 rounded-lg font-medium transition-colors ${
+              className={`px-4 md:px-6 py-3 rounded-lg font-medium transition-colors ${
                 quiz.isAnswerReady(quiz.state.currentAnswer)
                   ? "bg-blue-600 text-white hover:bg-blue-700"
                   : "bg-gray-300 text-gray-500 cursor-not-allowed"
@@ -180,7 +180,7 @@ export const UniversalQuiz = ({
                 clearAutoAdvance();
                 quiz.nextQuestion();
               }}
-              className="relative overflow-hidden flex items-center px-6 py-3 bg-blue-500 hover:bg-blue-600 text-white rounded-lg font-medium transition-colors"
+              className="relative overflow-hidden flex items-center px-3 md:px-6 py-3 bg-blue-500 hover:bg-blue-600 text-white rounded-lg font-medium transition-colors"
             >
               {/* background progress filler */}
               {autoAdvanceLeftMs !== null && (

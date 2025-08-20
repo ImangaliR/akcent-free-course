@@ -92,10 +92,11 @@ export const StoryTaskRenderer = ({
           </div>
         </div>
       )}
+
       {/* История */}
       {question.story && (
         <div className="mb-8">
-          <div className="bg-blue-50 rounded-lg p-6 mb-6">
+          <div className="bg-blue-50 rounded-lg p-3 md:p-6 mb-6">
             <h3 className="text-lg font-semibold text-blue-900 mb-3">Оқиға</h3>
             <p className="text-blue-800 text-lg leading-relaxed">
               {question.story}
@@ -117,8 +118,8 @@ export const StoryTaskRenderer = ({
       )}
 
       {/* Вопрос */}
-      <div className="mb-6 rounded-lg p-4">
-        <h4 className="text-3xl font-semibold text-gray-800">
+      <div className="mb-6 rounded-lg md:p-4">
+        <h4 className="text-xl md:text-3xl font-semibold text-gray-800">
           {question.question}
         </h4>
       </div>
@@ -145,7 +146,9 @@ export const StoryTaskRenderer = ({
               aria-pressed={isSelected}
             >
               {/* Option text */}
-              <span className="align-middle text-lg md:text-lg">{option}</span>
+              <span className="align-middle text-base md:text-lg">
+                {option}
+              </span>
 
               {/* Correct/Incorrect icon на правой стороне (только для выбранного) */}
               {showIcon && (
@@ -171,7 +174,7 @@ export const StoryTaskRenderer = ({
       {/* Результат */}
       {showFeedback && (
         <div
-          className={`p-4 rounded-lg mb-6 ${
+          className={`p-2 md:p-4 rounded-lg mb-6 ${
             isCorrect ? "bg-green-50 border border-green-200" : ""
           }`}
         >
