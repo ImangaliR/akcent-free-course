@@ -1,6 +1,6 @@
 // Исправленный useQuizLogic hook
 
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 export const useQuizLogic = (allQuestions, onStepComplete, taskType) => {
   // Normalize questions array - handle both single question and multi-question formats
@@ -114,8 +114,7 @@ export const useQuizLogic = (allQuestions, onStepComplete, taskType) => {
   // Universal correctness check - delegates to answer itself if it has isCorrect method
   const isAnswerCorrect = useCallback(
     (answer, question) => {
-      if (!answer || !question) return false;
-
+      if ((!answer && answer !== 0) || !question) return false;
       // If answer has its own isCorrect property, use it
       if (typeof answer?.isCorrect === "boolean") {
         return answer.isCorrect;
@@ -157,7 +156,7 @@ export const useQuizLogic = (allQuestions, onStepComplete, taskType) => {
             answer.length === question.blanks.length &&
             answer.every((selectedOptionIndex, blankIndex) => {
               const blank = question.blanks[blankIndex];
-              return selectedOptionIndex === blank.correctOption;
+              return selectedOptionIndex === blank.answer;
             })
           );
         default:
@@ -177,9 +176,14 @@ export const useQuizLogic = (allQuestions, onStepComplete, taskType) => {
 
   // Submit answer
   const submitAnswer = useCallback(() => {
-    if (!isAnswerReady(state.currentAnswer)) return;
+    if (!isAnswerReady(state.currentAnswer)) {
+      return;
+    }
 
     const isCorrect = isAnswerCorrect(state.currentAnswer, currentQuestion);
+    // if (!isAnswerReady(state.currentAnswer)) return;
+
+    // const isCorrect = isAnswerCorrect(state.currentAnswer, currentQuestion);
 
     setState((prev) => {
       const newState = {
@@ -336,9 +340,12 @@ export const useQuizLogic = (allQuestions, onStepComplete, taskType) => {
   }, [state.answers, state.redemptionAnswers, stats, onStepComplete, taskType]);
 
   // Auto-complete when done
-  if (state.phase === "done" && stats.passed) {
-    setTimeout(completeQuiz, 100);
-  }
+  useEffect(() => {
+    if (state.phase === "done" && stats.passed) {
+      const timer = setTimeout(completeQuiz, 100);
+      return () => clearTimeout(timer);
+    }
+  }, [state.phase, stats.passed, completeQuiz]);
 
   return {
     currentQuestion,
@@ -347,6 +354,7 @@ export const useQuizLogic = (allQuestions, onStepComplete, taskType) => {
     setAnswer,
     submitAnswer,
     nextQuestion,
+    isAnswerCorrect,
     isAnswerReady,
     completeQuiz,
   };

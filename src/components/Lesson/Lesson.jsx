@@ -106,8 +106,6 @@ export const Lesson = ({ currentBlockRef, onBlockComplete }) => {
 
   // Рендер контента
   const renderContent = () => {
-    console.log("renderContent called with blockData:", blockData);
-
     const props = {
       lesson: blockData,
       onStepComplete: handleBlockComplete,

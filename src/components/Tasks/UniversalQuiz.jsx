@@ -152,8 +152,11 @@ export const UniversalQuiz = ({
             isSubmitted={quiz.state.submitted}
             showFeedback={quiz.state.showResult}
             isCorrect={
-              quiz.state.showResult
-                ? quiz.state.currentAnswer === quiz.currentQuestion?.answer
+              quiz.state.showResult && quiz.isAnswerCorrect
+                ? quiz.isAnswerCorrect(
+                    quiz.state.currentAnswer,
+                    quiz.currentQuestion
+                  )
                 : null
             }
             taskType={taskType}
@@ -200,7 +203,11 @@ export const UniversalQuiz = ({
                   ? quiz.state.currentIndex < allQuestions.length - 1
                     ? "Келесі сұрақ"
                     : "Негізгі айналымды аяқтау"
-                  : quiz.state.currentAnswer === quiz.currentQuestion?.answer
+                  : quiz.isAnswerCorrect &&
+                    quiz.isAnswerCorrect(
+                      quiz.state.currentAnswer,
+                      quiz.currentQuestion
+                    )
                   ? quiz.state.redemptionIndex <
                     quiz.state.wrongQuestions.length - 1
                     ? "Келесі сұрақ"
