@@ -234,6 +234,7 @@ export const MultiBlankTaskRenderer = ({
                   selectedOption !== null && selectedOption !== undefined;
                 const isCorrectAnswer =
                   isSubmitted && isAnswered && selectedOption === blank.answer;
+
                 const isWrongAnswer =
                   isSubmitted && isAnswered && selectedOption !== blank.answer;
 
