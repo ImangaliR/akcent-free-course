@@ -231,18 +231,6 @@ export const Lesson = ({ currentBlockRef, onBlockComplete }) => {
   return (
     <div className="w-full">
       {/* Фиксированный заголовок */}
-      <div className="lg:sticky lg:top-0 lg:z-40 mt-1 mb-4">
-        <div className="bg-[#9C45FF] rounded-xl p-4">
-          <h2 className="text-lg md:text-2xl font-bold text-white">
-            {blockData.title}
-          </h2>
-          <div className="flex items-center gap-3 mt-2">
-            <span className="bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full text-xs text-white font-medium border border-white/30">
-              {blockData.type}
-            </span>
-          </div>
-        </div>
-      </div>
 
       {/* Контент */}
       <div className=" rounded-sm">
