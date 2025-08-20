@@ -61,12 +61,12 @@ export const UniversalQuiz = ({
               <Target className="w-16 h-16 text-gray-400 mx-auto mb-4" />
             )}
             <h3 className="text-2xl font-bold text-gray-800 mb-2">
-              {quiz.stats.passed ? "Поздравляем!" : "Тест не пройден"}
+              {quiz.stats.passed ? "Құттықтаймыз!" : "Тест өтілмеді"}
             </h3>
             <p className="text-gray-600">
               {quiz.stats.passed
-                ? `Вы успешно прошли тест с результатом ${quiz.stats.percent}%`
-                : `Результат: ${quiz.stats.percent}%. Требуется: 80%`}
+                ? `Сіз ${quiz.stats.percent}% нәтижемен сынақтан сәтті өттіңіз`
+                : `Нәтиже: ${quiz.stats.percent}%. Керек: 80%`}
             </p>
           </div>
 
@@ -78,9 +78,9 @@ export const UniversalQuiz = ({
                   {quiz.stats.mainCorrect}/{allQuestions.length}
                 </div>
               </div>
-              {quiz.stats.redemptionCorrect > 0 && (
+              {quiz.stats.redemptionCorrect >= 0 && (
                 <div>
-                  <div className="font-medium text-gray-700">Redemption</div>
+                  <div className="font-medium text-gray-700">Қатені түзеу</div>
                   <div className="text-xl font-bold text-green-600">
                     +{quiz.stats.redemptionCorrect}
                   </div>
@@ -116,7 +116,7 @@ export const UniversalQuiz = ({
               ) : (
                 <div className="flex items-center gap-2">
                   <RotateCcw size={16} className="text-orange-500" />
-                  <span>Өтеу: {quiz.stats.progress}</span>
+                  <span>Қатені түзеу: {quiz.stats.progress}</span>
                 </div>
               )}
             </div>
