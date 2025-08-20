@@ -200,7 +200,6 @@ export const MultiBlankTaskRenderer = ({
       {question.story && (
         <div className="mb-8">
           <div className="bg-blue-50 rounded-lg p-3 md:p-6 mb-6">
-            <h3 className="text-lg font-semibold text-blue-900 mb-3">Оқиға</h3>
             <p className="text-blue-800 md:text-lg leading-relaxed whitespace-pre-wrap">
               {storyTokens.map((token, tokenIndex) => {
                 if (token.type === "text") {

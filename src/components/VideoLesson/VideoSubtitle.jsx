@@ -57,39 +57,41 @@ export const SubtitlePanel = ({
   if (!showPanel) {
     return (
       <div
-        className={`w-full bg-white rounded-lg shadow-lg p-3 sm:p-4 ${className}`}
+        className={`w-full bg-white rounded-2xl shadow-sm border border-gray-100 p-4 sm:p-5 ${className}`}
       >
         <div className="flex items-center justify-between">
-          <h4 className="font-semibold text-gray-800 text-sm sm:text-base">
+          <h4 className="font-medium text-gray-800 text-sm sm:text-xl">
             Субтитры
           </h4>
           <button
             onClick={() => setShowPanel(true)}
-            className="p-2 hover:bg-gray-100 rounded-lg text-gray-600 touch-manipulation"
+            className="p-2.5 hover:bg-gray-50 rounded-xl text-gray-500 hover:text-gray-700 touch-manipulation transition-all duration-200"
             aria-label="Показать субтитры"
           >
             <Eye size={18} className="sm:w-5 sm:h-5" />
           </button>
         </div>
-        <p className="text-xs sm:text-sm text-gray-500 mt-2">Субтитры скрыты</p>
+        <p className="text-xs sm:text-sm text-gray-400 mt-3">Субтитры скрыты</p>
       </div>
     );
   }
 
   return (
-    <div className={`w-full bg-white rounded-lg shadow-lg ${className}`}>
+    <div
+      className={`w-full bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden ${className}`}
+    >
       {/* Заголовок */}
-      <div className="p-3 sm:p-4 border-b">
-        <div className="flex items-center justify-between gap-2">
-          <h4 className="font-semibold text-gray-800 text-sm sm:text-base">
+      <div className="p-4 sm:p-5 border-b border-gray-50">
+        <div className="flex items-center justify-between gap-3">
+          <h4 className="font-medium text-gray-800 text-sm sm:text-xl">
             Субтитры
           </h4>
 
-          <div className="flex items-center gap-1">
+          <div className="flex items-center gap-2">
             {/* Collapse/Expand для мобильных */}
             <button
               onClick={() => setIsCollapsed(!isCollapsed)}
-              className="lg:hidden p-2 hover:bg-gray-100 rounded-lg text-gray-600 touch-manipulation"
+              className="lg:hidden p-2.5 hover:bg-gray-50 rounded-xl text-gray-500 hover:text-gray-700 touch-manipulation transition-all duration-200"
               aria-label={isCollapsed ? "Развернуть" : "Свернуть"}
             >
               {isCollapsed ? (
@@ -102,11 +104,11 @@ export const SubtitlePanel = ({
             {/* Перевод вкл/выкл */}
             <button
               onClick={() => setShowTranslations((v) => !v)}
-              className={`inline-flex items-center gap-1 px-2 py-1 rounded-md text-xs sm:text-sm touch-manipulation
+              className={`inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs sm:text-sm touch-manipulation transition-all duration-200
                 ${
                   showTranslations
-                    ? "bg-green-50 text-green-700"
-                    : "bg-gray-100 text-gray-600"
+                    ? "bg-[#ED8A2E] text-white shadow-sm"
+                    : "bg-gray-50 text-gray-600 hover:bg-gray-100"
                 }
               `}
               aria-pressed={showTranslations}
@@ -125,7 +127,7 @@ export const SubtitlePanel = ({
             {/* Скрыть панель */}
             <button
               onClick={() => setShowPanel(false)}
-              className="p-2 hover:bg-gray-100 rounded-lg text-gray-600 touch-manipulation"
+              className="p-2.5 hover:bg-gray-50 rounded-xl text-gray-500 hover:text-gray-700 touch-manipulation transition-all duration-200"
               aria-label="Скрыть субтитры"
               title="Скрыть субтитры"
             >
@@ -139,12 +141,12 @@ export const SubtitlePanel = ({
       <div className={`${isCollapsed ? "hidden lg:block" : "block"}`}>
         {/* Текущий активный субтитр */}
         {activeSubtitle && (
-          <div className="p-3 sm:p-4 bg-blue-50 border-b">
+          <div className="p-4 sm:p-5 bg-blue-50 border-b border-blue-100/50">
             <div className="font-medium text-gray-800 text-sm sm:text-base leading-relaxed">
               {activeSubtitle.russian}
             </div>
             {showTranslations && (
-              <div className="text-xs sm:text-sm text-gray-600 mt-1 leading-relaxed">
+              <div className="text-xs sm:text-sm text-gray-600 mt-2 leading-relaxed">
                 {activeSubtitle.english}
               </div>
             )}
@@ -157,33 +159,33 @@ export const SubtitlePanel = ({
           className="flex-1 overflow-y-auto h-48 sm:h-64 lg:h-96"
         >
           {pastSubtitles.length === 0 ? (
-            <div className="p-3 sm:p-4 text-xs sm:text-sm text-gray-500 text-center">
-              История субтитров будет здесь
+            <div className="p-4 sm:p-5 text-xs sm:text-sm text-gray-400 text-center">
+              Мұнда субтитрлердің тарихы көрсетіледі{" "}
             </div>
           ) : (
             pastSubtitles.map((subtitle) => (
               <div
                 key={subtitle.id}
-                className="p-3 border-b cursor-pointer transition-colors duration-200 bg-green-50 hover:bg-green-100 active:bg-green-200 touch-manipulation"
+                className="p-4 border-b border-gray-50 cursor-pointer transition-all duration-300 bg-green-50/70 hover:bg-green-100/80 active:bg-green-200/60 touch-manipulation"
                 onClick={() => handleSubtitleClick(subtitle)}
                 title="Перейти к этому моменту"
               >
                 {/* Время */}
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-xs text-gray-500 font-mono">
+                <div className="flex items-center justify-between mb-3">
+                  <span className="text-xs text-gray-400 font-mono">
                     {formatTime(subtitle.start)}
                   </span>
-                  <div className="w-2 h-2 bg-green-500 rounded-full flex-shrink-0" />
+                  <div className="w-2 h-2 bg-green-500 rounded-full flex-shrink-0 opacity-80" />
                 </div>
 
                 {/* Русский текст */}
-                <div className="text-sm font-medium text-gray-800 mb-1 leading-relaxed">
+                <div className="text-sm font-medium text-gray-800 mb-2 leading-relaxed">
                   {subtitle.russian}
                 </div>
 
                 {/* Английский перевод — по переключателю */}
                 {showTranslations && (
-                  <div className="text-xs text-gray-600 leading-relaxed">
+                  <div className="text-xs text-gray-600 leading-relaxed opacity-90">
                     {subtitle.english}
                   </div>
                 )}
@@ -195,31 +197,31 @@ export const SubtitlePanel = ({
 
       {/* Детали выбранного слова */}
       {selectedWord && (
-        <div className="p-3 sm:p-4 border-t bg-yellow-50">
-          <div className="flex items-center gap-2 mb-2">
-            <Volume2 size={14} className="text-gray-600 sm:w-4 sm:h-4" />
-            <h5 className="font-semibold text-gray-800 text-sm sm:text-base">
+        <div className="p-4 sm:p-5 border-t border-yellow-100/70 bg-yellow-50/80">
+          <div className="flex items-center gap-2.5 mb-3">
+            <Volume2 size={14} className="text-gray-500 sm:w-4 sm:h-4" />
+            <h5 className="font-medium text-gray-800 text-sm sm:text-base">
               Выбранное слово
             </h5>
           </div>
-          <div className="space-y-1">
-            <div className="flex flex-wrap items-center gap-2">
+          <div className="space-y-2">
+            <div className="flex flex-wrap items-center gap-2.5">
               <span className="font-medium text-blue-800 text-base sm:text-lg">
                 {selectedWord.word}
               </span>
-              <span className="text-gray-600">—</span>
+              <span className="text-gray-400">—</span>
               <span className="text-gray-700 text-sm sm:text-base">
                 {selectedWord.translation}
               </span>
             </div>
-            <div className="text-xs sm:text-sm text-gray-600">
+            <div className="text-xs sm:text-sm text-gray-500">
               Время: {formatTime(selectedWord.start)} –{" "}
               {formatTime(selectedWord.end)}
             </div>
           </div>
           <button
             onClick={() => setSelectedWord(null)}
-            className="mt-2 text-xs text-gray-500 hover:text-gray-700 touch-manipulation"
+            className="mt-3 text-xs text-gray-400 hover:text-gray-600 touch-manipulation transition-colors duration-200"
           >
             Закрыть
           </button>

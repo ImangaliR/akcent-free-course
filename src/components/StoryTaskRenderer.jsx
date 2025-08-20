@@ -76,7 +76,7 @@ export const StoryTaskRenderer = ({
   return (
     <div>
       {/* Локация и фокус */}
-      {question.location && (
+      {/* {question.location && (
         <div className="mb-2 md:mb-3">
           <div className="flex items-center gap-2 text-sm text-gray-600">
             <span className="text-lg">{getLocationIcon()}</span>
@@ -91,15 +91,12 @@ export const StoryTaskRenderer = ({
             </span>
           </div>
         </div>
-      )}
+      )} */}
 
       {/* История */}
       {question.story && (
         <div className="mb-3">
           <div className="bg-blue-50 rounded-lg p-3 md:p-4 md:mb-3">
-            <h3 className="text-lg font-semibold text-blue-900 mb-1 md:mb-3">
-              Оқиға
-            </h3>
             <p className="text-blue-800 md:text-lg leading-relaxed">
               {question.story}
             </p>
