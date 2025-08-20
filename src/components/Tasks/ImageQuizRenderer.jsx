@@ -107,7 +107,7 @@ export const ImageQuizRenderer = ({
         {question.options?.map((option) => (
           <div
             key={option.id}
-            className={`relative w-[150px] md:w-[220px] aspect-square md:p-1.5 rounded-lg border-2 transition-all duration-200 ${getOptionStyle(
+            className={`relative w-[150px] md:w-[220px] aspect-square md:p-1 rounded-lg border-2 transition-all duration-200 ${getOptionStyle(
               option.id
             )} ${isSubmitted ? "cursor-default" : "cursor-pointer"}`}
             onClick={() => handleOptionClick(option.id)}
@@ -117,7 +117,7 @@ export const ImageQuizRenderer = ({
               {getOptionIcon(option.id)}
             </div>
 
-            <div className="w-full h-full bg-white rounded overflow-hidden">
+            <div className="w-full h-full bg-[#FEF9F2] rounded overflow-hidden">
               <img
                 src={option.image}
                 alt={option.label || `Option ${option.id}`}
