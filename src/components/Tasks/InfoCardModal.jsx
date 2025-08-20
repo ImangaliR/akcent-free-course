@@ -70,7 +70,7 @@ export const InfoCardModal = ({
       />
 
       {/* Modal */}
-      <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+      <div className="fixed inset-0 z-50 flex items-center justify-center p-2 md:p-4">
         <div
           className="bg-white rounded-xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-hidden transform transition-all duration-300 scale-100"
           onClick={(e) => e.stopPropagation()}
@@ -79,12 +79,16 @@ export const InfoCardModal = ({
           <div className="bg-gradient-to-r from-blue-500 to-indigo-600 p-6 text-white relative">
             <div className="flex items-center justify-between">
               <div className="flex items-center">
-                <div className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center mr-3">
+                <div className="w-8 h-8 md:w-10 md:h-10 bg-white/20 rounded-full flex items-center justify-center mr-3">
                   <Info size={20} />
                 </div>
                 <div>
-                  <h3 className="text-xl font-semibold">Пайдалы ақпарат</h3>
-                  <p className="text-blue-100 text-sm mt-1">Қызықты факт</p>
+                  <h3 className="text-lg md:text-xl font-semibold">
+                    Пайдалы ақпарат
+                  </h3>
+                  <p className="text-blue-100 text-xs md:text-sm mt-1">
+                    Қызықты факт
+                  </p>
                 </div>
               </div>
 
@@ -122,7 +126,7 @@ export const InfoCardModal = ({
           </div>
 
           {/* Content */}
-          <div className="p-8 overflow-y-auto max-h-[calc(90vh-140px)]">
+          <div className="p-6 md:p-8 overflow-y-auto max-h-[calc(90vh-140px)]">
             {/* Image if provided */}
             {lesson?.media && (
               <div className="mb-6 text-center">
@@ -139,7 +143,7 @@ export const InfoCardModal = ({
 
             {/* Text content */}
             <div className="text-center">
-              <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-6 mb-6 border border-blue-100">
+              <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-4 md:p-6 mb-6 border border-blue-100">
                 <p className="text-lg text-gray-800 leading-relaxed">
                   {lesson?.text || "Информационный контент"}
                 </p>
