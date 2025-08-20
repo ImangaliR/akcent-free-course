@@ -261,7 +261,7 @@ export const SidebarNav = ({
           .slice(1) // Skip intro video
           .findIndex(({ index: vIndex }) => vIndex === index) + 1;
 
-      return `${videoCount}ші сабақ: Бейне жазба`;
+      return `${videoCount} сабақ: Бейне жазба`;
     }
     if (typeInfo.type === "task") {
       // Count task blocks before this one (excluding InfoCards)
