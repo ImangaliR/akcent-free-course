@@ -12,25 +12,11 @@ export const MatchTaskRenderer = ({
   isSubmitted,
 }) => {
   // --- СОСТОЯНИЕ КОМПОНЕНТА (State) ---
-
-  // 1. 'matches': Хранит ответы пользователя в формате { leftId: rightId }
   const [matches, setMatches] = useState({});
-
-  // 2. 'selectedId': Хранит ID выбранного элемента из левой колонки.
-  //    Нам нужен только один выбранный элемент, т.к. левая колонка - главная.
   const [selectedId, setSelectedId] = useState(null);
-
   const [selectedItem, setSelectedItem] = useState({ id: null, type: null });
-
-  // 3. 'rightColumnOrder': Самое главное! Хранит массив объектов правой колонки
-  //    в том порядке, в котором они отображаются на экране. Анимация работает за счет
-  //    изменения порядка элементов в этом массиве.
   const [rightColumnOrder, setRightColumnOrder] = useState([]);
 
-  // --- ЭФФЕКТЫ (Effects) ---
-
-  // Этот useEffect срабатывает один раз при загрузке компонента или когда меняется вопрос.
-  // Он сбрасывает все состояния до начальных.
   useEffect(() => {
     setMatches({});
     setSelectedItem({ id: null, type: null }); // Сбрасываем новый state
@@ -40,38 +26,48 @@ export const MatchTaskRenderer = ({
   }, [question]);
 
   // --- ЛОГИКА ОБРАБОТКИ КЛИКОВ ---
-
   const handleItemClick = (id, type) => {
-    // Базовые проверки: не даем ничего делать, если тест сдан или элемент уже в правильной паре.
     if (isSubmitted || isPartOfCorrectMatch(id, type)) {
       return;
     }
 
     const { id: currentId, type: currentType } = selectedItem;
 
-    // Сценарий 1: Клик по уже выбранному элементу -> Снимаем выделение.
     if (id === currentId) {
       setSelectedItem({ id: null, type: null });
       return;
     }
 
-    // Сценарий 2: Еще ничего не выбрано ИЛИ клик по элементу в той же колонке -> Просто выбираем его.
     if (!currentType || type === currentType) {
       setSelectedItem({ id, type });
       return;
     }
 
-    // Сценарий 3: Выбран элемент в одной колонке, а кликнули по другой -> Сопоставление!
     if (type !== currentType) {
-      // Определяем, где левый ID, а где правый, в зависимости от того, с чего начали.
       const leftId = currentType === "left" ? currentId : id;
       const rightId = currentType === "right" ? currentId : id;
 
-      const newMatches = { ...matches, [leftId]: rightId };
+      // Remove any existing matches for both items before creating new match
+      const newMatches = { ...matches };
+
+      // Remove existing match for the left item if it exists
+      if (newMatches[leftId]) {
+        delete newMatches[leftId];
+      }
+
+      // Remove existing match where this right item was previously matched
+      const previousLeftId = Object.keys(newMatches).find(
+        (key) => newMatches[key] === rightId
+      );
+      if (previousLeftId) {
+        delete newMatches[previousLeftId];
+      }
+
+      // Create the new match
+      newMatches[leftId] = rightId;
       setMatches(newMatches);
       onAnswerChange(newMatches);
 
-      // Если сопоставление верное - запускаем анимацию пересортировки.
       if (question.answer[leftId] === rightId) {
         const targetIndex = question.leftItems.findIndex(
           (item) => item.id === leftId
@@ -87,12 +83,10 @@ export const MatchTaskRenderer = ({
         });
       }
 
-      // Сбрасываем выделение после хода.
       setSelectedItem({ id: null, type: null });
     }
   };
 
-  // Функция для сброса НЕПРАВИЛЬНОГО ответа
   const removeMatch = (leftId) => {
     if (isSubmitted) return;
     const newMatches = { ...matches };
@@ -101,9 +95,6 @@ export const MatchTaskRenderer = ({
     onAnswerChange(newMatches);
   };
 
-  // --- ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ ---
-
-  // Проверяет, является ли сопоставление для данного элемента левой колонки правильным
   const isCorrectlyMatched = (leftId) =>
     matches[leftId] && question.answer[leftId] === matches[leftId];
 
@@ -136,7 +127,6 @@ export const MatchTaskRenderer = ({
   };
 
   // --- СТИЛИЗАЦИЯ ---
-
   const getPieceClasses = (status) => {
     switch (status) {
       case "selected":
@@ -150,8 +140,33 @@ export const MatchTaskRenderer = ({
     }
   };
 
-  // --- RENDER (Отрисовка компонента) ---
+  const pieceBg = (status) => {
+    switch (status) {
+      case "selected":
+        return "bg-sky-100";
+      case "correct":
+        return "bg-green-100";
+      case "incorrect":
+        return "bg-red-100";
+      default: // idle
+        return "bg-blue-50 hover:bg-blue-100";
+    }
+  };
 
+  const pieceBorder = (status) => {
+    switch (status) {
+      case "selected":
+        return "border-2 border-sky-500";
+      case "correct":
+        return "border border-green-500";
+      case "incorrect":
+        return "border border-red-500";
+      default: // idle
+        return "border border-gray-200";
+    }
+  };
+
+  // --- RENDER (Отрисовка компонента) ---
   return (
     <div className="max-w-4xl mx-auto p-4 font-sans">
       <h3 className="text-2xl font-bold text-center text-gray-800 mb-8">
@@ -167,27 +182,41 @@ export const MatchTaskRenderer = ({
               <div
                 key={item.id}
                 onClick={() => handleItemClick(item.id, "left")}
-                className={`relative p-4 rounded-lg text-lg transition-all duration-200 ${getPieceClasses(
-                  status
-                )} ${
-                  status !== "correct" && !isSubmitted
-                    ? "cursor-pointer"
-                    : "cursor-default"
-                }`}
+                className={`w-fit md:w-full h-10 md:h-15 relative transform transition-all duration-200 cursor-pointer 
+                  
+                `}
               >
-                {item.text}
-                {/* Кнопка "X" для сброса неправильного ответа */}
-                {status === "incorrect" && !isSubmitted && (
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation(); // чтобы не сработал клик по самому элементу
-                      removeMatch(item.id);
-                    }}
-                    className="absolute -top-3 -right-3 w-7 h-7 bg-red-500 hover:bg-red-600 rounded-full flex items-center justify-center text-white shadow-lg z-10"
-                  >
-                    <X size={16} />
-                  </button>
-                )}
+                <div
+                  className={[
+                    "relative w-full text-left rounded-md px-3 py-2 pr-9 md:px-8 md:pr-12 md:py-4 overflow-visible text-lg",
+                    pieceBg(status),
+                    "after:content-[''] after:absolute after:-right-3 after:top-1/2 after:-translate-y-1/2",
+                    "after:w-7 after:h-7 after:rounded-full",
+                    status === "correct"
+                      ? "after:bg-green-100 after:border-r-1 after:border-green-500 after:border-t-0 after:border-b-0 after:border-l-0"
+                      : status === "incorrect"
+                      ? "after:bg-red-100 after:border-r-1 after:border-red-500 after:border-t-0 after:border-b-0 after:border-l-0"
+                      : status === "selected"
+                      ? "after:bg-sky-100 after:border-r-1 after:border-sky-500 after:border-t-0 after:border-b-0 after:border-l-0"
+                      : "after:bg-blue-50 hover:after:bg-blue-100 after:border-r-1 after:border-gray-300 after:border-t-0 after:border-b-0 after:border-l-0",
+                    pieceBorder(status),
+                  ].join(" ")}
+                >
+                  <span className="font-semibold text-gray-700 text-sm md:text-base">
+                    {item.text}
+                  </span>
+                  {status === "incorrect" && !isSubmitted && (
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        removeMatch(item.id);
+                      }}
+                      className="absolute -top-2 -right-2 w-6 h-6 bg-red-500 hover:bg-red-600 rounded-full flex items-center justify-center text-white shadow-lg z-30"
+                    >
+                      <X className="w-3 h-3" />
+                    </button>
+                  )}
+                </div>
               </div>
             );
           })}
@@ -195,33 +224,43 @@ export const MatchTaskRenderer = ({
 
         {/* === ПРАВАЯ КОЛОНКА (Анимированная) === */}
         <div className="space-y-4">
-          {/* Этот motion.div НЕ НУЖЕН для анимации порядка, 
-            так как мы анимируем каждый элемент отдельно.
-            Но он может быть полезен для анимации появления всего блока.
-          */}
           {rightColumnOrder.map((item) => {
             const status = getItemStatus(item.id, "right");
             const isLocked = status === "correct";
 
             return (
-              // layout="position" - это магия framer-motion.
-              // Он автоматически анимирует элемент к его новой позиции в DOM.
               <motion.div
                 layout="position"
                 key={item.id}
                 onClick={() => handleItemClick(item.id, "right")}
                 transition={{ duration: 0.5, ease: "easeInOut" }}
-                className={`p-4 rounded-lg text-lg transition-colors duration-200 ${getPieceClasses(
-                  status
-                )} ${
+                className={`w-fit md:w-full h-10 md:h-15 relative transform transition-colors duration-200 cursor-pointer ${
                   !isLocked && selectedId && !isSubmitted
-                    ? "cursor-pointer hover:scale-105"
+                    ? "hover:scale-105"
                     : "cursor-default"
                 }`}
               >
-                {item.text}
+                <div
+                  className={[
+                    "relative w-full text-left rounded-md px-3 py-2 pl-9 md:pl-12 md:px-8 md:py-4 transition-colors overflow-visible text-lg",
+                    pieceBg(status),
+                    "before:content-[''] before:absolute before:-left-3 before:top-1/2 before:-translate-y-1/2",
+                    "before:w-6 before:h-6 before:rounded-full before:bg-white",
+                    status === "correct"
+                      ? "before:border-r-1 before:border-green-500 before:border-t-0 before:border-b-0 before:border-l-0"
+                      : status === "incorrect"
+                      ? "before:border-r-1 before:border-red-500 before:border-t-0 before:border-b-0 before:border-l-0"
+                      : status === "selected"
+                      ? "before:border-r-1 before:border-sky-500 before:border-t-0 before:border-b-0 before:border-l-0"
+                      : "before:border-r-1 before:border-gray-300 before:border-t-0 before:border-b-0 before:border-l-0",
+                    pieceBorder(status),
+                  ].join(" ")}
+                >
+                  <span className="font-semibold text-gray-700 text-sm md:text-base ml-2">
+                    {item.text}
+                  </span>
+                </div>
               </motion.div>
-              
             );
           })}
         </div>
