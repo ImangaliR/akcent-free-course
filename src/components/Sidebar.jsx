@@ -466,12 +466,12 @@ export const SidebarNav = ({
           className="lg:hidden fixed inset-0 z-30 bg-black/10 backdrop-blur-xs transition-opacity"
           onClick={() => setIsSidebarOpen(false)}
         />
-      )}
+      )}x
 
       <aside
         className={`
           fixed inset-y-0 left-0 z-50
-          w-74 bg-gray-50 p-4 flex-shrink-0 flex flex-col
+          w-74 bg-[#f1f2f7] p-4 flex-shrink-0 flex flex-col
           transform transition-transform duration-300 ease-in-out
           ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"}
           lg:translate-x-0
@@ -501,7 +501,7 @@ export const SidebarNav = ({
           </div>
 
           {/* Навигация - скроллируемая область */}
-          <nav className="flex-1 overflow-y-auto py-4">
+          <nav className="flex-1 overflow-y-auto py-4   bg-white">
             <div className="px-6 py-2 mb-4">
               <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider flex items-center gap-2">
                 <BookOpen className="w-4 h-4" />
@@ -513,12 +513,12 @@ export const SidebarNav = ({
               {visibleModules.map((module) => (
                 <div
                   key={module.id}
-                  className="bg-gray-50 rounded-2xl overflow-hidden shadow-sm"
+                  className="bg-gray-50 rounded-2xl overflow-hidden "
                 >
                   {/* Заголовок модуля */}
                   <button
                     onClick={() => handleModuleToggle(module.id)}
-                    className="w-full px-4 py-3 bg-white hover:bg-gray-50 transition-colors flex items-center justify-between text-left rounded-2xl shadow-sm border border-gray-100"
+                    className="w-full px-4 py-3 bg-gray-50 hover:bg-gray-50 transition-colors flex items-center justify-between text-left rounded-2xl shadow-sm border border-gray-100"
                   >
                     <div className="flex items-center gap-3">
                       <div className="p-2 bg-blue-50 rounded-xl">
@@ -641,7 +641,7 @@ export const SidebarNav = ({
           </nav>
 
           {/* Прогресс обучения */}
-          <div className="p-6 bg-gradient-to-r from-gray-50 to-blue-50 rounded-b-3xl">
+          <div className="p-4 bg-gradient-to-r from-gray-50 to-blue-50">
             <div className="bg-white rounded-2xl p-4 shadow-sm">
               <div className="mb-3">
                 <div className="flex items-center justify-between text-sm text-gray-600 mb-2">
@@ -678,7 +678,7 @@ export const SidebarNav = ({
           </div>
 
           {/* Футер с кнопкой выхода */}
-          <div className="p-4">
+          <div className="p-4  bg-white">
             <button
               onClick={handleLogout}
               className="flex items-center gap-3 w-full px-4 py-3 text-red-500 hover:bg-red-50 hover:text-red-600 rounded-xl transition-all duration-200 group bg-white shadow-sm border border-red-100 hover:shadow-md"
