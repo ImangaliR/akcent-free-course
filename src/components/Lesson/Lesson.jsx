@@ -192,8 +192,8 @@ export const Lesson = ({ currentBlockRef, onBlockComplete }) => {
     return (
       <div className="w-full bg-white rounded-xl shadow-lg min-h-[600px] flex items-center justify-center">
         <div className="text-center">
-          <div className="w-8 h-8 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-gray-600">Загружаем...</p>
+          <Quantum size="65" speed="3.00" color="#9C45FF" />
+          <p className="text-gray-600">Жүктелуде...</p>
         </div>
       </div>
     );
