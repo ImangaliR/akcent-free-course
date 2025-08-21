@@ -60,7 +60,7 @@ export const CourseNavigation = ({ currentBlockCompleted = false }) => {
   const currentNumber = currentBlockIndex + 1;
 
   return (
-    <div className="w-full mx-auto px-1 md:px-4  ">
+    <div className="w-full mx-auto px-1 md:px-4   ">
       <div className="w-full mx-auto bg-white rounded-2xl overflow-hidden">
         <div className="p-2 lg:p-3">
           <div className="flex items-center justify-between gap-3 md:gap-4 lg:gap-6">
@@ -106,7 +106,7 @@ export const CourseNavigation = ({ currentBlockCompleted = false }) => {
                     flex items-center gap-3 px-4 py-3 lg:px-6 lg:py-4 rounded-2xl font-medium w-full justify-end transition-all duration-200 border-2
                     ${
                       currentBlockCompleted
-                        ? "bg-gradient-to-r from-[#6976F8] to-[#5661E0] text-white hover:from-[#5661E0] hover:to-[#4A54D1] shadow-lg hover:shadow-xl border-[#6976F8] transform hover:scale-[1.02]"
+                        ? "bg-[#9C45FF]  text-white hover:from-[#5661E0] hover:to-[#4A54D1] shadow-lg hover:shadow-xl border-[#9C45FF] "
                         : "bg-gray-100 text-gray-500 cursor-not-allowed border-gray-200"
                     }
                   `}

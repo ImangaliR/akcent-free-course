@@ -61,7 +61,7 @@ export const SubtitlePanel = ({
       >
         <div className="flex items-center justify-between">
           <h4 className="font-medium text-gray-800 text-sm sm:text-xl">
-            Субтитры
+            Субтитрлер
           </h4>
           <button
             onClick={() => setShowPanel(true)}
@@ -71,7 +71,9 @@ export const SubtitlePanel = ({
             <Eye size={18} className="sm:w-5 sm:h-5" />
           </button>
         </div>
-        <p className="text-xs sm:text-sm text-gray-400 mt-3">Субтитры скрыты</p>
+        <p className="text-xs sm:text-sm text-gray-400 mt-3">
+          Субтитрлер өшірілген
+        </p>
       </div>
     );
   }
@@ -84,7 +86,7 @@ export const SubtitlePanel = ({
       <div className="p-4 sm:p-5 border-b border-gray-50">
         <div className="flex items-center justify-between gap-3">
           <h4 className="font-medium text-gray-800 text-sm sm:text-xl">
-            Субтитры
+            Субтитрлер
           </h4>
 
           <div className="flex items-center gap-2">
@@ -117,10 +119,11 @@ export const SubtitlePanel = ({
             >
               <Languages size={14} className="sm:w-4 sm:h-4" />
               <span className="hidden sm:inline">
-                {showTranslations ? "Перевод: вкл" : "Перевод: выкл"}
+                {showTranslations ? "Аударма: қосулы" : "Аударма: сөндірулі"}
               </span>
+
               <span className="sm:hidden">
-                {showTranslations ? "RU" : "EN"}
+                {showTranslations ? "KZ" : "RU"}
               </span>
             </button>
 

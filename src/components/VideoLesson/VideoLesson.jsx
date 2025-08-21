@@ -136,7 +136,7 @@ export const VideoLessonWithSubtitles = ({ lesson, onStepComplete }) => {
 
         {/* Панель субтитров */}
         {!subtitlesLoading && subtitles.length > 0 && (
-          <div className="hidden md:block w-full lg:w-80 xl:w-96">
+          <div className=" md:block w-full lg:w-80 xl:w-96">
             <SubtitlePanel
               subtitles={subtitles}
               currentTime={currentTime}

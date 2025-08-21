@@ -1,5 +1,5 @@
 // Header.jsx
-import { BookOpen, Home, Menu, X } from "lucide-react";
+import { Menu, X } from "lucide-react";
 
 export const Header = ({
   isSidebarOpen,
@@ -24,25 +24,9 @@ export const Header = ({
         </button>
 
         <div className="flex items-center gap-2">
-          <Home className="w-5 h-5 text-indigo-600" />
           <h1 className="text-lg font-semibold text-gray-800 truncate">
-            Русский язык
+            Akcent Academy{" "}
           </h1>
-        </div>
-      </div>
-
-      {/* Правая часть - Текущий урок */}
-      <div className="flex items-center gap-2 min-w-0">
-        <BookOpen className="w-4 h-4 text-gray-500 flex-shrink-0" />
-        <div className="flex flex-col min-w-0">
-          <span className="text-sm text-gray-600 truncate">
-            Урок {currentLesson}
-          </span>
-          {lessonTitle && (
-            <span className="text-xs text-gray-500 truncate">
-              {lessonTitle}
-            </span>
-          )}
         </div>
       </div>
     </header>
