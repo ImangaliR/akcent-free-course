@@ -88,7 +88,7 @@ export const UniversalQuiz = ({
             <div className="grid grid-cols-2 gap-4 text-sm">
               <div>
                 <div className="font-medium text-gray-700">Негізгі айналым</div>
-                <div className="text-xl font-bold text-blue-600">
+                <div className="text-xl font-bold text-[#9C45FF]">
                   {quiz.stats.mainCorrect}/{allQuestions.length}
                 </div>
               </div>

@@ -106,7 +106,7 @@ export const CourseNavigation = ({ currentBlockCompleted = false }) => {
                     flex items-center gap-3 px-4 py-3 lg:px-6 lg:py-4 rounded-2xl font-medium w-full justify-end transition-all duration-200 border-2
                     ${
                       currentBlockCompleted
-                        ? "bg-[#9C45FF]  text-white hover:from-[#5661E0] hover:to-[#4A54D1] shadow-lg hover:shadow-xl border-[#9C45FF] "
+                        ? "bg-[#9C45FF]  text-white hover:from-[#9C45FF] hover:to-[#9C45FF] shadow-lg hover:shadow-xl border-[#9C45FF] transform hover:scale-101"
                         : "bg-gray-100 text-gray-500 cursor-not-allowed border-gray-200"
                     }
                   `}

@@ -48,7 +48,7 @@ export const ImageQuizRenderer = ({
   const getOptionStyle = (optionId) => {
     if (!isSubmitted) {
       if (selectedOption === optionId) {
-        return "border-blue-500 bg-blue-50 shadow-lg transform scale-105";
+        return "border-[#9C45FF] bg-gray-100 shadow-lg transform scale-105";
       }
       return "border-gray-300 bg-white hover:border-blue-300 hover:bg-blue-50 hover:shadow-md cursor-pointer";
     } else {
@@ -93,10 +93,10 @@ export const ImageQuizRenderer = ({
     <div className="mx-auto max-w-4xl">
       {/* Header */}
       <div className="text-center mb-4">
-        <h2 className="text-xl md:text-2xl font-bold text-gray-800">
+        <h2 className="text-xl md:text-lg text-gray-800">
           {question.title || "Дұрыс суретті табыңыз"}
         </h2>
-        <p className="text-gray-600 md:text-lg mb-6 md:mb-8">
+        <p className="text-gray-800 md:text-xl  font-bold mb-6 md:mb-8">
           {question.question}
         </p>
         {question.description && (
@@ -114,7 +114,7 @@ export const ImageQuizRenderer = ({
             )} ${
               !isSubmitted &&
               selectedOption === option.id && (
-                <div className="absolute inset-0 border-2 border-blue-500 rounded-2xl  pointer-events-none"></div>
+                <div className="absolute inset-0 border-2 border-[#9C45FF] rounded-2xl  pointer-events-none"></div>
               )
             }${isSubmitted ? "cursor-default" : "cursor-pointer"} `}
             onClick={() => handleOptionClick(option.id)}

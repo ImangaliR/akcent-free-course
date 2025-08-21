@@ -6,7 +6,7 @@ export const InfoCardModal = ({
   isOpen,
   onClose,
   onComplete,
-  autoCloseDelay = 3000,
+  autoCloseDelay = 6000,
 }) => {
   const [isRead, setIsRead] = useState(false);
   const [timeLeft, setTimeLeft] = useState(autoCloseDelay / 1000);
@@ -76,7 +76,7 @@ export const InfoCardModal = ({
           onClick={(e) => e.stopPropagation()}
         >
           {/* Header */}
-          <div className="bg-gradient-to-r from-blue-500 to-indigo-600 p-6 text-white relative">
+          <div className="bg-gradient-to-r from-[#9C45FF] to-[#823ecf] p-6 text-white relative">
             <div className="flex items-center justify-between">
               <div className="flex items-center">
                 <div className="w-8 h-8 md:w-10 md:h-10 bg-white/20 rounded-full flex items-center justify-center mr-3">
