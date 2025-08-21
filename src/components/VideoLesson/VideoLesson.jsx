@@ -91,7 +91,7 @@ export const VideoLessonWithSubtitles = ({ lesson, onStepComplete }) => {
   }
 
   return (
-    <div className="w-full mx-auto py-12 md:py-0">
+    <div className="w-full mx-auto py-8 md:py-0">
       {/* Mobile: Вертикальная компоновка, Desktop: Горизонтальная */}
       <div className="flex flex-col lg:flex-row gap-4 lg:gap-6 h-full">
         {/* Видео область */}

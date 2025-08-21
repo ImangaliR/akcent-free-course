@@ -15,7 +15,7 @@ export const SubtitlePanel = ({
   onSeekToTime,
   className = "",
 }) => {
-  const [showPanel, setShowPanel] = useState(true);
+  const [showPanel, setShowPanel] = useState(true); // Default is on
   const [showTranslations, setShowTranslations] = useState(true);
   const [activeSubtitle, setActiveSubtitle] = useState(null);
   const [selectedWord, setSelectedWord] = useState(null);
@@ -52,6 +52,13 @@ export const SubtitlePanel = ({
   const handleSubtitleClick = (subtitle) => {
     onSeekToTime?.(subtitle.start);
   };
+
+  // Set subtitles off by default on mobile
+  useEffect(() => {
+    if (window.innerWidth < 1024) {
+      setShowPanel(false); // Set subtitles to off by default for mobile
+    }
+  }, []);
 
   if (!showPanel) {
     return (
@@ -117,7 +124,7 @@ export const SubtitlePanel = ({
       {/* Основной контент */}
       <div
         className={`flex flex-col flex-1 min-h-0 ${
-          isCollapsed ? "" : "lg:flex"
+          isCollapsed ? "hidden" : ""
         }`}
       >
         {/* Активный субтитр */}

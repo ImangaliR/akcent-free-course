@@ -60,7 +60,7 @@ export const CourseNavigation = ({ currentBlockCompleted = false }) => {
   const currentNumber = currentBlockIndex + 1;
 
   return (
-    <div className="w-full mx-auto px-1 md:px-4   ">
+    <div className="w-full mx-auto px-1 md:px-4 pb-4">
       <div className="w-full mx-auto bg-white rounded-2xl overflow-hidden">
         <div className="p-2 lg:p-3">
           <div className="flex items-center justify-between gap-3 md:gap-4 lg:gap-6">
