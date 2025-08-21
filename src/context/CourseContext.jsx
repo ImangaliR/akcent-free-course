@@ -23,8 +23,8 @@ export const CourseProvider = ({ children }) => {
   // API endpoints для твоего бэкенда
   const API_BASE =
     "https://us-central1-akcent-course.cloudfunctions.net/api/storage";
-  const token =
-    "fe546c40b1796fd47f74449bfb777dfae79c7f5f6af2229222c33364eb3a6861"; // Твой токен
+
+  const token = localStorage.getItem("token"); // Или другое имя ключа
 
   // Загрузка манифеста курса
   useEffect(() => {
@@ -294,6 +294,36 @@ export const CourseProvider = ({ children }) => {
     return "in_progress";
   };
 
+  // NEW: Functions for progress calculation (для Header)
+  const getTotalBlocks = () => {
+    return (
+      courseManifest?.sequence?.filter((block) => {
+        const lowerRef = block.ref.toLowerCase();
+        return !lowerRef.includes("inf");
+      }).length || 0
+    );
+  };
+
+  const getCompletedCount = () => {
+    if (!courseManifest?.sequence) return 0;
+
+    return courseManifest.sequence.filter((block) => {
+      const lowerRef = block.ref.toLowerCase();
+      // Исключаем info блоки
+      if (lowerRef.includes("inf")) return false;
+
+      // Проверяем завершение через userAnswers (более надежно)
+      const answer = getUserAnswer(block.ref);
+      return answer?.completed === true;
+    }).length;
+  };
+
+  const getProgressPercentage = () => {
+    const total = getTotalBlocks();
+    const completed = getCompletedCount();
+    return total > 0 ? Math.min(100, Math.round((completed / total) * 100)) : 0;
+  };
+
   const value = {
     // Existing state
     courseManifest,
@@ -323,6 +353,11 @@ export const CourseProvider = ({ children }) => {
     hasUserAnswer,
     isBlockCompletedByRef,
     getBlockStatus,
+
+    // NEW: Progress calculation methods (for Header)
+    getTotalBlocks,
+    getCompletedCount,
+    getProgressPercentage,
 
     // Existing progress calculation
     progress: courseManifest

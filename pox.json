@@ -1,0 +1,1663 @@
+{
+  "blocks/v1.video.json": {
+    "blockType": "video",
+    "blockId": "v1",
+    "blockRef": "blocks/v1.video.json",
+    "watched": true,
+    "timeSpent": 565.169398,
+    "videoId": "v1",
+    "completedAt": "2025-08-21T09:33:05.183Z",
+    "completed": true
+  },
+  "blocks/v2.video.json": {
+    "blockType": "video",
+    "blockId": "v2",
+    "blockRef": "blocks/v2.video.json",
+    "watched": true,
+    "timeSpent": 609.897543,
+    "videoId": "v2",
+    "completedAt": "2025-08-21T09:33:12.693Z",
+    "completed": true
+  },
+  "blocks/t1.task.json": {
+    "blockType": "storytask",
+    "blockId": "speaking-basics-quiz-1",
+    "blockRef": "blocks/t1.task.json",
+    "answers": [
+      {
+        "questionIndex": 0,
+        "answer": 0,
+        "isCorrect": true,
+        "question": {
+          "id": "q1",
+          "story": "Арман начинает свой день в городе. Он приехал из Алматы и только начинает изучать русский язык. Сегодня ему предстоит пойти в офис, проехать на метро и отдохнуть в парке.",
+          "media": "/images/arman-city-day.jpg",
+          "question": "В офисе Арман хочет поздороваться с коллегами. Какая фраза будет правильной для представления?",
+          "options": [
+            "Привет, я Арман из Медеуского района, рад встрече",
+            "Привед, я Арман из Медеускый район, рад встреча",
+            "Привет, я Арман из Медеуский район, рада встрече",
+            "Приветь, я Арман из Медеуского районе, рад встречи"
+          ],
+          "answer": 0,
+          "explanation": "Правильно! Обратите внимание на мягкое произношение 'ть' в слове 'привет' - это частая ошибка у казахов.",
+          "focus": "Мягкие звуки 'ть' в 'привет'",
+          "location": "office",
+          "difficulty": "beginner"
+        }
+      },
+      {
+        "questionIndex": 1,
+        "answer": 0,
+        "isCorrect": true,
+        "question": {
+          "id": "q2",
+          "story": "Арман идет к лифту в офисном здании. Там уже стоят коллеги и ждут лифт.",
+          "question": "Как Арман должен вежливо спросить, на какой этаж едут коллеги?",
+          "options": [
+            "На какой этаж вы едете?",
+            "Куда вы едет?",
+            "На какой этаж вы едет?",
+            "Куда вы идете этаж?"
+          ],
+          "answer": 0,
+          "explanation": "Правильная форма глагола 'ехать' во втором лице множественного числа - 'едете'.",
+          "focus": "Спряжение глагола 'ехать'",
+          "location": "office",
+          "difficulty": "beginner"
+        }
+      },
+      {
+        "questionIndex": 2,
+        "answer": 0,
+        "isCorrect": true,
+        "question": {
+          "id": "q3",
+          "story": "На работе у Армана обеденный перерыв. Он идет в кафе рядом с офисом.",
+          "question": "Как правильно заказать борщ в кафе?",
+          "options": [
+            "Можно один борщ, пожалуйста",
+            "Мне нужно борщ, дайте",
+            "Хочу борщ сейчас",
+            "Борщ мне надо быстро"
+          ],
+          "answer": 0,
+          "explanation": "Вежливая форма заказа с использованием 'можно' и 'пожалуйста'.",
+          "focus": "Вежливые формы просьбы",
+          "location": "office",
+          "difficulty": "beginner"
+        }
+      },
+      {
+        "questionIndex": 3,
+        "answer": 0,
+        "isCorrect": true,
+        "question": {
+          "id": "q4",
+          "story": "После работы Арман спускается в метро. Ему нужно купить билет в кассе.",
+          "question": "Как правильно спросить цену билета до Алмалы?",
+          "options": [
+            "Сколько стоит билет до Алмалы?",
+            "Какая цена билет до Алмалы?",
+            "Сколько цена до Алмалы билет?",
+            "Какой стоит билет до Алмалы?"
+          ],
+          "answer": 0,
+          "explanation": "Стандартная фраза для вопроса о цене - 'Сколько стоит...'",
+          "focus": "Вопрос о цене",
+          "location": "metro",
+          "difficulty": "beginner"
+        }
+      },
+      {
+        "questionIndex": 4,
+        "answer": 0,
+        "isCorrect": true,
+        "question": {
+          "id": "q5",
+          "story": "В метро много людей. Арман хочет пройти к выходу, но проход заблокирован.",
+          "question": "Как вежливо попросить пропустить?",
+          "options": [
+            "Извините, можно пройти?",
+            "Эй, дайте дорогу!",
+            "Пропустите быстро!",
+            "Место дайте мне!"
+          ],
+          "answer": 0,
+          "explanation": "Вежливая просьба начинается с 'Извините' и использует вопросительную форму.",
+          "focus": "Вежливая просьба в транспорте",
+          "location": "metro",
+          "difficulty": "beginner"
+        }
+      },
+      {
+        "questionIndex": 5,
+        "answer": 0,
+        "isCorrect": true,
+        "question": {
+          "id": "q6",
+          "story": "Арман не уверен, в какую сторону ехать. Он спрашивает у прохожего дорогу.",
+          "question": "Как правильно спросить направление к центру города?",
+          "options": [
+            "Подскажите, как проехать к центру?",
+            "Скажите, где центр находится?",
+            "Куда ехать центр города?",
+            "Центр города как найти дорога?"
+          ],
+          "answer": 0,
+          "explanation": "Вежливое обращение 'Подскажите' + правильная конструкция 'как проехать к...'",
+          "focus": "Вопрос о направлении",
+          "location": "metro",
+          "difficulty": "beginner"
+        }
+      },
+      {
+        "questionIndex": 6,
+        "answer": 0,
+        "isCorrect": true,
+        "question": {
+          "id": "q7",
+          "story": "Вечером Арман гуляет в парке Кок-Тобе. Он видит красивый закат и хочет сфотографироваться.",
+          "question": "Как попросить незнакомого человека сфотографировать?",
+          "options": [
+            "Извините, не могли бы вы меня сфотографировать?",
+            "Эй, сфотографируйте меня!",
+            "Фото сделайте мне быстро!",
+            "Камера возьмите, снимайте!"
+          ],
+          "answer": 0,
+          "explanation": "Очень вежливая форма с использованием условного наклонения 'не могли бы вы...'",
+          "focus": "Вежливая просьба к незнакомому человеку",
+          "location": "park",
+          "difficulty": "intermediate"
+        }
+      },
+      {
+        "questionIndex": 7,
+        "answer": 0,
+        "isCorrect": true,
+        "question": {
+          "id": "q8",
+          "story": "В парке Арман встречает русскую семью с детьми. Дети играют в мяч.",
+          "question": "Как правильно спросить разрешение присоединиться к игре?",
+          "options": [
+            "Можно с вами поиграть?",
+            "Я тоже хочу играть с вами!",
+            "Дайте мне играть тоже!",
+            "Мяч мне тоже бросайте!"
+          ],
+          "answer": 0,
+          "explanation": "Вежливый вопрос с использованием 'можно' показывает уважение к чужой игре.",
+          "focus": "Просьба о разрешении",
+          "location": "park",
+          "difficulty": "beginner"
+        }
+      },
+      {
+        "questionIndex": 8,
+        "answer": 0,
+        "isCorrect": true,
+        "question": {
+          "id": "q9",
+          "story": "Арман устал и хочет отдохнуть на скамейке, но она занята пожилой женщиной с сумками.",
+          "question": "Как вежливо спросить, можно ли присесть рядом?",
+          "options": [
+            "Извините, можно присесть?",
+            "Место свободное здесь?",
+            "Сядь я могу тут?",
+            "Дайте место на скамейке!"
+          ],
+          "answer": 0,
+          "explanation": "Краткая и вежливая форма обращения к старшему человеку.",
+          "focus": "Обращение к пожилым людям",
+          "location": "park",
+          "difficulty": "beginner"
+        }
+      },
+      {
+        "questionIndex": 9,
+        "answer": 0,
+        "isCorrect": true,
+        "question": {
+          "id": "q10",
+          "story": "Поздно вечером Арман возвращается домой на такси. Он хочет убедиться, что водитель знает правильный адрес.",
+          "question": "Как уточнить адрес у таксиста?",
+          "options": [
+            "Вы знаете, где находится улица Абая, дом 150?",
+            "Адрес знаете мой куда ехать?",
+            "Улица Абая дом 150 вы умеете?",
+            "Знаете Абая 150 где это место?"
+          ],
+          "answer": 0,
+          "explanation": "Четкий и понятный вопрос с полным адресом.",
+          "focus": "Общение с водителем такси",
+          "location": "city",
+          "difficulty": "beginner"
+        }
+      }
+    ],
+    "redemptionAnswers": [],
+    "stats": {
+      "mainCorrect": 10,
+      "redemptionCorrect": 0,
+      "total": 10,
+      "needed": 8,
+      "passed": true,
+      "percent": 100,
+      "progress": ""
+    },
+    "passed": true,
+    "completedAt": "2025-08-21T09:31:22.577Z",
+    "completed": true
+  },
+  "blocks/t3.task.json": {
+    "blockType": "imagequiz",
+    "blockId": "image-basics-quiz-1",
+    "blockRef": "blocks/t3.task.json",
+    "answers": [
+      {
+        "questionIndex": 0,
+        "answer": {
+          "selectedOption": "opt5",
+          "correctAnswer": "opt5",
+          "isCorrect": true
+        },
+        "isCorrect": true,
+        "question": {
+          "question": "Нажмите на рисунок, где мальчик находится НА коробке",
+          "options": [
+            {
+              "id": "opt1",
+              "image": "/content/media/images/task3-4.png",
+              "label": "В коробке"
+            },
+            {
+              "id": "opt2",
+              "image": "/content/media/images/task3-1.png",
+              "label": "За коробкой"
+            },
+            {
+              "id": "opt3",
+              "image": "/content/media/images/task3-2.png",
+              "label": "У коробки"
+            },
+            {
+              "id": "opt4",
+              "image": "/content/media/images/task3-5.png",
+              "label": "Справа от коробки"
+            },
+            {
+              "id": "opt5",
+              "image": "/content/media/images/task3-3.png",
+              "label": "На коробке"
+            },
+            {
+              "id": "opt6",
+              "image": "/content/media/images/task3-6.png",
+              "label": "Под коробкой"
+            }
+          ],
+          "answer": "opt5",
+          "feedback": {
+            "correct": "Дұрыс! Мальчик на коробке.",
+            "wrong": "Қайтадан көріңіз."
+          }
+        }
+      },
+      {
+        "questionIndex": 1,
+        "answer": {
+          "selectedOption": "opt5",
+          "correctAnswer": "opt3",
+          "isCorrect": false
+        },
+        "isCorrect": false,
+        "question": {
+          "question": "Нажмите на рисунок, где мальчик находится У коробке",
+          "options": [
+            {
+              "id": "opt1",
+              "image": "/content/media/images/task3-4.png",
+              "label": "В коробке"
+            },
+            {
+              "id": "opt2",
+              "image": "/content/media/images/task3-1.png",
+              "label": "За коробкой"
+            },
+            {
+              "id": "opt3",
+              "image": "/content/media/images/task3-2.png",
+              "label": "У коробки"
+            },
+            {
+              "id": "opt4",
+              "image": "/content/media/images/task3-5.png",
+              "label": "Справа от коробки"
+            },
+            {
+              "id": "opt5",
+              "image": "/content/media/images/task3-3.png",
+              "label": "На коробке"
+            },
+            {
+              "id": "opt6",
+              "image": "/content/media/images/task3-6.png",
+              "label": "Под коробкой"
+            }
+          ],
+          "answer": "opt3",
+          "feedback": {
+            "correct": "Дұрыс! Мальчик у коробке.",
+            "wrong": "Қайтадан көріңіз."
+          }
+        }
+      },
+      {
+        "questionIndex": 2,
+        "answer": {
+          "selectedOption": "opt5",
+          "correctAnswer": "opt1",
+          "isCorrect": false
+        },
+        "isCorrect": false,
+        "question": {
+          "question": "Нажмите на рисунок, где мальчик находится В коробке",
+          "options": [
+            {
+              "id": "opt1",
+              "image": "/content/media/images/task3-4.png",
+              "label": "В коробке"
+            },
+            {
+              "id": "opt2",
+              "image": "/content/media/images/task3-1.png",
+              "label": "За коробкой"
+            },
+            {
+              "id": "opt3",
+              "image": "/content/media/images/task3-2.png",
+              "label": "У коробки"
+            },
+            {
+              "id": "opt4",
+              "image": "/content/media/images/task3-5.png",
+              "label": "Справа от коробки"
+            },
+            {
+              "id": "opt5",
+              "image": "/content/media/images/task3-3.png",
+              "label": "На коробке"
+            },
+            {
+              "id": "opt6",
+              "image": "/content/media/images/task3-6.png",
+              "label": "Под коробкой"
+            }
+          ],
+          "answer": "opt1",
+          "feedback": {
+            "correct": "Дұрыс! Мальчик в коробке.",
+            "wrong": "Қайтадан көріңіз."
+          }
+        }
+      },
+      {
+        "questionIndex": 3,
+        "answer": {
+          "selectedOption": "opt4",
+          "correctAnswer": "opt4",
+          "isCorrect": true
+        },
+        "isCorrect": true,
+        "question": {
+          "question": "Нажмите на рисунок, где мальчик находится СПРАВА от коробке",
+          "options": [
+            {
+              "id": "opt1",
+              "image": "/content/media/images/task3-4.png",
+              "label": "В коробке"
+            },
+            {
+              "id": "opt2",
+              "image": "/content/media/images/task3-1.png",
+              "label": "За коробкой"
+            },
+            {
+              "id": "opt3",
+              "image": "/content/media/images/task3-2.png",
+              "label": "У коробки"
+            },
+            {
+              "id": "opt4",
+              "image": "/content/media/images/task3-5.png",
+              "label": "Справа от коробки"
+            },
+            {
+              "id": "opt5",
+              "image": "/content/media/images/task3-3.png",
+              "label": "На коробке"
+            },
+            {
+              "id": "opt6",
+              "image": "/content/media/images/task3-6.png",
+              "label": "Под коробкой"
+            }
+          ],
+          "answer": "opt4",
+          "feedback": {
+            "correct": "Дұрыс! Мальчик справа коробке.",
+            "wrong": "Қайтадан көріңіз."
+          }
+        }
+      },
+      {
+        "questionIndex": 4,
+        "answer": {
+          "selectedOption": "opt3",
+          "correctAnswer": "opt2",
+          "isCorrect": false
+        },
+        "isCorrect": false,
+        "question": {
+          "question": "Нажмите на рисунок, где мальчик находится ПОД коробкой.",
+          "options": [
+            {
+              "id": "opt1",
+              "image": "/content/media/images/task3-5.png",
+              "label": "На коробке"
+            },
+            {
+              "id": "opt2",
+              "image": "/content/media/images/task3-6.png",
+              "label": "Под коробкой"
+            },
+            {
+              "id": "opt3",
+              "image": "/content/media/images/task3-1.png",
+              "label": "За коробкой"
+            },
+            {
+              "id": "opt4",
+              "image": "/content/media/images/task3-2.png",
+              "label": "У коробки"
+            },
+            {
+              "id": "opt5",
+              "image": "/content/media/images/task3-3.png",
+              "label": "Справа от коробки"
+            },
+            {
+              "id": "opt6",
+              "image": "/content/media/images/task3-4.png",
+              "label": "В коробке"
+            }
+          ],
+          "answer": "opt2",
+          "feedback": {
+            "correct": "Дұрыс! Мальчик под коробкой.",
+            "wrong": "Қайтадан көріңіз."
+          }
+        }
+      }
+    ],
+    "redemptionAnswers": [
+      {
+        "questionIndex": 0,
+        "answer": {
+          "selectedOption": "opt3",
+          "correctAnswer": "opt3",
+          "isCorrect": true
+        },
+        "isCorrect": true,
+        "question": {
+          "question": "Нажмите на рисунок, где мальчик находится У коробке",
+          "options": [
+            {
+              "id": "opt1",
+              "image": "/content/media/images/task3-4.png",
+              "label": "В коробке"
+            },
+            {
+              "id": "opt2",
+              "image": "/content/media/images/task3-1.png",
+              "label": "За коробкой"
+            },
+            {
+              "id": "opt3",
+              "image": "/content/media/images/task3-2.png",
+              "label": "У коробки"
+            },
+            {
+              "id": "opt4",
+              "image": "/content/media/images/task3-5.png",
+              "label": "Справа от коробки"
+            },
+            {
+              "id": "opt5",
+              "image": "/content/media/images/task3-3.png",
+              "label": "На коробке"
+            },
+            {
+              "id": "opt6",
+              "image": "/content/media/images/task3-6.png",
+              "label": "Под коробкой"
+            }
+          ],
+          "answer": "opt3",
+          "feedback": {
+            "correct": "Дұрыс! Мальчик у коробке.",
+            "wrong": "Қайтадан көріңіз."
+          }
+        }
+      },
+      {
+        "questionIndex": 1,
+        "answer": {
+          "selectedOption": "opt5",
+          "correctAnswer": "opt1",
+          "isCorrect": false
+        },
+        "isCorrect": false,
+        "question": {
+          "question": "Нажмите на рисунок, где мальчик находится В коробке",
+          "options": [
+            {
+              "id": "opt1",
+              "image": "/content/media/images/task3-4.png",
+              "label": "В коробке"
+            },
+            {
+              "id": "opt2",
+              "image": "/content/media/images/task3-1.png",
+              "label": "За коробкой"
+            },
+            {
+              "id": "opt3",
+              "image": "/content/media/images/task3-2.png",
+              "label": "У коробки"
+            },
+            {
+              "id": "opt4",
+              "image": "/content/media/images/task3-5.png",
+              "label": "Справа от коробки"
+            },
+            {
+              "id": "opt5",
+              "image": "/content/media/images/task3-3.png",
+              "label": "На коробке"
+            },
+            {
+              "id": "opt6",
+              "image": "/content/media/images/task3-6.png",
+              "label": "Под коробкой"
+            }
+          ],
+          "answer": "opt1",
+          "feedback": {
+            "correct": "Дұрыс! Мальчик в коробке.",
+            "wrong": "Қайтадан көріңіз."
+          }
+        }
+      },
+      {
+        "questionIndex": 1,
+        "answer": {
+          "selectedOption": "opt6",
+          "correctAnswer": "opt1",
+          "isCorrect": false
+        },
+        "isCorrect": false,
+        "question": {
+          "question": "Нажмите на рисунок, где мальчик находится В коробке",
+          "options": [
+            {
+              "id": "opt1",
+              "image": "/content/media/images/task3-4.png",
+              "label": "В коробке"
+            },
+            {
+              "id": "opt2",
+              "image": "/content/media/images/task3-1.png",
+              "label": "За коробкой"
+            },
+            {
+              "id": "opt3",
+              "image": "/content/media/images/task3-2.png",
+              "label": "У коробки"
+            },
+            {
+              "id": "opt4",
+              "image": "/content/media/images/task3-5.png",
+              "label": "Справа от коробки"
+            },
+            {
+              "id": "opt5",
+              "image": "/content/media/images/task3-3.png",
+              "label": "На коробке"
+            },
+            {
+              "id": "opt6",
+              "image": "/content/media/images/task3-6.png",
+              "label": "Под коробкой"
+            }
+          ],
+          "answer": "opt1",
+          "feedback": {
+            "correct": "Дұрыс! Мальчик в коробке.",
+            "wrong": "Қайтадан көріңіз."
+          }
+        }
+      },
+      {
+        "questionIndex": 1,
+        "answer": {
+          "selectedOption": "opt1",
+          "correctAnswer": "opt1",
+          "isCorrect": true
+        },
+        "isCorrect": true,
+        "question": {
+          "question": "Нажмите на рисунок, где мальчик находится В коробке",
+          "options": [
+            {
+              "id": "opt1",
+              "image": "/content/media/images/task3-4.png",
+              "label": "В коробке"
+            },
+            {
+              "id": "opt2",
+              "image": "/content/media/images/task3-1.png",
+              "label": "За коробкой"
+            },
+            {
+              "id": "opt3",
+              "image": "/content/media/images/task3-2.png",
+              "label": "У коробки"
+            },
+            {
+              "id": "opt4",
+              "image": "/content/media/images/task3-5.png",
+              "label": "Справа от коробки"
+            },
+            {
+              "id": "opt5",
+              "image": "/content/media/images/task3-3.png",
+              "label": "На коробке"
+            },
+            {
+              "id": "opt6",
+              "image": "/content/media/images/task3-6.png",
+              "label": "Под коробкой"
+            }
+          ],
+          "answer": "opt1",
+          "feedback": {
+            "correct": "Дұрыс! Мальчик в коробке.",
+            "wrong": "Қайтадан көріңіз."
+          }
+        }
+      },
+      {
+        "questionIndex": 2,
+        "answer": {
+          "selectedOption": "opt2",
+          "correctAnswer": "opt2",
+          "isCorrect": true
+        },
+        "isCorrect": true,
+        "question": {
+          "question": "Нажмите на рисунок, где мальчик находится ПОД коробкой.",
+          "options": [
+            {
+              "id": "opt1",
+              "image": "/content/media/images/task3-5.png",
+              "label": "На коробке"
+            },
+            {
+              "id": "opt2",
+              "image": "/content/media/images/task3-6.png",
+              "label": "Под коробкой"
+            },
+            {
+              "id": "opt3",
+              "image": "/content/media/images/task3-1.png",
+              "label": "За коробкой"
+            },
+            {
+              "id": "opt4",
+              "image": "/content/media/images/task3-2.png",
+              "label": "У коробки"
+            },
+            {
+              "id": "opt5",
+              "image": "/content/media/images/task3-3.png",
+              "label": "Справа от коробки"
+            },
+            {
+              "id": "opt6",
+              "image": "/content/media/images/task3-4.png",
+              "label": "В коробке"
+            }
+          ],
+          "answer": "opt2",
+          "feedback": {
+            "correct": "Дұрыс! Мальчик под коробкой.",
+            "wrong": "Қайтадан көріңіз."
+          }
+        }
+      }
+    ],
+    "stats": {
+      "mainCorrect": 2,
+      "redemptionCorrect": 3,
+      "total": 5,
+      "needed": 4,
+      "passed": true,
+      "percent": 100,
+      "progress": ""
+    },
+    "passed": true,
+    "completedAt": "2025-08-21T09:40:57.172Z",
+    "completed": true
+  },
+  "blocks/v3.video.json": {
+    "blockType": "video",
+    "blockId": "v3",
+    "blockRef": "blocks/v3.video.json",
+    "watched": true,
+    "timeSpent": 12.161832,
+    "videoId": "v3",
+    "completedAt": "2025-08-21T09:31:39.593Z",
+    "completed": true
+  },
+  "blocks/t2.task.json": {
+    "blockType": "multiblanktask",
+    "blockId": "multiblank-basics-quiz-1",
+    "blockRef": "blocks/t2.task.json",
+    "answers": [
+      {
+        "questionIndex": 0,
+        "answer": [0, 2],
+        "isCorrect": false,
+        "question": {
+          "id": "t1",
+          "story": "Айжан: {{blank1}} я могу добратся до метро?\nАрман: Иди {{blank2}} до станции, это вон то зеленое здание.",
+          "question": "Бос орындарға керекті сөздерді қойыңыз",
+          "blanks": [
+            {
+              "id": "blank1",
+              "options": ["Куда", "Как", "Когда"],
+              "answer": 1,
+              "feedback": [
+                "«Where do I get to the station?» — грамматически неверно в таком контексте.",
+                "Правильно! «How do I get to the station?» — как пройти/доехать.",
+                "«When do I get to the station?» — это вопрос о времени, не подходит."
+              ]
+            },
+            {
+              "id": "blank2",
+              "options": ["Прямо", "Вчера", "Счастливо"],
+              "answer": 0,
+              "feedback": [
+                "Правильно! «Go straight» — иди прямо.",
+                "«Go yesterday» — бессмысленно.",
+                "«Go happy» — бессмысленно."
+              ]
+            }
+          ],
+          "media": "../../../public/content/media/images/task6.png"
+        }
+      },
+      {
+        "questionIndex": 1,
+        "answer": [1, 0],
+        "isCorrect": false,
+        "question": {
+          "id": "t2",
+          "story": "Сауда орнында:\nСатушы: Сізге {{blank1}} керек?\nТұтынушы: Мен {{blank2}} сатып алғым келеді.",
+          "question": "Дұрыс сөздерді таңдаңыз",
+          "blanks": [
+            {
+              "id": "blank1",
+              "options": ["не", "кімдер", "қайда"],
+              "answer": 0,
+              "feedback": [
+                "Дұрыс! «Что вам нужно?» — қандай тауар керек екенін сұрау.",
+                "«Кто вам нужен?» — адам туралы сұрақ, дүкенде орынсыз.",
+                "«Куда вам нужно?» — бағыт туралы сұрақ, контекстке сәйкес келмейді."
+              ]
+            },
+            {
+              "id": "blank2",
+              "options": ["нан", "ертең", "жылдам"],
+              "answer": 0,
+              "feedback": [
+                "Дұрыс! «Я хочу купить хлеб» — логикалық және дұрыс.",
+                "«Я хочу купить завтра» — грамматикалық қате.",
+                "«Я хочу купить быстро» — мағынасыз."
+              ]
+            }
+          ],
+          "media": "../../../public/content/media/images/task2.png"
+        }
+      },
+      {
+        "questionIndex": 2,
+        "answer": [0, 1],
+        "isCorrect": false,
+        "question": {
+          "id": "t3",
+          "story": "Асел: {{blank1}} ауа райы қандай?\nДанияр: Бүгін {{blank2}} және салқын.",
+          "question": "Сөйлемді толықтырыңыз.",
+          "blanks": [
+            {
+              "id": "blank1",
+              "options": ["Бүгін", "Кеше", "Қашан"],
+              "answer": 0,
+              "feedback": [
+                "Дұрыс! «Сегодня какая погода?» — қазіргі уақыт туралы сұрақ.",
+                "«Вчера какая погода?» — өткен уақыт туралы, бірақ «қандай» дегеніміз қазіргі уақытты білдіреді.",
+                "«Когда какая погода?» — грамматикалық қате сұрақ."
+              ]
+            },
+            {
+              "id": "blank2",
+              "options": ["жаңбырлы", "кеше", "үйде"],
+              "answer": 0,
+              "feedback": [
+                "Дұрыс! «Сегодня дождливо и холодно» — ауа райын сипаттау.",
+                "«Сегодня вчера и холодно» — мағынасыз комбинация.",
+                "«Сегодня дома и холодно» — ауа райына қатысы жоқ."
+              ]
+            }
+          ],
+          "media": "../../../public/content/media/images/task3.png"
+        }
+      },
+      {
+        "questionIndex": 3,
+        "answer": [1, 0],
+        "isCorrect": false,
+        "question": {
+          "id": "t4",
+          "story": "Даяна: Мен {{blank1}} тапсырыс берғім келеді.\nГарсон: Әрине! Сіз {{blank2}} ішесіз бе?",
+          "question": "Диалогты аяқтаңыз.",
+          "blanks": [
+            {
+              "id": "blank1",
+              "options": ["тамақ", "кітап", "машина"],
+              "answer": 0,
+              "feedback": [
+                "Дұрыс! Ресторанда «тамақ тапсырыс беру» табиғи.",
+                "Ресторанда кітап тапсырыс бермейді.",
+                "Ресторанда машина тапсырыс бермейді."
+              ]
+            },
+            {
+              "id": "blank2",
+              "options": ["не", "қайда", "қашан"],
+              "answer": 0,
+              "feedback": [
+                "Дұрыс! «Что будете пить?» — сусын туралы сұрақ.",
+                "«Куда будете пить?» — мағынасыз сұрақ.",
+                "«Когда будете пить?» — уақыт туралы, бірақ контекстке сәйкес келмейді."
+              ]
+            }
+          ],
+          "media": "../../../public/content/media/images/task4.png"
+        }
+      },
+      {
+        "questionIndex": 4,
+        "answer": [0, 0],
+        "isCorrect": true,
+        "question": {
+          "id": "t5",
+          "story": "Студент: Кешіріңіз, {{blank1}} сағат болды?\nМұғалім: Қазір сағат {{blank2}}.",
+          "question": "Уақыт туралы диалогты толықтырыңыз.",
+          "blanks": [
+            {
+              "id": "blank1",
+              "options": ["неше", "қайда", "неге"],
+              "answer": 0,
+              "feedback": [
+                "Дұрыс! «Сколько времени?» — уақытты сұрау үшін.",
+                "«Где время?» — мағынасыз сұрақ.",
+                "«Почему время?» — контекстке сәйкес келмейді."
+              ]
+            },
+            {
+              "id": "blank2",
+              "options": ["үш", "кеше", "жақсы"],
+              "answer": 0,
+              "feedback": [
+                "Дұрыс! «Сейчас три часа» — нақты уақытты айту.",
+                "«Сейчас вчера» — мағынасыз жауап.",
+                "«Сейчас хорошо» — уақытқа жауап емес."
+              ]
+            }
+          ],
+          "media": "../../../public/content/media/images/task5.png"
+        }
+      },
+      {
+        "questionIndex": 5,
+        "answer": [0, 0],
+        "isCorrect": true,
+        "question": {
+          "id": "t6",
+          "story": "Айгүл: Сенің отбасыңда {{blank1}} адам бар?\nЕрлан: Бізде {{blank2}} адам: ата-анам, мен және қарындасым.",
+          "question": "Отбасы туралы әңгімені аяқтаңыз.",
+          "blanks": [
+            {
+              "id": "blank1",
+              "options": ["неше", "қайда", "қалай"],
+              "answer": 0,
+              "feedback": [
+                "Дұрыс! «Сколько человек в твоей семье?» — санды сұрау.",
+                "«Где человек в твоей семье?» — мағынасыз сұрақ.",
+                "«Как человек в твоей семье?» — грамматикалық қате."
+              ]
+            },
+            {
+              "id": "blank2",
+              "options": ["төрт", "ертең", "көп"],
+              "answer": 0,
+              "feedback": [
+                "Дұрыс! «У нас четыре человека» — нақты сан (ата-ана, мен, қарындас = 4).",
+                "«У нас завтра человека» — мағынасыз жауап.",
+                "«У нас много человека» — грамматикалық қате."
+              ]
+            }
+          ],
+          "media": "../../../public/content/media/images/task7.png"
+        }
+      },
+      {
+        "questionIndex": 6,
+        "answer": [0, 0],
+        "isCorrect": true,
+        "question": {
+          "id": "t7",
+          "story": "Менеджер: Сіз {{blank1}} жұмыс істейсіз?\nАрман: Мен {{blank2}} жұмыс істеймін, айына екі рет сапармен барамын.",
+          "question": "Жұмыс туралы сұхбатты толықтырыңыз.",
+          "blanks": [
+            {
+              "id": "blank1",
+              "options": ["қайда", "қашан", "неге"],
+              "answer": 0,
+              "feedback": [
+                "Дұрыс! «Где вы работаете?» — жұмыс орнын сұрау.",
+                "«Когда вы работаете?» — уақыт туралы, бірақ контекстке толық сәйкес келмейді.",
+                "«Почему вы работаете?» — себеп туралы, қалыпты таныстыру диалогында орынсыз."
+              ]
+            },
+            {
+              "id": "blank2",
+              "options": ["кеңседе", "кеше", "тез"],
+              "answer": 0,
+              "feedback": [
+                "Дұрыс! «Я работаю в офисе» — жұмыс орнын көрсету.",
+                "«Я работаю вчера» — грамматикалық қате.",
+                "«Я работаю быстро» — жұмыс орнын көрсетпейді."
+              ]
+            }
+          ],
+          "media": "../../../public/content/media/images/task8.png"
+        }
+      }
+    ],
+    "redemptionAnswers": [
+      {
+        "questionIndex": 0,
+        "answer": [1, 0],
+        "isCorrect": true,
+        "question": {
+          "id": "t1",
+          "story": "Айжан: {{blank1}} я могу добратся до метро?\nАрман: Иди {{blank2}} до станции, это вон то зеленое здание.",
+          "question": "Бос орындарға керекті сөздерді қойыңыз",
+          "blanks": [
+            {
+              "id": "blank1",
+              "options": ["Куда", "Как", "Когда"],
+              "answer": 1,
+              "feedback": [
+                "«Where do I get to the station?» — грамматически неверно в таком контексте.",
+                "Правильно! «How do I get to the station?» — как пройти/доехать.",
+                "«When do I get to the station?» — это вопрос о времени, не подходит."
+              ]
+            },
+            {
+              "id": "blank2",
+              "options": ["Прямо", "Вчера", "Счастливо"],
+              "answer": 0,
+              "feedback": [
+                "Правильно! «Go straight» — иди прямо.",
+                "«Go yesterday» — бессмысленно.",
+                "«Go happy» — бессмысленно."
+              ]
+            }
+          ],
+          "media": "../../../public/content/media/images/task6.png"
+        }
+      },
+      {
+        "questionIndex": 1,
+        "answer": [0, 0],
+        "isCorrect": true,
+        "question": {
+          "id": "t2",
+          "story": "Сауда орнында:\nСатушы: Сізге {{blank1}} керек?\nТұтынушы: Мен {{blank2}} сатып алғым келеді.",
+          "question": "Дұрыс сөздерді таңдаңыз",
+          "blanks": [
+            {
+              "id": "blank1",
+              "options": ["не", "кімдер", "қайда"],
+              "answer": 0,
+              "feedback": [
+                "Дұрыс! «Что вам нужно?» — қандай тауар керек екенін сұрау.",
+                "«Кто вам нужен?» — адам туралы сұрақ, дүкенде орынсыз.",
+                "«Куда вам нужно?» — бағыт туралы сұрақ, контекстке сәйкес келмейді."
+              ]
+            },
+            {
+              "id": "blank2",
+              "options": ["нан", "ертең", "жылдам"],
+              "answer": 0,
+              "feedback": [
+                "Дұрыс! «Я хочу купить хлеб» — логикалық және дұрыс.",
+                "«Я хочу купить завтра» — грамматикалық қате.",
+                "«Я хочу купить быстро» — мағынасыз."
+              ]
+            }
+          ],
+          "media": "../../../public/content/media/images/task2.png"
+        }
+      },
+      {
+        "questionIndex": 2,
+        "answer": [0, 0],
+        "isCorrect": true,
+        "question": {
+          "id": "t3",
+          "story": "Асел: {{blank1}} ауа райы қандай?\nДанияр: Бүгін {{blank2}} және салқын.",
+          "question": "Сөйлемді толықтырыңыз.",
+          "blanks": [
+            {
+              "id": "blank1",
+              "options": ["Бүгін", "Кеше", "Қашан"],
+              "answer": 0,
+              "feedback": [
+                "Дұрыс! «Сегодня какая погода?» — қазіргі уақыт туралы сұрақ.",
+                "«Вчера какая погода?» — өткен уақыт туралы, бірақ «қандай» дегеніміз қазіргі уақытты білдіреді.",
+                "«Когда какая погода?» — грамматикалық қате сұрақ."
+              ]
+            },
+            {
+              "id": "blank2",
+              "options": ["жаңбырлы", "кеше", "үйде"],
+              "answer": 0,
+              "feedback": [
+                "Дұрыс! «Сегодня дождливо и холодно» — ауа райын сипаттау.",
+                "«Сегодня вчера и холодно» — мағынасыз комбинация.",
+                "«Сегодня дома и холодно» — ауа райына қатысы жоқ."
+              ]
+            }
+          ],
+          "media": "../../../public/content/media/images/task3.png"
+        }
+      },
+      {
+        "questionIndex": 3,
+        "answer": [0, 1],
+        "isCorrect": false,
+        "question": {
+          "id": "t4",
+          "story": "Даяна: Мен {{blank1}} тапсырыс берғім келеді.\nГарсон: Әрине! Сіз {{blank2}} ішесіз бе?",
+          "question": "Диалогты аяқтаңыз.",
+          "blanks": [
+            {
+              "id": "blank1",
+              "options": ["тамақ", "кітап", "машина"],
+              "answer": 0,
+              "feedback": [
+                "Дұрыс! Ресторанда «тамақ тапсырыс беру» табиғи.",
+                "Ресторанда кітап тапсырыс бермейді.",
+                "Ресторанда машина тапсырыс бермейді."
+              ]
+            },
+            {
+              "id": "blank2",
+              "options": ["не", "қайда", "қашан"],
+              "answer": 0,
+              "feedback": [
+                "Дұрыс! «Что будете пить?» — сусын туралы сұрақ.",
+                "«Куда будете пить?» — мағынасыз сұрақ.",
+                "«Когда будете пить?» — уақыт туралы, бірақ контекстке сәйкес келмейді."
+              ]
+            }
+          ],
+          "media": "../../../public/content/media/images/task4.png"
+        }
+      },
+      {
+        "questionIndex": 3,
+        "answer": [0, 1],
+        "isCorrect": false,
+        "question": {
+          "id": "t4",
+          "story": "Даяна: Мен {{blank1}} тапсырыс берғім келеді.\nГарсон: Әрине! Сіз {{blank2}} ішесіз бе?",
+          "question": "Диалогты аяқтаңыз.",
+          "blanks": [
+            {
+              "id": "blank1",
+              "options": ["тамақ", "кітап", "машина"],
+              "answer": 0,
+              "feedback": [
+                "Дұрыс! Ресторанда «тамақ тапсырыс беру» табиғи.",
+                "Ресторанда кітап тапсырыс бермейді.",
+                "Ресторанда машина тапсырыс бермейді."
+              ]
+            },
+            {
+              "id": "blank2",
+              "options": ["не", "қайда", "қашан"],
+              "answer": 0,
+              "feedback": [
+                "Дұрыс! «Что будете пить?» — сусын туралы сұрақ.",
+                "«Куда будете пить?» — мағынасыз сұрақ.",
+                "«Когда будете пить?» — уақыт туралы, бірақ контекстке сәйкес келмейді."
+              ]
+            }
+          ],
+          "media": "../../../public/content/media/images/task4.png"
+        }
+      },
+      {
+        "questionIndex": 3,
+        "answer": [0, 0],
+        "isCorrect": true,
+        "question": {
+          "id": "t4",
+          "story": "Даяна: Мен {{blank1}} тапсырыс берғім келеді.\nГарсон: Әрине! Сіз {{blank2}} ішесіз бе?",
+          "question": "Диалогты аяқтаңыз.",
+          "blanks": [
+            {
+              "id": "blank1",
+              "options": ["тамақ", "кітап", "машина"],
+              "answer": 0,
+              "feedback": [
+                "Дұрыс! Ресторанда «тамақ тапсырыс беру» табиғи.",
+                "Ресторанда кітап тапсырыс бермейді.",
+                "Ресторанда машина тапсырыс бермейді."
+              ]
+            },
+            {
+              "id": "blank2",
+              "options": ["не", "қайда", "қашан"],
+              "answer": 0,
+              "feedback": [
+                "Дұрыс! «Что будете пить?» — сусын туралы сұрақ.",
+                "«Куда будете пить?» — мағынасыз сұрақ.",
+                "«Когда будете пить?» — уақыт туралы, бірақ контекстке сәйкес келмейді."
+              ]
+            }
+          ],
+          "media": "../../../public/content/media/images/task4.png"
+        }
+      }
+    ],
+    "stats": {
+      "mainCorrect": 3,
+      "redemptionCorrect": 4,
+      "total": 7,
+      "needed": 6,
+      "passed": true,
+      "percent": 100,
+      "progress": ""
+    },
+    "passed": true,
+    "completedAt": "2025-08-21T09:29:48.221Z",
+    "completed": true
+  },
+  "blocks/inf-1.json": {
+    "blockType": "infocard",
+    "blockId": "inf-1",
+    "blockRef": "blocks/inf-1.json",
+    "completed": true,
+    "autoAdvance": true,
+    "completedAt": "2025-08-21T09:31:26.203Z"
+  },
+  "blocks/v4.video.json": {
+    "blockType": "video",
+    "blockId": "v4",
+    "blockRef": "blocks/v4.video.json",
+    "watched": true,
+    "timeSpent": 12.066939,
+    "videoId": "v4",
+    "completedAt": "2025-08-21T07:42:41.977Z",
+    "completed": true
+  },
+  "blocks/inf-3.json": {
+    "blockType": "infocard",
+    "blockId": "inf-3",
+    "blockRef": "blocks/inf-3.json",
+    "completed": true,
+    "autoAdvance": true,
+    "completedAt": "2025-08-21T09:44:57.616Z"
+  },
+  "blocks/t2.audio.json": {
+    "blockType": "audiotask",
+    "blockId": "audio-listening-quiz-1",
+    "blockRef": "blocks/t2.audio.json",
+    "answers": [
+      {
+        "questionIndex": 0,
+        "answer": 1,
+        "isCorrect": false,
+        "question": {
+          "id": "t1",
+          "audio": "../../../public/content/media/audio/cafe-order.mp3",
+          "question": "Айжан не тапсырыс берді?",
+          "options": ["Чай", "Кофе", "Сок"],
+          "answer": 2,
+          "explanation": "В аудио четко слышно, что Айжан заказывает сок."
+        }
+      },
+      {
+        "questionIndex": 1,
+        "answer": 2,
+        "isCorrect": false,
+        "question": {
+          "id": "t2",
+          "audio": "../../../public/content/media/audio/metro-announcement.mp3",
+          "question": "Қай станцияға келесі тоқтау?",
+          "options": ["Алмалы", "Райымбек", "Жібек жолы"],
+          "answer": 0,
+          "explanation": "В объявлении говорится о следующей остановке Алмалы."
+        }
+      },
+      {
+        "questionIndex": 2,
+        "answer": 0,
+        "isCorrect": false,
+        "question": {
+          "id": "t3",
+          "audio": "../../../public/content/media/audio/weather-forecast.mp3",
+          "question": "Ертең ауа райы қандай болады?",
+          "options": ["Жаңбырлы", "Күнді", "Қарлы"],
+          "answer": 1,
+          "explanation": "В прогнозе погоды сказано, что завтра будет солнечно."
+        }
+      },
+      {
+        "questionIndex": 3,
+        "answer": 0,
+        "isCorrect": false,
+        "question": {
+          "id": "t4",
+          "audio": "../../../public/content/media/audio/office-meeting.mp3",
+          "question": "Жиналыс қашан басталады?",
+          "options": ["Сағат 2-де", "Сағат 3-те", "Сағат 4-те"],
+          "answer": 1,
+          "explanation": "В аудио четко указано время начала встречи в 3 часа."
+        }
+      },
+      {
+        "questionIndex": 4,
+        "answer": 1,
+        "isCorrect": false,
+        "question": {
+          "id": "t5",
+          "audio": "../../../public/content/media/audio/phone-conversation.mp3",
+          "question": "Арман қайда барады?",
+          "options": ["Дүкенге", "Үйге", "Жұмысқа"],
+          "answer": 0,
+          "explanation": "В телефонном разговоре Арман говорит, что идет в магазин."
+        }
+      },
+      {
+        "questionIndex": 5,
+        "answer": 1,
+        "isCorrect": true,
+        "question": {
+          "id": "t6",
+          "audio": "../../../public/content/media/audio/taxi-ride.mp3",
+          "question": "Такси қанша тұрады?",
+          "options": ["500 теңге", "700 теңге", "1000 теңге"],
+          "answer": 1,
+          "explanation": "Водитель такси называет цену 700 тенге."
+        }
+      },
+      {
+        "questionIndex": 6,
+        "answer": 1,
+        "isCorrect": true,
+        "question": {
+          "id": "t7",
+          "audio": "../../../public/content/media/audio/restaurant-reservation.mp3",
+          "question": "Үстел неше адамға брондалған?",
+          "options": ["2 адамға", "4 адамға", "6 адамға"],
+          "answer": 1,
+          "explanation": "В разговоре о бронировании упоминается стол на 4 человека."
+        }
+      }
+    ],
+    "redemptionAnswers": [
+      {
+        "questionIndex": 0,
+        "answer": 1,
+        "isCorrect": false,
+        "question": {
+          "id": "t1",
+          "audio": "../../../public/content/media/audio/cafe-order.mp3",
+          "question": "Айжан не тапсырыс берді?",
+          "options": ["Чай", "Кофе", "Сок"],
+          "answer": 2,
+          "explanation": "В аудио четко слышно, что Айжан заказывает сок."
+        }
+      },
+      {
+        "questionIndex": 0,
+        "answer": 2,
+        "isCorrect": true,
+        "question": {
+          "id": "t1",
+          "audio": "../../../public/content/media/audio/cafe-order.mp3",
+          "question": "Айжан не тапсырыс берді?",
+          "options": ["Чай", "Кофе", "Сок"],
+          "answer": 2,
+          "explanation": "В аудио четко слышно, что Айжан заказывает сок."
+        }
+      },
+      {
+        "questionIndex": 1,
+        "answer": 1,
+        "isCorrect": false,
+        "question": {
+          "id": "t2",
+          "audio": "../../../public/content/media/audio/metro-announcement.mp3",
+          "question": "Қай станцияға келесі тоқтау?",
+          "options": ["Алмалы", "Райымбек", "Жібек жолы"],
+          "answer": 0,
+          "explanation": "В объявлении говорится о следующей остановке Алмалы."
+        }
+      },
+      {
+        "questionIndex": 1,
+        "answer": 0,
+        "isCorrect": true,
+        "question": {
+          "id": "t2",
+          "audio": "../../../public/content/media/audio/metro-announcement.mp3",
+          "question": "Қай станцияға келесі тоқтау?",
+          "options": ["Алмалы", "Райымбек", "Жібек жолы"],
+          "answer": 0,
+          "explanation": "В объявлении говорится о следующей остановке Алмалы."
+        }
+      },
+      {
+        "questionIndex": 2,
+        "answer": 0,
+        "isCorrect": false,
+        "question": {
+          "id": "t3",
+          "audio": "../../../public/content/media/audio/weather-forecast.mp3",
+          "question": "Ертең ауа райы қандай болады?",
+          "options": ["Жаңбырлы", "Күнді", "Қарлы"],
+          "answer": 1,
+          "explanation": "В прогнозе погоды сказано, что завтра будет солнечно."
+        }
+      },
+      {
+        "questionIndex": 2,
+        "answer": 0,
+        "isCorrect": false,
+        "question": {
+          "id": "t3",
+          "audio": "../../../public/content/media/audio/weather-forecast.mp3",
+          "question": "Ертең ауа райы қандай болады?",
+          "options": ["Жаңбырлы", "Күнді", "Қарлы"],
+          "answer": 1,
+          "explanation": "В прогнозе погоды сказано, что завтра будет солнечно."
+        }
+      },
+      {
+        "questionIndex": 2,
+        "answer": 0,
+        "isCorrect": false,
+        "question": {
+          "id": "t3",
+          "audio": "../../../public/content/media/audio/weather-forecast.mp3",
+          "question": "Ертең ауа райы қандай болады?",
+          "options": ["Жаңбырлы", "Күнді", "Қарлы"],
+          "answer": 1,
+          "explanation": "В прогнозе погоды сказано, что завтра будет солнечно."
+        }
+      },
+      {
+        "questionIndex": 2,
+        "answer": 0,
+        "isCorrect": false,
+        "question": {
+          "id": "t3",
+          "audio": "../../../public/content/media/audio/weather-forecast.mp3",
+          "question": "Ертең ауа райы қандай болады?",
+          "options": ["Жаңбырлы", "Күнді", "Қарлы"],
+          "answer": 1,
+          "explanation": "В прогнозе погоды сказано, что завтра будет солнечно."
+        }
+      },
+      {
+        "questionIndex": 2,
+        "answer": 1,
+        "isCorrect": true,
+        "question": {
+          "id": "t3",
+          "audio": "../../../public/content/media/audio/weather-forecast.mp3",
+          "question": "Ертең ауа райы қандай болады?",
+          "options": ["Жаңбырлы", "Күнді", "Қарлы"],
+          "answer": 1,
+          "explanation": "В прогнозе погоды сказано, что завтра будет солнечно."
+        }
+      },
+      {
+        "questionIndex": 3,
+        "answer": 1,
+        "isCorrect": true,
+        "question": {
+          "id": "t4",
+          "audio": "../../../public/content/media/audio/office-meeting.mp3",
+          "question": "Жиналыс қашан басталады?",
+          "options": ["Сағат 2-де", "Сағат 3-те", "Сағат 4-те"],
+          "answer": 1,
+          "explanation": "В аудио четко указано время начала встречи в 3 часа."
+        }
+      },
+      {
+        "questionIndex": 4,
+        "answer": 1,
+        "isCorrect": false,
+        "question": {
+          "id": "t5",
+          "audio": "../../../public/content/media/audio/phone-conversation.mp3",
+          "question": "Арман қайда барады?",
+          "options": ["Дүкенге", "Үйге", "Жұмысқа"],
+          "answer": 0,
+          "explanation": "В телефонном разговоре Арман говорит, что идет в магазин."
+        }
+      },
+      {
+        "questionIndex": 4,
+        "answer": 2,
+        "isCorrect": false,
+        "question": {
+          "id": "t5",
+          "audio": "../../../public/content/media/audio/phone-conversation.mp3",
+          "question": "Арман қайда барады?",
+          "options": ["Дүкенге", "Үйге", "Жұмысқа"],
+          "answer": 0,
+          "explanation": "В телефонном разговоре Арман говорит, что идет в магазин."
+        }
+      },
+      {
+        "questionIndex": 4,
+        "answer": 0,
+        "isCorrect": true,
+        "question": {
+          "id": "t5",
+          "audio": "../../../public/content/media/audio/phone-conversation.mp3",
+          "question": "Арман қайда барады?",
+          "options": ["Дүкенге", "Үйге", "Жұмысқа"],
+          "answer": 0,
+          "explanation": "В телефонном разговоре Арман говорит, что идет в магазин."
+        }
+      }
+    ],
+    "stats": {
+      "mainCorrect": 2,
+      "redemptionCorrect": 5,
+      "total": 7,
+      "needed": 6,
+      "passed": true,
+      "percent": 100,
+      "progress": ""
+    },
+    "passed": true,
+    "completedAt": "2025-08-21T07:39:38.564Z",
+    "completed": true
+  },
+  "blocks/inf-2.json": {
+    "blockType": "infocard",
+    "blockId": "inf-2",
+    "blockRef": "blocks/inf-2.json",
+    "completed": true,
+    "autoAdvance": true,
+    "completedAt": "2025-08-20T12:31:51.974Z"
+  },
+  "blocks/v5.video.json": {
+    "blockType": "video",
+    "blockId": "v5",
+    "blockRef": "blocks/v5.video.json",
+    "watched": true,
+    "timeSpent": 48.229896,
+    "videoId": "v5",
+    "completedAt": "2025-08-21T10:45:06.668Z",
+    "completed": true
+  },
+  "blocks/t4.task.json": {
+    "blockType": "matchtask",
+    "blockId": "t4",
+    "blockRef": "blocks/t4.task.json",
+    "answers": [
+      {
+        "questionIndex": 0,
+        "answer": { "1": "a", "2": "b", "3": "c", "4": "d" },
+        "isCorrect": true,
+        "question": {
+          "question": "Сөйлемдерді  аудармасымен сәйкестендіріңіз",
+          "leftItems": [
+            { "id": "1", "text": "Айжан кафеге келді" },
+            { "id": "2", "text": "Ол кофеге тапсырыс берді" },
+            { "id": "3", "text": "Бариста күлімсіреді" },
+            { "id": "4", "text": "Айжан үстелге отырды" }
+          ],
+          "rightItems": [
+            { "id": "a", "text": "Айжан пришла в кафе" },
+            { "id": "b", "text": "Она заказала кофе" },
+            { "id": "c", "text": "Бариста улыбнулся" },
+            { "id": "d", "text": "Айжан села за столик" }
+          ],
+          "answer": { "1": "a", "2": "b", "3": "c", "4": "d" }
+        }
+      },
+      {
+        "questionIndex": 1,
+        "answer": { "1": "a", "2": "b", "3": "c", "4": "d" },
+        "isCorrect": true,
+        "question": {
+          "question": "Мамандықтар мен жұмыс орындарын сәйкестендіріңіз",
+          "leftItems": [
+            { "id": "1", "text": "доктор" },
+            { "id": "2", "text": "учитель" },
+            { "id": "3", "text": "повар" },
+            { "id": "4", "text": "инженер" }
+          ],
+          "rightItems": [
+            { "id": "a", "text": "работает в больнице" },
+            { "id": "b", "text": "преподает в школе" },
+            { "id": "c", "text": "готовит на кухне" },
+            { "id": "d", "text": "мастерит на заводе" }
+          ],
+          "answer": { "1": "a", "2": "b", "3": "c", "4": "d" }
+        }
+      },
+      {
+        "questionIndex": 2,
+        "answer": { "1": "a", "2": "b", "3": "c", "4": "d" },
+        "isCorrect": true,
+        "question": {
+          "question": "Тағамдар мен дәмдерін сәйкестендіріңіз",
+          "leftItems": [
+            { "id": "1", "text": "мёд" },
+            { "id": "2", "text": "лимон" },
+            { "id": "3", "text": "соль" },
+            { "id": "4", "text": "острый перец" }
+          ],
+          "rightItems": [
+            { "id": "a", "text": "сладкий" },
+            { "id": "b", "text": "кислый" },
+            { "id": "c", "text": "солёный" },
+            { "id": "d", "text": "острый" }
+          ],
+          "answer": { "1": "a", "2": "b", "3": "c", "4": "d" }
+        }
+      },
+      {
+        "questionIndex": 3,
+        "answer": { "1": "b", "2": "d", "3": "c", "4": "a" },
+        "isCorrect": true,
+        "question": {
+          "question": "Хайуандар мен тұратын жерлерін сәйкестендіріңіз",
+          "leftItems": [
+            { "id": "1", "text": "рыба" },
+            { "id": "2", "text": "волк" },
+            { "id": "3", "text": "верблюд" },
+            { "id": "4", "text": "пингвин" }
+          ],
+          "rightItems": [
+            { "id": "a", "text": "в ледниках" },
+            { "id": "b", "text": "в воде" },
+            { "id": "c", "text": "в пустыне" },
+            { "id": "d", "text": "в лесу" }
+          ],
+          "answer": { "1": "b", "2": "d", "3": "c", "4": "a" }
+        }
+      }
+    ],
+    "redemptionAnswers": [],
+    "stats": {
+      "mainCorrect": 4,
+      "redemptionCorrect": 0,
+      "total": 4,
+      "needed": 4,
+      "passed": true,
+      "percent": 100,
+      "progress": ""
+    },
+    "passed": true,
+    "completedAt": "2025-08-21T10:24:06.117Z",
+    "completed": true
+  },
+  "blocks/v6.video.json": {
+    "blockType": "video",
+    "blockId": "v6",
+    "blockRef": "blocks/v6.video.json",
+    "watched": true,
+    "timeSpent": 12.202718,
+    "videoId": "v6",
+    "completedAt": "2025-08-21T09:14:14.136Z",
+    "completed": true
+  }
+}
