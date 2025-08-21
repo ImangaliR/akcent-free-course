@@ -478,13 +478,13 @@ export const SidebarNav = ({
         `}
       >
         {/* Хедер сайдбара */}
-        <div className="p-6 border-b bg-blue-100">
+        <div className="p-6 border-b bg-black ">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-xl font-bold text-gray-800 leading-tight">
+              <h1 className="text-xl font-bold text-white leading-tight">
                 {courseManifest.title || "Русский язык"}
               </h1>
-              <span className="text-sm font-normal text-gray-600">
+              <span className="text-sm font-normal text-white">
                 бастауыш курс
               </span>
             </div>

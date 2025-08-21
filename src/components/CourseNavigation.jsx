@@ -60,82 +60,99 @@ export const CourseNavigation = ({ currentBlockCompleted = false }) => {
   const currentNumber = currentBlockIndex + 1;
 
   return (
-    <div className="bg-white rounded-xl shadow-lg">
-      <div className="p-6">
-        <div className="flex items-center justify-between gap-4">
-          {/* Кнопка назад */}
-          <div className="flex-1">
-            {canGoPrevious() ? (
-              <button
-                onClick={goToPreviousBlock}
-                className="flex items-center gap-3 px-4 py-3 rounded-lg font-medium text-gray-700 hover:bg-gray-100 border border-gray-300 w-full"
-              >
-                <ChevronLeft className="w-5 h-5" />
-                <div className="text-left">
-                  <div className="text-sm">Артқа</div>
-                </div>
-              </button>
-            ) : (
-              <div className="px-4 py-3 text-gray-400 text-sm flex items-center gap-3 border border-gray-300 rounded-lg">
-                <ChevronLeft className="w-5 h-5" />
-                <div>
-                  <div>Артқа</div>
-                  <div className="text-xs">Бірінші блок</div>
-                </div>
-              </div>
-            )}
-          </div>
-
-          {/* Текущий блок */}
-          <div className="text-center px-1 md:px-6">
-            <div className="text-sm md:text-base font-semibold md:font-bold text-gray-800">
-              {currentNumber} / {totalBlocks}
-            </div>
-            <div className="text-xs md:text-xs text-gray-500">блок</div>
-          </div>
-
-          {/* Кнопка вперед */}
-          <div className="flex-1">
-            {canGoNext() ? (
-              <button
-                onClick={handleNext}
-                disabled={!currentBlockCompleted}
-                className={`
-                  flex items-center gap-3 px-4 py-3 rounded-lg font-medium w-full justify-end transition-all
-                  ${
-                    currentBlockCompleted
-                      ? "bg-[#6976F8] text-white hover:bg-[#5661E0] shadow-lg"
-                      : "bg-gray-300 text-gray-500 cursor-not-allowed"
-                  }
-                `}
-              >
-                <div className="text-right">
-                  {currentBlockCompleted ? (
-                    <>
-                      <div className="text-sm">Алға</div>
-                    </>
-                  ) : (
-                    <>
-                      <div className="text-sm flex items-center gap-2 justify-end">
-                        <Play className="w-4 h-4" />
-                        Келесі
-                      </div>
-                    </>
-                  )}
-                </div>
-                {currentBlockCompleted && <ChevronRight className="w-5 h-5" />}
-              </button>
-            ) : (
-              <div className="flex items-center gap-3 px-4 py-3 rounded-lg bg-green-500 text-white font-medium justify-end shadow-lg">
-                <div className="text-right">
-                  <div className="text-sm flex items-center gap-2 justify-end">
-                    <CheckCircle className="w-4 h-4" />
-                    Аяқталды!
+    <div className="w-full max-w-6xl mx-auto p-4">
+      <div className="bg-white rounded-3xl shadow-lg overflow-hidden">
+        <div className="p-6 lg:p-4">
+          <div className="flex items-center justify-between gap-4 lg:gap-6">
+            {/* Кнопка назад */}
+            <div className="flex-1">
+              {canGoPrevious() ? (
+                <button
+                  onClick={goToPreviousBlock}
+                  className="flex items-center gap-3 px-4 py-3 lg:px-6 lg:py-4 rounded-2xl font-medium text-gray-700 hover:bg-gray-50 border-2 border-gray-200 w-full transition-all duration-200 hover:border-gray-300 hover:shadow-md group"
+                >
+                  <div className="p-1 bg-gray-100 rounded-xl group-hover:bg-gray-200 transition-colors">
+                    <ChevronLeft className="w-5 h-5" />
+                  </div>
+                  <div className="text-left">
+                    <div className="text-sm lg:text-base font-semibold">
+                      Артқа
+                    </div>
+                    <div className="text-xs text-gray-500">Алдыңғы блок</div>
+                  </div>
+                </button>
+              ) : (
+                <div className="px-4 py-3 lg:px-6 lg:py-4 text-gray-400 text-sm flex items-center gap-3 border-2 border-gray-200 rounded-2xl bg-gray-50">
+                  <div className="p-1 bg-gray-200 rounded-xl">
+                    <ChevronLeft className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <div className="font-semibold">Артқа</div>
+                    <div className="text-xs">Бірінші блок</div>
                   </div>
                 </div>
-              </div>
-            )}
+              )}
+            </div>
+
+            {/* Текущий блок - обновленный bubble стиль */}
+
+            {/* Кнопка вперед */}
+            <div className="flex-1">
+              {canGoNext() ? (
+                <button
+                  onClick={handleNext}
+                  disabled={!currentBlockCompleted}
+                  className={`
+                    flex items-center gap-3 px-4 py-3 lg:px-6 lg:py-4 rounded-2xl font-medium w-full justify-end transition-all duration-200 border-2
+                    ${
+                      currentBlockCompleted
+                        ? "bg-gradient-to-r from-[#6976F8] to-[#5661E0] text-white hover:from-[#5661E0] hover:to-[#4A54D1] shadow-lg hover:shadow-xl border-[#6976F8] transform hover:scale-[1.02]"
+                        : "bg-gray-100 text-gray-500 cursor-not-allowed border-gray-200"
+                    }
+                  `}
+                >
+                  <div className="text-right">
+                    {currentBlockCompleted ? (
+                      <>
+                        <div className="text-sm lg:text-base font-semibold">
+                          Алға
+                        </div>
+                        <div className="text-xs opacity-90">Келесі блок</div>
+                      </>
+                    ) : (
+                      <>
+                        <div className="text-sm lg:text-base font-semibold flex items-center gap-2 justify-end">
+                          <Play className="w-4 h-4" />
+                          Келесі
+                        </div>
+                        <div className="text-xs">Блокты аяқтаңыз</div>
+                      </>
+                    )}
+                  </div>
+                  {currentBlockCompleted && (
+                    <div className="p-1 bg-white/20 rounded-xl">
+                      <ChevronRight className="w-5 h-5" />
+                    </div>
+                  )}
+                </button>
+              ) : (
+                <div className="flex items-center gap-3 px-4 py-3 lg:px-6 lg:py-4 rounded-2xl bg-gradient-to-r from-green-500 to-emerald-500 text-white font-medium justify-end shadow-lg border-2 border-green-400">
+                  <div className="text-right">
+                    <div className="text-sm lg:text-base font-semibold flex items-center gap-2 justify-end">
+                      <CheckCircle className="w-5 h-5" />
+                      Аяқталды!
+                    </div>
+                    <div className="text-xs opacity-90">Курс бітті</div>
+                  </div>
+                  <div className="p-1 bg-white/20 rounded-xl">
+                    <CheckCircle className="w-5 h-5" />
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
+
+          {/* Дополнительная информация о прогрессе */}
         </div>
       </div>
     </div>
