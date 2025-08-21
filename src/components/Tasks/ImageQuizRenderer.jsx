@@ -94,7 +94,7 @@ export const ImageQuizRenderer = ({
       {/* Header */}
       <div className="text-center mb-4">
         <h2 className="text-xl md:text-2xl font-bold text-gray-800">
-          {question.title || "Найди правильный рисунок"}
+          {question.title || "Дұрыс суретті табыңыз"}
         </h2>
         <p className="text-gray-600 md:text-lg mb-6 md:mb-8">
           {question.question}
