@@ -479,7 +479,7 @@ export const SidebarNav = ({
       >
         <div className="md:rounded-2xl shadow-lg flex flex-col h-full overflow-hidden">
           {/* Хедер сайдбара */}
-          <div className="p-4 md:p-6 bg-black">
+          <div className="p-4 md:p-6 bg-[#27232d]">
             <div className="flex items-center justify-between">
               <div>
                 <h1 className="text-xl font-bold text-white leading-tight">

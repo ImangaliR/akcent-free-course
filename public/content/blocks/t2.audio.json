@@ -14,7 +14,7 @@
     },
     {
       "id": "t2",
-      "audio": "../../../public/content/media/audio/metro-announcement.mp3",
+      "audio": "../../../public/content/media/audio/cafe-order.mp3",
       "question": "Қай станцияға келесі тоқтау?",
       "options": ["Алмалы", "Райымбек", "Жібек жолы"],
       "answer": 0,
@@ -22,7 +22,7 @@
     },
     {
       "id": "t3",
-      "audio": "../../../public/content/media/audio/weather-forecast.mp3",
+      "audio": "../../../public/content/media/audio/cafe-order.mp3",
       "question": "Ертең ауа райы қандай болады?",
       "options": ["Жаңбырлы", "Күнді", "Қарлы"],
       "answer": 1,
@@ -30,7 +30,7 @@
     },
     {
       "id": "t4",
-      "audio": "../../../public/content/media/audio/office-meeting.mp3",
+      "audio": "../../../public/content/media/audio/cafe-order.mp3",
       "question": "Жиналыс қашан басталады?",
       "options": ["Сағат 2-де", "Сағат 3-те", "Сағат 4-те"],
       "answer": 1,
@@ -38,7 +38,7 @@
     },
     {
       "id": "t5",
-      "audio": "../../../public/content/media/audio/phone-conversation.mp3",
+      "audio": "../../../public/content/media/audio/cafe-order.mp3",
       "question": "Арман қайда барады?",
       "options": ["Дүкенге", "Үйге", "Жұмысқа"],
       "answer": 0,
@@ -46,7 +46,7 @@
     },
     {
       "id": "t6",
-      "audio": "../../../public/content/media/audio/taxi-ride.mp3",
+      "audio": "../../../public/content/media/audio/cafe-order.mp3",
       "question": "Такси қанша тұрады?",
       "options": ["500 теңге", "700 теңге", "1000 теңге"],
       "answer": 1,
@@ -54,7 +54,7 @@
     },
     {
       "id": "t7",
-      "audio": "../../../public/content/media/audio/restaurant-reservation.mp3",
+      "audio": "../../../public/content/media/audio/cafe-order.mp3",
       "question": "Үстел неше адамға брондалған?",
       "options": ["2 адамға", "4 адамға", "6 адамға"],
       "answer": 1,

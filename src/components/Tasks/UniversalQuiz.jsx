@@ -135,7 +135,9 @@ export const UniversalQuiz = ({
           <div className="w-full bg-gray-200 rounded-full h-2">
             <div
               className={`h-2 rounded-full transition-all ${
-                quiz.stats.passed ? "bg-green-500" : "bg-green-500"
+                quiz.stats.passed
+                  ? "bg-green-500"
+                  : "bg-gradient-to-r from-blue-500 to-indigo-500"
               }`}
               style={{
                 width: `${Math.min(

@@ -1,5 +1,7 @@
+import { div } from "framer-motion/client";
 import { CheckCircle, Pause, Play, Volume2, XCircle } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import { motion } from "framer-motion"; // Import Framer Motion for animations
 
 export const AudioTaskRenderer = ({
   question,
@@ -16,7 +18,7 @@ export const AudioTaskRenderer = ({
   const [duration, setDuration] = useState(0);
   const audioRef = useRef(null);
 
-  // Воспроизведение аудио
+  // Handle audio play/pause
   const handlePlayAudio = () => {
     const audio = audioRef.current;
     if (!audio) return;
@@ -30,7 +32,7 @@ export const AudioTaskRenderer = ({
     }
   };
 
-  // Обработчики событий аудио
+  // Event handlers for audio
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
@@ -79,14 +81,14 @@ export const AudioTaskRenderer = ({
     };
   }, [question?.audio]);
 
-  // Сброс состояния при смене вопроса
+  // Reset state on question change
   useEffect(() => {
     setHasPlayedAudio(false);
     setIsPlaying(false);
     setCurrentTime(0);
     setDuration(0);
 
-    // Останавливаем предыдущее аудио если оно играет
+    // Stop any previous audio playing
     const audio = audioRef.current;
     if (audio) {
       audio.pause();
@@ -94,23 +96,13 @@ export const AudioTaskRenderer = ({
     }
   }, [question?.id]);
 
-  // Выбор опции
+  // Option selection handler
   const handleOptionSelect = (index) => {
-    if (isSubmitted) return;
+    if (isSubmitted) return; // Prevent selecting once submitted
     onAnswerChange(index);
   };
 
-  // Проверяем наличие question
-  // Проверяем наличие question
-  if (!question) {
-    return (
-      <div className="flex items-center justify-center min-h-[200px]">
-        <p className="text-gray-400">Загрузка...</p>
-      </div>
-    );
-  }
-
-  // Форматирование времени
+  // Format time for display
   const formatTime = (time) => {
     const minutes = Math.floor(time / 60);
     const seconds = Math.floor(time % 60);
@@ -119,45 +111,44 @@ export const AudioTaskRenderer = ({
 
   return (
     <div className="max-w-2xl mx-auto space-y-6">
-      {/* Заголовок */}
+      {/* Question Header */}
       {question.question && (
         <div className="text-center">
-          <h4 className="text-lg font-medium text-gray-800">
+          <h4 className="text-xl md:text-2xl font-bold text-gray-800">
             {question.question}
           </h4>
         </div>
       )}
 
-      {/* Аудио плеер */}
-      <div className="bg-white rounded-xl border border-gray-100 p-6">
+      {/* Audio Player */}
+      <div className="bg-white rounded-xl py-6 border border-gray-200">
         <div className="text-center space-y-4">
-          <Volume2 className="mx-auto text-gray-400" size={24} />
-
-          <button
+          {/* Circular Button with Wave Effect */}
+          <motion.button
             onClick={handlePlayAudio}
             disabled={!question.audio}
-            className={`inline-flex items-center gap-2 px-6 py-3 rounded-lg font-medium transition-colors ${
+            className={`relative inline-flex items-center justify-center w-16 h-16 rounded-full transition-colors ${
               question.audio
-                ? "bg-[#ED8A2E] text-white hover:bg-[#D6761F]"
+                ? "bg-[#9C45FF] text-white hover:bg-[#9C45FF]"
                 : "bg-gray-100 text-gray-400 cursor-not-allowed"
             }`}
+            whileTap={{ scale: 0.9 }} // Bounce effect on click
           >
-            {isPlaying ? (
-              <>
-                <Pause size={16} />
-                Тоқтату
-              </>
-            ) : (
-              <>
-                <Play size={16} />
-                Тыңдау
-              </>
-            )}
-          </button>
+            {isPlaying ? <Pause size={16} /> : <Play size={16} />}
 
-          {/* Прогресс */}
-          {hasPlayedAudio && duration > 0 && (
-            <div className="max-w-xs mx-auto">
+            {/* Wave Effect */}
+            {isPlaying && (
+              <div className="absolute w-full h-full rounded-full bg-[#9C45FF] opacity-30 animate-ping"></div>
+            )}
+          </motion.button>
+
+          {question.audio && (
+            <audio ref={audioRef} src={question.audio} preload="metadata" />
+          )}
+
+          {/* Progress Bar */}
+          {duration > 0 && (
+            <div className="w-60 sm:w-70 md:w-80 mx-auto">
               <div className="flex items-center gap-2 text-xs text-gray-500 mb-2">
                 <span>{formatTime(currentTime)}</span>
                 <div className="flex-1 bg-gray-200 rounded-full h-1">
@@ -170,19 +161,15 @@ export const AudioTaskRenderer = ({
               </div>
             </div>
           )}
-
-          {question.audio && (
-            <audio ref={audioRef} src={question.audio} preload="metadata" />
-          )}
         </div>
       </div>
 
-      {/* Варианты ответов */}
+      {/* Options */}
       {question.options?.length > 0 && (
         <div className="space-y-2">
           {question.options.map((option, index) => {
             const isSelected = currentAnswer === index;
-            const isCorrect = index === question.answer;
+            const isCorrectAnswer = index === question.answer;
             const showResult = showFeedback && isSelected;
 
             return (
@@ -192,7 +179,7 @@ export const AudioTaskRenderer = ({
                 disabled={isSubmitted}
                 className={`w-full text-left p-4 rounded-lg border transition-all ${
                   showResult
-                    ? isCorrect
+                    ? isCorrectAnswer
                       ? "border-green-400 bg-green-50 text-green-800"
                       : "border-red-400 bg-red-50 text-red-800"
                     : isSelected
@@ -204,16 +191,22 @@ export const AudioTaskRenderer = ({
                     : "cursor-pointer hover:shadow-sm"
                 }`}
               >
-                <div className="flex items-center justify-between">
+                <div className="flex items-center justify-between relative">
                   <span className="font-medium">{option}</span>
 
-                  {showResult && (
-                    <div className="flex items-center gap-1">
-                      {isCorrect ? (
+                  {showResult && isSubmitted && (
+                    <div className="absolute right-3 flex items-center gap-1">
+                      {isCorrectAnswer ? (
                         <CheckCircle size={16} className="text-green-600" />
                       ) : (
                         <XCircle size={16} className="text-red-600" />
                       )}
+                    </div>
+                  )}
+
+                  {isSelected && !isSubmitted && (
+                    <div className="absolute right-3 flex items-center gap-1">
+                      <CheckCircle size={16} />
                     </div>
                   )}
                 </div>
