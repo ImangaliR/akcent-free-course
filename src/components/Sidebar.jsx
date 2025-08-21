@@ -466,20 +466,20 @@ export const SidebarNav = ({
           className="lg:hidden fixed inset-0 z-30 bg-black/10 backdrop-blur-xs transition-opacity"
           onClick={() => setIsSidebarOpen(false)}
         />
-      )}x
+      )}
 
       <aside
         className={`
           fixed inset-y-0 left-0 z-50
-          w-74 bg-[#f1f2f7] p-4 flex-shrink-0 flex flex-col
+          w-65 md:w-74 bg-[#f1f2f7] md:p-4 flex-shrink-0 flex flex-col
           transform transition-transform duration-300 ease-in-out
           ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"}
           lg:translate-x-0
         `}
       >
-        <div className=" rounded-3xl shadow-lg flex flex-col h-full overflow-hidden">
+        <div className="md:rounded-2xl shadow-lg flex flex-col h-full overflow-hidden">
           {/* Хедер сайдбара */}
-          <div className="p-6 bg-black rounded-t-3xl">
+          <div className="p-4 md:p-6 bg-black">
             <div className="flex items-center justify-between">
               <div>
                 <h1 className="text-xl font-bold text-white leading-tight">
@@ -501,15 +501,15 @@ export const SidebarNav = ({
           </div>
 
           {/* Навигация - скроллируемая область */}
-          <nav className="flex-1 overflow-y-auto py-4   bg-white">
-            <div className="px-6 py-2 mb-4">
+          <nav className="flex-1 overflow-y-auto py-4 bg-white">
+            <div className="px-4 md:px-6 md:py-2 mb-4">
               <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider flex items-center gap-2">
                 <BookOpen className="w-4 h-4" />
                 Курс мазмұны
               </p>
             </div>
 
-            <div className="px-4 space-y-3">
+            <div className="px-2 md:px-4 space-y-3">
               {visibleModules.map((module) => (
                 <div
                   key={module.id}
@@ -553,12 +553,12 @@ export const SidebarNav = ({
                     <div className="mt-2 px-2 pb-2">
                       {module.blocks.length === 0 ? (
                         // Show placeholder for empty intro section
-                        <div className="px-4 py-6 text-center text-gray-500 bg-white rounded-xl">
+                        <div className="px-3 md:px-4 py-3 md:py-6 text-center text-gray-500 bg-white rounded-xl">
                           <div className="mb-2">
                             {module.id === "intro" ? (
-                              <Play className="w-8 h-8 mx-auto text-gray-300" />
+                              <Play className="w-6 h-6 md:w-8 md:h-8 mx-auto text-gray-300" />
                             ) : (
-                              <BookOpen className="w-8 h-8 mx-auto text-gray-300" />
+                              <BookOpen className="w-6 h-6 md:w-8 md:h-8 mx-auto text-gray-300" />
                             )}
                           </div>
                           <p className="text-sm">
@@ -587,28 +587,28 @@ export const SidebarNav = ({
                                   flex items-center gap-3 group rounded-xl
                                   ${
                                     isActive
-                                      ? "bg-indigo-100 text-indigo-700 shadow-md border-2 border-indigo-200"
+                                      ? "bg-[#9C45FF] text-white shadow-md "
                                       : isAccessible
                                       ? "bg-white text-gray-600 hover:bg-gray-50 hover:text-gray-800 shadow-sm border border-gray-100 hover:shadow-md hover:border-gray-200"
                                       : "bg-gray-100 text-gray-400 cursor-not-allowed opacity-50 border border-gray-200"
                                   }
                                 `}
                               >
-                                <div className="flex-shrink-0">
+                                <div className="flex-shrink-0 rounded-md">
                                   {isCompleted ? (
-                                    <div className="p-1 bg-green-100 rounded-lg">
+                                    <div className="p-1 rounded-lg bg-green-10">
                                       <CheckCircle className="w-4 h-4 text-green-600" />
                                     </div>
                                   ) : isActive ? (
-                                    <div className="p-1 bg-indigo-100 rounded-lg">
-                                      <Clock className="w-4 h-4 text-indigo-600" />
+                                    <div className="p-1 rounded-lg bg-white/20">
+                                      <Clock className="w-4 h-4 text-white" />
                                     </div>
                                   ) : !isAccessible ? (
-                                    <div className="p-1 bg-gray-100 rounded-lg">
+                                    <div className="p-1 rounded-lg">
                                       <Lock className="w-4 h-4 text-gray-400" />
                                     </div>
                                   ) : (
-                                    <div className="p-1 bg-gray-100 rounded-lg group-hover:bg-gray-200 transition-colors">
+                                    <div className="p-1 rounded-lg group-hover:bg-gray-200 transition-colors">
                                       <div className="text-gray-400 group-hover:text-gray-600">
                                         {typeInfo.icon}
                                       </div>
@@ -620,13 +620,17 @@ export const SidebarNav = ({
                                   <div className="font-medium truncate">
                                     {getBlockTitle(block.ref, block.index)}
                                   </div>
-                                  <div className="text-xs text-gray-500 truncate mt-0.5">
+                                  <div
+                                    className={`text-xs truncate mt-0.5 ${
+                                      isActive ? "text-white" : "text-gray-500"
+                                    }`}
+                                  >
                                     {typeInfo.label}
                                   </div>
                                 </div>
 
                                 {isActive && (
-                                  <div className="w-2 h-2 bg-indigo-500 rounded-full flex-shrink-0" />
+                                  <div className="w-2 h-2 bg-white rounded-full flex-shrink-0" />
                                 )}
                               </button>
                             );
@@ -641,8 +645,8 @@ export const SidebarNav = ({
           </nav>
 
           {/* Прогресс обучения */}
-          <div className="p-4 bg-gradient-to-r from-gray-50 to-blue-50">
-            <div className="bg-white rounded-2xl p-4 shadow-sm">
+          <div className="p-2 md:p-4 bg-gradient-to-r from-white to-blue-50">
+            <div className="bg-white rounded-2xl p-2 md:p-4 shadow-sm">
               <div className="mb-3">
                 <div className="flex items-center justify-between text-sm text-gray-600 mb-2">
                   <span className="font-medium">Прогресс</span>
@@ -678,7 +682,7 @@ export const SidebarNav = ({
           </div>
 
           {/* Футер с кнопкой выхода */}
-          <div className="p-4  bg-white">
+          <div className="p-2 md:p-4 bg-white">
             <button
               onClick={handleLogout}
               className="flex items-center gap-3 w-full px-4 py-3 text-red-500 hover:bg-red-50 hover:text-red-600 rounded-xl transition-all duration-200 group bg-white shadow-sm border border-red-100 hover:shadow-md"

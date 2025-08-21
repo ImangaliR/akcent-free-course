@@ -91,12 +91,12 @@ export const VideoLessonWithSubtitles = ({ lesson, onStepComplete }) => {
   }
 
   return (
-    <div className="w-full max-w-9xl mx-auto ">
+    <div className="w-full mx-auto py-12 md:py-0">
       {/* Mobile: Вертикальная компоновка, Desktop: Горизонтальная */}
       <div className="flex flex-col lg:flex-row gap-4 lg:gap-6 h-full">
         {/* Видео область */}
         <div className="w-full lg:flex-1">
-          <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
+          <div className="bg-white rounded-2xl  overflow-hidden">
             <div className="relative bg-black">
               <video
                 ref={videoRef}
@@ -136,7 +136,7 @@ export const VideoLessonWithSubtitles = ({ lesson, onStepComplete }) => {
 
         {/* Панель субтитров */}
         {!subtitlesLoading && subtitles.length > 0 && (
-          <div className="w-full lg:w-80 xl:w-96">
+          <div className="hidden md:block w-full lg:w-80 xl:w-96">
             <SubtitlePanel
               subtitles={subtitles}
               currentTime={currentTime}

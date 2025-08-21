@@ -57,7 +57,7 @@ export const SubtitlePanel = ({
   if (!showPanel) {
     return (
       <div
-        className={`w-full bg-white rounded-2xl shadow-sm border border-gray-100 p-4 sm:p-5 ${className}`}
+        className={`w-full bg-white rounded-2xl border border-gray-100 p-4 sm:p-5 ${className}`}
       >
         <div className="flex items-center justify-between">
           <h4 className="font-medium text-gray-800 text-sm sm:text-xl">
@@ -78,7 +78,7 @@ export const SubtitlePanel = ({
 
   return (
     <div
-      className={`w-full bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden ${className}`}
+      className={`w-full bg-white rounded-2xl border border-gray-100 overflow-hidden ${className}`}
     >
       {/* Заголовок */}
       <div className="p-4 sm:p-5 border-b border-gray-50">

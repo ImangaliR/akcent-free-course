@@ -60,10 +60,10 @@ export const CourseNavigation = ({ currentBlockCompleted = false }) => {
   const currentNumber = currentBlockIndex + 1;
 
   return (
-    <div className="w-full mx-auto px-4">
-      <div className="w-full max-w-7xl mx-auto bg-white rounded-2xl overflow-hidden">
-        <div className="p-6 lg:p-4">
-          <div className="flex items-center justify-between gap-4 lg:gap-6">
+    <div className="w-full mx-auto px-1 md:px-4">
+      <div className="w-full mx-auto bg-white rounded-2xl overflow-hidden">
+        <div className="p-2 lg:p-3">
+          <div className="flex items-center justify-between gap-3 md:gap-4 lg:gap-6">
             {/* Кнопка назад */}
             <div className="flex-1">
               {canGoPrevious() ? (
@@ -72,7 +72,7 @@ export const CourseNavigation = ({ currentBlockCompleted = false }) => {
                   className="flex items-center gap-3 px-4 py-3 lg:px-6 lg:py-4 rounded-2xl font-medium text-gray-700 hover:bg-gray-50 border-2 border-gray-200 w-full transition-all duration-200 hover:border-gray-300 hover:shadow-md group"
                 >
                   <div className="p-1 bg-gray-100 rounded-xl group-hover:bg-gray-200 transition-colors">
-                    <ChevronLeft className="w-5 h-5" />
+                    <ChevronLeft className="w-4 h-4 md:w-5 md:h-5" />
                   </div>
                   <div className="text-left">
                     <div className="text-sm lg:text-base font-semibold">
@@ -84,7 +84,7 @@ export const CourseNavigation = ({ currentBlockCompleted = false }) => {
               ) : (
                 <div className="px-4 py-3 lg:px-6 lg:py-4 text-gray-400 text-sm flex items-center gap-3 border-2 border-gray-200 rounded-2xl bg-gray-50">
                   <div className="p-1 bg-gray-200 rounded-xl">
-                    <ChevronLeft className="w-5 h-5" />
+                    <ChevronLeft className="w-4 h-4 md:w-5 md:h-5" />
                   </div>
                   <div>
                     <div className="font-semibold">Артқа</div>
