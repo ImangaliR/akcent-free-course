@@ -10,7 +10,7 @@ export const UniversalQuiz = ({
   onStepComplete,
   taskType,
   TaskRenderer,
-  autoAdvanceMs = 3000,
+  autoAdvanceMs = 2000,
 }) => {
   // Поддерживаем и старый формат и новый
   const allQuestions = lesson.questions || [lesson];
