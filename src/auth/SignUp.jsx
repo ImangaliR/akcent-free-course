@@ -256,7 +256,7 @@ export const SignUp = () => {
             {/* Пароль */}
             <div className="space-y-2">
               <label className="text-sm font-medium text-gray-700">
-                Пароль
+                Құпиясөз
               </label>
               <div className="relative">
                 <Lock
@@ -285,7 +285,7 @@ export const SignUp = () => {
               {formData.password && (
                 <div className="space-y-2">
                   <div className="flex items-center justify-between text-xs">
-                    <span className="text-gray-500">Пароль күштілігі</span>
+                    <span className="text-gray-500">Құпиясөз қиындығы</span>
                     <span
                       className={`font-medium ${
                         passwordStrength.strength === 100
