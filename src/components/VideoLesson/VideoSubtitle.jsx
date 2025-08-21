@@ -1,12 +1,5 @@
 // components/Subtitles/SubtitlePanel.jsx
-import {
-  ChevronDown,
-  ChevronUp,
-  Eye,
-  EyeOff,
-  Languages,
-  Volume2,
-} from "lucide-react";
+import { ChevronDown, ChevronUp, Eye, EyeOff, Volume2 } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 
 export const SubtitlePanel = ({
@@ -155,15 +148,15 @@ export const SubtitlePanel = ({
                 {pastSubtitles.map((subtitle) => (
                   <div
                     key={subtitle.id}
-                    className="bg-green-50 hover:bg-green-100 active:bg-green-200 border border-green-100 rounded-2xl p-4 cursor-pointer transition-all duration-200"
-                    onClick={() => handleSubtitleClick(subtitle)}
+                    className="bg-gray-100 hover:bg-gray-200 border border-gray-100 rounded-2xl p-4  transition-all duration-200"
+                    // onClick={() => handleSubtitleClick(subtitle)}
                   >
                     {/* Время и индикатор */}
                     <div className="flex items-center justify-between mb-1 md:mb-3">
                       <span className="text-xs text-gray-400 font-mono">
                         {formatTime(subtitle.start)}
                       </span>
-                      <div className="w-2 h-2 bg-green-500 rounded-full flex-shrink-0 opacity-80" />
+                      <div className="w-2 h-2 bg-[#9C45FF] rounded-full flex-shrink-0 opacity-80" />
                     </div>
 
                     {/* Русский текст */}

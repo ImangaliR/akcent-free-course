@@ -175,10 +175,10 @@ export const UniversalQuiz = ({
             <button
               onClick={quiz.submitAnswer}
               disabled={!quiz.isAnswerReady(quiz.state.currentAnswer)}
-              className={`px-4 md:px-6 py-3 rounded-lg font-medium transition-colors ${
+              className={`px-4 md:px-6 py-3 rounded-lg font-medium  cursor-pointer transition-colors ${
                 quiz.isAnswerReady(quiz.state.currentAnswer)
                   ? "bg-[#9C45FF] text-white hover:bg-[#7E2AD9]"
-                  : "bg-gray-300 text-gray-500 cursor-not-allowed"
+                  : "bg-gray-300 text-gray-500 cursor-not-allowed  "
               }`}
             >
               Тексеру
@@ -204,7 +204,7 @@ export const UniversalQuiz = ({
               )}
 
               {/* button label (on top of filler) */}
-              <span className="relative z-10">
+              <span className="relative z-10 cursor-pointer">
                 {quiz.state.phase === "main"
                   ? quiz.state.currentIndex < allQuestions.length - 1
                     ? "Келесі сұрақ"

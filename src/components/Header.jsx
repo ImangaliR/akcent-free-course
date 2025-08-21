@@ -54,14 +54,14 @@ export const Header = ({
                 src={Battery}
                 alt="Battery"
                 className="w-full h-full object-contain"
-                style={{
-                  filter:
-                    getProgressPercentage() < 30
-                      ? "hue-rotate(0deg) saturate(1.2)" // красный
-                      : getProgressPercentage() < 70
-                      ? "hue-rotate(39deg) saturate(1.2)" // оранжевый
-                      : "hue-rotate(120deg) saturate(1.2)", // зеленый
-                }}
+                // style={{
+                //   filter:
+                //     getProgressPercentage() < 30
+                //       ? "hue-rotate(0deg) saturate(1.2)" // красный
+                //       : getProgressPercentage() < 70
+                //       ? "hue-rotate(39deg) saturate(1.2)" // оранжевый
+                //       : "hue-rotate(120deg) saturate(1.2)", // зеленый
+                // }}
               />
 
               {/* Процент поверх SVG */}

@@ -23,7 +23,7 @@ const LogoutModal = ({ isOpen, onClose, onConfirm }) => {
         {/* Close button */}
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-colors z-10"
+          className="absolute top-4 right-4 text-gray-400  hover:text-gray-600 transition-colors z-10"
         >
           <X className="w-5 h-5" />
         </button>
@@ -50,13 +50,13 @@ const LogoutModal = ({ isOpen, onClose, onConfirm }) => {
           <div className="flex gap-3">
             <button
               onClick={onClose}
-              className="flex-1 px-6 py-3 bg-gray-100 hover:bg-gray-200 text-gray-800 rounded-lg font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-gray-300"
+              className="flex-1 px-6 py-3 bg-gray-100  cursor-pointer hover:bg-gray-200 text-gray-800 rounded-lg font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-gray-300"
             >
               Болдырмау
             </button>
             <button
               onClick={onConfirm}
-              className="flex-1 px-6 py-3 bg-red-500 hover:bg-red-600 text-white rounded-lg font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-red-300"
+              className="flex-1 px-6 py-3 bg-red-500 hover:bg-red-600 cursor-pointer text-white rounded-lg font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-red-300"
             >
               Шығу
             </button>

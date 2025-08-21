@@ -8,6 +8,9 @@ import { SidebarNav } from "./components/Sidebar";
 import { useAuth } from "./context/AuthContext";
 import { CourseProvider, useCourse } from "./context/CourseContext";
 
+import { Quantum } from "ldrs/react";
+import "ldrs/react/Quantum.css";
+
 const HomeContent = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [currentBlockCompleted, setCurrentBlockCompleted] = useState(false);
@@ -77,8 +80,9 @@ const HomeContent = () => {
     return (
       <div className="min-h-screen bg-gray-100 flex items-center justify-center">
         <div className="text-center">
-          <div className="w-8 h-8 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-gray-600">Курс жүктелуде...</p>
+          {/* <div className="w-8 h-8 border-4 border-[#9C45FF] border-t-transparent rounded-full animate-spin mx-auto mb-4"></div> */}
+          <Quantum size="65" speed="3.00" color="#9C45FF" />
+          <p className="text-gray-600 mt-3">Курс жүктелуде...</p>
         </div>
       </div>
     );

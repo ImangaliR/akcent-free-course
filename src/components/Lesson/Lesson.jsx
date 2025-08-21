@@ -1,3 +1,5 @@
+import { Quantum } from "ldrs/react";
+import "ldrs/react/Quantum.css";
 import { useEffect, useState } from "react";
 import { useCourse } from "../../context/CourseContext";
 import { useInfoCardModal } from "../../hooks/useModal";
@@ -164,8 +166,9 @@ export const Lesson = ({ currentBlockRef, onBlockComplete }) => {
         );
       case "infocard":
         return (
-          <div className="bg-blue-50 rounded-lg p-8 text-center">
-            <div className="w-8 h-8 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <div className="bg-indigo-50 rounded-lg p-8 text-center">
+            {/* <div className="w-8 h-8 border-4 border-[#9C45FF] border-t-transparent rounded-full animate-spin mx-auto mb-4"></div> */}
+            <Quantum size="65" speed="3.00" color="#9C45FF" />
           </div>
         );
       default:

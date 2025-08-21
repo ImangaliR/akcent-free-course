@@ -31,6 +31,7 @@ export const SidebarNav = ({
     goToBlock,
     // eslint-disable-next-line no-unused-vars
     getCurrentBlock,
+    getProgressPercentage,
   } = useCourse();
 
   const [expandedModules, setExpandedModules] = useState({
@@ -656,31 +657,15 @@ export const SidebarNav = ({
               <div className="mb-3">
                 <div className="flex items-center justify-between text-sm text-gray-600 mb-2">
                   <span className="font-medium">Прогресс</span>
-                  <span className="font-bold text-indigo-600">
-                    {getTotalBlocks() > 0
-                      ? Math.min(
-                          100,
-                          Math.round(
-                            (getCompletedCount() / getTotalBlocks()) * 100
-                          )
-                        )
-                      : 0}
-                    %
+                  <span className="font-bold text-[#9C45FF]">
+                    {getProgressPercentage()}%
                   </span>
                 </div>
+
                 <div className="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
                   <div
-                    className="bg-gradient-to-r from-blue-500 to-indigo-500 h-3 rounded-full transition-all duration-700 ease-out"
-                    style={{
-                      width: `${
-                        getTotalBlocks() > 0
-                          ? Math.min(
-                              100,
-                              (getCompletedCount() / getTotalBlocks()) * 100
-                            )
-                          : 0
-                      }%`,
-                    }}
+                    className="bg-gradient-to-r from-[#bc92ed] to-[#9C45FF] h-3 rounded-full transition-all duration-700 ease-out"
+                    style={{ width: `${getProgressPercentage()}%` }}
                   />
                 </div>
               </div>
@@ -691,7 +676,7 @@ export const SidebarNav = ({
           <div className="p-2 md:p-4 bg-white">
             <button
               onClick={handleLogout}
-              className="flex items-center gap-3 w-full px-4 py-3 text-red-500 hover:bg-red-50 hover:text-red-600 rounded-xl transition-all duration-200 group bg-red-00 shadow-sm border border-red-500 hover:shadow-md"
+              className="flex items-center gap-3 w-full px-4 py-3 cursor-pointer text-red-500 hover:bg-red-50 hover:text-red-600 rounded-xl transition-all duration-200 group bg-red-00 shadow-sm border border-red-500 hover:shadow-md"
             >
               <div className="p-1 bg-red-50 rounded-lg group-hover:bg-red-100 transition-colors">
                 <LogOut className="w-4 h-4" />

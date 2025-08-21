@@ -234,7 +234,7 @@ export const Verify = () => {
             <button
               type="submit"
               disabled={loading || code.join("").length !== 6}
-              className="w-full bg-green-500 text-sm md:text-base text-white py-3 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 transition-all duration-200 shadow-lg hover:shadow-xl"
+              className="w-full bg-green-500 text-sm md:text-base  cursor-pointer text-white py-3 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 transition-all duration-200 shadow-lg hover:shadow-xl"
             >
               {loading ? (
                 <>
