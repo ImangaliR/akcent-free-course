@@ -199,8 +199,8 @@ export const MultiBlankTaskRenderer = ({
       {/* История с пропусками */}
       {question.story && (
         <div className="mb-8">
-          <div className="bg-blue-50 rounded-lg p-3 md:p-6 mb-6">
-            <p className="text-blue-800 md:text-lg leading-relaxed whitespace-pre-wrap">
+          <div className="bg-gray-50 rounded-lg p-3 md:p-6 mb-6">
+            <p className="text-gray-800 md:text-lg leading-relaxed whitespace-pre-wrap">
               {storyTokens.map((token, tokenIndex) => {
                 if (token.type === "text") {
                   return <span key={tokenIndex}>{token.value}</span>;
@@ -248,12 +248,12 @@ export const MultiBlankTaskRenderer = ({
                       mx-1 px-2 py-1 md:px-3 md:py-1.5 rounded-2xl border-2 align-middle transition-all shadow-sm
                       ${
                         !isAnswered && !isSubmitted
-                          ? "border-gray-300 text-gray-500 bg-white hover:border-blue-300 hover:bg-blue-50"
+                          ? "border-gray-300 text-gray-500 bg-white hover:border-gray-300 hover:bg-gray-50"
                           : ""
                       }
                       ${
                         isAnswered && !isSubmitted
-                          ? "border-blue-300 bg-blue-50 text-blue-600"
+                          ? "border-gray-300 bg-gray-50 text-gray-900"
                           : ""
                       }
                       ${
@@ -346,11 +346,11 @@ export const MultiBlankTaskRenderer = ({
             {question.blanks[openIdx]?.options.map((option, optionIndex) => (
               <div key={optionIndex}>
                 <button
-                  className="w-full text-left px-3 py-2.5 hover:bg-blue-50 focus:outline-none focus:bg-blue-50 active:bg-blue-100 transition-all duration-200 group"
+                  className="w-full text-left px-3 py-2.5 hover:bg-gray-50 focus:outline-none focus:bg-gray-50 active:bg-gray-100 transition-all duration-200 group"
                   onClick={() => selectOption(openIdx, optionIndex)}
                 >
                   <div className="flex items-center gap-2.5">
-                    <span className="inline-flex w-6 h-6 items-center justify-center text-xs font-medium rounded-full bg-gradient-to-br from-blue-100 to-blue-200 text-blue-700 group-hover:from-blue-200 group-hover:to-blue-300 group-hover:text-blue-800 transition-all duration-200 flex-shrink-0">
+                    <span className="inline-flex w-6 h-6 items-center justify-center text-xs font-medium rounded-full bg-gradient-to-br from-gray-100 to-gray-200 text-gray-700 group-hover:from-gray-200 group-hover:to-gray-300 group-hover:text-gray-800 transition-all duration-200 flex-shrink-0">
                       {optionIndex + 1}
                     </span>
                     <span className="text-xs md:text-sm text-gray-700 group-hover:text-gray-900 transition-colors duration-200">
