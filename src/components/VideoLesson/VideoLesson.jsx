@@ -5,14 +5,14 @@ export const VideoLessonWithSubtitles = ({ lesson, onStepComplete }) => {
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [videoWatched, setVideoWatched] = useState(false);
+  const [isVideoLoading, setIsVideoLoading] = useState(true); // Add state for video loading
 
-  // Состояние для субтитров
   const [subtitles, setSubtitles] = useState([]);
   const [subtitlesLoading, setSubtitlesLoading] = useState(true);
 
   const videoRef = useRef(null);
 
-  // Загрузка субтитров
+  // Load subtitles
   useEffect(() => {
     const loadSubtitles = async () => {
       if (!lesson?.id) return;
@@ -41,7 +41,7 @@ export const VideoLessonWithSubtitles = ({ lesson, onStepComplete }) => {
     loadSubtitles();
   }, [lesson?.id]);
 
-  // Обновление времени видео
+  // Update video time
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
@@ -74,6 +74,11 @@ export const VideoLessonWithSubtitles = ({ lesson, onStepComplete }) => {
     };
   }, [videoWatched, onStepComplete, lesson]);
 
+  // Handle video loading state
+  const handleVideoLoaded = () => {
+    setIsVideoLoading(false);
+  };
+
   const seekToTime = (time) => {
     const video = videoRef.current;
     if (video) {
@@ -81,7 +86,7 @@ export const VideoLessonWithSubtitles = ({ lesson, onStepComplete }) => {
     }
   };
 
-  // Проверка наличия обязательных данных
+  // Check if required data is present
   if (!lesson?.mediaUrl) {
     return (
       <div className="flex items-center justify-center h-64 bg-gray-100 rounded-lg mx-4">
@@ -91,16 +96,26 @@ export const VideoLessonWithSubtitles = ({ lesson, onStepComplete }) => {
   }
 
   return (
-    <div className="w-full mx-auto py-8 md:py-0">
+    <div className="w-full mx-auto pt-8 pb-3 md:py-0">
       {/* Mobile: Вертикальная компоновка, Desktop: Горизонтальная */}
       <div className="flex flex-col lg:flex-row gap-4 lg:gap-6 h-full">
-        {/* Видео область */}
+        {/* Video area */}
         <div className="w-full lg:flex-1">
-          <div className="bg-white rounded-2xl  overflow-hidden">
+          <div className="bg-white rounded-2xl overflow-hidden">
             <div className="relative bg-black">
+              {/* Video Placeholder */}
+              {isVideoLoading && (
+                <div className="w-full bg-gray-300 pb-[56.25%]">
+                  {/* You can add a loading animation here if needed */}
+                </div>
+              )}
+
+              {/* Video */}
               <video
                 ref={videoRef}
-                className="w-full h-auto max-h-[70vh] sm:max-h-[60vh] lg:max-h-none object-contain"
+                className={`w-full h-auto max-h-[70vh] sm:max-h-[60vh] lg:max-h-none object-contain ${
+                  isVideoLoading ? "hidden" : "block"
+                }`}
                 controls
                 autoPlay
                 preload="metadata"
@@ -109,13 +124,14 @@ export const VideoLessonWithSubtitles = ({ lesson, onStepComplete }) => {
                 disablePictureInPicture
                 disableRemotePlayback
                 playsInline
+                onLoadedData={handleVideoLoaded} // Trigger loading state change
               >
                 <source src={lesson.mediaUrl} type="video/mp4" />
                 Ваш браузер не поддерживает видео HTML5.
               </video>
             </div>
 
-            {/* Заголовок и транскрипт */}
+            {/* Title and Transcript */}
             <div className="p-4 lg:p-6">
               {lesson.title && (
                 <h2 className="text-xl lg:text-2xl font-bold text-gray-900 mb-3">
@@ -134,9 +150,9 @@ export const VideoLessonWithSubtitles = ({ lesson, onStepComplete }) => {
           </div>
         </div>
 
-        {/* Панель субтитров */}
+        {/* Subtitles Panel */}
         {!subtitlesLoading && subtitles.length > 0 && (
-          <div className=" md:block w-full lg:w-80 xl:w-96">
+          <div className="md:block w-full lg:w-80 xl:w-96">
             <SubtitlePanel
               subtitles={subtitles}
               currentTime={currentTime}
