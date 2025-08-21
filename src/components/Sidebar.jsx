@@ -596,9 +596,15 @@ export const SidebarNav = ({
                               >
                                 <div className="flex-shrink-0 rounded-md">
                                   {isCompleted ? (
-                                    <div className="p-1 rounded-lg bg-green-10">
-                                      <CheckCircle className="w-4 h-4 text-green-600" />
-                                    </div>
+                                    isActive ? (
+                                      <div className="p-1 rounded-lg bg-white/20">
+                                        <CheckCircle className="w-4 h-4 text-white" />
+                                      </div>
+                                    ) : (
+                                      <div className="p-1 rounded-lg bg-green-10">
+                                        <CheckCircle className="w-4 h-4 text-green-600" />
+                                      </div>
+                                    )
                                   ) : isActive ? (
                                     <div className="p-1 rounded-lg bg-white/20">
                                       <Clock className="w-4 h-4 text-white" />

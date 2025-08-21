@@ -116,7 +116,7 @@ const HomeContent = () => {
         onConfirm={handleConfirmLogout}
       />
 
-      <div className="font-['AtypDisplay'] min-h-screen bg-[#f1f2f7] text-gray-900">
+      <div className="font-['Intertight'] min-h-screen bg-[#f1f2f7] text-gray-900">
         <Header
           isSidebarOpen={isSidebarOpen}
           setIsSidebarOpen={setIsSidebarOpen}

@@ -215,3 +215,38 @@
   font-style: normal;
   font-display: swap;
 }
+/* InterTight */
+@font-face {
+  font-family: "Intertight";
+  font-weight: 300; /* Light */
+  font-style: normal;
+  src: url("fonts/intertight/light.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Intertight";
+  font-weight: 400; /* Regular */
+  font-style: normal;
+  src: url("fonts/intertight/regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Intertight";
+  font-weight: 500; /* Medium */
+  font-style: normal;
+  src: url("fonts/intertight/medium.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Intertight";
+  font-weight: 600; /* Semibold */
+  font-style: normal;
+  src: url("fonts/intertight/semibold.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Intertight";
+  font-weight: 700; /* Bold */
+  font-style: normal;
+  src: url("fonts/intertight/bold.ttf") format("truetype");
+}
