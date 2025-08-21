@@ -233,8 +233,8 @@ export const Lesson = ({ currentBlockRef, onBlockComplete }) => {
       {/* Фиксированный заголовок */}
 
       {/* Контент */}
-      <div className=" rounded-sm">
-        <div className="p-3 md:p-5">{renderContent()}</div>
+      <div className="rounded-sm">
+        <div className="p-1 md:p-5">{renderContent()}</div>
       </div>
 
       {/* Модал InfoCard */}

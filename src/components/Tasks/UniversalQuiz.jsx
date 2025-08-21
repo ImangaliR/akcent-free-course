@@ -115,7 +115,7 @@ export const UniversalQuiz = ({
 
   return (
     <div className="mx-auto">
-      <div className="bg-white rounded-lg px-3 md:px-6 py-1">
+      <div className="bg-white rounded-lg px-3 py-2 md:px-6 md:py-4">
         {/* Прогресс и статистика */}
         <div className="mb-6">
           <div className="flex items-center justify-between mb-4">
@@ -129,12 +129,6 @@ export const UniversalQuiz = ({
                 </div>
               )}
             </div>
-            {/* <div className="text-xs md:text-sm font-medium">
-              Дұрыс: {quiz.stats.total}/{allQuestions.length}
-              <span className="text-gray-500 ml-2">
-                (керек: {quiz.stats.needed})
-              </span>
-            </div> */}
           </div>
 
           {/* Прогресс бар */}
