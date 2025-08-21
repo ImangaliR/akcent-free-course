@@ -136,10 +136,9 @@ export const CourseNavigation = ({ currentBlockCompleted = false }) => {
                   )}
                 </button>
               ) : (
-                <div className="flex items-center gap-3 px-4 py-3 lg:px-6 lg:py-4 rounded-2xl bg-gradient-to-r from-green-500 to-emerald-500 text-white font-medium justify-end shadow-lg border-2 border-green-400">
+                <div className="flex items-center gap-3 px-4 py-3 lg:px-6 lg:py-4 rounded-2xl bg-green-500 text-white font-medium justify-end shadow-lg border-2 border-green-500">
                   <div className="text-right">
                     <div className="text-sm lg:text-base font-semibold flex items-center gap-2 justify-end">
-                      <CheckCircle className="w-5 h-5" />
                       Аяқталды!
                     </div>
                     <div className="text-xs opacity-90">Курс бітті</div>
@@ -151,8 +150,6 @@ export const CourseNavigation = ({ currentBlockCompleted = false }) => {
               )}
             </div>
           </div>
-
-          {/* Дополнительная информация о прогрессе */}
         </div>
       </div>
     </div>

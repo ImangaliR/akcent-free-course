@@ -131,7 +131,7 @@ const HomeContent = () => {
 
           <main className="flex-1 lg:ml-64">
             <div className="px-4 sm:px-6 lg:px-8">
-              <div className="mb-2 md:mb-6">
+              <div className="mb-2">
                 <Lesson
                   currentBlockRef={currentBlock?.ref}
                   onBlockComplete={handleBlockComplete}
