@@ -63,7 +63,7 @@ export const UniversalQuiz = ({
   if (quiz.state.phase === "done") {
     return (
       <div className="mx-auto">
-        <div className="bg-white  p-0 md:p-0 text-center">
+        <div className="bg-white  p-4 md:p-4 text-center">
           <div className="mb-0">
             {quiz.stats.passed ? (
               <Lottie
@@ -114,7 +114,7 @@ export const UniversalQuiz = ({
   }
 
   return (
-    <div className="mx-auto">
+    <div className="mx-auto ">
       <div className="bg-white rounded-lg px-3 md:px-6 py-1">
         {/* Прогресс и статистика */}
         <div className="mb-6">

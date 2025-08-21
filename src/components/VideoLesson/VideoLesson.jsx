@@ -125,7 +125,7 @@ export const VideoLessonWithSubtitles = ({ lesson, onStepComplete }) => {
               {lesson.transcript && (
                 <div className="text-gray-700 leading-relaxed">
                   <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-2">
-                    Транскрипт
+                    Описание урока
                   </h3>
                   <p className="text-base">{lesson.transcript}</p>
                 </div>
