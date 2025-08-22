@@ -651,7 +651,7 @@ export const SidebarNav = ({
           </nav>
 
           {/* Прогресс обучения */}
-          <div className="p-2 md:p-4 bg-gradient-to-r from-white to-blue-50">
+          <div className="hidden md:block p-2 md:p-4 bg-gradient-to-r from-white to-blue-50">
             <div className="bg-white rounded-2xl p-3 md:p-4 shadow-sm">
               <div className="mb-3">
                 <div className="flex items-center justify-between text-sm text-gray-600 mb-2">
