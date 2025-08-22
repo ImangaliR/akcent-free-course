@@ -15,11 +15,29 @@ export const CourseNavigation = ({ currentBlockCompleted = false }) => {
     getCurrentBlock,
     isCourseCompleted,
     getCourseStats,
+    // ДОБАВЛЯЕМ: методы для проверки завершенности блока
+    isBlockCompletedByRef,
+    getUserAnswer,
   } = useCourse();
 
   const [showCompletionModal, setShowCompletionModal] = useState(false);
 
   const currentBlock = getCurrentBlock();
+
+  // ИСПРАВЛЕНИЕ: Проверяем, завершен ли текущий блок через context
+  const isCurrentBlockCompleted = () => {
+    if (!currentBlock?.ref) return false;
+
+    // Проверяем через getUserAnswer - более надежный способ
+    const userAnswer = getUserAnswer(currentBlock.ref);
+    const completedViaAnswer = userAnswer?.completed === true;
+
+    // Также проверяем через isBlockCompletedByRef
+    const completedViaRef = isBlockCompletedByRef(currentBlock.ref);
+
+    // Учитываем и текущее состояние из props
+    return completedViaAnswer || completedViaRef || currentBlockCompleted;
+  };
 
   const handleCompletionClick = () => {
     setShowCompletionModal(true);
@@ -46,10 +64,15 @@ export const CourseNavigation = ({ currentBlockCompleted = false }) => {
 
   // Обработка кнопки "Алға"
   const handleNext = async () => {
-    if (!currentBlockCompleted || !currentBlock) return;
+    const blockCompleted = isCurrentBlockCompleted();
 
-    // Отмечаем текущий блок как завершенный
-    await completeBlock(currentBlock.ref);
+    if (!blockCompleted || !currentBlock) return;
+
+    // Отмечаем текущий блок как завершенный (если еще не отмечен)
+    const userAnswer = getUserAnswer(currentBlock.ref);
+    if (!userAnswer?.completed) {
+      await completeBlock(currentBlock.ref);
+    }
 
     // Проверяем, нужно ли показать InfoCard
     const hasInfoCard = await checkForInfoCardAfterTask();
@@ -68,6 +91,9 @@ export const CourseNavigation = ({ currentBlockCompleted = false }) => {
 
   const totalBlocks = courseManifest?.sequence?.length || 0;
   const currentNumber = currentBlockIndex + 1;
+
+  // ИСПОЛЬЗУЕМ исправленную функцию
+  const blockCompleted = isCurrentBlockCompleted();
 
   return (
     <div className="w-full mx-auto px-1 md:px-4 pb-4">
@@ -109,19 +135,19 @@ export const CourseNavigation = ({ currentBlockCompleted = false }) => {
               {canGoNext() ? (
                 <button
                   onClick={handleNext}
-                  disabled={!currentBlockCompleted}
+                  disabled={!blockCompleted}
                   className={`
-                    flex items-center gap-2 md:gap-3 px-3 py-3 lg:px-6 lg:py-4 rounded-2xl  cursor-pointer
-                     font-medium w-full justify-end transition-all duration-200 border-2
+                    flex items-center gap-2 md:gap-3 px-3 py-3 lg:px-6 lg:py-4 rounded-2xl cursor-pointer
+                    font-medium w-full justify-end transition-all duration-200 border-2
                     ${
-                      currentBlockCompleted
-                        ? "bg-[#9C45FF]  text-white hover:from-[#9C45FF] hover:to-[#9C45FF] shadow-lg hover:shadow-xl border-[#9C45FF] transform hover:scale-101"
+                      blockCompleted
+                        ? "bg-[#9C45FF] text-white hover:from-[#9C45FF] hover:to-[#9C45FF] shadow-lg hover:shadow-xl border-[#9C45FF] transform hover:scale-101"
                         : "bg-gray-100 text-gray-500 cursor-not-allowed border-gray-200"
                     }
                   `}
                 >
                   <div className="text-right">
-                    {currentBlockCompleted ? (
+                    {blockCompleted ? (
                       <>
                         <div className="text-sm lg:text-base font-semibold">
                           Алға
@@ -138,7 +164,7 @@ export const CourseNavigation = ({ currentBlockCompleted = false }) => {
                       </>
                     )}
                   </div>
-                  {currentBlockCompleted && (
+                  {blockCompleted && (
                     <div className="p-1 bg-white/20 rounded-xl">
                       <ChevronRight className="w-5 h-5" />
                     </div>
