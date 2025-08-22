@@ -485,9 +485,9 @@ export const SidebarNav = ({
                 <h1 className="text-xl font-bold text-white leading-tight">
                   {courseManifest.title || "Русский язык"}
                 </h1>
-                <span className="text-sm font-normal text-white">
+                {/* <span className="text-sm font-normal text-white">
                   бастауыш курс
-                </span>
+                </span> */}
               </div>
 
               <button
@@ -632,10 +632,6 @@ export const SidebarNav = ({
                                     {typeInfo.label}
                                   </div>
                                 </div>
-
-                                {isActive && (
-                                  <div className="w-2 h-2 bg-white rounded-full flex-shrink-0" />
-                                )}
                               </button>
                             );
                           })}

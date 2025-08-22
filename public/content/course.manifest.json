@@ -1,6 +1,6 @@
 {
   "courseId": "ru-demo-01",
-  "title": "Орыс тілі",
+  "title": "Akcent Практикум",
   "locale": "ru",
   "sequence": [
     { "ref": "blocks/v1.video.json" },
