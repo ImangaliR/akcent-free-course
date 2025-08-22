@@ -15,7 +15,7 @@
     "framer-motion": "^12.23.12",
     "ldrs": "^1.1.7",
     "lottie-react": "^2.4.1",
-    "lucide-react": "^0.539.0",
+    "lucide-react": "0.540.0",
     "react": "^19.1.1",
     "react-dnd": "^16.0.1",
     "react-dnd-html5-backend": "^16.0.1",

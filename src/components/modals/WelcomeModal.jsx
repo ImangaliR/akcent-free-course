@@ -336,11 +336,6 @@ export const WelcomeModal = () => {
               <div className="text-xs sm:text-sm font-medium text-gray-500">
                 {currentStep + 1} из {totalSteps}
               </div>
-              <img
-                src={owlIcon}
-                alt="Owl mascot"
-                className="w-8 h-8 sm:w-16 sm:h-16"
-              />
             </div>
 
             {/* Заголовок */}
