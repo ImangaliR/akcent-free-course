@@ -135,18 +135,18 @@ export const CompletionModal = ({
               <div className="bg-gradient-to-r from-[#9C45FF] to-purple-600 text-white p-4 sm:p-6 rounded-xl mb-6 sm:mb-8 max-w-xl mx-auto">
                 <div className="flex items-center justify-center mb-2 sm:mb-3">
                   <span className="font-semibold text-base sm:text-lg">
-                    Жетістік ашылды!
+                    Жетістік ашылды
                   </span>
                 </div>
                 <p className="opacity-90 text-sm sm:text-base">
-                  Курс аяқтаушы - алғашқы курсыңызды сәтті бітірдіңіз!
+                  Курс аяқтаушы - алғашқы курсыңызды сәтті бітірдіңіз
                 </p>
               </div>
 
               {/* Action Buttons - Стек на мобиле, ряд на десктопе */}
               <div className="space-y-3 sm:space-y-0 sm:grid sm:grid-cols-2 sm:gap-4 max-w-2xl mx-auto">
                 <button className="w-full bg-gradient-to-r from-[#9C45FF] to-purple-600 text-white py-3 sm:py-4 px-6 rounded-xl font-semibold hover:shadow-lg transition-all duration-200 transform hover:scale-[1.02] text-base sm:text-lg">
-                  Сертификат
+                  Сыйлықты алу
                 </button>
                 <button
                   onClick={onClose}
