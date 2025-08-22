@@ -130,7 +130,7 @@ export const UniversalQuiz = ({
             <div
               className={`h-2 rounded-full transition-all ${
                 quiz.stats.passed
-                  ? "bg-green-500"
+                  ? "bg-gradient-to-r from-blue-500 to-indigo-500"
                   : "bg-gradient-to-r from-blue-500 to-indigo-500"
               }`}
               style={{

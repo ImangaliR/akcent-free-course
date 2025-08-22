@@ -147,6 +147,24 @@ export const useQuizLogic = (
         return answer.isComplete;
       }
 
+      const q = currentQuestion;
+      const looksLikeMatching =
+        q &&
+        Array.isArray(q.leftItems) &&
+        q.leftItems.length > 0 &&
+        typeof q.answer === "object";
+
+      if (looksLikeMatching) {
+        // Разрешаем "Тексеру" только когда сопоставлены ВСЕ leftItems
+        if (typeof answer !== "object" || answer === null) return false;
+        return q.leftItems.every(
+          (li) =>
+            Object.prototype.hasOwnProperty.call(answer, li.id) &&
+            answer[li.id] !== null &&
+            answer[li.id] !== undefined
+        );
+      }
+
       // Task-specific logic с улучшенными проверками
       switch (taskType) {
         case "imagequiz":
@@ -166,10 +184,17 @@ export const useQuizLogic = (
 
         case "matchtask":
           // Для match задач проверяем объект с соответствиями
-          return (
-            typeof answer === "object" &&
-            answer !== null &&
-            Object.keys(answer).length > 0
+          if (
+            !q?.leftItems?.length ||
+            typeof answer !== "object" ||
+            answer === null
+          )
+            return false;
+          return q.leftItems.every(
+            (li) =>
+              Object.prototype.hasOwnProperty.call(answer, li.id) &&
+              answer[li.id] !== null &&
+              answer[li.id] !== undefined
           );
 
         case "multiblanktask":

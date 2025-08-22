@@ -23,10 +23,8 @@ export const ImageQuizRenderer = ({
 
   // Load current answer on mount
   useEffect(() => {
-    if (currentAnswer?.selectedOption) {
-      setSelectedOption(currentAnswer.selectedOption);
-    }
-  }, [currentAnswer]);
+    setSelectedOption(currentAnswer?.selectedOption ?? null);
+  }, [currentAnswer, question?.id]);
 
   // Handle option selection
   const handleOptionClick = (optionId) => {
@@ -109,20 +107,21 @@ export const ImageQuizRenderer = ({
         {question.options?.map((option) => (
           <div
             key={option.id}
-            className={`relative w-[150px] md:w-[220px] aspect-square rounded-2xl border-2 transition-all duration-200 ${getOptionStyle(
-              option.id
-            )} ${
-              !isSubmitted &&
-              selectedOption === option.id && (
-                <div className="absolute inset-0 border-2 border-[#9C45FF] rounded-2xl  pointer-events-none"></div>
-              )
-            }${isSubmitted ? "cursor-default" : "cursor-pointer"} `}
+            className={`relative w-[150px] md:w-[220px] aspect-square rounded-2xl border-2 transition-all duration-200
+              ${getOptionStyle(option.id)} ${
+              isSubmitted ? "cursor-default" : "cursor-pointer"
+            }`}
             onClick={() => handleOptionClick(option.id)}
           >
             {/* Result icon */}
             <div className="absolute top-1.5 right-1.5 z-10">
               {getOptionIcon(option.id)}
             </div>
+
+            {/* Selection overlay BEFORE submit */}
+            {!isSubmitted && selectedOption === option.id && (
+              <div className="absolute inset-0 border-2 border-[#9C45FF] rounded-2xl pointer-events-none" />
+            )}
 
             <div className="w-full h-full bg-[#FEF9F2] overflow-hidden rounded-2xl">
               <img
