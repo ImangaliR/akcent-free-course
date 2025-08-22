@@ -258,12 +258,12 @@ export const MultiBlankTaskRenderer = ({
                       }
                       ${
                         isCorrectAnswer
-                          ? "border-green-400 bg-green-50 text-green-700"
+                          ? "border-green-400 bg-green-50 text-green-700 font-bold"
                           : ""
                       }
                       ${
                         isWrongAnswer
-                          ? "border-red-400 bg-red-50 text-red-700"
+                          ? "border-red-400 bg-red-50 text-red-700 font-bold"
                           : ""
                       }
                       ${isSubmitted ? "cursor-default" : "cursor-pointer"}
