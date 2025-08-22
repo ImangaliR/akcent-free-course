@@ -12,7 +12,11 @@ import { MultiBlankTaskRenderer } from "../Tasks/MultiBlankTaskRenderer";
 import { UniversalQuiz } from "../Tasks/UniversalQuiz";
 import { VideoLessonWithSubtitles } from "../VideoLesson/VideoLesson";
 
-export const Lesson = ({ currentBlockRef, onBlockComplete }) => {
+export const Lesson = ({
+  currentBlockRef,
+  onBlockComplete,
+  isWelcomeModalOpen,
+}) => {
   const [loading, setLoading] = useState(true);
   const [blockData, setBlockData] = useState(null);
   const [error, setError] = useState(null);
@@ -117,17 +121,13 @@ export const Lesson = ({ currentBlockRef, onBlockComplete }) => {
 
     switch (blockData?.type) {
       case "video":
-        return <VideoLessonWithSubtitles {...props} />;
+        return (
+          <VideoLessonWithSubtitles
+            {...props}
+            isWelcomeModalOpen={isWelcomeModalOpen}
+          />
+        );
 
-      // case "storytask":
-      //   return (
-      //     <UniversalQuiz
-      //       lesson={blockData}
-      //       onStepComplete={handleBlockComplete}
-      //       taskType="storytask"
-      //       TaskRenderer={StoryTaskRenderer}
-      //     />
-      //   );
       case "chatgame": // ИСПРАВЛЕННЫЙ CASE
         return (
           <ContinuousChatGame

@@ -139,6 +139,7 @@ const HomeContent = () => {
                 <Lesson
                   currentBlockRef={currentBlock?.ref}
                   onBlockComplete={handleBlockComplete}
+                  isWelcomeModalOpen={showWelcomeModal} // Добавить эту строку
                 />
               </div>
 

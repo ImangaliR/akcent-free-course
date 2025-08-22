@@ -1,7 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import { SubtitlePanel } from "./VideoSubtitle";
 
-export const VideoLessonWithSubtitles = ({ lesson, onStepComplete }) => {
+export const VideoLessonWithSubtitles = ({
+  lesson,
+  onStepComplete,
+  isWelcomeModalOpen,
+}) => {
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [videoWatched, setVideoWatched] = useState(false);
@@ -117,14 +121,14 @@ export const VideoLessonWithSubtitles = ({ lesson, onStepComplete }) => {
                   isVideoLoading ? "hidden" : "block"
                 }`}
                 controls
-                autoPlay
+                autoPlay={!isWelcomeModalOpen} // Изменить эту строку
                 preload="metadata"
                 controlsList="nodownload"
                 onContextMenu={(e) => e.preventDefault()}
                 disablePictureInPicture
                 disableRemotePlayback
                 playsInline
-                onLoadedData={handleVideoLoaded} // Trigger loading state change
+                onLoadedData={handleVideoLoaded}
               >
                 <source src={lesson.mediaUrl} type="video/mp4" />
                 Ваш браузер не поддерживает видео HTML5.
