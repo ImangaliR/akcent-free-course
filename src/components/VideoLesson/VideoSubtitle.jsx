@@ -180,7 +180,7 @@ export const SubtitlePanel = ({
               className="text-gray-500 sm:w-4 sm:h-4 flex-shrink-0"
             />
             <h5 className="font-medium text-gray-800 text-sm sm:text-base">
-              Выбранное слово
+              Таңдалған сөз
             </h5>
           </div>
           <div className="space-y-2">
@@ -194,7 +194,7 @@ export const SubtitlePanel = ({
               </span>
             </div>
             <div className="text-xs sm:text-sm text-gray-500">
-              Время: {formatTime(selectedWord.start)} –{" "}
+              Уақыт: {formatTime(selectedWord.start)} –{" "}
               {formatTime(selectedWord.end)}
             </div>
           </div>
@@ -202,7 +202,7 @@ export const SubtitlePanel = ({
             onClick={() => setSelectedWord(null)}
             className="mt-3 text-xs text-gray-400 hover:text-gray-600 transition-colors duration-200"
           >
-            Закрыть
+            Жабу
           </button>
         </div>
       )}

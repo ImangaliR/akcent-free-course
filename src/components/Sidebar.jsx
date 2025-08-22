@@ -532,10 +532,8 @@ export const SidebarNav = ({
                           {module.blocks.length === 0
                             ? module.id === "intro"
                               ? "Скоро..."
-                              : "0 блоков"
-                            : `${module.blocks.length} блок${
-                                module.blocks.length > 1 ? "ов" : ""
-                              }`}
+                              : "0 бөлім"
+                            : `${module.blocks.length} бөлім`}
                         </span>
                       </div>
                     </div>
