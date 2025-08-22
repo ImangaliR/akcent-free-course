@@ -1,5 +1,7 @@
 import { CheckCircle, ChevronLeft, ChevronRight, Play } from "lucide-react";
+import { useState } from "react";
 import { useCourse } from "../context/CourseContext";
+import { CompletionModal } from "./modals/CompetitionModal";
 
 export const CourseNavigation = ({ currentBlockCompleted = false }) => {
   const {
@@ -11,9 +13,17 @@ export const CourseNavigation = ({ currentBlockCompleted = false }) => {
     canGoPrevious,
     completeBlock,
     getCurrentBlock,
+    isCourseCompleted,
+    getCourseStats,
   } = useCourse();
 
+  const [showCompletionModal, setShowCompletionModal] = useState(false);
+
   const currentBlock = getCurrentBlock();
+
+  const handleCompletionClick = () => {
+    setShowCompletionModal(true);
+  };
 
   // Проверка, есть ли InfoCard после задания
   const checkForInfoCardAfterTask = async () => {
@@ -104,7 +114,7 @@ export const CourseNavigation = ({ currentBlockCompleted = false }) => {
                   disabled={!currentBlockCompleted}
                   className={`
                     flex items-center gap-3 px-4 py-3 lg:px-6 lg:py-4 rounded-2xl  cursor-pointer
- font-medium w-full justify-end transition-all duration-200 border-2
+                     font-medium w-full justify-end transition-all duration-200 border-2
                     ${
                       currentBlockCompleted
                         ? "bg-[#9C45FF]  text-white hover:from-[#9C45FF] hover:to-[#9C45FF] shadow-lg hover:shadow-xl border-[#9C45FF] transform hover:scale-101"
@@ -137,22 +147,31 @@ export const CourseNavigation = ({ currentBlockCompleted = false }) => {
                   )}
                 </button>
               ) : (
-                <div className="flex items-center gap-3 px-4 py-3 lg:px-6 lg:py-4 rounded-2xl bg-green-500 text-white font-medium justify-end shadow-lg border-2 border-green-500">
+                <button
+                  onClick={handleCompletionClick}
+                  className="flex items-center gap-3 px-4 py-3 lg:px-6 lg:py-4 rounded-2xl cursor-pointer bg-green-500 text-white font-medium justify-end shadow-lg border-2 border-green-500"
+                >
                   <div className="text-right">
                     <div className="text-sm lg:text-base font-semibold flex items-center gap-2 justify-end">
                       Аяқталды!
                     </div>
-                    <div className="text-xs opacity-90">Курс бітті</div>
+                    <div className="text-xs opacity-90">Сыйлықты алу</div>
                   </div>
                   <div className="p-1 bg-white/20 rounded-xl">
                     <CheckCircle className="w-5 h-5" />
                   </div>
-                </div>
+                </button>
               )}
             </div>
           </div>
         </div>
       </div>
+      <CompletionModal
+        isOpen={showCompletionModal}
+        onClose={() => setShowCompletionModal(false)}
+        courseTitle={courseManifest?.title || "Орыс тілі"}
+        courseStats={getCourseStats()}
+      />
     </div>
   );
 };

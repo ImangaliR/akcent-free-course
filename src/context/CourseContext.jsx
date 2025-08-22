@@ -273,6 +273,71 @@ export const CourseProvider = ({ children }) => {
     return currentBlockIndex > 0;
   };
 
+  const isCourseCompleted = () => {
+    if (!courseManifest?.sequence) return false;
+
+    // Получаем все блоки кроме info блоков
+    const mainBlocks = courseManifest.sequence.filter((block) => {
+      const lowerRef = block.ref.toLowerCase();
+      return !lowerRef.includes("inf");
+    });
+
+    // Проверяем что мы на последнем блоке и он завершен
+    const isLastBlock =
+      currentBlockIndex === courseManifest.sequence.length - 1;
+    const lastBlockCompleted = mainBlocks.every((block) => {
+      const answer = getUserAnswer(block.ref);
+      return answer?.completed === true;
+    });
+
+    return isLastBlock && lastBlockCompleted;
+  };
+
+  // NEW: Get course completion statistics
+  const getCourseStats = () => {
+    if (!courseManifest?.sequence) return {};
+
+    const mainBlocks = courseManifest.sequence.filter((block) => {
+      const lowerRef = block.ref.toLowerCase();
+      return !lowerRef.includes("inf");
+    });
+
+    const completedCount = getCompletedCount();
+    const totalBlocks = getTotalBlocks();
+
+    // Calculate accuracy from user answers
+    let totalQuestions = 0;
+    let correctAnswers = 0;
+
+    Object.values(userAnswers).forEach((answer) => {
+      if (answer.score !== undefined) {
+        totalQuestions += answer.totalQuestions || 1;
+        correctAnswers += answer.score || 0;
+      }
+    });
+
+    const accuracy =
+      totalQuestions > 0
+        ? Math.round((correctAnswers / totalQuestions) * 100)
+        : 0;
+
+    // Get course start date
+    const startTime = localStorage.getItem("courseStartTime");
+    const startDate = startTime ? new Date(parseInt(startTime)) : new Date();
+
+    // Calculate total study time (примерно)
+    const totalTime = `${Math.max(1, Math.round(completedCount * 3))} мин`;
+
+    return {
+      totalBlocks,
+      completedBlocks: completedCount,
+      totalTime,
+      accuracy,
+      startDate: startDate.toLocaleDateString("kk-KZ"),
+      completionDate: new Date().toLocaleDateString("kk-KZ"),
+    };
+  };
+
   // Проверка, завершен ли блок
   const isBlockCompleted = (blockId) => {
     return completedBlocks.includes(blockId);
@@ -358,6 +423,8 @@ export const CourseProvider = ({ children }) => {
     getTotalBlocks,
     getCompletedCount,
     getProgressPercentage,
+    isCourseCompleted,
+    getCourseStats,
 
     // Existing progress calculation
     progress: courseManifest
