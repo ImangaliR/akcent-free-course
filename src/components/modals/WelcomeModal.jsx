@@ -1,7 +1,8 @@
 import { Dialog } from "@headlessui/react";
+import Lottie from "lottie-react";
 import { useMemo, useState } from "react";
 import owlIcon from "../../assets/horse.svg";
-import rocketIcon from "../../assets/rocket.svg";
+import Pensil from "../../assets/Microsoft Designer.json";
 import { useAuth } from "../../context/AuthContext";
 
 // Конфиг шагов
@@ -66,11 +67,7 @@ const stepConfig = [
 
 const WelcomeStep = ({ onNext }) => (
   <div className="text-center py-2">
-    <img
-      src={rocketIcon}
-      alt="Rocket"
-      className="mx-auto mb-6 w-20 h-20 sm:w-28 sm:h-28 animate-pulse"
-    />
+    <Lottie animationData={Pensil} loop={true} className="w-72 h-72 mx-auto " />
     <p className="text-gray-600 mb-6">
       Бірнеше жылдам сұрақтар сізге тамаша курсты реттеуге көмектеседі.
     </p>
