@@ -1,5 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { SubtitlePanel } from "./VideoSubtitle";
+import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
+import "./skeleton.css";
 
 export const VideoLessonWithSubtitles = ({
   lesson,
@@ -109,8 +112,17 @@ export const VideoLessonWithSubtitles = ({
             <div className="relative bg-black">
               {/* Video Placeholder */}
               {isVideoLoading && (
-                <div className="w-full bg-gray-300 pb-[56.25%]">
-                  {/* You can add a loading animation here if needed */}
+                <div className="w-full pb-[56.25%] relative video-skeleton">
+                  {/* Центральная кнопка воспроизведения */}
+                  <div className="play-button-skeleton"></div>
+
+                  {/* Контролы плеера */}
+                  <div className="controls-skeleton">
+                    <div className="control-button-skeleton"></div>
+                    <div className="progress-bar-skeleton"></div>
+                    <div className="control-button-skeleton"></div>
+                    <div className="control-button-skeleton"></div>
+                  </div>
                 </div>
               )}
 
@@ -137,18 +149,52 @@ export const VideoLessonWithSubtitles = ({
 
             {/* Title and Transcript */}
             <div className="p-4 lg:p-6">
-              {lesson.title && (
-                <h2 className="text-xl lg:text-2xl font-bold text-gray-900 mb-3">
-                  {lesson.title}
-                </h2>
-              )}
-              {lesson.transcript && (
-                <div className="text-gray-700 leading-relaxed">
-                  <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-2">
-                    Сабақ мазмұны
-                  </h3>
-                  <p className="text-base">{lesson.transcript}</p>
+              {isVideoLoading ? (
+                <div className="space-y-4">
+                  {/* Заголовок */}
+                  <div
+                    className="skeleton text-skeleton text-skeleton-title"
+                    style={{ width: "75%" }}
+                  ></div>
+
+                  {/* Подзаголовок */}
+                  <div
+                    className="skeleton text-skeleton text-skeleton-line"
+                    style={{ width: "40%" }}
+                  ></div>
+
+                  {/* Текст */}
+                  <div className="space-y-2">
+                    <div
+                      className="skeleton text-skeleton text-skeleton-line"
+                      style={{ width: "90%" }}
+                    ></div>
+                    <div
+                      className="skeleton text-skeleton text-skeleton-line"
+                      style={{ width: "85%" }}
+                    ></div>
+                    <div
+                      className="skeleton text-skeleton text-skeleton-line"
+                      style={{ width: "70%" }}
+                    ></div>
+                  </div>
                 </div>
+              ) : (
+                <>
+                  {lesson.title && (
+                    <h2 className="text-xl lg:text-2xl font-bold text-gray-900 mb-3">
+                      {lesson.title}
+                    </h2>
+                  )}
+                  {lesson.transcript && (
+                    <div className="text-gray-700 leading-relaxed">
+                      <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-2">
+                        Сабақ мазмұны
+                      </h3>
+                      <p className="text-base">{lesson.transcript}</p>
+                    </div>
+                  )}
+                </>
               )}
             </div>
           </div>

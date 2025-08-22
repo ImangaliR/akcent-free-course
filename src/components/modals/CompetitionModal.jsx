@@ -9,15 +9,6 @@ export const CompletionModal = ({
 }) => {
   const [showConfetti, setShowConfetti] = useState(false);
 
-  // Анимация конфетти при открытии
-  useEffect(() => {
-    if (isOpen) {
-      setShowConfetti(true);
-      const timer = setTimeout(() => setShowConfetti(false), 3000);
-      return () => clearTimeout(timer);
-    }
-  }, [isOpen]);
-
   // Обработчик ESC и блокировка скролла
   useEffect(() => {
     const handleEscape = (e) => {

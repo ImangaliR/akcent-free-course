@@ -68,7 +68,7 @@ export const Lesson = ({
         setTimeout(() => {
           hideInfoCard();
           handleInfoCardComplete();
-        }, 3000);
+        }, 6000);
       }, 500);
     }
   }, [blockData]);
@@ -252,7 +252,7 @@ export const Lesson = ({
         lesson={currentInfoCard}
         isOpen={isOpen}
         onClose={hideInfoCard}
-        autoCloseDelay={3000}
+        autoCloseDelay={5000}
       />
     </div>
   );

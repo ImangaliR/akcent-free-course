@@ -9,6 +9,7 @@ import { ContinuousChatGame } from "../ContinuousChatGame";
 export const UniversalQuiz = ({
   lesson,
   onStepComplete,
+
   taskType,
   TaskRenderer,
   autoAdvanceMs = 2000,

@@ -66,7 +66,11 @@ const stepConfig = [
 
 const WelcomeStep = ({ onNext }) => (
   <div className="text-center py-2">
-    <Lottie animationData={Pensil} loop={true} className="w-72 h-72 mx-auto " />
+    <Lottie
+      animationData={Pensil}
+      loop={false}
+      className="w-72 h-72 mx-auto "
+    />
     <p className="text-gray-600 mb-6 text-sm md:text-base">
       Бірнеше жылдам сұрақтар сізге тамаша курсты реттеуге көмектеседі
     </p>
@@ -193,7 +197,7 @@ const InputStep = ({
 
         <input
           type={isAge ? "number" : "email"}
-          min={isAge ? "1" : undefined}
+          min={isAge ? "6" : undefined}
           max={isAge ? "120" : undefined}
           inputMode={isAge ? "numeric" : "email"}
           autoComplete={isAge ? "off" : "email"}
@@ -254,7 +258,7 @@ export const WelcomeModal = () => {
 
     if (currentStepData.type === "age") {
       const n = Number(value);
-      return Number.isFinite(n) && n >= 1 && n <= 120;
+      return Number.isFinite(n) && n >= 6 && n <= 120;
     }
     if (currentStepData.type === "email") {
       return typeof value === "string" && /\S+@\S+\.\S+/.test(value.trim());

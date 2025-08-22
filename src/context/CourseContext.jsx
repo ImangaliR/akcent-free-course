@@ -194,13 +194,15 @@ export const CourseProvider = ({ children }) => {
 
   // Enhanced: Complete block with answer data
   const completeBlock = async (blockId, answerData = null) => {
+    // Если уже завершен — не повторяем сохранение
+    if (isBlockCompletedByRef(blockId)) return;
+
     const newCompleted = [...completedBlocks];
     if (!newCompleted.includes(blockId)) {
       newCompleted.push(blockId);
       setCompletedBlocks(newCompleted);
     }
 
-    // NEW: Save answer data if provided
     if (answerData) {
       const currentBlock = getCurrentBlock();
       const blockRef = currentBlock?.ref || blockId;
