@@ -69,7 +69,7 @@ const WelcomeStep = ({ onNext }) => (
   <div className="text-center py-2">
     <Lottie animationData={Pensil} loop={true} className="w-72 h-72 mx-auto " />
     <p className="text-gray-600 mb-6">
-      Бірнеше жылдам сұрақтар сізге тамаша курсты реттеуге көмектеседі.
+      Бірнеше жылдам сұрақтар сізге тамаша курсты реттеуге көмектеседі
     </p>
     <button
       onClick={onNext}
