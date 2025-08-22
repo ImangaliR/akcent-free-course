@@ -203,7 +203,7 @@ export const SignUp = () => {
                     placeholder="Есіміңізді енгізіңіз"
                     value={formData.name}
                     onChange={handleChange}
-                    className="w-full pl-9 pr-3 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 text-sm"
+                    className="w-full pl-9 pr-3 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 text-sm md:text-base"
                     required
                   />
                 </div>
@@ -224,7 +224,7 @@ export const SignUp = () => {
                     placeholder="Тегіңізді енгізіңіз"
                     value={formData.surname}
                     onChange={handleChange}
-                    className="w-full pl-9 pr-3 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 text-sm"
+                    className="w-full pl-9 pr-3 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 text-sm md:text-base"
                     required
                   />
                 </div>
@@ -247,7 +247,7 @@ export const SignUp = () => {
                   placeholder="Нөміріңізді енгізіңіз"
                   value={formData.login}
                   onChange={handleChange}
-                  className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                  className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 text-sm md:text-base"
                   required
                 />
               </div>
@@ -269,7 +269,7 @@ export const SignUp = () => {
                   placeholder="Кемінде 6 символ"
                   value={formData.password}
                   onChange={handleChange}
-                  className="w-full pl-10 pr-12 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                  className="w-full pl-10 pr-12 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 text-sm md:text-base"
                   required
                 />
                 <button
@@ -348,7 +348,7 @@ export const SignUp = () => {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-blue-500 text-white py-3  cursor-pointer rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 transition-all duration-200 shadow-lg hover:shadow-xl"
+              className="w-full bg-blue-500 text-white py-3 cursor-pointer rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 transition-all duration-200 shadow-lg hover:shadow-xl"
             >
               {loading ? (
                 <>
@@ -365,7 +365,7 @@ export const SignUp = () => {
           </form>
 
           {/* Ссылка на вход */}
-          <div className="mt-6 pt-6 border-t border-gray-100">
+          <div className="mt-4 md:mt-6 pt-4 md:pt-6 border-t border-gray-100">
             <p className="text-sm md:text-base text-center text-gray-600">
               Аккаунтыңыз барма?{" "}
               <Link

@@ -79,7 +79,7 @@ export const CourseNavigation = ({ currentBlockCompleted = false }) => {
               {canGoPrevious() ? (
                 <button
                   onClick={goToPreviousBlock}
-                  className="flex items-center gap-3 px-4 py-3 lg:px-6 lg:py-4 rounded-2xl cursor-pointer font-medium text-gray-700 hover:bg-gray-50 border-2 border-gray-200 w-full transition-all duration-200 hover:border-gray-300 hover:shadow-md group"
+                  className="flex items-center gap-2 md:gap-3 px-3 py-3 lg:px-6 lg:py-4 rounded-2xl cursor-pointer font-medium text-gray-700 hover:bg-gray-50 border-2 border-gray-200 w-full transition-all duration-200 hover:border-gray-300 hover:shadow-md group"
                 >
                   <div className="p-1 bg-gray-100 rounded-xl group-hover:bg-gray-200 transition-colors">
                     <ChevronLeft className="w-4 h-4 md:w-5 md:h-5" />
@@ -92,7 +92,7 @@ export const CourseNavigation = ({ currentBlockCompleted = false }) => {
                   </div>
                 </button>
               ) : (
-                <div className="px-4 py-3 lg:px-6 lg:py-4 text-gray-400 text-sm flex items-center gap-3 border-2 border-gray-200 rounded-2xl bg-gray-50">
+                <div className="px-3 py-3 lg:px-6 lg:py-4 text-gray-400 text-sm flex items-center gap-2 md:gap-3 border-2 border-gray-200 rounded-2xl bg-gray-50">
                   <div className="p-1 bg-gray-200 rounded-xl">
                     <ChevronLeft className="w-4 h-4 md:w-5 md:h-5" />
                   </div>
@@ -111,7 +111,7 @@ export const CourseNavigation = ({ currentBlockCompleted = false }) => {
                   onClick={handleNext}
                   disabled={!currentBlockCompleted}
                   className={`
-                    flex items-center gap-3 px-4 py-3 lg:px-6 lg:py-4 rounded-2xl  cursor-pointer
+                    flex items-center gap-2 md:gap-3 px-3 py-3 lg:px-6 lg:py-4 rounded-2xl  cursor-pointer
                      font-medium w-full justify-end transition-all duration-200 border-2
                     ${
                       currentBlockCompleted
@@ -147,7 +147,7 @@ export const CourseNavigation = ({ currentBlockCompleted = false }) => {
               ) : (
                 <button
                   onClick={handleCompletionClick}
-                  className="flex items-center gap-3 px-4 py-3 lg:px-6 lg:py-4 rounded-2xl cursor-pointer bg-green-500 text-white font-medium justify-end shadow-lg border-2 border-green-500 hover:bg-green-600 transition-colors w-full"
+                  className="flex items-center gap-2 md:gap-3 px-3 py-3 lg:px-6 lg:py-4 rounded-2xl cursor-pointer bg-green-500 text-white font-medium justify-end shadow-lg border-2 border-green-500 hover:bg-green-600 transition-colors w-full"
                 >
                   <div className="text-right">
                     <div className="text-sm lg:text-base font-semibold">

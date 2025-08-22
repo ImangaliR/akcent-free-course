@@ -147,7 +147,7 @@ export const Login = () => {
                   placeholder="Нөміріңізді енгізіңіз"
                   value={login}
                   onChange={(e) => setLogin(formatPhoneNumber(e.target.value))}
-                  className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-200"
+                  className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-200 text-sm md:text-base"
                   required
                 />
               </div>
@@ -168,7 +168,7 @@ export const Login = () => {
                   placeholder="Пароліңізді енгізіңіз"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full pl-10 pr-12 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-200"
+                  className="w-full pl-10 pr-12 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-200 text-sm md:text-base"
                   required
                 />
                 <button
@@ -201,7 +201,7 @@ export const Login = () => {
             </button>
           </form>
 
-          <div className="mt-6 pt-6 border-t border-gray-100">
+          <div className="mt-4 pt-4 md:mt-6 md:pt-6 border-t border-gray-100">
             <p className="text-sm md:text-base text-center text-gray-600">
               Аккаунтыңыз жоқпа?{" "}
               <Link
