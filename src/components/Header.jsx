@@ -1,7 +1,9 @@
 // Header.jsx
-import { Menu, X } from "lucide-react";
+import { X } from "lucide-react";
+import { HiOutlineMenuAlt2 } from "react-icons/hi";
 import Battery from "../assets/thunder-icon.svg"; // Импортируем SVG
-import { useCourse } from "../context/CourseContext"; // Импортируем хук
+import { useCourse } from "../context/CourseContext";
+// Импортируем хук
 
 export const Header = ({
   isSidebarOpen,
@@ -24,7 +26,7 @@ export const Header = ({
           {isSidebarOpen ? (
             <X className="w-6 h-6" />
           ) : (
-            <Menu className="w-6 h-6" />
+            <HiOutlineMenuAlt2 className="w-6 h-6" />
           )}
         </button>
 
