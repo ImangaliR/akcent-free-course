@@ -1,7 +1,6 @@
 import { Dialog } from "@headlessui/react";
 import Lottie from "lottie-react";
 import { useMemo, useState } from "react";
-import owlIcon from "../../assets/horse.svg";
 import Pensil from "../../assets/Microsoft Designer.json";
 import { useAuth } from "../../context/AuthContext";
 
@@ -66,14 +65,18 @@ const stepConfig = [
 ];
 
 const WelcomeStep = ({ onNext }) => (
-  <div className="text-center py-2">
-    <Lottie animationData={Pensil} loop={true} className="w-72 h-72 mx-auto " />
-    <p className="text-gray-600 mb-6">
+  <div className="text-center pb-2">
+    <Lottie
+      animationData={Pensil}
+      loop={true}
+      className="w-65 h-65 md:w-72 md:h-72 mx-auto "
+    />
+    <p className="text-sm md:text-base text-gray-600 mb-6">
       Бірнеше жылдам сұрақтар сізге тамаша курсты реттеуге көмектеседі.
     </p>
     <button
       onClick={onNext}
-      className="bg-[#9C45FF] hover:bg-purple-600 text-white font-medium py-3 px-8 rounded-lg transition duration-200 shadow-md transform hover:scale-105"
+      className="bg-[#9C45FF] hover:bg-purple-600 text-white font-medium px-6 py-2 md:py-3 md:px-8 rounded-lg transition duration-200 shadow-md transform hover:scale-105"
     >
       Бастау
     </button>
@@ -159,8 +162,7 @@ const InputStep = ({
     "placeholder-gray-400 text-base sm:text-lg focus:outline-none " +
     "shadow-sm focus:shadow-md px-12 py-3 sm:py-4"; // padding под иконку
 
-  const ok =
-    "border-gray-300 focus:ring-2 focus:ring-green-500 focus:border-green-500";
+  const ok = "border-gray-300 focus:border-[#9C45FF]";
   const bad =
     "border-red-400 focus:ring-2 focus:ring-red-500 focus:border-red-500";
 
@@ -313,7 +315,7 @@ export const WelcomeModal = () => {
         <div
           className="
             relative w-[92vw] max-w-[800px]
-            sm:w-[800px] sm:h-[600px]
+            sm:w-[800px] 
             transform overflow-hidden rounded-2xl bg-white text-left align-middle shadow-2xl transition-all
             flex flex-col
           "
@@ -339,12 +341,12 @@ export const WelcomeModal = () => {
             <div className="text-center my-2 space-y-1">
               <Dialog.Title
                 as="h2"
-                className="text-xl sm:text-3xl font-extrabold text-gray-800"
+                className="text-2xl md:text-3xl font-extrabold text-gray-800"
               >
                 {currentStepData.title}
               </Dialog.Title>
               {currentStepData.subtitle && (
-                <Dialog.Description className="text-gray-600 text-xs sm:text-base">
+                <Dialog.Description className="text-gray-600 text-xs md:text-base">
                   {currentStepData.subtitle}
                 </Dialog.Description>
               )}
@@ -398,12 +400,12 @@ export const WelcomeModal = () => {
 
           {/* Навигация — прилипает к низу модалки и не уезжает при скролле контента */}
           {currentStepData.type !== "welcome" && (
-            <div className="border-t border-gray-100 p-4 sm:p-6 flex gap-3 sm:gap-4">
+            <div className="border-t border-gray-100 p-3 md:p-4 sm:p-6 flex gap-3 sm:gap-4">
               <button
                 type="button"
                 onClick={handleBack}
                 disabled={loading || currentStep === 0}
-                className="flex-1 px-4 py-3 sm:px-6 sm:py-4 border-2 border-gray-300 text-gray-700 font-semibold rounded-xl hover:bg-gray-50 disabled:opacity-50 transition duration-200"
+                className="flex-1 px-3 py-2 sm:px-6 sm:py-4 border-2 border-gray-300 text-gray-700 font-semibold rounded-xl hover:bg-gray-50 disabled:opacity-50 transition duration-200"
               >
                 Артқа
               </button>
