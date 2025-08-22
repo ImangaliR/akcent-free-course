@@ -12,17 +12,56 @@ export const useQuizLogic = (
 
   const storageKey = `quiz_progress_${quizId || taskType}`;
 
-  const questions = useMemo(() => {
+  const normalizeQuestions = useMemo(() => {
+    if (taskType === "chatgame") {
+      if (allQuestions?.dialogs && Array.isArray(allQuestions.dialogs)) {
+        // Преобразуем dialogs в формат questions
+        return allQuestions.dialogs.map((dialog) => ({
+          id: dialog.id,
+          systemMessage: dialog.systemMessage,
+          options: dialog.options,
+          // Для совместимости с общей логикой
+          question: dialog.systemMessage,
+          answer: dialog.options?.find((opt) => opt.isCorrect)?.id || null,
+        }));
+      }
+    }
+
+    // Существующая логика для других типов
     if (Array.isArray(allQuestions)) {
       return allQuestions;
     }
-    // For imagequiz and other multi-question types
     if (allQuestions?.questions && Array.isArray(allQuestions.questions)) {
       return allQuestions.questions;
     }
-    // Single question format
     return [allQuestions];
-  }, [allQuestions]);
+  }, [allQuestions, taskType]);
+
+  const questions = useMemo(() => {
+    if (taskType === "chatgame") {
+      if (allQuestions?.dialogs && Array.isArray(allQuestions.dialogs)) {
+        // Преобразуем dialogs в формат questions
+        return allQuestions.dialogs.map((dialog) => ({
+          id: dialog.id,
+          systemMessage: dialog.systemMessage,
+          options: dialog.options,
+          // Для совместимости с общей логикой
+          question: dialog.systemMessage,
+          answer: dialog.options?.find((opt) => opt.isCorrect)?.id || null,
+        }));
+      }
+    }
+
+    // Существующая логика для других типов
+    if (Array.isArray(allQuestions)) {
+      return allQuestions;
+    }
+    if (allQuestions?.questions && Array.isArray(allQuestions.questions)) {
+      return allQuestions.questions;
+    }
+    return [allQuestions];
+  }, [allQuestions, taskType]);
+
   const loadSavedState = useCallback(() => {
     try {
       const saved = localStorage.getItem(storageKey);
@@ -57,18 +96,6 @@ export const useQuizLogic = (
     },
     [storageKey, questions.length, taskType]
   );
-  () => {
-    if (Array.isArray(allQuestions)) {
-      return allQuestions;
-    }
-    // For imagequiz and other multi-question types
-    if (allQuestions?.questions && Array.isArray(allQuestions.questions)) {
-      return allQuestions.questions;
-    }
-    // Single question format
-    return [allQuestions];
-  },
-    [allQuestions];
 
   const [state, setState] = useState(() => {
     const savedState = loadSavedState();
@@ -153,6 +180,16 @@ export const useQuizLogic = (
             answer.every((item) => item !== null && item !== undefined)
           );
 
+        case "chatgame":
+          // Для chatgame проверяем наличие selectedOption
+          return (
+            typeof answer === "object" &&
+            answer !== null &&
+            "selectedOption" in answer &&
+            answer.selectedOption !== null &&
+            answer.selectedOption !== undefined
+          );
+
         default:
           // Общая проверка для неизвестных типов
           // Разрешаем 0, false как валидные ответы
@@ -218,12 +255,38 @@ export const useQuizLogic = (
               return selectedOptionIndex === blank.answer;
             })
           );
+
+        case "chatgame":
+          // Для chatgame используем встроенную информацию о правильности
+          if (typeof answer?.isCorrect === "boolean") {
+            return answer.isCorrect;
+          }
+          // Fallback: ищем правильную опцию в вопросе
+          if (question?.options && answer?.selectedOption) {
+            const selectedOpt = question.options.find(
+              (opt) => opt.id === answer.selectedOption
+            );
+            return selectedOpt?.isCorrect === true;
+          }
+          return false;
         default:
           return answer === question.answer;
       }
     },
     [taskType]
   );
+
+  const clearChatGameState = (questions) => {
+    questions.forEach((question) => {
+      if (question.id) {
+        try {
+          localStorage.removeItem(`chatgame_${question.id}`);
+        } catch (error) {
+          console.warn("Ошибка очистки состояния чата:", error);
+        }
+      }
+    });
+  };
 
   // Set answer
   const setAnswer = useCallback((answer) => {
@@ -365,7 +428,9 @@ export const useQuizLogic = (
     } else {
       try {
         localStorage.removeItem(storageKey);
-      } catch (error) {}
+      } catch (error) {
+        console.warn("Error clearing quiz state:", error);
+      }
     }
   }, [state, saveState, storageKey]); // ← storageKey добавлен в зависимости
 
@@ -415,6 +480,15 @@ export const useQuizLogic = (
       return () => clearTimeout(timer);
     }
   }, [state.phase, stats.passed, completeQuiz]);
+
+  useEffect(() => {
+    if (state.phase === "done" && taskType === "chatgame") {
+      // Очищаем состояние чата при завершении
+      setTimeout(() => {
+        clearChatGameState(questions);
+      }, 1000); // Небольшая задержка перед очисткой
+    }
+  }, [state.phase, taskType, questions]);
 
   return {
     currentQuestion,

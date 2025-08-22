@@ -53,7 +53,7 @@ export const SidebarNav = ({
 
     const navigableBlocks = blocks.filter((block) => {
       const lowerRef = block.ref.toLowerCase();
-      return !lowerRef.includes("inf"); // Exclude info cards from navigation
+      return !lowerRef.includes("inf");
     });
 
     const videoBlocks = navigableBlocks
@@ -104,7 +104,6 @@ export const SidebarNav = ({
         organized.main.push(blockInfo);
       }
     });
-
     return organized;
   };
 

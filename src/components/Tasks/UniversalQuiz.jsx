@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import successAnim from "../../assets/Businessman flies up with rocket (1).json";
 // import ClapAudio from "../../assets/sound.mp3";
 import { useQuizLogic } from "../../utils/useQuizLogic";
+import { ContinuousChatGame } from "../ContinuousChatGame";
 
 export const UniversalQuiz = ({
   lesson,
@@ -13,7 +14,7 @@ export const UniversalQuiz = ({
   autoAdvanceMs = 2000,
 }) => {
   // Поддерживаем и старый формат и новый
-  const allQuestions = lesson.questions || [lesson];
+  const allQuestions = lesson.dialogs || lesson.questions || [lesson];
   const quizId = lesson.id || `${taskType}_${allQuestions.length}`;
 
   const quiz = useQuizLogic(allQuestions, onStepComplete, taskType, quizId);
@@ -21,13 +22,6 @@ export const UniversalQuiz = ({
   // ---- auto-advance timer ----
   const [autoAdvanceLeftMs, setAutoAdvanceLeftMs] = useState(null);
   const tickRef = useRef(null);
-
-  // useEffect(() => {
-  //   if (quiz.stats.passed) {
-  //     const audio = new Audio(ClapAudio); // путь к звуку
-  //     audio.play();
-  //   }
-  // }, [quiz.stats.passed]);
 
   const clearAutoAdvance = () => {
     if (tickRef.current) {
@@ -151,76 +145,99 @@ export const UniversalQuiz = ({
 
         {/* Рендер задания */}
         <div className="mb-6">
-          <TaskRenderer
-            question={quiz.currentQuestion}
-            currentAnswer={quiz.state.currentAnswer}
-            onAnswerChange={quiz.setAnswer}
-            isSubmitted={quiz.state.submitted}
-            showFeedback={quiz.state.showResult}
-            isCorrect={
-              quiz.state.showResult && quiz.isAnswerCorrect
-                ? quiz.isAnswerCorrect(
-                    quiz.state.currentAnswer,
-                    quiz.currentQuestion
-                  )
-                : null
-            }
-            taskType={taskType}
-          />
+          {taskType === "chatgame" ? (
+            <ContinuousChatGame
+              question={quiz.currentQuestion}
+              currentAnswer={quiz.state.currentAnswer}
+              onAnswerChange={quiz.setAnswer}
+              isSubmitted={quiz.state.submitted}
+              showFeedback={quiz.state.showResult}
+              isCorrect={
+                quiz.state.showResult && quiz.isAnswerCorrect
+                  ? quiz.isAnswerCorrect(
+                      quiz.state.currentAnswer,
+                      quiz.currentQuestion
+                    )
+                  : null
+              }
+              taskType={taskType}
+            />
+          ) : (
+            <TaskRenderer
+              question={quiz.currentQuestion}
+              currentAnswer={quiz.state.currentAnswer}
+              onAnswerChange={quiz.setAnswer}
+              isSubmitted={quiz.state.submitted}
+              showFeedback={quiz.state.showResult}
+              isCorrect={
+                quiz.state.showResult && quiz.isAnswerCorrect
+                  ? quiz.isAnswerCorrect(
+                      quiz.state.currentAnswer,
+                      quiz.currentQuestion
+                    )
+                  : null
+              }
+              taskType={taskType}
+            />
+          )}
         </div>
 
         {/* Кнопки */}
+
         <div className="flex justify-center gap-3 text-sm md:text-base">
           {!quiz.state.submitted ? (
             <button
               onClick={quiz.submitAnswer}
               disabled={!quiz.isAnswerReady(quiz.state.currentAnswer)}
-              className={`px-4 md:px-6 py-3 rounded-lg font-medium  cursor-pointer transition-colors ${
+              className={`px-4 md:px-6 py-3 rounded-lg font-medium cursor-pointer transition-colors ${
                 quiz.isAnswerReady(quiz.state.currentAnswer)
                   ? "bg-[#9C45FF] text-white hover:bg-[#7E2AD9]"
-                  : "bg-gray-300 text-gray-500 cursor-not-allowed  "
+                  : "bg-gray-300 text-gray-500 cursor-not-allowed"
               }`}
             >
-              Тексеру
+              {taskType === "chatgame" ? "Отправить" : "Тексеру"}
             </button>
           ) : (
-            <button
-              onClick={() => {
-                clearAutoAdvance();
-                quiz.nextQuestion();
-              }}
-              className="relative overflow-hidden flex items-center px-3 md:px-6 py-3 bg-[#9C45FF] hover:bg-[#7E2AD9] text-white rounded-lg font-medium transition-colors"
-            >
-              {/* background progress filler */}
-              {autoAdvanceLeftMs !== null && (
-                <div
-                  className="absolute left-0 top-0 h-full bg-[#7E2AD9] transition-all"
-                  style={{
-                    width: `${
-                      100 - (autoAdvanceLeftMs / autoAdvanceMs) * 100
-                    }%`,
-                  }}
-                />
-              )}
+            // Для chatgame кнопка скрывается, так как ChatGameRenderer показывает свою подсказку
+            taskType !== "chatgame" && (
+              <button
+                onClick={() => {
+                  clearAutoAdvance();
+                  quiz.nextQuestion();
+                }}
+                className="relative overflow-hidden flex items-center px-3 md:px-6 py-3 bg-[#9C45FF] hover:bg-[#7E2AD9] text-white rounded-lg font-medium transition-colors"
+              >
+                {/* background progress filler */}
+                {autoAdvanceLeftMs !== null && (
+                  <div
+                    className="absolute left-0 top-0 h-full bg-[#7E2AD9] transition-all"
+                    style={{
+                      width: `${
+                        100 - (autoAdvanceLeftMs / autoAdvanceMs) * 100
+                      }%`,
+                    }}
+                  />
+                )}
 
-              {/* button label (on top of filler) */}
-              <span className="relative z-10 cursor-pointer">
-                {quiz.state.phase === "main"
-                  ? quiz.state.currentIndex < allQuestions.length - 1
-                    ? "Келесі сұрақ"
-                    : "Негізгі айналымды аяқтау"
-                  : quiz.isAnswerCorrect &&
-                    quiz.isAnswerCorrect(
-                      quiz.state.currentAnswer,
-                      quiz.currentQuestion
-                    )
-                  ? quiz.state.redemptionIndex <
-                    quiz.state.wrongQuestions.length - 1
-                    ? "Келесі сұрақ"
-                    : "Тестті аяқтау"
-                  : "Попробовать снова"}
-              </span>
-            </button>
+                {/* button label (on top of filler) */}
+                <span className="relative z-10 cursor-pointer">
+                  {quiz.state.phase === "main"
+                    ? quiz.state.currentIndex < allQuestions.length - 1
+                      ? "Келесі сұрақ"
+                      : "Негізгі айналымды аяқтау"
+                    : quiz.isAnswerCorrect &&
+                      quiz.isAnswerCorrect(
+                        quiz.state.currentAnswer,
+                        quiz.currentQuestion
+                      )
+                    ? quiz.state.redemptionIndex <
+                      quiz.state.wrongQuestions.length - 1
+                      ? "Келесі сұрақ"
+                      : "Тестті аяқтау"
+                    : "Попробовать снова"}
+                </span>
+              </button>
+            )
           )}
         </div>
       </div>

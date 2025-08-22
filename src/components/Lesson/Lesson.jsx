@@ -3,8 +3,8 @@ import "ldrs/react/Quantum.css";
 import { useEffect, useState } from "react";
 import { useCourse } from "../../context/CourseContext";
 import { useInfoCardModal } from "../../hooks/useModal";
+import { ContinuousChatGame } from "../ContinuousChatGame";
 import { MatchTaskRenderer } from "../MatchTaskRenderer";
-import { StoryTaskRenderer } from "../StoryTaskRenderer";
 import { AudioTaskRenderer } from "../Tasks/AudioTaskRenderer";
 import { ImageQuizRenderer } from "../Tasks/ImageQuizRenderer";
 import { InfoCardModal } from "../Tasks/InfoCardModal";
@@ -119,13 +119,20 @@ export const Lesson = ({ currentBlockRef, onBlockComplete }) => {
       case "video":
         return <VideoLessonWithSubtitles {...props} />;
 
-      case "storytask":
+      // case "storytask":
+      //   return (
+      //     <UniversalQuiz
+      //       lesson={blockData}
+      //       onStepComplete={handleBlockComplete}
+      //       taskType="storytask"
+      //       TaskRenderer={StoryTaskRenderer}
+      //     />
+      //   );
+      case "chatgame": // ИСПРАВЛЕННЫЙ CASE
         return (
-          <UniversalQuiz
+          <ContinuousChatGame
             lesson={blockData}
             onStepComplete={handleBlockComplete}
-            taskType="storytask"
-            TaskRenderer={StoryTaskRenderer}
           />
         );
       case "matchtask":

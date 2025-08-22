@@ -296,9 +296,7 @@ export const MultiBlankTaskRenderer = ({
       {showFeedback && (
         <div
           className={`p-4 rounded-lg mb-6 ${
-            isCorrect
-              ? "bg-green-50 border border-green-200"
-              : "bg-red-50 border border-red-200"
+            !isCorrect && "bg-red-50 border border-red-200"
           }`}
         >
           <div
@@ -306,15 +304,7 @@ export const MultiBlankTaskRenderer = ({
               isCorrect ? "text-green-800" : "text-red-800"
             }`}
           >
-            {isCorrect ? (
-              <>
-                <span>Дұрыс!</span>
-              </>
-            ) : (
-              <>
-                <span>Қате</span>
-              </>
-            )}
+            {!isCorrect && <span>Қате</span>}
           </div>
 
           {!isCorrect &&

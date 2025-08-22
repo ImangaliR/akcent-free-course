@@ -1,4 +1,3 @@
-// Verify.jsx
 import { AlertCircle, ArrowRight, CheckCircle } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { FaWhatsapp } from "react-icons/fa";
@@ -20,13 +19,6 @@ export const Verify = () => {
 
   // Проверяем наличие логина
   useEffect(() => {
-    console.log("Current login:", userLogin);
-    console.log("Location state:", location.state);
-    console.log(
-      "localStorage pendingLogin:",
-      localStorage.getItem("pendingLogin")
-    );
-
     if (!userLogin) {
       setError("Логин табылмады. Өтініш, тіркеуді қайтадан өтіңіз.");
     }
@@ -105,11 +97,6 @@ export const Verify = () => {
     setError("");
 
     try {
-      console.log("Sending verification data:", {
-        login: userLogin,
-        code: verificationCode,
-      });
-
       const res = await fetch(
         "https://us-central1-akcent-course.cloudfunctions.net/api/verify",
         {
