@@ -104,8 +104,6 @@ export const CourseNavigation = ({ currentBlockCompleted = false }) => {
               )}
             </div>
 
-            {/* Текущий блок - обновленный bubble стиль */}
-
             {/* Кнопка вперед */}
             <div className="flex-1">
               {canGoNext() ? (
@@ -149,10 +147,10 @@ export const CourseNavigation = ({ currentBlockCompleted = false }) => {
               ) : (
                 <button
                   onClick={handleCompletionClick}
-                  className="flex items-center gap-3 px-4 py-3 lg:px-6 lg:py-4 rounded-2xl cursor-pointer bg-green-500 text-white font-medium justify-end shadow-lg border-2 border-green-500"
+                  className="flex items-center gap-3 px-4 py-3 lg:px-6 lg:py-4 rounded-2xl cursor-pointer bg-green-500 text-white font-medium justify-end shadow-lg border-2 border-green-500 hover:bg-green-600 transition-colors w-full"
                 >
                   <div className="text-right">
-                    <div className="text-sm lg:text-base font-semibold flex items-center gap-2 justify-end">
+                    <div className="text-sm lg:text-base font-semibold">
                       Аяқталды!
                     </div>
                     <div className="text-xs opacity-90">Сыйлықты алу</div>
