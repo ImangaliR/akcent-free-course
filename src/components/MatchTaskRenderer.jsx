@@ -168,8 +168,8 @@ export const MatchTaskRenderer = ({
 
   // --- RENDER (Отрисовка компонента) ---
   return (
-    <div className="max-w-4xl mx-auto p-4 font-sans">
-      <h3 className="text-2xl font-bold text-center text-gray-800 mb-8">
+    <div className="max-w-4xl mx-auto p-1 md:p-4 font-sans">
+      <h3 className="text-xl md:text-2xl font-bold text-center text-gray-800 mb-5 md:mb-8">
         {question.question}
       </h3>
 
@@ -182,16 +182,16 @@ export const MatchTaskRenderer = ({
               <div
                 key={item.id}
                 onClick={() => handleItemClick(item.id, "left")}
-                className={`w-fit md:w-full h-10 md:h-15 relative transform transition-all duration-200 cursor-pointer 
+                className={`flex items-center w-full h-13 md:h-15 relative transform transition-all duration-200 cursor-pointer 
                   
                 `}
               >
                 <div
                   className={[
-                    "relative w-full text-left rounded-md px-3 py-2 pr-9 md:px-8 md:pr-12 md:py-4 overflow-visible text-lg",
+                    "flex items-center relative w-full text-left rounded-sm md:rounded-md p-2 pr-5 md:px-8 md:pr-12 md:py-4 overflow-visible md:text-lg",
                     pieceBg(status),
                     "after:content-[''] after:absolute after:-right-3 after:top-1/2 after:-translate-y-1/2",
-                    "after:w-7 after:h-7 after:rounded-full",
+                    "after:w-6 after:h-6 md:after:w-7 md:after:h-7 after:rounded-full",
                     status === "correct"
                       ? "after:bg-green-100 after:border-r-1 after:border-green-500 after:border-t-0 after:border-b-0 after:border-l-0"
                       : status === "incorrect"
@@ -234,7 +234,7 @@ export const MatchTaskRenderer = ({
                 key={item.id}
                 onClick={() => handleItemClick(item.id, "right")}
                 transition={{ duration: 0.5, ease: "easeInOut" }}
-                className={`w-fit md:w-full h-10 md:h-15 relative transform transition-colors duration-200 cursor-pointer ${
+                className={`flex items-center w-full h-13 md:h-15 relative transform transition-colors duration-200 cursor-pointer ${
                   !isLocked && selectedId && !isSubmitted
                     ? "hover:scale-105"
                     : "cursor-default"
@@ -242,10 +242,10 @@ export const MatchTaskRenderer = ({
               >
                 <div
                   className={[
-                    "relative w-full text-left rounded-md px-3 py-2 pl-9 md:pl-12 md:px-8 md:py-4 transition-colors overflow-visible text-lg",
+                    "flex items-center relative w-full text-left rounded-sm md:rounded-md p-2 pl-5 md:pl-12 md:px-8 md:py-4 transition-colors overflow-visible md:text-lg",
                     pieceBg(status),
                     "before:content-[''] before:absolute before:-left-3 before:top-1/2 before:-translate-y-1/2",
-                    "before:w-6 before:h-6 before:rounded-full before:bg-white",
+                    "before:w-5 before:h-5 md:before:w-6 md:before:h-6 before:rounded-full before:bg-white",
                     status === "correct"
                       ? "before:border-r-1 before:border-green-500 before:border-t-0 before:border-b-0 before:border-l-0"
                       : status === "incorrect"
@@ -256,7 +256,7 @@ export const MatchTaskRenderer = ({
                     pieceBorder(status),
                   ].join(" ")}
                 >
-                  <span className="font-semibold text-gray-700 text-sm md:text-base ml-2">
+                  <span className="font-semibold text-gray-700 text-sm md:text-base">
                     {item.text}
                   </span>
                 </div>
