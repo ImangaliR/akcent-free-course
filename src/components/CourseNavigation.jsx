@@ -27,14 +27,14 @@ export const CourseNavigation = ({ currentBlockCompleted = false }) => {
   // ИСПРАВЛЕНИЕ: Проверяем, завершен ли текущий блок через context
   const isCurrentBlockCompleted = () => {
     if (!currentBlock?.ref) return false;
-    
+
     // Проверяем через getUserAnswer - более надежный способ
     const userAnswer = getUserAnswer(currentBlock.ref);
     const completedViaAnswer = userAnswer?.completed === true;
-    
+
     // Также проверяем через isBlockCompletedByRef
     const completedViaRef = isBlockCompletedByRef(currentBlock.ref);
-    
+
     // Учитываем и текущее состояние из props
     return completedViaAnswer || completedViaRef || currentBlockCompleted;
   };
@@ -65,7 +65,7 @@ export const CourseNavigation = ({ currentBlockCompleted = false }) => {
   // Обработка кнопки "Алға"
   const handleNext = async () => {
     const blockCompleted = isCurrentBlockCompleted();
-    
+
     if (!blockCompleted || !currentBlock) return;
 
     // Отмечаем текущий блок как завершенный (если еще не отмечен)
@@ -91,7 +91,7 @@ export const CourseNavigation = ({ currentBlockCompleted = false }) => {
 
   const totalBlocks = courseManifest?.sequence?.length || 0;
   const currentNumber = currentBlockIndex + 1;
-  
+
   // ИСПОЛЬЗУЕМ исправленную функцию
   const blockCompleted = isCurrentBlockCompleted();
 

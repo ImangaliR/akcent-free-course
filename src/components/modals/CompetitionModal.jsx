@@ -1,5 +1,6 @@
-import { Trophy } from "lucide-react";
-import { useEffect, useState } from "react";
+import Lottie from "lottie-react";
+import Trophy from "../../assets/Trophy.json";
+import { useEffect } from "react";
 
 export const CompletionModal = ({
   isOpen,
@@ -7,8 +8,6 @@ export const CompletionModal = ({
   courseTitle = "Орыс тілі",
   courseStats = {},
 }) => {
-  const [showConfetti, setShowConfetti] = useState(false);
-
   // Обработчик ESC и блокировка скролла
   useEffect(() => {
     const handleEscape = (e) => {
@@ -66,12 +65,17 @@ export const CompletionModal = ({
         >
           {/* Scrollable Content */}
           <div className="h-full sm:h-auto overflow-y-auto">
-            <div className="p-6 sm:p-8 lg:p-10 text-center min-h-full sm:min-h-0 flex flex-col justify-center">
+            <div className="p-4 sm:p-8 lg:p-10 text-center min-h-full sm:min-h-0 flex flex-col justify-center">
               {/* Trophy Icon */}
-              <div className="mb-6 sm:mb-8">
-                <div className="w-20 h-20 sm:w-24 sm:h-24 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-full flex items-center justify-center mx-auto shadow-lg">
+              <div className="">
+                {/* <div className="w-20 h-20 sm:w-24 sm:h-24 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-full flex items-center justify-center mx-auto shadow-lg">
                   <Trophy className="w-10 h-10 sm:w-12 sm:h-12 text-white" />
-                </div>
+                </div> */}
+                <Lottie
+                  animationData={Trophy}
+                  loop={false}
+                  className="w-45 h-45 md:w-60 md:h-60 mx-auto"
+                />
               </div>
 
               {/* Title */}
@@ -85,12 +89,12 @@ export const CompletionModal = ({
                 </span>{" "}
                 курсын сәтті аяқтадыңыз!
               </p>
-              <p className="text-xs sm:text-sm text-gray-500 mb-6 sm:mb-8">
+              <p className="text-xs sm:text-sm text-gray-500 mb-6">
                 {completionDate} күні
               </p>
 
               {/* Stats - Минималистичный дизайн */}
-              <div className="flex flex-wrap justify-center gap-6 sm:gap-8 mb-6 sm:mb-8 max-w-lg mx-auto">
+              <div className="flex flex-wrap justify-center gap-6 sm:gap-8 mb-6 sm:mb-8 mx-auto">
                 {/* Completed Blocks */}
                 <div className="text-center">
                   <div className="flex items-center justify-center mb-1">
@@ -123,9 +127,9 @@ export const CompletionModal = ({
               </div>
 
               {/* Achievement Badge */}
-              <div className="bg-gradient-to-r from-[#9C45FF] to-purple-600 text-white p-4 sm:p-6 rounded-xl mb-6 sm:mb-8 max-w-xl mx-auto">
+              <div className="bg-gradient-to-r from-[#9C45FF] to-purple-600 text-white p-4 sm:p-6 rounded-xl mb-6">
                 <div className="flex items-center justify-center mb-2 sm:mb-3">
-                  <span className="font-semibold text-base sm:text-lg">
+                  <span className="font-semibold text-lg md:text-xl">
                     Жетістік ашылды
                   </span>
                 </div>
@@ -135,13 +139,13 @@ export const CompletionModal = ({
               </div>
 
               {/* Action Buttons - Стек на мобиле, ряд на десктопе */}
-              <div className="space-y-3 sm:space-y-0 sm:grid sm:grid-cols-2 sm:gap-4 max-w-2xl mx-auto">
+              <div className="space-y-3 sm:space-y-0 sm:grid sm:grid-cols-2 sm:gap-4 ">
                 <button className="w-full bg-gradient-to-r from-[#9C45FF] to-purple-600 text-white py-3 sm:py-4 px-6 rounded-xl font-semibold hover:shadow-lg transition-all duration-200 transform hover:scale-[1.02] text-base sm:text-lg">
                   Сыйлықты алу
                 </button>
                 <button
                   onClick={onClose}
-                  className="w-full bg-gray-100 text-gray-600 py-3 sm:py-4 px-6 rounded-xl font-medium hover:bg-gray-200 transition-colors text-base sm:text-lg"
+                  className="w-full bg-gray-100 text-gray-600 py-3 sm:py-4 px-6 rounded-xl font-semibold hover:bg-gray-200 transition-colors text-base sm:text-lg"
                 >
                   Жабу
                 </button>

@@ -5,6 +5,7 @@ import successAnim from "../../assets/Businessman flies up with rocket (1).json"
 // import ClapAudio from "../../assets/sound.mp3";
 import { useQuizLogic } from "../../utils/useQuizLogic";
 import { ContinuousChatGame } from "../ContinuousChatGame";
+import { useCourse } from "../../context/CourseContext";
 
 export const UniversalQuiz = ({
   lesson,
@@ -14,6 +15,8 @@ export const UniversalQuiz = ({
   TaskRenderer,
   autoAdvanceMs = 2000,
 }) => {
+  const { getProgressPercentage } = useCourse();
+  const progress = getProgressPercentage();
   // Поддерживаем и старый формат и новый
   const allQuestions = lesson.dialogs || lesson.questions || [lesson];
   const quizId = lesson.id || `${taskType}_${allQuestions.length}`;
@@ -86,9 +89,18 @@ export const UniversalQuiz = ({
               {quiz.stats.passed ? "Құттықтаймыз!" : "Тест өтілмеді"}
             </h3>
             <p className="text-gray-600">
-              {quiz.stats.passed
-                ? `Сіз ${quiz.stats.percent}% нәтижемен тапсырмалардан сәтті өттіңіз`
-                : `Нәтиже: ${quiz.stats.percent}%. Керек: 80%`}
+              {progress < 30 &&
+                "🔥 Бастама жасалды! Әлі алда көп қызық күтіп тұр 🚀"}
+              {progress >= 30 &&
+                progress < 60 &&
+                "💪 Жарайсың! Сен жолдың жартысынан астың!"}
+              {progress >= 60 &&
+                progress < 90 &&
+                "🌟 Керемет! Мақсатқа жақындап қалдың!"}
+              {progress >= 90 &&
+                progress < 100 &&
+                "⚡ Сәл қалды! Сен соңғы қадамдасың!"}
+              {progress === 100 && "🎉 Тамаша! Сен курсты толығымен аяқтадың!"}
             </p>
           </div>
 
@@ -209,7 +221,7 @@ export const UniversalQuiz = ({
                   : "bg-gray-300 text-gray-500 cursor-not-allowed"
               }`}
             >
-              {taskType === "chatgame" ? "Отправить" : "Тексеру"}
+              {taskType === "chatgame" ? "Жіберу" : "Тексеру"}
             </button>
           ) : (
             // Для chatgame кнопка скрывается, так как ChatGameRenderer показывает свою подсказку

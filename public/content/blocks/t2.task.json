@@ -30,11 +30,11 @@
           ]
         }
       ],
-      "media": "../../../public/content/media/images/task6.png"
+      "media": "../../../public/content/media/images/task1-1.png"
     },
     {
       "id": "t2",
-      "story": "В магазине:\nАрман: Вам {{blank1}} нужно?\nАйжан: Я хочу купить {{blank2}}.",
+      "story": "Арман: Вам {{blank1}} нужно?\nАйжан: Я хочу купить {{blank2}}.",
       "question": "Бос орындарға керекті сөздерді қойыңыз",
       "blanks": [
         {
@@ -58,7 +58,7 @@
           ]
         }
       ],
-      "media": "../../../public/content/media/images/task2.png"
+      "media": "../../../public/content/media/images/task1-2.png"
     },
     {
       "id": "t3",
@@ -86,7 +86,7 @@
           ]
         }
       ],
-      "media": "../../../public/content/media/images/task3.png"
+      "media": "../../../public/content/media/images/task1-3.png"
     },
     {
       "id": "t4",
@@ -114,7 +114,7 @@
           ]
         }
       ],
-      "media": "../../../public/content/media/images/task4.png"
+      "media": "../../../public/content/media/images/task1-4.png"
     },
     {
       "id": "t5",
@@ -142,7 +142,7 @@
           ]
         }
       ],
-      "media": "../../../public/content/media/images/task5.png"
+      "media": "../../../public/content/media/images/task1-5.png"
     },
     {
       "id": "t6",
@@ -170,7 +170,7 @@
           ]
         }
       ],
-      "media": "../../../public/content/media/images/task7.png"
+      "media": "../../../public/content/media/images/task1-6.png"
     },
     {
       "id": "t7",
@@ -198,7 +198,7 @@
           ]
         }
       ],
-      "media": "../../../public/content/media/images/task8.png"
+      "media": "../../../public/content/media/images/task1-7.png"
     }
   ],
   "minimumPassRate": 0.8,

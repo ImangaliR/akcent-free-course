@@ -198,53 +198,90 @@ export const MultiBlankTaskRenderer = ({
 
       {/* История с пропусками */}
       {question.story && (
-        <div className="mb-8">
+        <div className="mb-6">
           <div className="bg-gray-50 rounded-lg p-3 md:p-6 mb-6">
-            <p className="text-black md:text-lg leading-relaxed whitespace-pre-wrap">
-              {storyTokens.map((token, tokenIndex) => {
-                if (token.type === "text") {
-                  return <span key={tokenIndex}>{token.value}</span>;
+            {/* Медиа */}
+            {question.media && (
+              <div>
+                <img
+                  src={question.media}
+                  alt="story illustration"
+                  className="w-40 h-40 md:w-55 md:h-55 object-cover rounded-lg"
+                  onError={(e) => {
+                    e.currentTarget.style.display = "none";
+                  }}
+                />
+              </div>
+            )}
+
+            <div className="text-black md:text-lg leading-relaxed whitespace-pre-wrap">
+              {question.story.split("\n").map((line, lineIndex) => {
+                // Парсим line в токены (чтобы бланки всё ещё работали)
+                const regex = /(\{\{(.*?)\}\})/g;
+                const tokens = [];
+                let lastIndex = 0;
+                let match;
+
+                while ((match = regex.exec(line)) !== null) {
+                  if (match.index > lastIndex) {
+                    tokens.push({
+                      type: "text",
+                      value: line.slice(lastIndex, match.index),
+                    });
+                  }
+                  tokens.push({ type: "blank", id: match[2].trim() });
+                  lastIndex = regex.lastIndex;
                 }
-
-                // Это токен бланка
-                const blankIndex = blankIndexById.get(token.id);
-                if (blankIndex === undefined) {
-                  return (
-                    <span key={tokenIndex} className="text-red-500">
-                      [ERROR: {token.id}]
-                    </span>
-                  );
+                if (lastIndex < line.length) {
+                  tokens.push({ type: "text", value: line.slice(lastIndex) });
                 }
-
-                const blank = question.blanks[blankIndex];
-                const selectedOption = choices[blankIndex];
-
-                // Проверяем что blank существует
-                if (!blank) {
-                  return (
-                    <span key={tokenIndex} className="text-red-500">
-                      [ERROR: blank not found for {token.id}]
-                    </span>
-                  );
-                }
-
-                // Определяем состояние для стилизации
-                const isAnswered =
-                  selectedOption !== null && selectedOption !== undefined;
-                const isCorrectAnswer =
-                  isSubmitted && isAnswered && selectedOption === blank.answer;
-
-                const isWrongAnswer =
-                  isSubmitted && isAnswered && selectedOption !== blank.answer;
 
                 return (
-                  <button
-                    key={tokenIndex}
-                    type="button"
-                    ref={(el) => (anchorsRef.current[blankIndex] = el)}
-                    onClick={() => openMenuFor(blankIndex)}
-                    disabled={isSubmitted}
-                    className={`
+                  <p key={lineIndex} className="mb-2">
+                    {tokens.map((token, tokenIndex) => {
+                      if (token.type === "text") {
+                        return <span key={tokenIndex}>{token.value}</span>;
+                      }
+
+                      const blankIndex = blankIndexById.get(token.id);
+                      if (blankIndex === undefined) {
+                        return (
+                          <span key={tokenIndex} className="text-red-500">
+                            [ERROR: {token.id}]
+                          </span>
+                        );
+                      }
+
+                      const blank = question.blanks[blankIndex];
+                      const selectedOption = choices[blankIndex];
+
+                      if (!blank) {
+                        return (
+                          <span key={tokenIndex} className="text-red-500">
+                            [ERROR: blank not found for {token.id}]
+                          </span>
+                        );
+                      }
+
+                      const isAnswered =
+                        selectedOption !== null && selectedOption !== undefined;
+                      const isCorrectAnswer =
+                        isSubmitted &&
+                        isAnswered &&
+                        selectedOption === blank.answer;
+                      const isWrongAnswer =
+                        isSubmitted &&
+                        isAnswered &&
+                        selectedOption !== blank.answer;
+
+                      return (
+                        <button
+                          key={tokenIndex}
+                          type="button"
+                          ref={(el) => (anchorsRef.current[blankIndex] = el)}
+                          onClick={() => openMenuFor(blankIndex)}
+                          disabled={isSubmitted}
+                          className={`
                       mx-1 px-2 py-1 md:px-3 md:py-1.5 rounded-2xl border-2 align-middle transition-all shadow-sm
                       ${
                         !isAnswered && !isSubmitted
@@ -258,36 +295,25 @@ export const MultiBlankTaskRenderer = ({
                       }
                       ${
                         isCorrectAnswer
-                          ? "border-green-400 bg-green-50 text-green-700 font-bold"
+                          ? "border-green-500 bg-green-500 text-white font-bold"
                           : ""
                       }
                       ${
                         isWrongAnswer
-                          ? "border-red-400 bg-red-50 text-red-700 font-bold"
+                          ? "border-red-500 bg-red-500 texwhite font-bold"
                           : ""
                       }
                       ${isSubmitted ? "cursor-default" : "cursor-pointer"}
                     `}
-                  >
-                    {isAnswered ? blank.options[selectedOption] : "____"}
-                  </button>
+                        >
+                          {isAnswered ? blank.options[selectedOption] : "____"}
+                        </button>
+                      );
+                    })}
+                  </p>
                 );
               })}
-            </p>
-
-            {/* Медиа */}
-            {question.media && (
-              <div className="mt-6">
-                <img
-                  src={question.media}
-                  alt="story illustration"
-                  className="w-full max-w-md h-60 object-cover rounded-lg"
-                  onError={(e) => {
-                    e.currentTarget.style.display = "none";
-                  }}
-                />
-              </div>
-            )}
+            </div>
           </div>
         </div>
       )}

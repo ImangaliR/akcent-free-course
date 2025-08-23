@@ -143,11 +143,11 @@ export const MatchTaskRenderer = ({
   const pieceBg = (status) => {
     switch (status) {
       case "selected":
-        return "bg-sky-100";
+        return "bg-sky-200";
       case "correct":
-        return "bg-green-100";
+        return "bg-green-200";
       case "incorrect":
-        return "bg-red-100";
+        return "bg-red-200";
       default: // idle
         return "bg-blue-50 hover:bg-blue-100";
     }
@@ -158,11 +158,11 @@ export const MatchTaskRenderer = ({
       case "selected":
         return "border-2 border-sky-500";
       case "correct":
-        return "border border-green-500";
+        return "border-2 border-green-500";
       case "incorrect":
-        return "border border-red-500";
+        return "border-2 border-red-500";
       default: // idle
-        return "border border-gray-200";
+        return "border-2 border-gray-200";
     }
   };
 
@@ -183,22 +183,22 @@ export const MatchTaskRenderer = ({
                 key={item.id}
                 onClick={() => handleItemClick(item.id, "left")}
                 className={`flex items-center w-full h-13 md:h-15 relative transform transition-all duration-200 cursor-pointer 
-                  
+                  ${status == "correct" && "md:pl-2"}
                 `}
               >
                 <div
                   className={[
-                    "flex items-center relative w-full text-left rounded-sm md:rounded-md p-2 pr-5 md:px-8 md:pr-12 md:py-4 overflow-visible md:text-lg",
+                    "flex items-center relative w-full h-full text-left rounded-sm md:rounded-md p-2 pr-5 md:px-8 md:pr-12 md:py-4 overflow-visible md:text-lg",
                     pieceBg(status),
-                    "after:content-[''] after:absolute after:-right-3 after:top-1/2 after:-translate-y-1/2",
+                    "after:content-[''] after:absolute after:-right-2 md:after:-right-3 after:top-1/2 after:-translate-y-1/2",
                     "after:w-6 after:h-6 md:after:w-7 md:after:h-7 after:rounded-full",
                     status === "correct"
-                      ? "after:bg-green-100 after:border-r-1 after:border-green-500 after:border-t-0 after:border-b-0 after:border-l-0"
+                      ? "after:bg-green-200 after:border-r-2 after:border-green-600 after:border-t-0 after:border-b-0 after:border-l-0"
                       : status === "incorrect"
-                      ? "after:bg-red-100 after:border-r-1 after:border-red-500 after:border-t-0 after:border-b-0 after:border-l-0"
+                      ? "after:bg-red-200 after:border-r-2 after:border-red-600 after:border-t-0 after:border-b-0 after:border-l-0"
                       : status === "selected"
-                      ? "after:bg-sky-100 after:border-r-1 after:border-sky-500 after:border-t-0 after:border-b-0 after:border-l-0"
-                      : "after:bg-blue-50 hover:after:bg-blue-100 after:border-r-1 after:border-gray-300 after:border-t-0 after:border-b-0 after:border-l-0",
+                      ? "after:bg-sky-200 after:border-r-2 after:border-sky-600 after:border-t-0 after:border-b-0 after:border-l-0"
+                      : "after:bg-blue-50 hover:after:bg-blue-100 after:border-r-2 after:border-gray-300 after:border-t-0 after:border-b-0 after:border-l-0",
                     pieceBorder(status),
                   ].join(" ")}
                 >
@@ -238,21 +238,21 @@ export const MatchTaskRenderer = ({
                   !isLocked && selectedId && !isSubmitted
                     ? "hover:scale-105"
                     : "cursor-default"
-                }`}
+                } ${status == "correct" && "md:pr-2"}`}
               >
                 <div
                   className={[
-                    "flex items-center relative w-full text-left rounded-sm md:rounded-md p-2 pl-5 md:pl-12 md:px-8 md:py-4 transition-colors overflow-visible md:text-lg",
+                    "flex items-center relative w-full h-full text-left rounded-sm md:rounded-md p-2 pl-5 md:pl-12 md:px-8 md:py-4 transition-colors overflow-visible md:text-lg",
                     pieceBg(status),
                     "before:content-[''] before:absolute before:-left-3 before:top-1/2 before:-translate-y-1/2",
                     "before:w-5 before:h-5 md:before:w-6 md:before:h-6 before:rounded-full before:bg-white",
                     status === "correct"
-                      ? "before:border-r-1 before:border-green-500 before:border-t-0 before:border-b-0 before:border-l-0"
+                      ? "before:border-r-2 before:border-green-600 before:border-t-0 before:border-b-0 before:border-l-0"
                       : status === "incorrect"
-                      ? "before:border-r-1 before:border-red-500 before:border-t-0 before:border-b-0 before:border-l-0"
+                      ? "before:border-r-2 before:border-red-600 before:border-t-0 before:border-b-0 before:border-l-0"
                       : status === "selected"
-                      ? "before:border-r-1 before:border-sky-500 before:border-t-0 before:border-b-0 before:border-l-0"
-                      : "before:border-r-1 before:border-gray-300 before:border-t-0 before:border-b-0 before:border-l-0",
+                      ? "before:border-r-2 before:border-sky-600 before:border-t-0 before:border-b-0 before:border-l-0"
+                      : "before:border-r-2 before:border-gray-300 before:border-t-0 before:border-b-0 before:border-l-0",
                     pieceBorder(status),
                   ].join(" ")}
                 >

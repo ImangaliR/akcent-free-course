@@ -14,17 +14,17 @@ const stepConfig = [
     type: "single_choice",
     field: "goal",
     options: [
-      { id: "goal_1", text: "Айтылымды жақсарту", value: "pronunciation" },
-      { id: "goal_2", text: "Емтиханға дайындық", value: "exam" },
+      { id: "goal_1", text: "Акценттен арылу", value: "pronunciation" },
+      { id: "goal_2", text: "Еркін сөйлеп үйрену", value: "exam" },
       { id: "goal_3", text: "Жұмыс/мансап үшін", value: "career" },
-      { id: "goal_4", text: "Саяхатқа арналған", value: "travel" },
-      { id: "goal_5", text: "Жалпы даму", value: "general" },
+      { id: "goal_4", text: "Жалпы даму", value: "general" },
+      { id: "goal_5", text: "Саяхатқа арналған", value: "travel" },
     ],
   },
   {
     id: 3,
     title: "Сіздің дайындық деңгейіңіз қандай?",
-    subtitle: "Ағымдағы деңгейіңізді бағалаңыз",
+    subtitle: "Деңгейіңізді бағалаңыз",
     type: "single_choice",
     field: "level",
     options: [
@@ -43,9 +43,9 @@ const stepConfig = [
     options: [
       { id: "pain_1", text: "Сөздерді жаттау", value: "vocabulary" },
       { id: "pain_2", text: "Грамматика", value: "grammar" },
-      { id: "pain_3", text: "Айтылуы", value: "pronunciation" },
-      { id: "pain_4", text: "Тыңдап түсіну", value: "listening" },
-      { id: "pain_5", text: "Ауызша сөйлеу", value: "speaking" },
+      { id: "pain_3", text: "Акцентпен сөйлеу", value: "pronunciation" },
+      { id: "pain_4", text: "Қате сөйлеу", value: "listening" },
+      { id: "pain_5", text: "Қате жазу", value: "speaking" },
     ],
   },
   {
@@ -57,7 +57,7 @@ const stepConfig = [
   },
   {
     id: 6,
-    title: "Ваш email",
+    title: "Сіздің электронды поштаңыз",
     type: "email",
     field: "email",
     placeholder: "your@email.com",
@@ -69,7 +69,7 @@ const WelcomeStep = ({ onNext }) => (
     <Lottie
       animationData={Pensil}
       loop={false}
-      className="w-72 h-72 mx-auto "
+      className="w-60 h-60 sm:w-64 sm:h-64 md:w-72 md:h-72 mx-auto"
     />
     <p className="text-gray-600 mb-6 text-sm md:text-base">
       Бірнеше жылдам сұрақтар сізге тамаша курсты реттеуге көмектеседі
@@ -98,7 +98,7 @@ const LevelWifiIcon = ({ level }) => {
               isActive ? "bg-[#9C45FF]" : "bg-gray-300"
             }`}
             style={{
-              height: `${6 + i * 4}px`, // bar heights: 6, 10, 14, 18px
+              height: `${6 + i * 4}px`,
             }}
           />
         );
@@ -109,8 +109,11 @@ const LevelWifiIcon = ({ level }) => {
 
 const QuestionStep = ({ stepData, onSelect, selectedValue }) => (
   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-    {stepData.options.map((option) => {
+    {stepData.options.map((option, index) => {
       const isLevel = option.id?.startsWith("lvl_");
+      const numberIcons = ["①", "②", "③", "④", "⑤"];
+
+      const isSelected = selectedValue === option.value;
 
       return (
         <button
@@ -120,14 +123,11 @@ const QuestionStep = ({ stepData, onSelect, selectedValue }) => (
             isLevel ? "py-2" : "py-3"
           } border-2 rounded-xl transition-all duration-200 ease-in-out cursor-pointer
           ${
-            selectedValue === option.value
+            isSelected
               ? "bg-purple-50 text-purple-700 border-[#9C45FF] shadow-lg"
               : "bg-white text-gray-800 border-gray-300 hover:border-purple-400"
           }
-          ${
-            isLevel ? "sm:col-span-2" : ""
-          }  /* <-- make lvl_* span full row on sm+ */
-        `}
+          ${isLevel ? "sm:col-span-2" : ""}`}
         >
           {isLevel ? (
             <div className="flex items-center gap-5">
@@ -138,7 +138,16 @@ const QuestionStep = ({ stepData, onSelect, selectedValue }) => (
               <span>{option.text}</span>
             </div>
           ) : (
-            option.text
+            <div className="flex items-center gap-3">
+              <span
+                className={`text-lg md:text-xl ${
+                  isSelected ? "text-purple-600" : "text-gray-400"
+                }`}
+              >
+                {numberIcons[index]}
+              </span>
+              <span>{option.text}</span>
+            </div>
           )}
         </button>
       );
@@ -146,21 +155,20 @@ const QuestionStep = ({ stepData, onSelect, selectedValue }) => (
   </div>
 );
 
-// КРАСИВЫЙ ВАРИАНТ InputStep
 const InputStep = ({
   stepData,
   value,
   onChange,
   onKeyDown,
-  invalid = false, // передаём true, если есть ошибка валидации
-  errorText = "", // текст ошибки
-  hint = "", // подсказка под полем
+  invalid = false,
+  errorText = "",
+  hint = "",
 }) => {
   const isAge = stepData.type === "age";
   const base =
     "w-full rounded-xl border-2 bg-white transition-all duration-200 " +
     "placeholder-gray-400 text-base sm:text-lg focus:outline-none " +
-    "shadow-sm focus:shadow-md px-12 py-3 sm:py-4"; // padding под иконку
+    "shadow-sm focus:shadow-md px-12 py-3 sm:py-4";
 
   const ok = "border-gray-300 focus:border-[#9C45FF]";
   const bad =
@@ -169,10 +177,8 @@ const InputStep = ({
   return (
     <div className="w-full">
       <div className="relative">
-        {/* Левая иконка */}
         <div className="pointer-events-none absolute inset-y-0 left-4 flex items-center text-gray-400">
           {isAge ? (
-            // # — для возраста
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
               <path
                 d="M6 10h12M6 14h12M9 7v10M15 7v10"
@@ -182,7 +188,6 @@ const InputStep = ({
               />
             </svg>
           ) : (
-            // конверт — для email
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
               <path d="M4 6h16v12H4z" stroke="currentColor" strokeWidth="1.8" />
               <path
@@ -197,14 +202,13 @@ const InputStep = ({
 
         <input
           type={isAge ? "number" : "email"}
-          min={isAge ? "6" : undefined}
+          min={isAge ? "5" : undefined}
           max={isAge ? "120" : undefined}
           inputMode={isAge ? "numeric" : "email"}
           autoComplete={isAge ? "off" : "email"}
           className={[
             base,
             invalid ? bad : ok,
-            // убираем стрелки у number
             isAge
               ? "[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
               : "",
@@ -217,11 +221,10 @@ const InputStep = ({
         />
       </div>
 
-      {/* Подсказка / ошибка */}
       <div className="mt-2 min-h-[20px]">
         {invalid ? (
           <p className="text-sm text-red-600">
-            {errorText || "Проверьте введённые данные"}
+            {errorText || "Еңгізілген деректерді тексеріңіз"}
           </p>
         ) : hint ? (
           <p className="text-sm text-gray-500">{hint}</p>
@@ -258,7 +261,7 @@ export const WelcomeModal = () => {
 
     if (currentStepData.type === "age") {
       const n = Number(value);
-      return Number.isFinite(n) && n >= 6 && n <= 120;
+      return Number.isFinite(n) && n >= 6 && n <= 120; // ✅ updated range
     }
     if (currentStepData.type === "email") {
       return typeof value === "string" && /\S+@\S+\.\S+/.test(value.trim());
@@ -267,10 +270,23 @@ export const WelcomeModal = () => {
   }, [currentStepData, formData]);
 
   const handleNext = async () => {
-    if (!isStepValid) return setError("Пожалуйста, заполните это поле");
+    if (!isStepValid) {
+      if (currentStepData.type === "age") {
+        setError("Жасыңыз кемінде 6-да болуы керек");
+      } else if (currentStepData.type === "email") {
+        setError("Дұрыс электронный почта жазу керек");
+      } else {
+        setError("Өтініш, бұл жерді толтырыңыз");
+      }
+      return;
+    }
+
     setError("");
-    if (currentStep < totalSteps - 1) setCurrentStep((s) => s + 1);
-    else await handleSubmit();
+    if (currentStep < totalSteps - 1) {
+      setCurrentStep((s) => s + 1);
+    } else {
+      await handleSubmit();
+    }
   };
 
   const handleBack = () => {
@@ -286,10 +302,12 @@ export const WelcomeModal = () => {
     try {
       const result = await completeWelcome(formData);
       if (!result?.success)
-        setError(result?.error || "Произошла ошибка при сохранении данных");
+        setError(
+          result?.error || "Деректерді сақтау барысында қателер туындады"
+        );
     } catch (err) {
       console.error("Ошибка при завершении welcome:", err);
-      setError("Не удалось сохранить данные. Пожалуйста, попробуйте позже.");
+      setError("Деректерді сақтау сәтсіз өтті. Өтініш, қате өтіңіз.");
     } finally {
       setLoading(false);
     }
@@ -307,11 +325,6 @@ export const WelcomeModal = () => {
           aria-hidden="true"
         />
 
-        {/* 
-          Адаптивный контейнер:
-          - на мобильных: ширина ~92vw, высота ~85vh (почти фикс), внутренний скролл
-          - на >=sm: жёстко 800×600
-        */}
         <div
           className="
             relative w-[92vw] max-w-[800px]
@@ -320,9 +333,7 @@ export const WelcomeModal = () => {
             flex flex-col
           "
         >
-          {/* Внутренние отступы — адаптивные */}
           <div className="flex-1 overflow-hidden p-5 sm:p-8 flex flex-col">
-            {/* Прогресс */}
             <div className="h-2 bg-gray-200 rounded-full mb-4">
               <div
                 className="h-full rounded-full bg-gradient-to-r from-[#9C45FF] to-purple-600 transition-all duration-500 ease-out"
@@ -330,14 +341,12 @@ export const WelcomeModal = () => {
               />
             </div>
 
-            {/* Счётчик + маскот */}
             <div className="flex items-center justify-between mb-3 sm:mb-2">
               <div className="text-xs sm:text-sm font-medium text-gray-500">
                 {currentStep + 1} из {totalSteps}
               </div>
             </div>
 
-            {/* Заголовок */}
             <div className="text-center my-2 space-y-1">
               <Dialog.Title
                 as="h2"
@@ -352,7 +361,6 @@ export const WelcomeModal = () => {
               )}
             </div>
 
-            {/* Ошибка */}
             {error && (
               <div
                 role="alert"
@@ -362,7 +370,6 @@ export const WelcomeModal = () => {
               </div>
             )}
 
-            {/* Контент шага — делает основной скролл на мобильных */}
             <div className="flex-1 min-h-[140px] sm:min-h-[150px] flex items-start sm:items-center justify-center overflow-y-auto pr-1">
               {(() => {
                 switch (currentStepData.type) {
@@ -398,7 +405,6 @@ export const WelcomeModal = () => {
             </div>
           </div>
 
-          {/* Навигация — прилипает к низу модалки и не уезжает при скролле контента */}
           {currentStepData.type !== "welcome" && (
             <div className="text-sm md:text-base border-t border-gray-100 p-2 md:p-4 sm:p-6 flex gap-3 sm:gap-4">
               <button

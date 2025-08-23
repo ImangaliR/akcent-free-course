@@ -94,7 +94,7 @@ export const AuthProvider = ({ children }) => {
         localStorage.setItem("hasSeenWelcome", "true");
         return { success: true };
       } else {
-        throw new Error("Failed to save welcome data");
+        throw new Error("Деректерді сақтау барысында қате туындады");
       }
     } catch (error) {
       console.error("Failed to complete welcome:", error);
