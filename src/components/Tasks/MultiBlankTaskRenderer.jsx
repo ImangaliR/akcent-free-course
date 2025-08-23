@@ -199,14 +199,14 @@ export const MultiBlankTaskRenderer = ({
       {/* История с пропусками */}
       {question.story && (
         <div className="mb-6">
-          <div className="bg-gray-50 rounded-lg p-3 md:p-6 mb-6">
+          <div className="bg-gray-50 rounded-lg p-3 md:p-6 md:pt-3 mb-6">
             {/* Медиа */}
             {question.media && (
-              <div>
+              <div className="flex justify-center">
                 <img
                   src={question.media}
                   alt="story illustration"
-                  className="w-40 h-40 md:w-55 md:h-55 object-cover rounded-lg"
+                  className="w-40 h-40 md:w-70 md:h-70 object-cover rounded-lg"
                   onError={(e) => {
                     e.currentTarget.style.display = "none";
                   }}
