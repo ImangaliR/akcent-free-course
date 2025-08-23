@@ -67,8 +67,8 @@ export const Header = ({
               />
 
               {/* Процент поверх SVG */}
-              <div className="absolute inset-0 flex items-center justify-center ml-1">
-                <span className="text-white text-xs font-bold drop-shadow-sm">
+              <div className="absolute inset-0 flex items-center justify-center ml-2.5">
+                <span className="text-white text-xs font-semibold drop-shadow-sm">
                   {getProgressPercentage()}%
                 </span>
               </div>
