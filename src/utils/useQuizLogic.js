@@ -110,6 +110,7 @@ export const useQuizLogic = (
         redemptionIndex: 0,
         answers: [], // Store all answers for main phase
         redemptionAnswers: [], // Store redemption answers
+        completionReported: false, // ← ДОБАВИТЬ ЭТО ПОЛЕ
       }
     );
   });

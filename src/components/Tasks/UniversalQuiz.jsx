@@ -17,6 +17,7 @@ export const UniversalQuiz = ({
   // Поддерживаем и старый формат и новый
   const allQuestions = lesson.dialogs || lesson.questions || [lesson];
   const quizId = lesson.id || `${taskType}_${allQuestions.length}`;
+  const [apiCallCompleted, setApiCallCompleted] = useState(false);
 
   const quiz = useQuizLogic(allQuestions, onStepComplete, taskType, quizId);
 
@@ -50,6 +51,18 @@ export const UniversalQuiz = ({
     }
     return () => clearAutoAdvance();
   }, [quiz.state.submitted, autoAdvanceMs]);
+
+  useEffect(() => {
+    if (quiz.state.phase === "done" && !apiCallCompleted) {
+      // Делаем финальный вызов API только один раз
+      onStepComplete(taskType, {
+        phase: "completed",
+        stats: quiz.stats,
+        finalResults: true,
+      });
+      setApiCallCompleted(true);
+    }
+  }, [quiz.state.phase, apiCallCompleted]);
 
   // Очищаем таймер при размонтировании
   useEffect(() => () => clearAutoAdvance(), []);

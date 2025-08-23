@@ -240,8 +240,6 @@ export const Lesson = ({
 
   return (
     <div className="w-full">
-      {/* Фиксированный заголовок */}
-
       {/* Контент */}
       <div className="rounded-sm">
         <div className="p-1 md:p-5">{renderContent()}</div>
