@@ -300,7 +300,7 @@ export const MultiBlankTaskRenderer = ({
                       }
                       ${
                         isWrongAnswer
-                          ? "border-red-500 bg-red-500 texwhite font-bold"
+                          ? "border-red-500 bg-red-500 text-white font-bold"
                           : ""
                       }
                       ${isSubmitted ? "cursor-default" : "cursor-pointer"}
