@@ -297,7 +297,7 @@ export const ContinuousChatGame = ({ lesson, onStepComplete }) => {
                     {option.isCorrect && (
                       <button
                         onClick={handleContinue}
-                        className="mt-3 w-full p-3 text-left rounded-lg border border-gray-300 hover:border-[#9C45FF] hover:bg-[#d4afff]  hover:text-[#471d77] bg-gray-50 hover:shadow-sm cursor-pointer text-gray-800 transition-all duration-200"
+                        className="mt-3 w-full p-3 text-left rounded-lg border border-gray-300 hover:border-[#9C45FF] hover:bg-[#9C45FF]  hover:text-white bg-gray-50 hover:shadow-sm cursor-pointer text-gray-800 transition-all duration-200"
                       >
                         <div className="text-sm font-medium">Келесі</div>
                       </button>
@@ -315,7 +315,7 @@ export const ContinuousChatGame = ({ lesson, onStepComplete }) => {
                     className={`w-full p-3 text-left rounded-lg border transition-all duration-200 ${
                       isProcessing
                         ? "border-gray-200 bg-gray-50 cursor-not-allowed text-gray-500"
-                        : "border-gray-300 hover:border-[#9C45FF] hover:bg-[#d4afff] hover:text-[#471d77] bg-gray-50 hover:shadow-sm cursor-pointer text-gray-800"
+                        : "border-gray-300 hover:border-[#9C45FF] hover:bg-[#9C45FF] hover:text-white bg-gray-50 hover:shadow-sm cursor-pointer text-gray-800"
                     }`}
                   >
                     <div className="text-sm font-medium">{option.text}</div>

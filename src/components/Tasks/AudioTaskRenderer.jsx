@@ -1,16 +1,8 @@
-import {
-  CheckCircle,
-  Pause,
-  Play,
-  Volume,
-  Volume1,
-  Volume2,
-  XCircle,
-} from "lucide-react";
-import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
-import talkingAnimation from "../../assets/talking_green_man.json";
 import Lottie from "lottie-react";
+import { CheckCircle, Pause, Volume2, XCircle } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import talkingAnimation from "../../assets/talking_green_man.json";
 
 export const AudioTaskRenderer = ({
   question,
@@ -220,10 +212,10 @@ export const AudioTaskRenderer = ({
                 className={`w-full text-left p-4 rounded-lg border transition-all ${
                   showResult
                     ? isCorrectAnswer
-                      ? "border-green-600 bg-green-100 text-green-800"
-                      : "border-red-600 bg-red-100 text-red-800"
+                      ? "border-green-600 bg-green-600 text-white"
+                      : "border-red-600 bg-red-600 text-white"
                     : isSelected
-                    ? "border-blue-600 bg-blue-100 text-[#3849ff]"
+                    ? "border-blue-600 bg-blue-600 text-white"
                     : "border-gray-200 bg-white hover:border-gray-300 text-gray-700"
                 } ${
                   isSubmitted
@@ -237,9 +229,9 @@ export const AudioTaskRenderer = ({
                   {showResult && isSubmitted && (
                     <div className="absolute right-3 flex items-center gap-1">
                       {isCorrectAnswer ? (
-                        <CheckCircle size={16} className="text-green-600" />
+                        <CheckCircle size={16} className="text-white" />
                       ) : (
-                        <XCircle size={16} className="text-red-600" />
+                        <XCircle size={16} className="text-white" />
                       )}
                     </div>
                   )}

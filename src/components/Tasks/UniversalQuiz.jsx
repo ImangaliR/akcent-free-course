@@ -3,9 +3,9 @@ import { RotateCcw, Target } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import successAnim from "../../assets/Businessman flies up with rocket (1).json";
 // import ClapAudio from "../../assets/sound.mp3";
+import { useCourse } from "../../context/CourseContext";
 import { useQuizLogic } from "../../utils/useQuizLogic";
 import { ContinuousChatGame } from "../ContinuousChatGame";
-import { useCourse } from "../../context/CourseContext";
 
 export const UniversalQuiz = ({
   lesson,
@@ -21,6 +21,7 @@ export const UniversalQuiz = ({
   const allQuestions = lesson.dialogs || lesson.questions || [lesson];
   const quizId = lesson.id || `${taskType}_${allQuestions.length}`;
   const [apiCallCompleted, setApiCallCompleted] = useState(false);
+  const hasCalledApi = useRef(false); // Используем useRef для отслеживания вызова
 
   const quiz = useQuizLogic(allQuestions, onStepComplete, taskType, quizId);
 
@@ -56,17 +57,16 @@ export const UniversalQuiz = ({
   }, [quiz.state.submitted, autoAdvanceMs]);
 
   useEffect(() => {
-    if (quiz.state.phase === "done" && !apiCallCompleted) {
-      // Делаем финальный вызов API только один раз
+    // Вызов onStepComplete только один раз, когда викторина завершена
+    if (quiz.state.phase === "done" && !hasCalledApi.current) {
       onStepComplete(taskType, {
         phase: "completed",
         stats: quiz.stats,
         finalResults: true,
       });
-      setApiCallCompleted(true);
+      hasCalledApi.current = true; // Устанавливаем флаг, что вызов был
     }
-  }, [quiz.state.phase, apiCallCompleted]);
-
+  }, [quiz.state.phase, onStepComplete, taskType, quiz.stats]);
   // Очищаем таймер при размонтировании
   useEffect(() => () => clearAutoAdvance(), []);
 

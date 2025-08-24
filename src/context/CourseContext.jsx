@@ -105,65 +105,114 @@ export const CourseProvider = ({ children }) => {
     }
   };
 
-  // Enhanced: Save both progress and answers
-  const saveUserProgress = async (blockIndex, completed, answers = null) => {
-    try {
-      // Save progress (existing functionality)
-      const progress = {
-        currentBlockIndex: blockIndex,
-        completedBlocks: completed,
-        lastUpdated: new Date().toISOString(),
-      };
+  useEffect(() => {
+    // Эта функция будет сохранять данные
+    const saveProgressAndAnswers = async () => {
+      if (!token) return; // Не сохраняем, если нет токена
 
-      await fetch(API_BASE, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          token,
-          key: "course_progress",
-          value: JSON.stringify(progress),
-        }),
-      });
-
-      // NEW: Save answers if provided
-      if (answers !== null) {
+      try {
+        // 1. Сохраняем прогресс (currentBlockIndex и completedBlocks)
+        const progress = {
+          currentBlockIndex,
+          completedBlocks,
+          lastUpdated: new Date().toISOString(),
+        };
         await fetch(API_BASE, {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            token,
+            key: "course_progress",
+            value: JSON.stringify(progress),
+          }),
+        });
+
+        // 2. Сохраняем ответы пользователя
+        await fetch(API_BASE, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             token,
             key: "user_answers",
-            value: JSON.stringify(answers),
+            value: JSON.stringify(userAnswers),
           }),
         });
-      }
-    } catch (err) {
-      console.error("Ошибка сохранения прогресса:", err);
-    }
-  };
 
-  // NEW: Save user answers separately (for real-time saving)
-  const saveUserAnswers = async (answers) => {
-    try {
-      await fetch(API_BASE, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          token,
-          key: "user_answers",
-          value: JSON.stringify(answers),
-        }),
-      });
-    } catch (err) {
-      console.error("Ошибка сохранения ответов:", err);
-    }
-  };
+        console.log("Прогресс и ответы успешно сохранены.");
+      } catch (err) {
+        console.error("Ошибка сохранения прогресса:", err);
+      }
+    };
+
+    // Чтобы избежать слишком частых вызовов, используем debounce
+    const handler = setTimeout(() => {
+      saveProgressAndAnswers();
+    }, 1000); // Сохраняем через 1 секунду после последнего изменения
+
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [completedBlocks, userAnswers, token]);
+
+  // // Enhanced: Save both progress and answers
+  // const saveUserProgress = async (blockIndex, completed, answers = null) => {
+  //   try {
+  //     // Save progress (existing functionality)
+  //     const progress = {
+  //       currentBlockIndex: blockIndex,
+  //       completedBlocks: completed,
+  //       lastUpdated: new Date().toISOString(),
+  //     };
+
+  //     await fetch(API_BASE, {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify({
+  //         token,
+  //         key: "course_progress",
+  //         value: JSON.stringify(progress),
+  //       }),
+  //     });
+
+  //     // NEW: Save answers if provided
+  //     if (answers !== null) {
+  //       await fetch(API_BASE, {
+  //         method: "POST",
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //         },
+  //         body: JSON.stringify({
+  //           token,
+  //           key: "user_answers",
+  //           value: JSON.stringify(answers),
+  //         }),
+  //       });
+  //     }
+  //   } catch (err) {
+  //     console.error("Ошибка сохранения прогресса:", err);
+  //   }
+  // };
+
+  // // NEW: Save user answers separately (for real-time saving)
+  // const saveUserAnswers = async (answers) => {
+  //   try {
+  //     await fetch(API_BASE, {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify({
+  //         token,
+  //         key: "user_answers",
+  //         value: JSON.stringify(answers),
+  //       }),
+  //     });
+  //   } catch (err) {
+  //     console.error("Ошибка сохранения ответов:", err);
+  //   }
+  // };
 
   // Переход к следующему блоку
   const goToNextBlock = async () => {
@@ -172,7 +221,7 @@ export const CourseProvider = ({ children }) => {
     const nextIndex = currentBlockIndex + 1;
     if (nextIndex < courseManifest.sequence.length) {
       setCurrentBlockIndex(nextIndex);
-      await saveUserProgress(nextIndex, completedBlocks);
+      // await saveUserProgress(nextIndex, completedBlocks);
     }
   };
 
@@ -180,7 +229,7 @@ export const CourseProvider = ({ children }) => {
   const goToPreviousBlock = async () => {
     const prevIndex = Math.max(0, currentBlockIndex - 1);
     setCurrentBlockIndex(prevIndex);
-    await saveUserProgress(prevIndex, completedBlocks);
+    // await saveUserProgress(prevIndex, completedBlocks);
   };
 
   // Переход к конкретному блоку
@@ -189,7 +238,7 @@ export const CourseProvider = ({ children }) => {
       return;
 
     setCurrentBlockIndex(index);
-    await saveUserProgress(index, completedBlocks);
+    // await saveUserProgress(index, completedBlocks);
   };
 
   // Enhanced: Complete block with answer data
@@ -217,9 +266,9 @@ export const CourseProvider = ({ children }) => {
       };
 
       setUserAnswers(newAnswers);
-      await saveUserProgress(currentBlockIndex, newCompleted, newAnswers);
-    } else {
-      await saveUserProgress(currentBlockIndex, newCompleted);
+      // await saveUserProgress(currentBlockIndex, newCompleted, newAnswers);
+      // } else {
+      //   await saveUserProgress(currentBlockIndex, newCompleted);
     }
   };
 
@@ -236,14 +285,14 @@ export const CourseProvider = ({ children }) => {
 
     setUserAnswers(newAnswers);
 
-    // Debounced save to avoid too many API calls
-    if (updateAnswer.timeoutId) {
-      clearTimeout(updateAnswer.timeoutId);
-    }
+    // // Debounced save to avoid too many API calls
+    // if (updateAnswer.timeoutId) {
+    //   clearTimeout(updateAnswer.timeoutId);
+    // }
 
-    updateAnswer.timeoutId = setTimeout(async () => {
-      await saveUserAnswers(newAnswers);
-    }, 2000); // Save after 2 seconds of inactivity
+    // updateAnswer.timeoutId = setTimeout(async () => {
+    //   await saveUserAnswers(newAnswers);
+    // }, 2000); // Save after 2 seconds of inactivity
   };
 
   // NEW: Get user's answer for a specific block
