@@ -114,7 +114,7 @@ export const CourseNavigation = ({ currentBlockCompleted = false }) => {
                     <div className="text-sm lg:text-base font-semibold">
                       Артқа
                     </div>
-                    <div className="text-xs text-gray-500">Алдыңғы блок</div>
+                    <div className="text-xs text-gray-500">Алдыңғы бөлім</div>
                   </div>
                 </button>
               ) : (
@@ -124,7 +124,7 @@ export const CourseNavigation = ({ currentBlockCompleted = false }) => {
                   </div>
                   <div>
                     <div className="font-semibold">Артқа</div>
-                    <div className="text-xs">Бірінші блок</div>
+                    <div className="text-xs">Бірінші бөлім</div>
                   </div>
                 </div>
               )}
@@ -152,7 +152,7 @@ export const CourseNavigation = ({ currentBlockCompleted = false }) => {
                         <div className="text-sm lg:text-base font-semibold">
                           Алға
                         </div>
-                        <div className="text-xs opacity-90">Келесі блок</div>
+                        <div className="text-xs opacity-90">Келесі бөлім</div>
                       </>
                     ) : (
                       <>
@@ -160,7 +160,7 @@ export const CourseNavigation = ({ currentBlockCompleted = false }) => {
                           <Play className="w-4 h-4" />
                           Келесі
                         </div>
-                        <div className="text-xs">Блокты аяқтаңыз</div>
+                        <div className="text-xs">Бөлімді аяқтаңыз</div>
                       </>
                     )}
                   </div>

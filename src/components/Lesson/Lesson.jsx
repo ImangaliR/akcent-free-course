@@ -230,7 +230,7 @@ export const Lesson = ({
       <div className="w-full bg-white rounded-xl shadow-lg min-h-[600px] flex items-center justify-center">
         <div className="text-center">
           <h3 className="text-lg font-semibold text-gray-800 mb-2">
-            Нет данных
+            Деректер жоқ
           </h3>
           <p className="text-gray-600">Не удалось загрузить блок</p>
         </div>

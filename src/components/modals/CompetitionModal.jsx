@@ -102,7 +102,7 @@ export const CompletionModal = ({
                       {completedBlocks}
                     </span>
                   </div>
-                  <div className="text-xs text-gray-500">Блок аяқталды</div>
+                  <div className="text-xs text-gray-500">Бөлім аяқталды</div>
                 </div>
 
                 {/* Total Time */}
