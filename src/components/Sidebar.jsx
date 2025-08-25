@@ -618,9 +618,9 @@ export const SidebarNav = ({
           <div className="p-2 md:p-4 bg-white">
             <button
               onClick={handleLogout}
-              className="flex items-center gap-3 w-full px-4 py-3 cursor-pointer text-red-500 hover:bg-red-50 hover:text-red-600 rounded-xl transition-all duration-200 group bg-red-00 shadow-sm border border-red-500 hover:shadow-md"
+              className="flex items-center gap-3 w-full  bg-red-500 px-4 py-3 cursor-pointer text-white hover:bg-red-600 hover:text-white rounded-xl transition-all duration-200 group bg-red-00 shadow-sm border border-red-500 hover:shadow-md"
             >
-              <div className="p-1 bg-red-50 rounded-lg group-hover:bg-red-100 transition-colors">
+              <div className="p-1 bg-red-50 rounded-lg text-red-500 group-hover:bg-red-100 transition-colors">
                 <LogOut className="w-4 h-4" />
               </div>
               <span className="text-sm font-medium">Шығу</span>
