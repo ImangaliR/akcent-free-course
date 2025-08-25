@@ -1,5 +1,5 @@
 // context/CourseContext.js
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useRef, useState } from "react";
 
 const CourseContext = createContext();
 
@@ -19,6 +19,11 @@ export const CourseProvider = ({ children }) => {
   const [userAnswers, setUserAnswers] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  // Добавить после существующих useState
+  const [totalStudyTime, setTotalStudyTime] = useState(0); // в секундах
+  const [isActive, setIsActive] = useState(true);
+  const lastActivityRef = useRef(Date.now());
+  const intervalRef = useRef(null);
 
   // API endpoints для твоего бэкенда
   const API_BASE =
@@ -103,7 +108,89 @@ export const CourseProvider = ({ children }) => {
     } catch (err) {
       console.warn("Не удалось загрузить прогресс:", err);
     }
+
+    const timeResponse = await fetch(
+      `${API_BASE}?token=${token}&key=total_study_time`
+    );
+
+    if (timeResponse.ok) {
+      const timeData = await timeResponse.json();
+      if (timeData.value) {
+        setTotalStudyTime(parseInt(timeData.value) || 0);
+      }
+    }
   };
+
+  // Добавить после существующего useEffect с loadCourseManifest
+  useEffect(() => {
+    const storedStartTime = localStorage.getItem("courseStartTime");
+    if (!storedStartTime) {
+      localStorage.setItem("courseStartTime", Date.now().toString());
+    }
+  }, []);
+
+  // Трекинг активности пользователя
+  useEffect(() => {
+    const handleActivity = () => {
+      lastActivityRef.current = Date.now();
+      if (!isActive) setIsActive(true);
+    };
+
+    const handleVisibilityChange = () => {
+      setIsActive(!document.hidden);
+      if (!document.hidden) lastActivityRef.current = Date.now();
+    };
+
+    const events = [
+      "mousedown",
+      "mousemove",
+      "keypress",
+      "scroll",
+      "touchstart",
+      "click",
+    ];
+
+    events.forEach((event) => {
+      document.addEventListener(event, handleActivity, true);
+    });
+
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
+    const inactivityCheck = setInterval(() => {
+      const timeSinceLastActivity = Date.now() - lastActivityRef.current;
+      if (timeSinceLastActivity > 60000) {
+        // 1 минута неактивности
+        setIsActive(false);
+      }
+    }, 30000);
+
+    return () => {
+      events.forEach((event) => {
+        document.removeEventListener(event, handleActivity, true);
+      });
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+      clearInterval(inactivityCheck);
+    };
+  }, [isActive]);
+
+  // Основной таймер
+  useEffect(() => {
+    if (isActive) {
+      intervalRef.current = setInterval(() => {
+        setTotalStudyTime((prev) => prev + 1);
+      }, 1000);
+    } else {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
+    }
+
+    return () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
+    };
+  }, [isActive]);
 
   useEffect(() => {
     // Эта функция будет сохранять данные
@@ -135,6 +222,16 @@ export const CourseProvider = ({ children }) => {
             token,
             key: "user_answers",
             value: JSON.stringify(userAnswers),
+          }),
+        });
+
+        await fetch(API_BASE, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            token,
+            key: "total_study_time",
+            value: totalStudyTime.toString(),
           }),
         });
 
@@ -372,12 +469,25 @@ export const CourseProvider = ({ children }) => {
         ? Math.round((correctAnswers / totalQuestions) * 100)
         : 0;
 
+    const formatTime = (seconds) => {
+      const hours = Math.floor(seconds / 3600);
+      const minutes = Math.floor((seconds % 3600) / 60);
+
+      if (hours > 0) {
+        return `${hours} сағ ${minutes} мин`;
+      } else if (minutes > 0) {
+        return `${minutes} мин`;
+      } else {
+        return "1 мин";
+      }
+    };
+
     // Get course start date
     const startTime = localStorage.getItem("courseStartTime");
     const startDate = startTime ? new Date(parseInt(startTime)) : new Date();
 
     // Calculate total study time (примерно)
-    const totalTime = `${Math.max(1, Math.round(completedCount * 3))} мин`;
+    const totalTime = formatTime(totalStudyTime);
 
     return {
       totalBlocks,
@@ -450,6 +560,7 @@ export const CourseProvider = ({ children }) => {
 
     // NEW: Answer-related state
     userAnswers,
+    totalStudyTime,
 
     // Existing navigation methods
     goToNextBlock,
