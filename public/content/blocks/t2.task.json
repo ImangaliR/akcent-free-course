@@ -24,7 +24,7 @@
           ]
         }
       ],
-      "media": "/content/media/images/700.svg"
+      "media": "/content/media/images/700.png"
     },
     {
       "id": "t2",
@@ -46,7 +46,7 @@
           ]
         }
       ],
-      "media": "/content/media/images/800.svg"
+      "media": "/content/media/images/800.png"
     },
     {
       "id": "t3",
@@ -68,7 +68,7 @@
           ]
         }
       ],
-      "media": "/content/media/images/930.svg"
+      "media": "/content/media/images/930.png"
     },
     {
       "id": "t4",
@@ -90,7 +90,7 @@
           ]
         }
       ],
-      "media": "/content/media/images/1050.svg"
+      "media": "/content/media/images/1050.png"
     },
     {
       "id": "t5",
@@ -112,7 +112,7 @@
           ]
         }
       ],
-      "media": "/content/media/images/1200.svg"
+      "media": "/content/media/images/1200.png"
     },
     {
       "id": "t6",
@@ -130,7 +130,7 @@
           ]
         }
       ],
-      "media": "/content/media/images/130.svg"
+      "media": "/content/media/images/130.png"
     },
     {
       "id": "t7",
@@ -152,7 +152,7 @@
           ]
         }
       ],
-      "media": "/content/media/images/330.svg"
+      "media": "/content/media/images/330.png"
     }
   ],
   "minimumPassRate": 0.8,
