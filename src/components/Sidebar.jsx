@@ -29,11 +29,13 @@ export const SidebarNav = ({
     currentBlockIndex,
     completedBlocks,
     goToBlock,
-    // eslint-disable-next-line no-unused-vars
     getCurrentBlock,
     getProgressPercentage,
+    // Добавляем новые методы
+    isBlockCompletedByRef,
+    getTotalBlocks,
+    getCompletedCount,
   } = useCourse();
-
   const [expandedModules, setExpandedModules] = useState({
     intro: true,
     main: true,
@@ -240,7 +242,7 @@ export const SidebarNav = ({
 
     // Position-based titles
     if (index === 0 && typeInfo.type === "video") {
-      return "Курсқа қош келдіңіз!";
+      return "Кіріспе сабақ";
     }
 
     // Check if this is the last video (6th video) → conclusion
@@ -274,7 +276,7 @@ export const SidebarNav = ({
           );
         }).length + 1;
 
-      return `Тапсырма`;
+      return ` ${taskCount} тапсырма `;
     }
     if (typeInfo.type === "audio") {
       // Count audio blocks before this one (excluding InfoCards)
@@ -290,133 +292,80 @@ export const SidebarNav = ({
     return `${typeInfo.label}`;
   };
 
-  const getTotalBlocks = () => {
-    return (
-      courseManifest?.sequence?.filter((block) => {
-        const lowerRef = block.ref.toLowerCase();
-        return !lowerRef.includes("inf");
-      }).length || 0
-    );
-  };
+  // const getTotalBlocks = () => {
+  //   return (
+  //     courseManifest?.sequence?.filter((block) => {
+  //       const lowerRef = block.ref.toLowerCase();
+  //       return !lowerRef.includes("inf");
+  //     }).length || 0
+  //   );
+  // };
 
   const isBlockCompleted = (blockRef) => {
-    if (!completedBlocks) return false;
-
-    if (completedBlocks.has && typeof completedBlocks.has === "function") {
-      return completedBlocks.has(blockRef); // Set
-    }
-
-    if (
-      completedBlocks.includes &&
-      typeof completedBlocks.includes === "function"
-    ) {
-      return completedBlocks.includes(blockRef); // Array
-    }
-
-    // Object handling - check for completion status
-    const blockData = completedBlocks[blockRef];
-    if (!blockData) return false;
-
-    // If it's an object with completion data
-    if (typeof blockData === "object") {
-      // For video blocks, check multiple possible indicators
-      // First check if 'watched' field exists and is true
-      if (Object.prototype.hasOwnProperty.call(blockData, "watched")) {
-        return blockData.watched === true;
-      }
-
-      // Also check for 'completed' field
-      if (Object.prototype.hasOwnProperty.call(blockData, "completed")) {
-        return blockData.completed === true;
-      }
-
-      // For blocks that might have blockType specified as video
-      if (blockData.blockType === "video" && blockData.watched === true) {
-        return true;
-      }
-
-      // Check if it's a video block by reference and has watched=true
-      const lowerRef = blockRef.toLowerCase();
-      const isVideoBlock =
-        lowerRef.includes("video") ||
-        lowerRef.includes(".mp4") ||
-        lowerRef.match(/v\d/) ||
-        lowerRef.includes("/v");
-
-      if (isVideoBlock && blockData.watched === true) {
-        return true;
-      }
-
-      // Fallback: if object exists but no specific completion field, consider it completed
-      // This handles cases where the object exists but doesn't have expected fields
-      return true;
-    }
-
-    // If it's a simple boolean/truthy value
-    return Boolean(blockData);
+    return isBlockCompletedByRef(blockRef);
   };
 
-  const getCompletedCount = () => {
-    if (!completedBlocks || !courseManifest?.sequence) return 0;
+  // const getCompletedCount = () => {
+  //   if (!completedBlocks || !courseManifest?.sequence) return 0;
 
-    // Get all valid block references from the current course (excluding InfoCards)
-    const validBlockRefs = courseManifest.sequence
-      .filter((block) => {
-        const lowerRef = block.ref.toLowerCase();
-        return !lowerRef.includes("inf");
-      })
-      .map((block) => block.ref);
+  //   // Get all valid block references from the current course (excluding InfoCards)
+  //   const validBlockRefs = courseManifest.sequence
+  //     .filter((block) => {
+  //       const lowerRef = block.ref.toLowerCase();
+  //       return !lowerRef.includes("inf");
+  //     })
+  //     .map((block) => block.ref);
 
-    let completedCount = 0;
+  //   let completedCount = 0;
 
-    if (completedBlocks.has && typeof completedBlocks.has === "function") {
-      // Set - only count completed blocks that exist in current course
-      validBlockRefs.forEach((ref) => {
-        if (completedBlocks.has(ref)) {
-          completedCount++;
-        }
-      });
-    } else if (
-      completedBlocks.includes &&
-      typeof completedBlocks.includes === "function"
-    ) {
-      // Array - only count completed blocks that exist in current course
-      validBlockRefs.forEach((ref) => {
-        if (completedBlocks.includes(ref)) {
-          completedCount++;
-        }
-      });
-    } else {
-      // Object - only count completed blocks that exist in current course
-      validBlockRefs.forEach((ref) => {
-        const blockData = completedBlocks[ref];
-        if (!blockData) return;
+  //   if (completedBlocks.has && typeof completedBlocks.has === "function") {
+  //     // Set - only count completed blocks that exist in current course
+  //     validBlockRefs.forEach((ref) => {
+  //       if (completedBlocks.has(ref)) {
+  //         completedCount++;
+  //       }
+  //     });
+  //   } else if (
+  //     completedBlocks.includes &&
+  //     typeof completedBlocks.includes === "function"
+  //   ) {
+  //     // Array - only count completed blocks that exist in current course
+  //     validBlockRefs.forEach((ref) => {
+  //       if (completedBlocks.includes(ref)) {
+  //         completedCount++;
+  //       }
+  //     });
+  //   } else {
+  //     // Object - only count completed blocks that exist in current course
+  //     validBlockRefs.forEach((ref) => {
+  //       const blockData = completedBlocks[ref];
+  //       if (!blockData) return;
 
-        if (typeof blockData === "object") {
-          const lowerRef = ref.toLowerCase();
-          const isVideoBlock =
-            lowerRef.includes("video") ||
-            lowerRef.includes(".mp4") ||
-            lowerRef.match(/v\d/) ||
-            lowerRef.includes("/v");
+  //       if (typeof blockData === "object") {
+  //         const lowerRef = ref.toLowerCase();
+  //         const isVideoBlock =
+  //           lowerRef.includes("video") ||
+  //           lowerRef.includes(".mp4") ||
+  //           lowerRef.match(/v\d/) ||
+  //           lowerRef.includes("/v");
 
-          // Универсальная проверка
-          if (
-            blockData.watched === true ||
-            blockData.completed === true ||
-            (blockData.blockType === "video" && blockData.watched === true) ||
-            (isVideoBlock && blockData.watched === true)
-          ) {
-            completedCount++;
-          }
-        } else if (blockData) {
-          completedCount++;
-        }
-      });
-    }
+  //         // Универсальная проверка
+  //         if (
+  //           blockData.watched === true ||
+  //           blockData.completed === true ||
+  //           (blockData.blockType === "video" && blockData.watched === true) ||
+  //           (isVideoBlock && blockData.watched === true)
+  //         ) {
+  //           completedCount++;
+  //         }
+  //       } else if (blockData) {
+  //         completedCount++;
+  //       }
+  //     });
+  //   }
 
-    return completedCount;
-  };
+  //   return completedCount;
+  // };
 
   const moduleData = {
     intro: {

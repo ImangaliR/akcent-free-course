@@ -1,8 +1,7 @@
 import { useEffect, useRef, useState } from "react";
-import { SubtitlePanel } from "./VideoSubtitle";
-import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import "./skeleton.css";
+import { SubtitlePanel } from "./VideoSubtitle";
 
 export const VideoLessonWithSubtitles = ({
   lesson,
@@ -191,7 +190,7 @@ export const VideoLessonWithSubtitles = ({
                       <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-2">
                         Сабақ мазмұны
                       </h3>
-                      <p className="text-base">{lesson.transcript}</p>
+                      <p className="text-sm">{lesson.transcript}</p>
                     </div>
                   )}
                 </>

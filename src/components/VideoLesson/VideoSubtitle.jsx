@@ -26,24 +26,19 @@ export const SubtitlePanel = ({
 
   // Только завершённые субтитры
   const pastSubtitles = useMemo(
-    () => subtitles.filter((s) => currentTime > s.end),
+    () => subtitles.filter((s) => currentTime > s.end).reverse(), // <- добавить .reverse()
     [subtitles, currentTime]
   );
 
-  // Автоскролл к последнему элементу
   useEffect(() => {
     if (!listRef.current) return;
-    listRef.current.scrollTop = listRef.current.scrollHeight;
+    listRef.current.scrollTop = 0; // Скролл к началу списка
   }, [pastSubtitles.length]);
-
+  // Автоскролл к последнему элементу
   const formatTime = (time) => {
     const minutes = Math.floor(time / 60);
     const seconds = Math.floor(time % 60);
     return `${minutes}:${seconds.toString().padStart(2, "0")}`;
-  };
-
-  const handleSubtitleClick = (subtitle) => {
-    onSeekToTime?.(subtitle.start);
   };
 
   // Set subtitles off by default on mobile
@@ -82,7 +77,7 @@ export const SubtitlePanel = ({
       className={`w-full max-h-120 md:max-h-155 bg-white rounded-2xl border border-gray-100 flex flex-col ${className}`}
     >
       {/* Фиксированная шапка */}
-      <div className="flex-shrink-0 p-4 sm:p-5 border-b border-gray-50">
+      <div className="flex-shrink-0 p-5 sm:p-5 border-b border-gray-50">
         <div className="flex items-center justify-between gap-3">
           <h4 className="font-medium text-gray-800 text-sm sm:text-xl min-w-0">
             Субтитрлер
@@ -122,7 +117,7 @@ export const SubtitlePanel = ({
       >
         {/* Активный субтитр */}
         {activeSubtitle && (
-          <div className="flex-shrink-0 px-4 pt-2 md:px-5">
+          <div className="flex-shrink-0 px-5  md:px-5">
             <div className="bg-blue-50 border border-blue-100 rounded-2xl p-4">
               <div
                 className="font-medium text-gray-800 text-xs sm:text-sm leading-relaxed break-words hyphens-auto"
@@ -149,7 +144,7 @@ export const SubtitlePanel = ({
                 {pastSubtitles.map((subtitle) => (
                   <div
                     key={subtitle.id}
-                    className="bg-gray-100 hover:bg-gray-200 border border-gray-100 rounded-2xl p-4  transition-all duration-200"
+                    className="bg-gray-100 hover:bg-gray-200 border border-gray-100 rounded-2xl px-4 py-2  transition-all duration-200"
                     // onClick={() => handleSubtitleClick(subtitle)}
                   >
                     {/* Время и индикатор */}
@@ -162,7 +157,7 @@ export const SubtitlePanel = ({
 
                     {/* Русский текст */}
                     <div
-                      className="text-sm font-medium text-gray-800 mb-3 leading-relaxed break-words hyphens-auto"
+                      className="text-xs  sm:text-sm font-medium text-gray-800  leading-relaxed break-words hyphens-auto"
                       dangerouslySetInnerHTML={{ __html: subtitle.russian }}
                     />
                   </div>
