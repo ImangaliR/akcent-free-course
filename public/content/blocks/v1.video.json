@@ -1,8 +1,8 @@
 {
   "type": "video",
   "id": "v1",
-  "title": "Введение в курс русского языка",
-  "mediaUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+  "title": "Кіріспе сабақ",
+  "mediaUrl": "https://firebasestorage.googleapis.com/v0/b/akcent-course.firebasestorage.app/o/video%2F%D0%9A%D1%96%D1%80%D1%96%D1%81%D0%BF%D0%B5.mp4?alt=media&token=9340fc0b-a0c4-4537-bccf-9dddc01e8432",
   "minWatchPct": 0.8,
-  "transcript": "Добро пожаловать в курс русского языка для начинающих. Меня зовут Анна, и я ваш преподаватель. В этом курсе мы изучим основы русского языка: алфавит, произношение, базовую лексику и грамматику."
+  "transcript": "Бұл кіріспе сабақта сіз оқу орталығымыз және сабақтардың қалай өтетінімен танысасыз"
 }
