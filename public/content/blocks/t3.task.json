@@ -18,24 +18,9 @@
           "label": "За коробкой"
         },
         {
-          "id": "opt3",
-          "image": "/content/media/images/task3-2.png",
-          "label": "У коробки"
-        },
-        {
-          "id": "opt4",
-          "image": "/content/media/images/task3-5.png",
-          "label": "Справа от коробки"
-        },
-        {
           "id": "opt5",
           "image": "/content/media/images/task3-3.png",
           "label": "На коробке"
-        },
-        {
-          "id": "opt6",
-          "image": "/content/media/images/task3-6.png",
-          "label": "Под коробкой"
         }
       ],
       "answer": "opt5",
@@ -45,162 +30,102 @@
       }
     },
     {
-      "question": "Нажмите на рисунок, где мальчик находится У коробке",
+      "question": "Нажмите на рисунок, где кошка сидит В корзине",
       "options": [
         {
           "id": "opt1",
-          "image": "/content/media/images/task3-4.png",
+          "image": "/content/media/images/kowka-v.png",
           "label": "В коробке"
         },
         {
-          "id": "opt2",
-          "image": "/content/media/images/task3-1.png",
-          "label": "За коробкой"
-        },
-        {
-          "id": "opt3",
-          "image": "/content/media/images/task3-2.png",
-          "label": "У коробки"
-        },
-        {
-          "id": "opt4",
-          "image": "/content/media/images/task3-5.png",
-          "label": "Справа от коробки"
-        },
-        {
           "id": "opt5",
-          "image": "/content/media/images/task3-3.png",
+          "image": "/content/media/images/kowka-na.png",
           "label": "На коробке"
         },
         {
           "id": "opt6",
-          "image": "/content/media/images/task3-6.png",
+          "image": "/content/media/images/kowka-pod.png",
           "label": "Под коробкой"
         }
       ],
-      "answer": "opt3",
+      "answer": "opt1",
       "feedback": {
         "correct": "Дұрыс! Мальчик у коробке.",
         "wrong": "Қайтадан көріңіз."
       }
     },
     {
-      "question": "Нажмите на рисунок, где мальчик находится В коробке",
+      "question": "Нажмите на рисунок, где мальчик выходит ИЗ автобуса",
       "options": [
         {
           "id": "opt1",
-          "image": "/content/media/images/task3-4.png",
-          "label": "В коробке"
+          "image": "/content/media/images/boy-in-bus.png",
+          "label": "В автобусе"
         },
         {
           "id": "opt2",
-          "image": "/content/media/images/task3-1.png",
-          "label": "За коробкой"
+          "image": "/content/media/images/boy-out-bus.png",
+          "label": "Из автобуса"
         },
         {
           "id": "opt3",
-          "image": "/content/media/images/task3-2.png",
-          "label": "У коробки"
-        },
-        {
-          "id": "opt4",
-          "image": "/content/media/images/task3-5.png",
-          "label": "Справа от коробки"
-        },
-        {
-          "id": "opt5",
-          "image": "/content/media/images/task3-3.png",
-          "label": "На коробке"
-        },
-        {
-          "id": "opt6",
-          "image": "/content/media/images/task3-6.png",
-          "label": "Под коробкой"
-        }
-      ],
-      "answer": "opt1",
-      "feedback": {
-        "correct": "Дұрыс! Мальчик в коробке.",
-        "wrong": "Қайтадан көріңіз."
-      }
-    },
-    {
-      "question": "Нажмите на рисунок, где мальчик находится СПРАВА от коробке",
-      "options": [
-        {
-          "id": "opt1",
-          "image": "/content/media/images/task3-4.png",
-          "label": "В коробке"
-        },
-        {
-          "id": "opt2",
-          "image": "/content/media/images/task3-1.png",
-          "label": "За коробкой"
-        },
-        {
-          "id": "opt3",
-          "image": "/content/media/images/task3-2.png",
-          "label": "У коробки"
-        },
-        {
-          "id": "opt4",
-          "image": "/content/media/images/task3-5.png",
-          "label": "Справа от коробки"
-        },
-        {
-          "id": "opt5",
-          "image": "/content/media/images/task3-3.png",
-          "label": "На коробке"
-        },
-        {
-          "id": "opt6",
-          "image": "/content/media/images/task3-6.png",
-          "label": "Под коробкой"
-        }
-      ],
-      "answer": "opt4",
-      "feedback": {
-        "correct": "Дұрыс! Мальчик справа коробке.",
-        "wrong": "Қайтадан көріңіз."
-      }
-    },
-    {
-      "question": "Нажмите на рисунок, где мальчик находится ПОД коробкой.",
-      "options": [
-        {
-          "id": "opt1",
-          "image": "/content/media/images/task3-5.png",
-          "label": "На коробке"
-        },
-        {
-          "id": "opt2",
-          "image": "/content/media/images/task3-6.png",
-          "label": "Под коробкой"
-        },
-        {
-          "id": "opt3",
-          "image": "/content/media/images/task3-1.png",
-          "label": "За коробкой"
-        },
-        {
-          "id": "opt4",
-          "image": "/content/media/images/task3-2.png",
-          "label": "У коробки"
-        },
-        {
-          "id": "opt5",
-          "image": "/content/media/images/task3-3.png",
-          "label": "Справа от коробки"
-        },
-        {
-          "id": "opt6",
-          "image": "/content/media/images/task3-4.png",
-          "label": "В коробке"
+          "image": "/content/media/images/boy-on-bus.png",
+          "label": "На автобусе"
         }
       ],
       "answer": "opt2",
       "feedback": {
-        "correct": "Дұрыс! Мальчик под коробкой.",
+        "correct": "Дұрыс! Мальчик выходит из автобуса.",
+        "wrong": "Қайтадан көріңіз."
+      }
+    },
+    {
+      "question": "Нажмите на рисунок, где книги лежат НА столе",
+      "options": [
+        {
+          "id": "opt1",
+          "image": "/content/media/images/books-on-table.png",
+          "label": "На столе"
+        },
+        {
+          "id": "opt2",
+          "image": "/content/media/images/books-in-box.png",
+          "label": "В коробке"
+        },
+        {
+          "id": "opt3",
+          "image": "/content/media/images/books-under-table.png",
+          "label": "Под столом"
+        }
+      ],
+      "answer": "opt1",
+      "feedback": {
+        "correct": "Дұрыс! Книги на столе.",
+        "wrong": "Қайтадан көріңіз."
+      }
+    },
+    {
+      "question": "Нажмите на рисунок, где девочка спускается С горки",
+      "options": [
+        {
+          "id": "opt1",
+          "image": "/content/media/images/girl-on-slide.png",
+          "label": "На горке"
+        },
+        {
+          "id": "opt2",
+          "image": "/content/media/images/girl-down-slide.png",
+          "label": "С горки"
+        },
+        {
+          "id": "opt3",
+          "image": "/content/media/images/girl-under-slide.png",
+          "label": "Под горкой"
+        }
+      ],
+      "answer": "opt2",
+      "feedback": {
+        "correct": "Дұрыс! Девочка спускается с горки.",
         "wrong": "Қайтадан көріңіз."
       }
     }
