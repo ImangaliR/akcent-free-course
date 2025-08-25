@@ -1,85 +1,181 @@
 {
-  "id": "programming-stereotypes-chat",
-  "title": "Разбираемся с местоимениями!",
-  "description": "Интерактивный диалог о местоимениях в русском языке",
+  "id": "prepositions-chat",
+  "title": "Разбираемся с предлогами: «в», «на», «из», «с»!",
+  "description": "Интерактивный диалог о предлогах в русском языке",
   "type": "chatgame",
-  "greeting": "Разбираемся с местоимениями!",
+  "greeting": "Сегодня учимся правильно употреблять предлоги «в», «на», «из», «с»!",
   "dialogs": [
     {
-      "id": "dialog_definition",
-      "systemMessage": "Местоимения называют предметы напрямую, как существительные. Это верно?",
+      "id": "dialog_in_school",
+      "systemMessage": "Как правильно сказать: я иду ... школу?",
       "options": [
         {
-          "id": "yes_name_directly",
-          "text": "Да, местоимения называют предметы прямо",
-          "isCorrect": false,
-          "feedback": "Не верно. Местоимения НЕ называют предмет, признак или количество, а лишь указывают на них (например: он, этот, столько)."
+          "id": "option_v",
+          "text": "в школу",
+          "isCorrect": true,
+          "feedback": "Верно! «в школу»."
         },
         {
-          "id": "no_point_not_name",
-          "text": "Нет, они указывают, но не называют",
-          "isCorrect": true,
-          "feedback": "Верно! Местоимения служат для указания на предметы, признаки и количества, не называя их."
+          "id": "option_na",
+          "text": "на школу",
+          "isCorrect": false,
+          "feedback": "Неверно. Так не говорят."
+        },
+        {
+          "id": "option_s",
+          "text": "с школу",
+          "isCorrect": false,
+          "feedback": "Ошибка. «с школу» — неправильно."
         }
       ]
     },
     {
-      "id": "dialog_possessive",
-      "systemMessage": "Слова «мой», «твой», «наш», «его» — это притяжательные местоимения?",
+      "id": "dialog_on_table",
+      "systemMessage": "Как правильно: книга лежит ... столе?",
       "options": [
         {
-          "id": "yes_possessive",
-          "text": "Да, это притяжательные местоимения",
+          "id": "option_na",
+          "text": "на столе",
           "isCorrect": true,
-          "feedback": "Правильно! Эти слова выражают принадлежность: мой ноутбук, твоя идея, его книга."
+          "feedback": "Правильно! «на столе»."
         },
         {
-          "id": "no_not_possessive",
-          "text": "Нет, это не притяжательные местоимения",
+          "id": "option_v",
+          "text": "в столе",
           "isCorrect": false,
-          "feedback": "На самом деле это притяжательные местоимения — они показывают, кому что принадлежит."
+          "feedback": "Нет, так говорят, когда книга в ящике стола."
+        },
+        {
+          "id": "option_iz",
+          "text": "из столе",
+          "isCorrect": false,
+          "feedback": "Так не говорят."
         }
       ]
     },
     {
-      "id": "dialog_cases",
-      "systemMessage": "Правильно ли, что родительный падеж местоимения «я» — «меня»?",
+      "id": "dialog_from_village",
+      "systemMessage": "Он приехал ... деревни.",
       "options": [
         {
-          "id": "yes_gen_me",
-          "text": "Да, родительный — «меня»",
+          "id": "option_iz",
+          "text": "из деревни",
           "isCorrect": true,
-          "feedback": "Верно! Склонение: я — меня — мне — меня — мной — обо мне."
+          "feedback": "Верно! «из деревни»."
         },
         {
-          "id": "no_gen_wrong",
-          "text": "Нет, родительный — «мной»",
+          "id": "option_s",
+          "text": "с деревни",
           "isCorrect": false,
-          "feedback": "Неверно. «Мной» — это творительный падеж. Родительный — «меня»."
+          "feedback": "Некорректно, так обычно не говорят."
+        },
+        {
+          "id": "option_na",
+          "text": "на деревни",
+          "isCorrect": false,
+          "feedback": "Ошибка, так не строится фраза."
         }
       ]
     },
     {
-      "id": "dialog_reflexive",
-      "systemMessage": "У местоимения «себя» есть форма именительного падежа?",
+      "id": "dialog_with_friend",
+      "systemMessage": "Как сказать: он вышел ... другом?",
       "options": [
         {
-          "id": "yes_sebya_nom",
-          "text": "Да, есть форма именительного падежа",
-          "isCorrect": false,
-          "feedback": "Неправильно. У возвратного местоимения «себя» НЕТ формы именительного падежа."
+          "id": "option_s",
+          "text": "с другом",
+          "isCorrect": true,
+          "feedback": "Правильно! «с другом»."
         },
         {
-          "id": "no_sebya_no_nom",
-          "text": "Нет, формы именительного нет",
+          "id": "option_v",
+          "text": "в другом",
+          "isCorrect": false,
+          "feedback": "Нет, это бессмыслица."
+        },
+        {
+          "id": "option_na",
+          "text": "на другом",
+          "isCorrect": false,
+          "feedback": "Так не говорят."
+        }
+      ]
+    },
+    {
+      "id": "dialog_in_museum",
+      "systemMessage": "Айжан говорит: «Я иду ... музей». Как правильно?",
+      "options": [
+        {
+          "id": "option_v",
+          "text": "в музей",
           "isCorrect": true,
-          "feedback": "Точно! «Себя» не употребляется в именительном падеже."
+          "feedback": "Верно! «в музей»."
+        },
+        {
+          "id": "option_na",
+          "text": "на музей",
+          "isCorrect": false,
+          "feedback": "Неверно, так не говорят."
+        },
+        {
+          "id": "option_iz",
+          "text": "из музей",
+          "isCorrect": false,
+          "feedback": "Грамматически неверно."
+        }
+      ]
+    },
+    {
+      "id": "dialog_on_wall",
+      "systemMessage": "Картина висит ... стене.",
+      "options": [
+        {
+          "id": "option_na",
+          "text": "на стене",
+          "isCorrect": true,
+          "feedback": "Правильно! «на стене»."
+        },
+        {
+          "id": "option_v",
+          "text": "в стене",
+          "isCorrect": false,
+          "feedback": "Нет, так не говорят."
+        },
+        {
+          "id": "option_s",
+          "text": "с стене",
+          "isCorrect": false,
+          "feedback": "Грамматически неверно."
+        }
+      ]
+    },
+    {
+      "id": "dialog_from_work",
+      "systemMessage": "Он пришёл ... работы.",
+      "options": [
+        {
+          "id": "option_s",
+          "text": "с работы",
+          "isCorrect": true,
+          "feedback": "Верно! «с работы»."
+        },
+        {
+          "id": "option_iz",
+          "text": "из работы",
+          "isCorrect": false,
+          "feedback": "Так не говорят."
+        },
+        {
+          "id": "option_na",
+          "text": "на работы",
+          "isCorrect": false,
+          "feedback": "Неверно."
         }
       ]
     }
   ],
   "completion": {
-    "message": "Отлично! Теперь ты уверен(а) в основных фактах о местоимениях.",
+    "message": "Отлично! Теперь ты уверен(а), как правильно употреблять предлоги «в», «на», «из» и «с».",
     "successThreshold": 1,
     "celebration": true
   },
