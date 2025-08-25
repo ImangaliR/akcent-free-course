@@ -124,9 +124,10 @@ export const SubtitlePanel = ({
         {activeSubtitle && (
           <div className="flex-shrink-0 px-4 pt-2 md:px-5">
             <div className="bg-blue-50 border border-blue-100 rounded-2xl p-4">
-              <div className="font-medium text-gray-800 text-xs sm:text-sm leading-relaxed break-words hyphens-auto">
-                {activeSubtitle.russian}
-              </div>
+              <div
+                className="font-medium text-gray-800 text-xs sm:text-sm leading-relaxed break-words hyphens-auto"
+                dangerouslySetInnerHTML={{ __html: activeSubtitle.russian }}
+              />
             </div>
           </div>
         )}
@@ -160,9 +161,10 @@ export const SubtitlePanel = ({
                     </div>
 
                     {/* Русский текст */}
-                    <div className="text-sm font-medium text-gray-800 mb-3 leading-relaxed break-words hyphens-auto">
-                      {subtitle.russian}
-                    </div>
+                    <div
+                      className="text-sm font-medium text-gray-800 mb-3 leading-relaxed break-words hyphens-auto"
+                      dangerouslySetInnerHTML={{ __html: subtitle.russian }}
+                    />
                   </div>
                 ))}
               </div>
