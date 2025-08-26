@@ -21,6 +21,11 @@
           "id": "opt5",
           "image": "/content/media/images/task3-3.png",
           "label": "На коробке"
+        },
+        {
+          "id": "opt3",
+          "image": "/content/media/images/task3-2.png",
+          "label": "На коробке"
         }
       ],
       "answer": "opt5",
@@ -46,6 +51,11 @@
           "id": "opt6",
           "image": "/content/media/images/kowka-pod.png",
           "label": "Под коробкой"
+        },
+        {
+          "id": "opt2",
+          "image": "/content/media/images/kowka-spravo.png",
+          "label": "За коробкой"
         }
       ],
       "answer": "opt1",
@@ -71,6 +81,11 @@
           "id": "opt3",
           "image": "/content/media/images/boy-on-bus.png",
           "label": "На автобусе"
+        },
+        {
+          "id": "opt4",
+          "image": "/content/media/images/boy-away-from-bus.png",
+          "label": "Далеко От автобусе"
         }
       ],
       "answer": "opt2",
@@ -96,6 +111,11 @@
           "id": "opt3",
           "image": "/content/media/images/books-under-table.png",
           "label": "Под столом"
+        },
+        {
+          "id": "opt4",
+          "image": "/content/media/images/books-on-carpet.png",
+          "label": "Под столом"
         }
       ],
       "answer": "opt1",
@@ -113,14 +133,19 @@
           "label": "На горке"
         },
         {
-          "id": "opt2",
-          "image": "/content/media/images/girl-down-slide.png",
-          "label": "С горки"
+          "id": "opt4",
+          "image": "/content/media/images/girl-away-from-slide.png",
+          "label": "Под горкой"
         },
         {
           "id": "opt3",
           "image": "/content/media/images/girl-under-slide.png",
           "label": "Под горкой"
+        },
+        {
+          "id": "opt2",
+          "image": "/content/media/images/girl-down-slide.png",
+          "label": "С горки"
         }
       ],
       "answer": "opt2",

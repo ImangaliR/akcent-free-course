@@ -88,7 +88,7 @@ export const ImageQuizRenderer = ({
   const isCorrect = selectedOption === question?.answer;
 
   return (
-    <div className="mx-auto max-w-4xl">
+    <div className="mx-auto max-w-2xl">
       {/* Header */}
       <div className="text-center mb-4">
         <h2 className="text-xl md:text-lg text-gray-800">
@@ -103,7 +103,7 @@ export const ImageQuizRenderer = ({
       </div>
 
       {/* Options grid */}
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-3 place-items-center ">
+      <div className="grid grid-cols-2 gap-4 md:gap-3 place-items-center ">
         {question.options?.map((option) => (
           <div
             key={option.id}
