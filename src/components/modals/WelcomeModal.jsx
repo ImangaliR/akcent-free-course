@@ -261,7 +261,7 @@ export const WelcomeModal = () => {
 
     if (currentStepData.type === "age") {
       const n = Number(value);
-      return Number.isFinite(n) && n >= 6 && n <= 120; // ✅ updated range
+      return Number.isFinite(n) && n >= 6 && n <= 100; // ✅ updated range
     }
     if (currentStepData.type === "email") {
       return typeof value === "string" && /\S+@\S+\.\S+/.test(value.trim());
