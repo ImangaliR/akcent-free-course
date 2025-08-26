@@ -34,16 +34,16 @@
       "systemMessage": "Как правильно: книга лежит ... столе?",
       "options": [
         {
-          "id": "option_na",
-          "text": "на столе",
-          "isCorrect": true,
-          "feedback": "Правильно! «на столе»."
-        },
-        {
           "id": "option_v",
           "text": "в столе",
           "isCorrect": false,
           "feedback": "Нет, так говорят, когда книга в ящике стола."
+        },
+        {
+          "id": "option_na",
+          "text": "на столе",
+          "isCorrect": true,
+          "feedback": "Правильно! «на столе»."
         },
         {
           "id": "option_iz",
@@ -82,12 +82,6 @@
       "systemMessage": "Как сказать: он вышел ... другом?",
       "options": [
         {
-          "id": "option_s",
-          "text": "с другом",
-          "isCorrect": true,
-          "feedback": "Правильно! «с другом»."
-        },
-        {
           "id": "option_v",
           "text": "в другом",
           "isCorrect": false,
@@ -98,6 +92,12 @@
           "text": "на другом",
           "isCorrect": false,
           "feedback": "Так не говорят."
+        },
+        {
+          "id": "option_s",
+          "text": "с другом",
+          "isCorrect": true,
+          "feedback": "Правильно! «с другом»."
         }
       ]
     },
@@ -106,16 +106,16 @@
       "systemMessage": "Айжан говорит: «Я иду ... музей». Как правильно?",
       "options": [
         {
-          "id": "option_v",
-          "text": "в музей",
-          "isCorrect": true,
-          "feedback": "Верно! «в музей»."
-        },
-        {
           "id": "option_na",
           "text": "на музей",
           "isCorrect": false,
           "feedback": "Неверно, так не говорят."
+        },
+        {
+          "id": "option_v",
+          "text": "в музей",
+          "isCorrect": true,
+          "feedback": "Верно! «в музей»."
         },
         {
           "id": "option_iz",
@@ -130,12 +130,6 @@
       "systemMessage": "Картина висит ... стене.",
       "options": [
         {
-          "id": "option_na",
-          "text": "на стене",
-          "isCorrect": true,
-          "feedback": "Правильно! «на стене»."
-        },
-        {
           "id": "option_v",
           "text": "в стене",
           "isCorrect": false,
@@ -146,6 +140,12 @@
           "text": "с стене",
           "isCorrect": false,
           "feedback": "Грамматически неверно."
+        },
+        {
+          "id": "option_na",
+          "text": "на стене",
+          "isCorrect": true,
+          "feedback": "Правильно! «на стене»."
         }
       ]
     },
