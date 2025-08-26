@@ -140,9 +140,15 @@ export const CompletionModal = ({
 
               {/* Action Buttons - Стек на мобиле, ряд на десктопе */}
               <div className="space-y-3 sm:space-y-0 sm:grid sm:grid-cols-2 sm:gap-4 ">
-                <button className="w-full bg-gradient-to-r from-[#9C45FF] to-purple-600 text-white py-3 sm:py-4 px-6 rounded-xl font-semibold hover:shadow-lg transition-all duration-200 transform hover:scale-[1.02] text-base sm:text-lg">
-                  Сыйлықты алу
-                </button>
+                <a
+                  href="https://wa.me/77074945051?text=%D0%9F%D1%80%D0%BE%D0%B1%D0%BD%D1%8B%D0%B9%20%D1%81%D0%B0%D0%B1%D0%B0%D2%9B%D2%9B%D0%B0%20%D2%9B%D0%B0%D1%82%D1%8B%D1%81%D2%9B%D1%8B%D0%BC%20%D0%BA%D0%B5%D0%BB%D0%B5%D0%B4%D1%96"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <button className="w-full bg-gradient-to-r from-[#9C45FF] to-purple-600 text-white py-3 sm:py-4 px-6 rounded-xl font-semibold hover:shadow-lg transition-all duration-200 transform hover:scale-[1.02] text-base sm:text-lg">
+                    Пробный сабақ
+                  </button>
+                </a>
                 <button
                   onClick={onClose}
                   className="w-full bg-gray-100 text-gray-600 py-3 sm:py-4 px-6 rounded-xl font-semibold hover:bg-gray-200 transition-colors text-base sm:text-lg"
