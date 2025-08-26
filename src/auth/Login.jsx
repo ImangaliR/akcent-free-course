@@ -108,23 +108,23 @@ export const Login = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50 flex items-center  justify-center p-4 font-['Intertight']">
-      <div className="max-w-md w-full p-6 md:p-10 rounded-3xl shadow-2xl  bg-white/70 backdrop-blur-md border border-gray-100 flex flex-col justify-center text-center">
+    <div className="min-h-screen bg-[#f9f9f9] flex items-center p-4 justify-center font-['Intertight']">
+      <div className="max-w-md w-full">
         {/* Top Section: Heading and Motivation */}
-        <div className="space-y-4 mb-8">
-          <h2 className="text-2xl md:text-3xl font-bold text-gray-900 leading-tight">
-            Тегін курсқа қол жеткізіңіз
+        <div className="grid place-items-center text-center">
+          <h2 className="text-3xl md:text-4xl font-medium leading-tight tracking-tight">
+            <span className="text-[#9C45FF]">Тегін курсқа </span>қол жеткізіңіз
           </h2>
-          <p className="text-gray-600 text-sm md:text-base">
+          <p className="text-[#5D5D5D] text-sm md:text-base max-w-60">
             Жеке деректеріңізді енгізіп, орыс тілін үйренуді қазір бастаңыз
           </p>
         </div>
 
         {/* Middle Section: Social Proof & Form */}
-        <div className="space-y-6">
-          <form onSubmit={handleStartLesson} className="space-y-4 mt-6">
+        <div className="space-y-5">
+          <form onSubmit={handleStartLesson} className="space-y-3 mt-6">
             {error && (
-              <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg flex items-center gap-2 text-sm">
+              <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-4 rounded-lg flex items-center gap-2 text-sm">
                 <div className="w-2 h-2 bg-red-500 rounded-full"></div>
                 <span>{error}</span>
               </div>
@@ -133,7 +133,7 @@ export const Login = () => {
             {/* Phone number field */}
             <div className="relative">
               <Phone
-                className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
+                className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"
                 size={18}
               />
               <input
@@ -141,7 +141,7 @@ export const Login = () => {
                 placeholder="Телефон нөмері"
                 value={phone}
                 onChange={(e) => setPhone(formatPhoneNumber(e.target.value))}
-                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all text-sm md:text-base"
+                className="w-full pl-12 pr-4 py-4 text-gray-700 bg-white border border-[#DEDEDE] rounded-full focus:outline-none focus:ring-2 focus:ring-[#9C45FF] focus:border-transparent transition-all text-sm md:text-base"
                 required
               />
             </div>
@@ -149,15 +149,15 @@ export const Login = () => {
             {/* Password field */}
             <div className="relative">
               <Lock
-                className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
+                className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"
                 size={18}
               />
               <input
                 type={showPassword ? "text" : "password"}
-                placeholder="Құпиясөз"
+                placeholder="Құпия сөз"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full pl-10 pr-12 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all text-sm md:text-base"
+                className="w-full pl-12 pr-12 py-4 text-gray-700 bg-white border border-[#DEDEDE] rounded-full focus:outline-none focus:ring-2 focus:ring-[#9C45FF] focus:border-transparent transition-all text-sm md:text-base"
                 required
               />
               <button
@@ -173,7 +173,7 @@ export const Login = () => {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-blue-500 text-white py-3 rounded-lg cursor-pointer hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 transition-all duration-200 shadow-lg hover:shadow-xl"
+              className="w-full bg-gradient-to-r from-[#AE67FF] to-[#7727D2] text-white py-4 rounded-full cursor-pointer hover:bg-[#5f1fa8] disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 transition-all duration-200  font-medium"
             >
               {loading ? (
                 <>
@@ -190,11 +190,11 @@ export const Login = () => {
           </form>
         </div>
 
-        <p className="mt-8 text-center text-sm md:text-base text-gray-600">
-          Аккаунтыңыз жоқпа?{" "}
+        <p className="mt-6 text-center text-sm md:text-base text-[#5D5D5D]">
+          Аккаунтыңыз жоқ па?{" "}
           <Link
             to="/signup"
-            className="text-blue-600 hover:text-blue-700 font-medium transition-colors"
+            className="text-[#9C45FF] hover:text-[#7e37d0] font-bold transition-colors"
           >
             Тіркелу{" "}
           </Link>

@@ -1,4 +1,13 @@
-import { Check, Eye, EyeOff, Lock, Phone, User, UserPlus } from "lucide-react";
+import {
+  Check,
+  Eye,
+  EyeOff,
+  Lock,
+  Phone,
+  Rocket,
+  User,
+  UserPlus,
+} from "lucide-react";
 import { useState } from "react";
 import { MdFemale, MdMale } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
@@ -141,36 +150,36 @@ export const SignUp = () => {
     const password = formData.password;
     if (password.length === 0) return { strength: 0, text: "" };
     if (password.length < 6)
-      return { strength: 25, text: "Слабый", color: "bg-red-500" };
+      return { strength: 25, text: "Әлсіз", color: "bg-red-500" };
     if (password.length < 8)
-      return { strength: 50, text: "Средний", color: "bg-yellow-500" };
+      return { strength: 50, text: "Орташа", color: "bg-yellow-500" };
     if (
       password.length >= 8 &&
       /(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/.test(password)
     ) {
-      return { strength: 100, text: "Сильный", color: "bg-green-500" };
+      return { strength: 100, text: "Мықты", color: "bg-green-500" };
     }
-    return { strength: 75, text: "Хороший", color: "bg-blue-500" };
+    return { strength: 75, text: "Жақсы", color: "bg-blue-500" };
   };
 
   const passwordStrength = getPasswordStrength();
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-indigo-50 flex items-center justify-center p-4 font-['Intertight']">
-      <div className="max-w-md w-full space-y-5 md:space-y-8">
+    <div className="min-h-screen bg-[#f9f9f9] flex items-center p-4 justify-center font-['Intertight']">
+      <div className="max-w-md w-full">
         {/* Логотип и заголовок */}
-        <div className="text-center">
-          <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">
+        <div className="grid place-items-center">
+          <h2 className="text-3xl md:text-4xl font-medium leading-tight tracking-tight">
             Тіркелу
           </h2>
-          <p className="text-sm md:text-base text-gray-600">
+          <p className="text-sm md:text-base text-[#5D5D5D] max-w-60 text-center">
             Бізге қосылыңыз және орыс тілін үйренуді бастаңыз
           </p>
         </div>
 
         {/* Форма регистрации */}
-        <div className="bg-white p-6 md:p-8 rounded-2xl shadow-xl border border-gray-100">
-          <form onSubmit={handleSubmit} className="space-y-3 md:space-y-5">
+        <div className="space-y-5">
+          <form onSubmit={handleSubmit} className="space-y-3 mt-6">
             {/* Сообщения */}
             {error && (
               <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg flex items-center gap-2">
@@ -189,42 +198,36 @@ export const SignUp = () => {
             {/* Имя и Фамилия в одной строке */}
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
-                <label className="text-sm font-medium text-gray-700">
-                  Есімі
-                </label>
                 <div className="relative">
                   <User
-                    className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
-                    size={16}
+                    className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"
+                    size={20}
                   />
                   <input
                     type="text"
                     name="name"
-                    placeholder="Есіміңізді енгізіңіз"
+                    placeholder="Есімі"
                     value={formData.name}
                     onChange={handleChange}
-                    className="w-full pl-9 pr-3 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 text-sm md:text-base"
+                    className="text-gray-700 bg-white w-full pl-12 pr-3 py-4 border border-[#B7B7B7] rounded-full focus:outline-none focus:ring-2 focus:ring-[#9C45FF] focus:border-transparent transition-all duration-200 text-sm md:text-base"
                     required
                   />
                 </div>
               </div>
 
               <div className="space-y-2">
-                <label className="text-sm font-medium text-gray-700">
-                  Тегі
-                </label>
                 <div className="relative">
                   <User
-                    className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
-                    size={16}
+                    className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"
+                    size={20}
                   />
                   <input
                     type="text"
                     name="surname"
-                    placeholder="Тегіңізді енгізіңіз"
+                    placeholder="Тегі"
                     value={formData.surname}
                     onChange={handleChange}
-                    className="w-full pl-9 pr-3 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 text-sm md:text-base"
+                    className="text-gray-700 bg-white w-full pl-12 pr-3 py-4 border border-[#B7B7B7] rounded-full focus:outline-none focus:ring-2 focus:ring-[#9C45FF] focus:border-transparent transition-all duration-200 text-sm md:text-base"
                     required
                   />
                 </div>
@@ -233,21 +236,18 @@ export const SignUp = () => {
 
             {/* Логин */}
             <div className="space-y-2">
-              <label className="text-sm font-medium text-gray-700">
-                Телефон нөмері
-              </label>
               <div className="relative">
                 <Phone
-                  className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
-                  size={18}
+                  className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"
+                  size={20}
                 />
                 <input
                   type="text"
                   name="login"
-                  placeholder="Нөміріңізді енгізіңіз"
+                  placeholder="Телефон нөмері"
                   value={formData.login}
                   onChange={handleChange}
-                  className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 text-sm md:text-base"
+                  className="text-gray-700 bg-white w-full pl-12 pr-4 py-4 border border-[#B7B7B7] rounded-full focus:outline-none focus:ring-2 focus:ring-[#9C45FF] focus:border-transparent transition-all duration-200 text-sm md:text-base"
                   required
                 />
               </div>
@@ -255,21 +255,18 @@ export const SignUp = () => {
 
             {/* Пароль */}
             <div className="space-y-2">
-              <label className="text-sm font-medium text-gray-700">
-                Құпиясөз
-              </label>
               <div className="relative">
                 <Lock
-                  className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
-                  size={18}
+                  className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"
+                  size={20}
                 />
                 <input
                   type={showPassword ? "text" : "password"}
                   name="password"
-                  placeholder="Кемінде 6 символ"
+                  placeholder="Құпия сөз"
                   value={formData.password}
                   onChange={handleChange}
-                  className="w-full pl-10 pr-12 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 text-sm md:text-base"
+                  className="text-gray-700 bg-white w-full pl-12 pr-12 py-4 border border-[#B7B7B7] rounded-full focus:outline-none focus:ring-2 focus:ring-[#9C45FF] focus:border-transparent transition-all duration-200 text-sm md:text-base"
                   required
                 />
                 <button
@@ -277,7 +274,7 @@ export const SignUp = () => {
                   onClick={() => setShowPassword(!showPassword)}
                   className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
                 >
-                  {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                  {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                 </button>
               </div>
 
@@ -312,33 +309,30 @@ export const SignUp = () => {
 
             {/* Гендер */}
             <div className="space-y-2">
-              <label className="text-sm font-medium text-gray-700 mb-6">
-                Жыныс
-              </label>
               <div className="grid grid-cols-2 gap-3">
                 <button
                   type="button"
                   onClick={() => setFormData({ ...formData, gender: "male" })}
-                  className={`flex items-center justify-center gap-2 p-3 border-2 rounded-lg transition-all duration-200 ${
+                  className={`cursor-pointer flex items-center justify-center gap-2 p-3 border-2 rounded-full transition-all duration-200 ${
                     formData.gender === "male"
                       ? "border-blue-500 bg-blue-50 text-blue-700"
-                      : "border-gray-300 bg-white text-gray-600 hover:border-gray-400"
+                      : "border-[#B7B7B7] bg-white text-[#5D5D5D] hover:border-gray-400"
                   }`}
                 >
-                  <MdMale className="w-5 h-5" />
+                  <MdMale className="w-6 h-6" />
                   <span className="text-sm font-medium">Ер</span>
                 </button>
 
                 <button
                   type="button"
                   onClick={() => setFormData({ ...formData, gender: "female" })}
-                  className={`flex items-center justify-center gap-2 p-3 border-2 rounded-lg transition-all duration-200 ${
+                  className={`cursor-pointer flex items-center justify-center gap-2 p-3 border-2 rounded-full transition-all duration-200 ${
                     formData.gender === "female"
                       ? "border-pink-500 bg-pink-50 text-pink-700"
-                      : "border-gray-300 bg-white text-gray-600 hover:border-gray-400"
+                      : "border-[#B7B7B7] bg-white text-[#5D5D5D] hover:border-gray-400"
                   }`}
                 >
-                  <MdFemale className="w-5 h-5" />
+                  <MdFemale className="w-6 h-6" />
                   <span className="text-sm font-medium">Әйел</span>
                 </button>
               </div>
@@ -347,7 +341,7 @@ export const SignUp = () => {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-blue-500 text-white py-3 cursor-pointer rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 transition-all duration-200 shadow-lg hover:shadow-xl"
+              className="w-full bg-gradient-to-r from-[#AE67FF] to-[#7727D2] text-white py-4 cursor-pointer rounded-full hover:bg-[#5f1fa8] disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 transition-all duration-200"
             >
               {loading ? (
                 <>
@@ -356,25 +350,22 @@ export const SignUp = () => {
                 </>
               ) : (
                 <>
-                  <UserPlus size={18} />
-                  <span>Тіркелу</span>
+                  <Rocket size={20} />
+                  <span className="font-semibold">Тіркелу</span>
                 </>
               )}
             </button>
           </form>
 
-          {/* Ссылка на вход */}
-          <div className="mt-4 md:mt-6 pt-4 md:pt-6 border-t border-gray-100">
-            <p className="text-sm md:text-base text-center text-gray-600">
-              Аккаунтыңыз барма?{" "}
-              <Link
-                to="/login"
-                className="text-blue-600 hover:text-blue-700 font-medium transition-colors"
-              >
-                Кіру
-              </Link>
-            </p>
-          </div>
+          <p className="mt-6 text-sm md:text-base text-center text-gray-600">
+            Аккаунтыңыз бар ма?{" "}
+            <Link
+              to="/login"
+              className="text-[#9C45FF] hover:text-[#7e37d0] font-bold transition-colors"
+            >
+              Кіру
+            </Link>
+          </p>
         </div>
       </div>
     </div>
