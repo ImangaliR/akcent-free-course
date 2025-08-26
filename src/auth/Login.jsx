@@ -1,4 +1,4 @@
-import { Eye, EyeOff, Lock, Phone, Rocket, Users } from "lucide-react";
+import { Eye, EyeOff, Lock, Phone, Rocket } from "lucide-react";
 import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
@@ -108,45 +108,20 @@ export const Login = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50 flex items-center justify-center p-4">
-      <div className="max-w-md w-full p-6 md:p-10 rounded-3xl shadow-2xl bg-white/70 backdrop-blur-md border border-gray-100 flex flex-col justify-center text-center">
+    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50 flex items-center  justify-center p-4 font-['Intertight']">
+      <div className="max-w-md w-full p-6 md:p-10 rounded-3xl shadow-2xl  bg-white/70 backdrop-blur-md border border-gray-100 flex flex-col justify-center text-center">
         {/* Top Section: Heading and Motivation */}
         <div className="space-y-4 mb-8">
           <h2 className="text-2xl md:text-3xl font-bold text-gray-900 leading-tight">
-            Тегін сабаққа қол жеткізіңіз
+            Тегін курсқа қол жеткізіңіз
           </h2>
           <p className="text-gray-600 text-sm md:text-base">
-            Телефон нөміріңізді енгізіп, ағылшын тілін үйренуді қазір бастаңыз
+            Жеке деректеріңізді енгізіп, орыс тілін үйренуді қазір бастаңыз
           </p>
         </div>
 
         {/* Middle Section: Social Proof & Form */}
         <div className="space-y-6">
-          <div className="flex flex-col sm:flex-row justify-center items-center sm:gap-8 gap-4 text-center">
-            <div className="flex items-center gap-2">
-              <Users size={32} className="text-blue-600" />
-              <div>
-                <span className="block text-2xl font-bold text-gray-900">
-                  127
-                </span>
-                <span className="block text-sm text-gray-500">
-                  бүгін оқуды бастады
-                </span>
-              </div>
-            </div>
-            <div className="flex items-center gap-2">
-              <Users size={32} className="text-blue-600" />
-              <div>
-                <span className="block text-2xl font-bold text-gray-900">
-                  10,000+
-                </span>
-                <span className="block text-sm text-gray-500">
-                  оқушы Akcent Academy таңдады
-                </span>
-              </div>
-            </div>
-          </div>
-
           <form onSubmit={handleStartLesson} className="space-y-4 mt-6">
             {error && (
               <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg flex items-center gap-2 text-sm">
@@ -208,7 +183,7 @@ export const Login = () => {
               ) : (
                 <>
                   <Rocket size={20} />
-                  <span>Тегін сабақты бастау</span>
+                  <span>Тегін курсты бастау</span>
                 </>
               )}
             </button>
