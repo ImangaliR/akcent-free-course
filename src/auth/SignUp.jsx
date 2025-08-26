@@ -156,7 +156,7 @@ export const SignUp = () => {
   const passwordStrength = getPasswordStrength();
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-indigo-50 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-indigo-50 flex items-center justify-center p-4 font-['Intertight']">
       <div className="max-w-md w-full space-y-5 md:space-y-8">
         {/* Логотип и заголовок */}
         <div className="text-center">
@@ -344,7 +344,6 @@ export const SignUp = () => {
               </div>
             </div>
 
-            {/* Кнопка регистрации */}
             <button
               type="submit"
               disabled={loading}
@@ -357,8 +356,8 @@ export const SignUp = () => {
                 </>
               ) : (
                 <>
-                  <span>Тіркелу</span>
                   <UserPlus size={18} />
+                  <span>Тіркелу</span>
                 </>
               )}
             </button>
