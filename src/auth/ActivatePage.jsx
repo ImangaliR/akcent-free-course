@@ -146,37 +146,21 @@ export const Verify = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50 flex items-center justify-center p-4 font-['Intertight']">
-      <div className="max-w-md w-full space-y-4 md:space-y-8">
+    <div className="min-h-screen bg-[#f9f9f9] flex items-center justify-center p-4 font-['Intertight']">
+      <div className="max-w-md w-full space-y-4 md:space-y-5">
         {/* Логотип и заголовок */}
-        <div className="text-center">
-          <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">
+        <div className="grid place-items-center text-center">
+          <h2 className="text-3xl md:text-4xl font-medium leading-tight tracking-tight">
             Аккаунтты растау
           </h2>
-          <p className="text-sm md:text-base text-gray-600 mb-4">
+          <p className="text-sm md:text-base text-[#5D5D5D] max-w-60 mt-2">
             Біз сізге 6-символдық растау кодын WhatsApp-қа жібердік
           </p>
-
-          {/* WhatsApp информация */}
-          <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-6">
-            <div className="flex items-center justify-center gap-2 text-green-700 mb-2">
-              <FaWhatsapp className="w-5 h-5" />
-              <span className="font-medium">WhatsApp</span>
-            </div>
-            <p className="text-xs md:text-sm text-green-600">
-              Растау кодын алу үшін WhatsApp хабарламаларыңызды тексеріңіз
-            </p>
-            {userLogin && (
-              <p className="text-xs text-green-500 mt-2">
-                Аккаунт нөмірі: <span className="font-mono">+{userLogin}</span>
-              </p>
-            )}
-          </div>
         </div>
 
         {/* Форма верификации */}
-        <div className="bg-white p-8 rounded-2xl shadow-xl border border-gray-100">
-          <form onSubmit={handleSubmit} className="space-y-6">
+        <div className="">
+          <form onSubmit={handleSubmit} className="space-y-5">
             {/* Сообщения */}
             {error && (
               <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg flex items-center gap-2">
@@ -194,7 +178,7 @@ export const Verify = () => {
 
             {/* Поля для ввода кода */}
             <div className="space-y-4">
-              <label className="block text-xs md:text-sm font-medium text-gray-700 text-center">
+              <label className="block text-sm md:text-base font-medium text-[#5D5D5D] text-center">
                 WhatsApp-қа келген кодты енгізіңіз
               </label>
 
@@ -210,7 +194,7 @@ export const Verify = () => {
                     onChange={(e) => handleCodeChange(index, e.target.value)}
                     onKeyDown={(e) => handleKeyDown(index, e)}
                     onPaste={index === 0 ? handlePaste : undefined}
-                    className="w-9 h-9 md:w-12 md:h-12 text-center md:text-xl md:font-bold border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200"
+                    className="bg-white w-10 h-13 md:w-15 md:h-18 text-center md:text-xl md:font-bold border border-[#DEDEDE] rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200"
                     disabled={loading}
                   />
                 ))}
@@ -221,7 +205,7 @@ export const Verify = () => {
             <button
               type="submit"
               disabled={loading || code.join("").length !== 6}
-              className="w-full bg-green-500 text-sm md:text-base  cursor-pointer text-white py-3 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 transition-all duration-200 shadow-lg hover:shadow-xl"
+              className="w-full bg-gradient-to-r from-[#25D366] to-[#1DB957] text-sm md:text-base cursor-pointer text-white py-4 rounded-full disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 transition-all duration-200"
             >
               {loading ? (
                 <>
@@ -230,13 +214,18 @@ export const Verify = () => {
                 </>
               ) : (
                 <>
+                  <FaWhatsapp className="w-5 h-5 text-white" />
                   <span>Растау</span>
-                  <ArrowRight size={18} />
                 </>
               )}
             </button>
           </form>
         </div>
+        {userLogin && (
+          <p className="text-center text-sm text-green-500 mt-2">
+            Аккаунт нөмері: <span className="font-bold">+{userLogin}</span>
+          </p>
+        )}
       </div>
     </div>
   );
