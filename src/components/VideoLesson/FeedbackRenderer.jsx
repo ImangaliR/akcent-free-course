@@ -28,7 +28,7 @@ export const FeedbackRenderer = ({ lesson, onComplete, onAdvance }) => {
   return (
     <div className="w-full max-w-8xl mx-auto p-6 md:p-8 pt-8 md:pt-6 bg-gradient-to-br from-purple-50 via-white to-blue-50 rounded-2xl border border-purple-100 relative overflow-hidden">
       <div className="text-center mb-6 relative">
-        <h2 className="text-2xl md:text-4xl font-bold bg-gradient-to-r from-purple-600 via-blue-600 to-purple-800 bg-clip-text text-transparent mb-2">
+        <h2 className="text-2xl md:text-4xl font-bold bg-gradient-to-r from-[#9C45FF] [#9C45FF] to-[#9C45FF] bg-clip-text text-transparent mb-2">
           Курс аяқталды!
         </h2>
       </div>
