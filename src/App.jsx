@@ -31,7 +31,7 @@ function App() {
           />
           <Route path="/verify" element={<Verify />} />
 
-          <Route path="/admin" element={<AdminPanel />} />
+          <Route path="/adminqwertyuiop/*" element={<AdminPanel />} />
           <Route
             path="/home"
             element={

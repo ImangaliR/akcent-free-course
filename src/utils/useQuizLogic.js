@@ -1,6 +1,7 @@
 // Исправленный useQuizLogic hook
 
 import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCourse } from "../context/CourseContext";
 
 export const useQuizLogic = (
   allQuestions,
@@ -9,7 +10,7 @@ export const useQuizLogic = (
   quizId
 ) => {
   // Normalize questions array - handle both single question and multi-question formats
-
+  const { saveToServer } = useCourse();
   const storageKey = `quiz_progress_${quizId || taskType}`;
 
   const normalizeQuestions = useMemo(() => {
@@ -80,6 +81,8 @@ export const useQuizLogic = (
     return null;
   }, [storageKey, questions.length, taskType]);
 
+  // utils/useQuizLogic.js
+
   const saveState = useCallback(
     (newState) => {
       try {
@@ -89,12 +92,20 @@ export const useQuizLogic = (
           taskType: taskType,
           timestamp: Date.now(),
         };
-        localStorage.setItem(storageKey, JSON.stringify(dataToSave));
+        const jsonData = JSON.stringify(dataToSave);
+
+        // 1. Сохраняем локально для быстрого доступа
+        localStorage.setItem(storageKey, jsonData);
+
+        // 2. Отправляем на сервер для надежного восстановления
+        if (saveToServer) {
+          saveToServer(storageKey, jsonData);
+        }
       } catch (error) {
         console.warn("Error saving quiz state:", error);
       }
     },
-    [storageKey, questions.length, taskType]
+    [storageKey, questions.length, taskType, saveToServer] // ← ДОБАВЬТЕ saveToServer
   );
 
   const [state, setState] = useState(() => {
@@ -329,9 +340,6 @@ export const useQuizLogic = (
     }
 
     const isCorrect = isAnswerCorrect(state.currentAnswer, currentQuestion);
-    // if (!isAnswerReady(state.currentAnswer)) return;
-
-    // const isCorrect = isAnswerCorrect(state.currentAnswer, currentQuestion);
 
     setState((prev) => {
       const newState = {
@@ -448,17 +456,24 @@ export const useQuizLogic = (
     });
   }, [questions]);
 
+  // utils/useQuizLogic.js
+
   useEffect(() => {
     if (state.phase !== "done") {
       saveState(state);
     } else {
       try {
+        // Очищаем локальное хранилище
         localStorage.removeItem(storageKey);
+        // Очищаем данные на сервере, отправив null
+        if (saveToServer) {
+          saveToServer(storageKey, null);
+        }
       } catch (error) {
         console.warn("Error clearing quiz state:", error);
       }
     }
-  }, [state, saveState, storageKey]); // ← storageKey добавлен в зависимости
+  }, [state, saveState, storageKey, saveToServer]); // ← ДОБАВЬТЕ saveToServer
 
   // Calculate stats
   const stats = useMemo(() => {

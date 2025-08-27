@@ -1,6 +1,6 @@
 import Lottie from "lottie-react";
-import Trophy from "../../assets/Trophy.json";
 import { useEffect } from "react";
+import Trophy from "../../assets/Trophy.json";
 
 export const CompletionModal = ({
   isOpen,
@@ -134,7 +134,7 @@ export const CompletionModal = ({
                   </span>
                 </div>
                 <p className="opacity-90 text-sm sm:text-base">
-                  Курс аяқтаушы - алғашқы курсыңызды сәтті бітірдіңіз
+                  Пробный сабаққа өту үшін төмендегі батырманы басыңыз
                 </p>
               </div>
 
@@ -146,7 +146,7 @@ export const CompletionModal = ({
                   rel="noopener noreferrer"
                 >
                   <button className="w-full bg-gradient-to-r from-[#9C45FF] to-purple-600 text-white py-3 sm:py-4 px-6 rounded-xl font-semibold hover:shadow-lg transition-all duration-200 transform hover:scale-[1.02] text-base sm:text-lg">
-                    Пробный сабақ
+                    Пробный сабаққа өту
                   </button>
                 </a>
                 <button

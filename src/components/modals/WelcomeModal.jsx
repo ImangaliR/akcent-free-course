@@ -343,7 +343,7 @@ export const WelcomeModal = () => {
 
             <div className="flex items-center justify-between mb-3 sm:mb-2">
               <div className="text-xs sm:text-sm font-medium text-gray-500">
-                {currentStep + 1} из {totalSteps}
+                {currentStep + 1} / {totalSteps}
               </div>
             </div>
 

@@ -1,4 +1,4 @@
-import { AlertCircle, ArrowRight, CheckCircle } from "lucide-react";
+import { AlertCircle, CheckCircle } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { FaWhatsapp } from "react-icons/fa";
 import { useLocation, useNavigate } from "react-router-dom";

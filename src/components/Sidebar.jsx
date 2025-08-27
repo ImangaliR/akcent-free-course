@@ -109,32 +109,32 @@ export const SidebarNav = ({
     return organized;
   };
 
-  // const isBlockAccessible = (blockIndex) => {
-  //   // Первый блок всегда доступен
-  //   if (blockIndex === 0) return true;
+  const isBlockAccessible = (blockIndex) => {
+    // Первый блок всегда доступен
+    if (blockIndex === 0) return true;
 
-  //   // Получаем все навигируемые блоки (исключая InfoCards)
-  //   const navigableBlocks = courseManifest.sequence
-  //     .map((block, index) => ({ ...block, originalIndex: index }))
-  //     .filter((block) => {
-  //       const lowerRef = block.ref.toLowerCase();
-  //       return !lowerRef.includes("inf");
-  //     });
+    // Получаем все навигируемые блоки (исключая InfoCards)
+    const navigableBlocks = courseManifest.sequence
+      .map((block, index) => ({ ...block, originalIndex: index }))
+      .filter((block) => {
+        const lowerRef = block.ref.toLowerCase();
+        return !lowerRef.includes("inf");
+      });
 
-  //   // Находим текущий блок среди навигируемых
-  //   const currentNavigableIndex = navigableBlocks.findIndex(
-  //     (block) => block.originalIndex === blockIndex
-  //   );
+    // Находим текущий блок среди навигируемых
+    const currentNavigableIndex = navigableBlocks.findIndex(
+      (block) => block.originalIndex === blockIndex
+    );
 
-  //   if (currentNavigableIndex === -1) return false;
-  //   if (currentNavigableIndex === 0) return true;
+    if (currentNavigableIndex === -1) return false;
+    if (currentNavigableIndex === 0) return true;
 
-  //   // Проверяем, завершен ли предыдущий навигируемый блок
-  //   const previousBlock = navigableBlocks[currentNavigableIndex - 1];
-  //   return isBlockCompleted(previousBlock.ref);
-  // };
+    // Проверяем, завершен ли предыдущий навигируемый блок
+    const previousBlock = navigableBlocks[currentNavigableIndex - 1];
+    return isBlockCompleted(previousBlock.ref);
+  };
 
-  const isBlockAccessible = () => true;
+  // const isBlockAccessible = () => true;
 
   const organizedBlocks = organizeBlocks();
 
@@ -477,7 +477,7 @@ export const SidebarNav = ({
                         <span className="font-medium text-gray-800 block">
                           {module.title}
                         </span>
-                        <span className="text-xs text-gray-500">
+                        <span className="text-xs text-gray-500 hidden  md:block">
                           {module.blocks.length === 0
                             ? module.id === "intro"
                               ? "Скоро..."

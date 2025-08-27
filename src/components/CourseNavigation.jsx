@@ -177,9 +177,9 @@ export const CourseNavigation = ({ currentBlockCompleted = false }) => {
                 >
                   <div className="text-right">
                     <div className="text-sm lg:text-base font-semibold">
-                      Аяқталды!
+                      Пробный сабақ
                     </div>
-                    <div className="text-xs opacity-90">Сыйлықты алу</div>
+                    <div className="text-xs opacity-90">Курс аяқталды!</div>
                   </div>
                   <div className="p-1 bg-white/20 rounded-xl">
                     <CheckCircle className="w-5 h-5" />
