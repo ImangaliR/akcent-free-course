@@ -66,6 +66,60 @@ const Users = ({ users, storage }) => {
     return { noData, zeroBlocks, allBlocks };
   }, [users, storage, ALL_COMPLETE_COUNTS]);
 
+  // Parse helpers
+  const getProgressRecord = (userId) => {
+    if (!storage || !storage[userId] || !storage[userId].course_progress)
+      return null;
+    try {
+      return JSON.parse(storage[userId].course_progress.value);
+    } catch {
+      return null;
+    }
+  };
+
+  const getAnswersRecord = (userId) => {
+    if (!storage || !storage[userId] || !storage[userId].user_answers)
+      return null;
+    try {
+      return JSON.parse(storage[userId].user_answers.value);
+    } catch {
+      return null;
+    }
+  };
+
+  // When did user complete all blocks?
+  const getAllBlocksCompletionDate = (userId) => {
+    const progress = getProgressRecord(userId);
+    if (!progress) return null;
+
+    const completed = Array.isArray(progress.completedBlocks)
+      ? progress.completedBlocks
+      : [];
+    if (!ALL_COMPLETE_COUNTS.has(completed.length)) return null; // not all blocks yet
+
+    const answers = getAnswersRecord(userId) || {};
+
+    // Find the latest completedAt among the completed blocks
+    const timestamps = completed
+      .map((ref) => answers?.[ref]?.completedAt)
+      .filter(Boolean)
+      .map((iso) => new Date(iso))
+      .filter((d) => !isNaN(d));
+
+    if (timestamps.length > 0) {
+      // Latest completion time of any block
+      return new Date(Math.max(...timestamps.map((d) => d.getTime())));
+    }
+
+    // Fallback: use progress.lastUpdated if present
+    if (progress.lastUpdated) {
+      const d = new Date(progress.lastUpdated);
+      if (!isNaN(d)) return d;
+    }
+
+    return null;
+  };
+
   // Сортировка
   const sortUsers = (userKeys) => {
     return userKeys.sort((a, b) => {
@@ -136,10 +190,13 @@ const Users = ({ users, storage }) => {
         <table className="min-w-full divide-y divide-gray-200">
           <thead className="bg-gray-50">
             <tr>
+              <th className="px-2 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                ID
+              </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Имя
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-2 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Возраст
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -149,30 +206,60 @@ const Users = ({ users, storage }) => {
                 Дата регистрации
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Завершение всех блоков
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Прогресс
               </th>
               <th className="px-6 py-3"></th>
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
-            {userKeys.map((key) => {
+            {userKeys.map((key, index) => {
               const user = users[key];
               const userHasProgress = hasProgress(key);
               const completedBlocks = getCompletedBlocksCount(key);
 
               return (
                 <tr key={key} className="hover:bg-gray-50 transition-colors">
+                  {/* ID column */}
+                  <td className="px-2 py-4 whitespace-nowrap text-sm text-gray-500 text-center">
+                    {index + 1}
+                  </td>
+
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                     {user.name} {user.surname}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  <td className="px-2 py-4 whitespace-nowrap text-sm text-gray-500 text-center">
                     {user.age || "Не указан"}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                     {user.login}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {new Date(user.createdAt).toLocaleDateString()}
+                    {new Date(user.createdAt).toLocaleString("ru-RU", {
+                      year: "numeric",
+                      month: "2-digit",
+                      day: "2-digit",
+                      hour: "2-digit",
+                      minute: "2-digit",
+                    })}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    {ALL_COMPLETE_COUNTS.has(completedBlocks)
+                      ? (() => {
+                          const doneAt = getAllBlocksCompletionDate(key);
+                          return doneAt
+                            ? doneAt.toLocaleString("ru-RU", {
+                                year: "numeric",
+                                month: "2-digit",
+                                day: "2-digit",
+                                hour: "2-digit",
+                                minute: "2-digit",
+                              })
+                            : "Дата не найдена";
+                        })()
+                      : "-"}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm">
                     {userHasProgress ? (
