@@ -10,6 +10,7 @@ import { ImageQuizRenderer } from "../Tasks/ImageQuizRenderer";
 import { InfoCardModal } from "../Tasks/InfoCardModal";
 import { MultiBlankTaskRenderer } from "../Tasks/MultiBlankTaskRenderer";
 import { UniversalQuiz } from "../Tasks/UniversalQuiz";
+import { FeedbackRenderer } from "../VideoLesson/FeedbackRenderer";
 import { VideoLessonWithSubtitles } from "../VideoLesson/VideoLesson";
 
 export const Lesson = ({
@@ -118,6 +119,16 @@ export const Lesson = ({
       onAnswerUpdate: handleAnswerUpdate,
       previousAnswer: userAnswer,
     };
+
+    if (currentBlockRef === "blocks/v6.video.json") {
+      return (
+        <FeedbackRenderer
+          lesson={blockData}
+          onComplete={handleBlockComplete}
+          onAdvance={onBlockComplete} // Используем onBlockComplete для перехода
+        />
+      );
+    }
 
     switch (blockData?.type) {
       case "video":

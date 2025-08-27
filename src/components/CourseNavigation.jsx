@@ -177,7 +177,7 @@ export const CourseNavigation = ({ currentBlockCompleted = false }) => {
                 >
                   <div className="text-right">
                     <div className="text-sm lg:text-base font-semibold">
-                      Пробный сабақ
+                      Деңгей анықтау
                     </div>
                     <div className="text-xs opacity-90">Курс аяқталды!</div>
                   </div>

@@ -11,16 +11,12 @@ export const CompletionModal = ({
 }) => {
   const { playCourseCompleteSound, cleanup } = useAudioFeedback();
 
-  // Play course completion sound when modal opens
   useEffect(() => {
     if (isOpen) {
-      // Delay the sound slightly to allow modal to fully appear
-
       playCourseCompleteSound();
     }
   }, [isOpen, playCourseCompleteSound]);
 
-  // Handle ESC key and block scrolling
   useEffect(() => {
     const handleEscape = (e) => {
       if (e.key === "Escape" && isOpen) {
@@ -148,19 +144,19 @@ export const CompletionModal = ({
                   </span>
                 </div>
                 <p className="opacity-90 text-sm sm:text-base">
-                  Пробный сабаққа өту үшін төмендегі батырманы басыңыз
+                  Деңгей анықтау үшін төмендегі батырманы басыңыз
                 </p>
               </div>
 
               {/* Action Buttons - Stack on mobile, row on desktop */}
               <div className="space-y-3 sm:space-y-0 sm:grid sm:grid-cols-2 sm:gap-4 ">
                 <a
-                  href="https://wa.me/77074945051?text=%D0%9F%D1%80%D0%BE%D0%B1%D0%BD%D1%8B%D0%B9%20%D1%81%D0%B0%D0%B1%D0%B0%D2%9B%D2%9B%D0%B0%20%D2%9B%D0%B0%D1%82%D1%8B%D1%81%D2%9B%D1%8B%D0%BC%20%D0%BA%D0%B5%D0%BB%D0%B5%D0%B4%D1%96"
+                  href="https://wa.me/77074945051?text=%D0%94%D0%B5%D2%A3%D0%B3%D0%B5%D0%B9%D1%96%D0%BC%D0%B4%D1%96%20%D0%B0%D0%BD%D1%8B%D2%9B%D1%82%D0%B0%D2%93%D1%8B%D0%BC%20%D0%BA%D0%B5%D0%BB%D0%B5%D0%B4%D1%96"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
                   <button className="w-full bg-gradient-to-r from-[#9C45FF] to-purple-600 text-white py-3 sm:py-4 px-6 rounded-xl font-semibold hover:shadow-lg transition-all duration-200 transform hover:scale-[1.02] text-base sm:text-lg">
-                    Пробный сабаққа өту
+                    Деңгей анықтауға өту
                   </button>
                 </a>
                 <button
