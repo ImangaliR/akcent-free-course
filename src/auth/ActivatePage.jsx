@@ -2,6 +2,7 @@ import { AlertCircle, CheckCircle } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { FaWhatsapp } from "react-icons/fa";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 export const Verify = () => {
   const CODE_LENGTH = 4;
@@ -14,6 +15,7 @@ export const Verify = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const inputRefs = useRef([]);
+  const { login } = useAuth();
 
   // Получаем логин из состояния навигации или localStorage
   const userLogin =
@@ -135,8 +137,12 @@ export const Verify = () => {
       localStorage.removeItem("pendingLogin");
 
       // Перенаправляем на главную страницу
+      if (data.token) {
+        await login(data.token, data.user || null);
+      }
+
       setTimeout(() => {
-        navigate("/login");
+        navigate("/home");
       }, 1500);
     } catch (err) {
       setError(
