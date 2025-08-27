@@ -10,7 +10,6 @@ import {
   LogOut,
   PenTool,
   Play,
-  Users,
   Volume2,
   X,
 } from "lucide-react";
@@ -44,13 +43,13 @@ export const SidebarNav = ({
 
   const organizeBlocks = () => {
     if (!courseManifest?.sequence)
-      return { intro: [], main: [], conclusion: [] };
+      return { intro: [], main: [], conclusion: [] }; // Возвращаем пустые массивы
 
     const blocks = courseManifest.sequence;
     const organized = {
       intro: [],
       main: [],
-      conclusion: [],
+      // Убираем 'conclusion' из объекта organized
     };
 
     const navigableBlocks = blocks.filter((block) => {
@@ -58,6 +57,7 @@ export const SidebarNav = ({
       return !lowerRef.includes("inf");
     });
 
+    // Находим индексы всех видео-блоков
     const videoBlocks = navigableBlocks
       .map((block, index) => ({
         block,
@@ -78,34 +78,23 @@ export const SidebarNav = ({
       const originalIndex = blocks.indexOf(block);
       const blockInfo = {
         ...block,
-        index: originalIndex, // Keep original index for navigation
+        index: originalIndex, // Сохраняем оригинальный индекс
         id: block.ref.split("/")[1].split(".")[0],
       };
 
-      const lowerRef = block.ref.toLowerCase();
-      const isVideo =
-        lowerRef.includes("video") ||
-        lowerRef.includes(".mp4") ||
-        lowerRef.match(/v\d/) ||
-        lowerRef.includes("/v");
+      // Проверяем, является ли блок первым видео
+      const isIntroVideo =
+        index === 0 && videoBlocks[0]?.originalIndex === originalIndex;
 
-      if (index === 0 && isVideo) {
-        organized.intro.push(blockInfo);
-      } else if (isVideo && videoBlocks.length >= 6) {
-        // If this is the 6th video (last video) → conclusion
-        const videoIndex = videoBlocks.findIndex(
-          ({ originalIndex: vIndex }) => vIndex === originalIndex
-        );
-        if (videoIndex === videoBlocks.length - 1 && videoBlocks.length >= 6) {
-          organized.conclusion.push(blockInfo);
-        } else {
-          organized.main.push(blockInfo);
-        }
-      } else {
-        // Everything else → main
+      // Если блок не является первым видео, добавляем его в 'main'
+      if (!isIntroVideo) {
         organized.main.push(blockInfo);
+      } else {
+        // Первый видео-блок всегда в 'intro'
+        organized.intro.push(blockInfo);
       }
     });
+
     return organized;
   };
 
@@ -218,14 +207,14 @@ export const SidebarNav = ({
   const getBlockTitle = (ref, index) => {
     const typeInfo = getBlockTypeInfo(ref);
 
-    // Get video blocks to determine video numbering (excluding InfoCards)
+    // Get all navigable blocks
     const navigableBlocks = courseManifest.sequence.filter((block) => {
       const lowerRef = block.ref.toLowerCase();
       return !lowerRef.includes("inf");
     });
 
+    // Get all video blocks to determine video numbering
     const videoBlocks = navigableBlocks
-      // eslint-disable-next-line no-unused-vars
       .map((block, idx) => ({
         block,
         index: courseManifest.sequence.indexOf(block),
@@ -240,33 +229,32 @@ export const SidebarNav = ({
         );
       });
 
-    // Position-based titles
+    // Проверяем, является ли блок последним видео
+    const isLastVideo =
+      typeInfo.type === "video" &&
+      videoBlocks.length > 0 &&
+      videoBlocks[videoBlocks.length - 1].index === index;
+
+    // Специальное название для последнего видео
+    if (isLastVideo) {
+      return "Қорытынды және кері байланыс"; // "Заключение и обратная связь"
+    }
+
+    // Existing logic...
     if (index === 0 && typeInfo.type === "video") {
       return "Кіріспе сабақ";
     }
 
-    // Check if this is the last video (6th video) → conclusion
-    if (typeInfo.type === "video" && videoBlocks.length >= 6) {
-      const videoIndex = videoBlocks.findIndex(
+    // Для всех остальных видео - обычная нумерация
+    if (typeInfo.type === "video") {
+      const videoCount = videoBlocks.findIndex(
         ({ index: vIndex }) => vIndex === index
       );
-      if (videoIndex === videoBlocks.length - 1) {
-        return "Курс қорытындысы";
-      }
+      return `${videoCount === 0 ? "" : `${videoCount} `}сабақ: Бейне жазба`;
     }
 
-    // For all other blocks, number them based on their position and type
-    if (typeInfo.type === "video") {
-      // Count how many video blocks come before this one (excluding intro video at index 0)
-      const videoCount =
-        videoBlocks
-          .slice(1) // Skip intro video
-          .findIndex(({ index: vIndex }) => vIndex === index) + 1;
-
-      return `${videoCount} сабақ: Бейне жазба`;
-    }
+    // Остальная логика без изменений
     if (typeInfo.type === "task") {
-      // Count task blocks before this one (excluding InfoCards)
       const taskCount =
         courseManifest.sequence.slice(0, index).filter((block) => {
           const lowerRef = block.ref.toLowerCase();
@@ -275,17 +263,14 @@ export const SidebarNav = ({
             (lowerRef.includes("task") || lowerRef.includes("t"))
           );
         }).length + 1;
-
       return ` ${taskCount} тапсырма `;
     }
     if (typeInfo.type === "audio") {
-      // Count audio blocks before this one (excluding InfoCards)
       const audioCount =
         courseManifest.sequence.slice(0, index).filter((block) => {
           const lowerRef = block.ref.toLowerCase();
           return !lowerRef.includes("inf") && lowerRef.includes("audio");
         }).length + 1;
-
       return `Аудирование ${audioCount}`;
     }
 
@@ -382,19 +367,11 @@ export const SidebarNav = ({
       blocks: organizedBlocks.main,
       color: "indigo",
     },
-    conclusion: {
-      id: "conclusion",
-      title: "Курсты қорытындылау",
-      icon: <Users className="w-4 h-4" />,
-      blocks: organizedBlocks.conclusion,
-      color: "purple",
-    },
   };
 
   // Always show intro and main modules, only hide conclusion if empty
   const visibleModules = Object.values(moduleData).filter(
-    (module) =>
-      module.id === "intro" || module.id === "main" || module.blocks.length > 0
+    (module) => module.id === "intro" || module.id === "main"
   );
 
   if (!courseManifest) {

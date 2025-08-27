@@ -387,7 +387,7 @@ export const useQuizLogic = (
             .map((a) => a.question);
 
           const correctCount = prev.answers.filter((a) => a.isCorrect).length;
-          const passThreshold = Math.ceil(questions.length * 0.8);
+          const passThreshold = Math.ceil(questions.length * 0.7);
 
           if (correctCount >= passThreshold || wrongQuestions.length === 0) {
             // Passed or no wrong questions - finish
@@ -482,7 +482,7 @@ export const useQuizLogic = (
       (a) => a.isCorrect
     ).length;
     const total = mainCorrect + redemptionCorrect;
-    const needed = Math.ceil(questions.length * 0.8);
+    const needed = Math.ceil(questions.length * 0.7);
     const passed = total >= needed;
     const percent = Math.round((total / questions.length) * 100);
 

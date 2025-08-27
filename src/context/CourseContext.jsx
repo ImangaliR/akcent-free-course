@@ -424,21 +424,20 @@ export const CourseProvider = ({ children }) => {
   const isCourseCompleted = () => {
     if (!courseManifest?.sequence) return false;
 
-    // Получаем все блоки кроме info блоков
-    const mainBlocks = courseManifest.sequence.filter((block) => {
+    // Определяем все обязательные блоки
+    const requiredBlocks = courseManifest.sequence.filter((block) => {
       const lowerRef = block.ref.toLowerCase();
-      return !lowerRef.includes("inf");
+      // Исключаем "info" блоки и блок с отзывом (v6.video.json)
+      return !lowerRef.includes("inf") && block.ref !== "blocks/v6.video.json";
     });
 
-    // Проверяем что мы на последнем блоке и он завершен
-    const isLastBlock =
-      currentBlockIndex === courseManifest.sequence.length - 1;
-    const lastBlockCompleted = mainBlocks.every((block) => {
+    // Проверяем, что все обязательные блоки завершены
+    const allRequiredCompleted = requiredBlocks.every((block) => {
       const answer = getUserAnswer(block.ref);
       return answer?.completed === true;
     });
 
-    return isLastBlock && lastBlockCompleted;
+    return allRequiredCompleted;
   };
 
   // NEW: Get course completion statistics
