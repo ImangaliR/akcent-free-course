@@ -1,6 +1,7 @@
 import Lottie from "lottie-react";
 import { useEffect } from "react";
 import Trophy from "../../assets/Trophy.json";
+import { useAudioFeedback } from "../../hooks/useAudioFeedback";
 
 export const CompletionModal = ({
   isOpen,
