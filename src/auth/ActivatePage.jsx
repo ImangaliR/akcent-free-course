@@ -4,7 +4,9 @@ import { FaWhatsapp } from "react-icons/fa";
 import { useLocation, useNavigate } from "react-router-dom";
 
 export const Verify = () => {
-  const [code, setCode] = useState(["", "", "", "", "", ""]);
+  const CODE_LENGTH = 4;
+
+  const [code, setCode] = useState(Array(CODE_LENGTH).fill(""));
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
@@ -49,33 +51,38 @@ export const Verify = () => {
     setCode(newCode);
 
     // Автоматический переход на следующее поле
-    if (value && index < 5) {
-      inputRefs.current[index + 1].focus();
+    if (value && index < CODE_LENGTH - 1) {
+      inputRefs.current[index + 1]?.focus();
     }
   };
 
   // Обработка клавиш
   const handleKeyDown = (index, e) => {
     if (e.key === "Backspace" && !code[index] && index > 0) {
-      inputRefs.current[index - 1].focus();
+      inputRefs.current[index - 1]?.focus();
     }
     if (e.key === "ArrowLeft" && index > 0) {
-      inputRefs.current[index - 1].focus();
+      inputRefs.current[index - 1]?.focus();
     }
-    if (e.key === "ArrowRight" && index < 5) {
-      inputRefs.current[index + 1].focus();
+    if (e.key === "ArrowRight" && index < CODE_LENGTH - 1) {
+      inputRefs.current[index + 1]?.focus();
     }
   };
 
   // Вставка кода из буфера обмена
   const handlePaste = (e) => {
     e.preventDefault();
-    const pastedData = e.clipboardData.getData("text").replace(/\D/g, "");
-    if (pastedData.length === 6) {
-      const newCode = pastedData.split("");
-      setCode(newCode);
-      inputRefs.current[5].focus();
-    }
+    const digits = e.clipboardData.getData("text").replace(/\D/g, "");
+    if (!digits) return;
+
+    const newCode = Array(CODE_LENGTH)
+      .fill("")
+      .map((_, i) => digits[i] || "");
+    setCode(newCode);
+
+    // Фокус на последнюю заполненную ячейку
+    const lastIdx = Math.min(digits.length, CODE_LENGTH) - 1;
+    if (lastIdx >= 0) inputRefs.current[lastIdx]?.focus();
   };
 
   // Отправка кода на верификацию
@@ -83,8 +90,8 @@ export const Verify = () => {
     e.preventDefault();
     const verificationCode = code.join("");
 
-    if (verificationCode.length !== 6) {
-      setError("6-символды кодты енгізіңіз.");
+    if (verificationCode.length !== CODE_LENGTH) {
+      setError("4-символды кодты енгізіңіз.");
       return;
     }
 
@@ -138,8 +145,8 @@ export const Verify = () => {
           : err.message
       );
       // Очищаем код при ошибке
-      setCode(["", "", "", "", "", ""]);
-      inputRefs.current[0].focus();
+      setCode(Array(CODE_LENGTH).fill(""));
+      inputRefs.current[0]?.focus();
     } finally {
       setLoading(false);
     }
@@ -154,7 +161,7 @@ export const Verify = () => {
             Аккаунтты растау
           </h2>
           <p className="text-sm md:text-base text-[#5D5D5D] max-w-60 mt-2">
-            Біз сізге 6-символдық растау кодын WhatsApp-қа жібердік
+            Біз сізге <b>4-символдық</b> растау кодын WhatsApp-қа жібердік
           </p>
         </div>
 
@@ -194,7 +201,7 @@ export const Verify = () => {
                     onChange={(e) => handleCodeChange(index, e.target.value)}
                     onKeyDown={(e) => handleKeyDown(index, e)}
                     onPaste={index === 0 ? handlePaste : undefined}
-                    className="bg-white w-10 h-13 md:w-15 md:h-18 text-center md:text-xl md:font-bold border border-[#DEDEDE] rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200"
+                    className="bg-white w-13 h-15 md:w-15 md:h-18 text-center md:text-xl md:font-bold border border-[#DEDEDE] rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200"
                     disabled={loading}
                   />
                 ))}
@@ -204,7 +211,7 @@ export const Verify = () => {
             {/* Кнопка подтверждения */}
             <button
               type="submit"
-              disabled={loading || code.join("").length !== 6}
+              disabled={loading || code.join("").length !== CODE_LENGTH}
               className="w-full bg-gradient-to-r from-[#25D366] to-[#1DB957] text-sm md:text-base cursor-pointer text-white py-4 rounded-full disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 transition-all duration-200"
             >
               {loading ? (
