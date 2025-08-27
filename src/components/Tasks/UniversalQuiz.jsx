@@ -2,30 +2,36 @@ import Lottie from "lottie-react";
 import { RotateCcw, Target } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import successAnim from "../../assets/Businessman flies up with rocket (1).json";
-// import ClapAudio from "../../assets/sound.mp3";
 import { useCourse } from "../../context/CourseContext";
+import { useAudioFeedback } from "../../hooks/useAudioFeedback";
 import { useQuizLogic } from "../../utils/useQuizLogic";
 import { ContinuousChatGame } from "../ContinuousChatGame";
 
 export const UniversalQuiz = ({
   lesson,
   onStepComplete,
-
   taskType,
   TaskRenderer,
   autoAdvanceMs = 2000,
 }) => {
   const { getProgressPercentage } = useCourse();
   const progress = getProgressPercentage();
-  // Поддерживаем и старый формат и новый
+
+  // Audio feedback hook
+  const { playCorrectSound, playWrongSound, playCourseCompleteSound, cleanup } =
+    useAudioFeedback();
+
   const allQuestions = lesson.dialogs || lesson.questions || [lesson];
   const quizId = lesson.id || `${taskType}_${allQuestions.length}`;
   const [apiCallCompleted, setApiCallCompleted] = useState(false);
-  const hasCalledApi = useRef(false); // Используем useRef для отслеживания вызова
+  const hasCalledApi = useRef(false);
 
   const quiz = useQuizLogic(allQuestions, onStepComplete, taskType, quizId);
 
-  // ---- auto-advance timer ----
+  // Track previous result state to detect changes
+  const previousResultRef = useRef(null);
+
+  // auto-advance timer
   const [autoAdvanceLeftMs, setAutoAdvanceLeftMs] = useState(null);
   const tickRef = useRef(null);
 
@@ -37,7 +43,39 @@ export const UniversalQuiz = ({
     setAutoAdvanceLeftMs(null);
   };
 
-  // Запускаем автопродвижение после отправки ответа
+  // Play audio feedback when answer is submitted and result is shown
+  useEffect(() => {
+    if (quiz.state.showResult && quiz.state.submitted) {
+      const currentIsCorrect =
+        quiz.isAnswerCorrect &&
+        quiz.isAnswerCorrect(quiz.state.currentAnswer, quiz.currentQuestion);
+
+      // Only play sound if this is a new result (prevent duplicate sounds)
+      if (previousResultRef.current !== currentIsCorrect) {
+        if (currentIsCorrect) {
+          playCorrectSound();
+        } else {
+          playWrongSound();
+        }
+        previousResultRef.current = currentIsCorrect;
+      }
+    }
+  }, [
+    quiz.state.showResult,
+    quiz.state.submitted,
+    quiz.state.currentAnswer,
+    playCorrectSound,
+    playWrongSound,
+  ]);
+
+  // Reset previous result when moving to next question
+  useEffect(() => {
+    if (!quiz.state.showResult) {
+      previousResultRef.current = null;
+    }
+  }, [quiz.state.showResult]);
+
+  // Auto-advance timer
   useEffect(() => {
     if (quiz.state.submitted && autoAdvanceMs && autoAdvanceMs > 0) {
       clearAutoAdvance();
@@ -49,7 +87,7 @@ export const UniversalQuiz = ({
         setAutoAdvanceLeftMs(left);
         if (left <= 0) {
           clearAutoAdvance();
-          quiz.nextQuestion(); // автоматический переход
+          quiz.nextQuestion();
         }
       }, 100);
     }
@@ -57,20 +95,38 @@ export const UniversalQuiz = ({
   }, [quiz.state.submitted, autoAdvanceMs]);
 
   useEffect(() => {
-    // Вызов onStepComplete только один раз, когда викторина завершена
     if (quiz.state.phase === "done" && !hasCalledApi.current) {
+      // Play completion audio if quiz was passed
+      if (quiz.stats.passed) {
+        setTimeout(() => {
+          playCourseCompleteSound();
+        }, 300); // Delay to allow Lottie animation to start
+      }
+
       onStepComplete(taskType, {
         phase: "completed",
         stats: quiz.stats,
         finalResults: true,
       });
-      hasCalledApi.current = true; // Устанавливаем флаг, что вызов был
+      hasCalledApi.current = true;
     }
-  }, [quiz.state.phase, onStepComplete, taskType, quiz.stats]);
-  // Очищаем таймер при размонтировании
-  useEffect(() => () => clearAutoAdvance(), []);
+  }, [
+    quiz.state.phase,
+    onStepComplete,
+    taskType,
+    quiz.stats,
+    playCourseCompleteSound,
+  ]);
 
-  // Экран завершения
+  // Cleanup audio on unmount
+  useEffect(() => {
+    return () => {
+      clearAutoAdvance();
+      cleanup();
+    };
+  }, [cleanup]);
+
+  // Completion screen
   if (quiz.state.phase === "done") {
     return (
       <div className="mx-auto">
@@ -136,7 +192,7 @@ export const UniversalQuiz = ({
   return (
     <div className="mx-auto pt-8 pb-3 md:py-0">
       <div className="bg-white rounded-2xl px-3 py-2 md:px-6 md:py-4">
-        {/* Прогресс и статистика */}
+        {/* Progress and statistics */}
         <div className="mb-6">
           <div className="flex items-center justify-between mb-4">
             <div className="text-xs md:text-sm text-gray-600">
@@ -151,7 +207,7 @@ export const UniversalQuiz = ({
             </div>
           </div>
 
-          {/* Прогресс бар */}
+          {/* Progress bar */}
           <div className="w-full bg-gray-200 rounded-full h-2">
             <div
               className={`h-2 rounded-full transition-all ${
@@ -169,7 +225,7 @@ export const UniversalQuiz = ({
           </div>
         </div>
 
-        {/* Рендер задания */}
+        {/* Task renderer */}
         <div className="mb-6">
           {taskType === "chatgame" ? (
             <ContinuousChatGame
@@ -208,8 +264,7 @@ export const UniversalQuiz = ({
           )}
         </div>
 
-        {/* Кнопки */}
-
+        {/* Buttons */}
         <div className="flex justify-center gap-3 text-sm md:text-base">
           {!quiz.state.submitted ? (
             <button
@@ -224,7 +279,6 @@ export const UniversalQuiz = ({
               {taskType === "chatgame" ? "Жіберу" : "Тексеру"}
             </button>
           ) : (
-            // Для chatgame кнопка скрывается, так как ChatGameRenderer показывает свою подсказку
             taskType !== "chatgame" && (
               <button
                 onClick={() => {

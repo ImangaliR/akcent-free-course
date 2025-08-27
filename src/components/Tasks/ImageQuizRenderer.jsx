@@ -107,7 +107,7 @@ export const ImageQuizRenderer = ({
         {question.options?.map((option) => (
           <div
             key={option.id}
-            className={`relative w-[150px] md:w-[220px] aspect-square rounded-2xl border-2 transition-all duration-200
+            className={`relative w-[130px] md:w-[220px] aspect-square rounded-2xl border-2 transition-all duration-200
               ${getOptionStyle(option.id)} ${
               isSubmitted ? "cursor-default" : "cursor-pointer"
             }`}

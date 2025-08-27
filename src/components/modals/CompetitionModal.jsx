@@ -8,7 +8,18 @@ export const CompletionModal = ({
   courseTitle = "Орыс тілі",
   courseStats = {},
 }) => {
-  // Обработчик ESC и блокировка скролла
+  const { playCourseCompleteSound, cleanup } = useAudioFeedback();
+
+  // Play course completion sound when modal opens
+  useEffect(() => {
+    if (isOpen) {
+      // Delay the sound slightly to allow modal to fully appear
+
+      playCourseCompleteSound();
+    }
+  }, [isOpen, playCourseCompleteSound]);
+
+  // Handle ESC key and block scrolling
   useEffect(() => {
     const handleEscape = (e) => {
       if (e.key === "Escape" && isOpen) {
@@ -25,6 +36,11 @@ export const CompletionModal = ({
       };
     }
   }, [isOpen, onClose]);
+
+  // Cleanup audio on unmount
+  useEffect(() => {
+    return () => cleanup();
+  }, [cleanup]);
 
   if (!isOpen) return null;
 
@@ -68,9 +84,6 @@ export const CompletionModal = ({
             <div className="p-4 sm:p-8 lg:p-10 text-center min-h-full sm:min-h-0 flex flex-col justify-center">
               {/* Trophy Icon */}
               <div className="">
-                {/* <div className="w-20 h-20 sm:w-24 sm:h-24 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-full flex items-center justify-center mx-auto shadow-lg">
-                  <Trophy className="w-10 h-10 sm:w-12 sm:h-12 text-white" />
-                </div> */}
                 <Lottie
                   animationData={Trophy}
                   loop={false}
@@ -93,7 +106,7 @@ export const CompletionModal = ({
                 {completionDate} күні
               </p>
 
-              {/* Stats - Минималистичный дизайн */}
+              {/* Stats - Minimalistic design */}
               <div className="flex flex-wrap justify-center gap-6 sm:gap-8 mb-6 sm:mb-8 mx-auto">
                 {/* Completed Blocks */}
                 <div className="text-center">
@@ -138,7 +151,7 @@ export const CompletionModal = ({
                 </p>
               </div>
 
-              {/* Action Buttons - Стек на мобиле, ряд на десктопе */}
+              {/* Action Buttons - Stack on mobile, row on desktop */}
               <div className="space-y-3 sm:space-y-0 sm:grid sm:grid-cols-2 sm:gap-4 ">
                 <a
                   href="https://wa.me/77074945051?text=%D0%9F%D1%80%D0%BE%D0%B1%D0%BD%D1%8B%D0%B9%20%D1%81%D0%B0%D0%B1%D0%B0%D2%9B%D2%9B%D0%B0%20%D2%9B%D0%B0%D1%82%D1%8B%D1%81%D2%9B%D1%8B%D0%BC%20%D0%BA%D0%B5%D0%BB%D0%B5%D0%B4%D1%96"

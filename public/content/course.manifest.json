@@ -10,13 +10,13 @@
     { "ref": "blocks/t1.task.json" },
     { "ref": "blocks/inf-1.json" },
 
-    { "ref": "blocks/v3.video.json" },
-    { "ref": "blocks/t4.task.json" },
-    { "ref": "blocks/inf-2.json" },
-
     { "ref": "blocks/v4.video.json" },
     { "ref": "blocks/t2.task.json" },
     { "ref": "blocks/inf-3.json" },
+
+    { "ref": "blocks/v3.video.json" },
+    { "ref": "blocks/t4.task.json" },
+    { "ref": "blocks/inf-2.json" },
 
     { "ref": "blocks/v5.video.json" },
     { "ref": "blocks/t2.audio.json" },
