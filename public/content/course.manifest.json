@@ -3,6 +3,8 @@
   "title": "Akcent Практикум",
   "locale": "ru",
   "sequence": [
+    { "ref": "blocks/warmup-1.json" },
+
     { "ref": "blocks/v1.video.json" },
 
     { "ref": "blocks/v2.video.json" },

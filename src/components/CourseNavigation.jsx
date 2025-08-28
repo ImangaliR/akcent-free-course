@@ -74,16 +74,6 @@ export const CourseNavigation = ({ currentBlockCompleted = false }) => {
       await completeBlock(currentBlock.ref);
     }
 
-    // Проверяем, нужно ли показать InfoCard
-    const hasInfoCard = await checkForInfoCardAfterTask();
-
-    if (hasInfoCard) {
-      console.log("После задания будет показан InfoCard");
-    } else {
-      console.log("Обычный переход к следующему блоку");
-    }
-
-    // Переходим к следующему блоку (InfoCard или обычному)
     await goToNextBlock();
   };
 

@@ -4,14 +4,15 @@ import { useEffect, useState } from "react";
 import { useCourse } from "../../context/CourseContext";
 import { useInfoCardModal } from "../../hooks/useModal";
 import { ContinuousChatGame } from "../ContinuousChatGame";
-import { MatchTaskRenderer } from "../MatchTaskRenderer";
 import { AudioTaskRenderer } from "../Tasks/AudioTaskRenderer";
 import { ImageQuizRenderer } from "../Tasks/ImageQuizRenderer";
 import { InfoCardModal } from "../Tasks/InfoCardModal";
+import { MatchTaskRenderer } from "../Tasks/MatchTaskRenderer";
 import { MultiBlankTaskRenderer } from "../Tasks/MultiBlankTaskRenderer";
-import { UniversalQuiz } from "../Tasks/UniversalQuiz";
+import { UniversalQuiz } from "../UniversalQuiz";
 import { FeedbackRenderer } from "../VideoLesson/FeedbackRenderer";
 import { VideoLessonWithSubtitles } from "../VideoLesson/VideoLesson";
+import { WarmupQuiz } from "../WarmupQuiz";
 
 export const Lesson = ({
   currentBlockRef,
@@ -182,6 +183,11 @@ export const Lesson = ({
             TaskRenderer={ImageQuizRenderer}
           />
         );
+      case "warmupquiz":
+        return (
+          <WarmupQuiz lesson={blockData} onStepComplete={handleBlockComplete} />
+        );
+
       case "infocard":
         return (
           <div className="bg-indigo-50 rounded-lg p-8 text-center">

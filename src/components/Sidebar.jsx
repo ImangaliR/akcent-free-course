@@ -41,57 +41,55 @@ export const SidebarNav = ({
     conclusion: true,
   });
 
+  const isVideoRef = (lowerRef) =>
+    lowerRef.includes("video") ||
+    lowerRef.includes(".mp4") ||
+    /(?:^|\/)v\d/.test(lowerRef) ||
+    lowerRef.includes("/v");
+
+  const findFirstVideoOriginalIndex = (blocks) => {
+    for (let i = 0; i < blocks.length; i++) {
+      const lr = blocks[i].ref.toLowerCase();
+      if (!lr.includes("inf") && isVideoRef(lr)) return i;
+    }
+    return null; // если в курсе нет видео
+  };
+
   const organizeBlocks = () => {
-    if (!courseManifest?.sequence)
-      return { intro: [], main: [], conclusion: [] }; // Возвращаем пустые массивы
+    if (!courseManifest?.sequence) return { intro: [], main: [] };
 
     const blocks = courseManifest.sequence;
-    const organized = {
-      intro: [],
-      main: [],
-      // Убираем 'conclusion' из объекта organized
-    };
+    const organized = { intro: [], main: [] };
 
-    const navigableBlocks = blocks.filter((block) => {
-      const lowerRef = block.ref.toLowerCase();
-      return !lowerRef.includes("inf");
-    });
+    // навигируемые (без инфо-карточек)
+    const navigableBlocks = blocks.filter(
+      (b) => !b.ref.toLowerCase().includes("inf")
+    );
 
-    // Находим индексы всех видео-блоков
-    const videoBlocks = navigableBlocks
-      .map((block, index) => ({
-        block,
-        originalIndex: blocks.indexOf(block),
-        index,
-      }))
-      .filter(({ block }) => {
-        const lowerRef = block.ref.toLowerCase();
-        return (
-          lowerRef.includes("video") ||
-          lowerRef.includes(".mp4") ||
-          lowerRef.match(/v\d/) ||
-          lowerRef.includes("/v")
-        );
-      });
+    // находим оригинальный индекс ПЕРВОГО видео
+    const firstVideoOriginalIndex = findFirstVideoOriginalIndex(blocks);
 
-    navigableBlocks.forEach((block, index) => {
+    // если видео нет — в intro кладём только первый навигируемый
+    const firstNavigableOriginalIndex =
+      navigableBlocks.length > 0 ? blocks.indexOf(navigableBlocks[0]) : null;
+
+    navigableBlocks.forEach((block) => {
       const originalIndex = blocks.indexOf(block);
       const blockInfo = {
         ...block,
-        index: originalIndex, // Сохраняем оригинальный индекс
+        index: originalIndex,
         id: block.ref.split("/")[1].split(".")[0],
       };
 
-      // Проверяем, является ли блок первым видео
-      const isIntroVideo =
-        index === 0 && videoBlocks[0]?.originalIndex === originalIndex;
+      const toIntro =
+        firstVideoOriginalIndex !== null
+          ? originalIndex <= firstVideoOriginalIndex // всё ДО и само первое видео
+          : originalIndex === firstNavigableOriginalIndex; // fallback: только самый первый блок
 
-      // Если блок не является первым видео, добавляем его в 'main'
-      if (!isIntroVideo) {
-        organized.main.push(blockInfo);
-      } else {
-        // Первый видео-блок всегда в 'intro'
+      if (toIntro) {
         organized.intro.push(blockInfo);
+      } else {
+        organized.main.push(blockInfo);
       }
     });
 
@@ -152,6 +150,13 @@ export const SidebarNav = ({
 
   const getBlockTypeInfo = (ref) => {
     const lowerRef = ref.toLowerCase();
+    if (lowerRef.includes("warmup")) {
+      return {
+        type: "warmup",
+        label: "Прогрев",
+        icon: <Play className="w-4 h-4" />,
+      };
+    }
 
     if (
       lowerRef.includes("video") ||
@@ -239,9 +244,20 @@ export const SidebarNav = ({
     if (isLastVideo) {
       return "Қорытынды және кері байланыс"; // "Заключение и обратная связь"
     }
+    if (typeInfo.type === "warmup") {
+      return "Миға шабуыл";
+    }
 
-    // Existing logic...
-    if (index === 0 && typeInfo.type === "video") {
+    // определить первое видео
+    const firstVideoOriginalIndex = findFirstVideoOriginalIndex(
+      courseManifest.sequence
+    );
+    const isFirstVideo =
+      typeInfo.type === "video" &&
+      firstVideoOriginalIndex !== null &&
+      index === firstVideoOriginalIndex;
+
+    if (isFirstVideo) {
       return "Кіріспе сабақ";
     }
 

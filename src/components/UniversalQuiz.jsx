@@ -1,11 +1,11 @@
 import Lottie from "lottie-react";
 import { RotateCcw, Target } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
-import successAnim from "../../assets/Businessman flies up with rocket (1).json";
-import { useCourse } from "../../context/CourseContext";
-import { useAudioFeedback } from "../../hooks/useAudioFeedback";
-import { useQuizLogic } from "../../utils/useQuizLogic";
-import { ContinuousChatGame } from "../ContinuousChatGame";
+import successAnim from "../assets/Businessman flies up with rocket (1).json";
+import { useCourse } from "../context/CourseContext";
+import { useAudioFeedback } from "../hooks/useAudioFeedback";
+import { useQuizLogic } from "../utils/useQuizLogic";
+import { ContinuousChatGame } from "./ContinuousChatGame";
 
 export const UniversalQuiz = ({
   lesson,
