@@ -57,10 +57,13 @@ const stepConfig = [
   },
   {
     id: 6,
-    title: "Сіздің электронды поштаңыз",
-    type: "email",
-    field: "email",
-    placeholder: "your@email.com",
+    title: "Атыңыз бен тегіңіз",
+    subtitle: "Өзіңізді қалай атаймыз?",
+    type: "name",
+    fields: {
+      name: { placeholder: "Атыңыз" },
+      surname: { placeholder: "Тегіңіз" },
+    },
   },
 ];
 
@@ -234,6 +237,51 @@ const InputStep = ({
   );
 };
 
+const NameStep = ({
+  values,
+  onChange,
+  onKeyDown,
+  invalid = false,
+  errorText = "",
+}) => {
+  return (
+    <div className="w-full  gap-3">
+      <input
+        type="text"
+        placeholder="Аты"
+        className={`w-full mb-4 rounded-xl border-2 bg-white transition-all duration-200 placeholder-gray-400 text-base sm:text-lg focus:outline-none shadow-sm focus:shadow-md px-4 py-3 ${
+          invalid
+            ? "border-red-400 focus:ring-2 focus:ring-red-500 focus:border-red-500"
+            : "border-gray-300 focus:border-[#9C45FF]"
+        }`}
+        value={values.name}
+        onChange={(e) => onChange("name", e.target.value)}
+        onKeyDown={onKeyDown}
+        autoFocus
+      />
+      <input
+        type="text"
+        placeholder="Жөні"
+        className={`w-full rounded-xl border-2 bg-white transition-all duration-200 placeholder-gray-400 text-base sm:text-lg focus:outline-none shadow-sm focus:shadow-md px-4 py-3 ${
+          invalid
+            ? "border-red-400 focus:ring-2 focus:ring-red-500 focus:border-red-500"
+            : "border-gray-300 focus:border-[#9C45FF]"
+        }`}
+        value={values.surname}
+        onChange={(e) => onChange("surname", e.target.value)}
+        onKeyDown={onKeyDown}
+      />
+      <div className="sm:col-span-2 min-h-[20px]">
+        {invalid ? (
+          <p className="text-sm text-red-600">
+            {errorText || "Аты-жөніңізді дұрыс енгізіңіз"}
+          </p>
+        ) : null}
+      </div>
+    </div>
+  );
+};
+
 export const WelcomeModal = () => {
   const { completeWelcome, user } = useAuth();
   const [loading, setLoading] = useState(false);
@@ -244,7 +292,8 @@ export const WelcomeModal = () => {
     goal: "",
     level: "",
     age: "",
-    email: user?.email || "",
+    name: "",
+    surname: "",
   });
 
   const totalSteps = stepConfig.length;
@@ -255,26 +304,31 @@ export const WelcomeModal = () => {
   };
 
   const isStepValid = useMemo(() => {
+    if (currentStepData.type === "name") {
+      const fn = (formData.name || "").trim();
+      const ln = (formData.surname || "").trim();
+      const re = /^[A-Za-zА-Яа-яЁёӘәҚқҢңҒғҮүҰұІіҺһЪъЬь'’\- ]{2,}$/;
+      return re.test(fn) && re.test(ln);
+    }
+
     const field = currentStepData.field;
-    if (!field) return true;
-    const value = formData[field];
 
     if (currentStepData.type === "age") {
-      const n = Number(value);
-      return Number.isFinite(n) && n >= 6 && n <= 100; // ✅ updated range
+      const n = Number(formData[field]);
+      return Number.isFinite(n) && n >= 6 && n <= 100;
     }
-    if (currentStepData.type === "email") {
-      return typeof value === "string" && /\S+@\S+\.\S+/.test(value.trim());
-    }
-    return value && value.toString().trim() !== "";
+
+    if (!field) return true;
+    const value = formData[field];
+    return !!(value && value.toString().trim() !== "");
   }, [currentStepData, formData]);
 
   const handleNext = async () => {
     if (!isStepValid) {
       if (currentStepData.type === "age") {
         setError("Жасыңыз кемінде 6-да болуы керек");
-      } else if (currentStepData.type === "email") {
-        setError("Дұрыс электронный почта жазу керек");
+      } else if (currentStepData.type === "name") {
+        setError("Аты-жөніңізді дұрыс енгізіңіз (ең аз 2 әріп)");
       } else {
         setError("Өтініш, бұл жерді толтырыңыз");
       }
@@ -301,10 +355,12 @@ export const WelcomeModal = () => {
     setError("");
     try {
       const result = await completeWelcome(formData);
-      if (!result?.success)
+      if (!result?.success) {
         setError(
           result?.error || "Деректерді сақтау барысында қателер туындады"
         );
+        return;
+      }
     } catch (err) {
       console.error("Ошибка при завершении welcome:", err);
       setError("Деректерді сақтау сәтсіз өтті. Өтініш, қате өтіңіз.");
@@ -384,7 +440,6 @@ export const WelcomeModal = () => {
                       />
                     );
                   case "age":
-                  case "email":
                     return (
                       <InputStep
                         stepData={currentStepData}
@@ -396,6 +451,19 @@ export const WelcomeModal = () => {
                           )
                         }
                         onKeyDown={(e) => e.key === "Enter" && handleNext()}
+                      />
+                    );
+                  case "name":
+                    return (
+                      <NameStep
+                        values={{
+                          name: formData.name || "",
+                          surname: formData.surname || "",
+                        }}
+                        onChange={handleFormDataChange}
+                        onKeyDown={(e) => e.key === "Enter" && handleNext()}
+                        invalid={!!error}
+                        errorText={error}
                       />
                     );
                   default:

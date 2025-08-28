@@ -124,6 +124,8 @@ export const SignUp = () => {
       setError(
         err.message === "User with this login already exists"
           ? "Бұндай нөмірмен аккаунт тіркелген"
+          : err.message === "Invalid password"
+          ? "Құпиясөз қате"
           : err.message
       );
     } finally {
