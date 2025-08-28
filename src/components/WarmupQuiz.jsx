@@ -9,7 +9,7 @@ export const WarmupQuiz = ({ lesson, onStepComplete }) => {
   const [answers, setAnswers] = useState([]);
   const [memeIndex, setMemeIndex] = useState({ pos: 0, neg: 0 });
   const [lastCorrect, setLastCorrect] = useState(null);
-  
+
   // Animation states
   const [isExiting, setIsExiting] = useState(false);
   const [isEntering, setIsEntering] = useState(true);
@@ -83,15 +83,15 @@ export const WarmupQuiz = ({ lesson, onStepComplete }) => {
   // Animation classes
   const getAnimationClasses = () => {
     const baseClasses = "transition-all duration-300 ease-in-out";
-    
+
     if (isExiting) {
       return `${baseClasses} opacity-0 scale-95 translate-y-4`;
     }
-    
+
     if (isEntering) {
       return `${baseClasses} opacity-0 scale-95 translate-y-4`;
     }
-    
+
     return `${baseClasses} opacity-100 scale-100 translate-y-0`;
   };
 
@@ -101,7 +101,9 @@ export const WarmupQuiz = ({ lesson, onStepComplete }) => {
 
   if (mode === "intro") {
     return (
-      <div className={`flex-1 flex flex-col justify-center bg-white rounded-2xl p-6 text-center shadow-md ${getAnimationClasses()}`}>
+      <div
+        className={`flex-1 flex flex-col justify-center bg-white rounded-2xl p-6 text-center shadow-md ${getAnimationClasses()}`}
+      >
         <img
           src={lesson.intro?.image}
           alt="intro"
@@ -119,7 +121,7 @@ export const WarmupQuiz = ({ lesson, onStepComplete }) => {
           }}
           className="px-6 py-3 bg-[#9C45FF] text-white rounded-lg hover:bg-[#7E2AD9] transition-colors cursor-pointer"
         >
-          {lesson.intro?.buttonText || "Начать"}
+          {lesson.intro?.buttonText || "Бастау"}
         </button>
       </div>
     );
@@ -175,39 +177,38 @@ export const WarmupQuiz = ({ lesson, onStepComplete }) => {
     }
 
     return (
-      <div className={`flex-1 flex flex-col justify-center bg-white rounded-2xl p-6 text-center shadow-md ${getAnimationClasses()}`}>
-        <div className="mb-4">
-          <div
-            className={`w-16 h-16 mx-auto rounded-full flex items-center justify-center text-2xl mb-4 transition-all duration-500 ${
-              lastCorrect 
-                ? "bg-green-100 text-green-600 animate-bounce" 
-                : "bg-red-100 text-red-600 animate-pulse"
-            }`}
-          >
-            {lastCorrect ? "✓" : "✗"}
-          </div>
-        </div>
-        
+      <div
+        className={`flex-1 flex flex-col justify-center bg-white rounded-2xl p-6 text-center shadow-md ${getAnimationClasses()}`}
+      >
         <img
           src={memeData?.src}
           alt="meme"
-          className="mx-auto mb-4 max-h-64 object-contain transform transition-transform duration-300 hover:scale-105"
+          className="mx-auto mb-4 max-h-44 object-contain transform transition-transform duration-300 hover:scale-105"
         />
         <h3
           className={`text-xl font-bold transition-colors duration-500 ${
-            lastCorrect ? "text-green-600 animate-pulse" : "text-red-600 animate-pulse"
+            lastCorrect
+              ? "text-green-600 animate-pulse"
+              : "text-red-600 animate-pulse"
           }`}
         >
           {memeData?.text}
         </h3>
-        
-        {/* Visual progress indicator */}
+
         <div className="mt-6">
-          <div className="text-sm text-gray-500 mb-2">Следующий вопрос через...</div>
+          <div className="text-sm text-gray-500 mb-2">
+            Следующий вопрос через...
+          </div>
           <div className="flex justify-center space-x-1">
             <div className="w-2 h-2 bg-[#9C45FF] rounded-full animate-bounce"></div>
-            <div className="w-2 h-2 bg-[#9C45FF] rounded-full animate-bounce" style={{animationDelay: '0.1s'}}></div>
-            <div className="w-2 h-2 bg-[#9C45FF] rounded-full animate-bounce" style={{animationDelay: '0.2s'}}></div>
+            <div
+              className="w-2 h-2 bg-[#9C45FF] rounded-full animate-bounce"
+              style={{ animationDelay: "0.1s" }}
+            ></div>
+            <div
+              className="w-2 h-2 bg-[#9C45FF] rounded-full animate-bounce"
+              style={{ animationDelay: "0.2s" }}
+            ></div>
           </div>
         </div>
       </div>
@@ -217,9 +218,11 @@ export const WarmupQuiz = ({ lesson, onStepComplete }) => {
   if (mode === "outro") {
     const score = answers.filter((a) => a.correct).length;
     const percentage = Math.round((score / totalQuestions) * 100);
-    
+
     return (
-      <div className={`flex-1 flex flex-col justify-center bg-white rounded-2xl p-6 text-center shadow-md ${getAnimationClasses()}`}>
+      <div
+        className={`flex-1 flex flex-col justify-center bg-white rounded-2xl p-6 text-center shadow-md ${getAnimationClasses()}`}
+      >
         <div className="mb-6">
           <div className="w-24 h-24 mx-auto rounded-full bg-[#9C45FF] flex items-center justify-center text-white text-3xl font-bold mb-4 transform transition-all duration-500 animate-pulse">
             {percentage}%
@@ -228,7 +231,7 @@ export const WarmupQuiz = ({ lesson, onStepComplete }) => {
             Правильных ответов: {score} из {totalQuestions}
           </div>
         </div>
-        
+
         <img
           src={lesson.outro?.image}
           alt="outro"

@@ -5,17 +5,18 @@ export const WarmupQuestionRenderer = ({
   isSubmitted,
 }) => {
   return (
-    <div className="bg-white rounded-2xl p-6 shadow-md text-center">
+    <div className="bg-white rounded-2xl p-6  pt-8 md:pt-0 shadow-md text-center">
       <h3 className="text-xl font-semibold text-gray-800 mb-6 transform transition-all duration-500">
         {question.question}
       </h3>
-      
+
       <div className="grid grid-cols-1 gap-3">
         {question.options.map((option, idx) => {
           const isSelected = selectedIndex === idx;
           const isCorrect = isSubmitted && idx === question.correctIndex;
-          const isWrong = isSubmitted && isSelected && idx !== question.correctIndex;
-          
+          const isWrong =
+            isSubmitted && isSelected && idx !== question.correctIndex;
+
           return (
             <button
               key={idx}
@@ -31,17 +32,14 @@ export const WarmupQuestionRenderer = ({
                     ? "bg-[#9C45FF] text-white border-[#9C45FF] scale-105"
                     : "bg-gray-50 text-gray-700 border-gray-200 hover:bg-gray-100 hover:border-gray-300"
                 }
-                ${isSubmitted ? "cursor-not-allowed" : "hover:shadow-md hover:scale-105"}
+                ${
+                  isSubmitted
+                    ? "cursor-not-allowed"
+                    : "hover:shadow-md hover:scale-105"
+                }
                 ${!isSubmitted ? "hover:-translate-y-1" : ""}
               `}
             >
-              {/* Success/Error icons */}
-              {isSubmitted && (
-                <span className="inline-block mr-2 text-lg animate-ping">
-                  {isCorrect ? "✓" : isWrong ? "✗" : ""}
-                </span>
-              )}
-              
               {option}
             </button>
           );
