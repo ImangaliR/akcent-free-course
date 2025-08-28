@@ -12,7 +12,7 @@ function App() {
       <AuthProvider>
         <Routes>
           <Route
-            path="/signup"
+            path="/login"
             element={
               <PublicRoute>
                 <SignUp />

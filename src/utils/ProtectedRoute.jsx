@@ -19,7 +19,7 @@ export const ProtectedRoute = ({ children }) => {
 
   if (!isAuthenticated) {
     // Сохраняем текущий путь для редиректа после входа
-    return <Navigate to="/signup" state={{ from: location }} replace />;
+    return <Navigate to="/login" state={{ from: location }} replace />;
   }
 
   return children;
