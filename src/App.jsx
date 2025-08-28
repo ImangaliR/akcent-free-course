@@ -1,7 +1,5 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { AdminPanel } from "./AdminPanel";
-import { Verify } from "./auth/ActivatePage";
-import { Login } from "./auth/Login";
 import { SignUp } from "./auth/SignUp";
 import { AuthProvider } from "./context/AuthContext";
 import { Home } from "./Home";
@@ -14,14 +12,6 @@ function App() {
       <AuthProvider>
         <Routes>
           <Route
-            path="/login"
-            element={
-              <PublicRoute>
-                <Login />
-              </PublicRoute>
-            }
-          />
-          <Route
             path="/signup"
             element={
               <PublicRoute>
@@ -29,8 +19,6 @@ function App() {
               </PublicRoute>
             }
           />
-          <Route path="/verify" element={<Verify />} />
-
           <Route path="/adminqwertyuiop/*" element={<AdminPanel />} />
           <Route
             path="/home"
