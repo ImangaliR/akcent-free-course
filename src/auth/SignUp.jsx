@@ -135,12 +135,12 @@ export const SignUp = () => {
     <div className="min-h-screen bg-[#f9f9f9] flex items-center p-4 justify-center font-['Intertight']">
       <div className="max-w-md w-full">
         {/* Логотип и заголовок */}
-        <div className="grid place-items-center">
+        <div className="grid place-items-center text-center">
           <h2 className="text-3xl md:text-4xl font-medium leading-tight tracking-tight">
-            Тіркелу
+            <span className="text-[#9C45FF]">Тегін курсқа </span>қол жеткізіңіз
           </h2>
-          <p className="text-sm md:text-base text-[#5D5D5D] max-w-60 text-center">
-            Бізге қосылыңыз және орыс тілін үйренуді бастаңыз
+          <p className="text-[#5D5D5D] text-sm md:text-base max-w-60 mt-1">
+            Жеке деректеріңізді енгізіп, орыс тілін үйренуді қазір бастаңыз
           </p>
         </div>
 
