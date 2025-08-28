@@ -1,4 +1,4 @@
-import { Check, Eye, EyeOff, Lock, Phone, Rocket } from "lucide-react";
+import { Eye, EyeOff, Lock, Phone, Rocket } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
