@@ -1,6 +1,7 @@
 import { Check, Eye, EyeOff, Lock, Phone, Rocket } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 export const SignUp = () => {
   const [formData, setFormData] = useState({
@@ -12,6 +13,7 @@ export const SignUp = () => {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const navigate = useNavigate();
+  const { login: authLogin } = useAuth();
 
   const formatPhoneNumber = (value) => {
     const numbers = value.replace(/\D/g, "");
@@ -86,13 +88,12 @@ export const SignUp = () => {
     setSuccess("");
 
     if (!validateForm()) return;
-
     setLoading(true);
 
     try {
       const payload = {
         ...formData,
-        login: normalizePhoneNumber(formData.login), // normalized here
+        login: normalizePhoneNumber(formData.login),
       };
 
       const res = await fetch(
@@ -105,15 +106,20 @@ export const SignUp = () => {
       );
 
       const data = await res.json();
-      if (!res.ok) {
+      if (!res.ok)
         throw new Error(data.message || data.error || "Ошибка регистрации");
+
+      // ⬇️ IMPORTANT: set auth state BEFORE navigating
+      if (!data.token) {
+        throw new Error("Токен авторизации не получен");
       }
 
-      setSuccess("Тіркеу сәтті өтті! Сізді растау бетіне бағыттаймыз...");
+      await authLogin(data.token, data.user); // updates context + localStorage inside your provider
+
+      setSuccess("Тіркеу сәтті өтті! Басты бетке өтеміз...");
       localStorage.setItem("pendingLogin", payload.login);
-      setTimeout(() => {
-        navigate("/home", { state: { login: payload.login } });
-      }, 2000);
+
+      navigate("/home", { replace: true, state: { login: payload.login } }); // no timeout needed
     } catch (err) {
       setError(
         err.message === "User with this login already exists"
@@ -202,12 +208,12 @@ export const SignUp = () => {
               {loading ? (
                 <>
                   <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                  <span>Аккаунт тіркелуде...</span>
+                  <span>Кірілуде...</span>
                 </>
               ) : (
                 <>
                   <Rocket size={20} />
-                  <span className="font-semibold">Тіркелу</span>
+                  <span className="font-semibold">Кіру</span>
                 </>
               )}
             </button>
