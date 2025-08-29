@@ -115,6 +115,7 @@ export const WarmupQuiz = ({ lesson, onStepComplete }) => {
         <img
           src={lesson.intro?.image}
           alt="intro"
+          loading="lazy"
           className="mx-auto mb-4 max-h-64 object-contain rounded-2xl"
         />
         <h2 className="text-2xl font-bold mb-2">{lesson.intro?.title}</h2>
@@ -190,6 +191,7 @@ export const WarmupQuiz = ({ lesson, onStepComplete }) => {
         <img
           src={memeData?.src}
           alt="meme"
+          loading="lazy"
           className="mx-auto mb-4 max-h-64 object-contain transform transition-transform duration-300 hover:scale-105"
         />
 
@@ -233,6 +235,7 @@ export const WarmupQuiz = ({ lesson, onStepComplete }) => {
         <img
           src={lesson.outro?.image}
           alt="outro"
+          loading="lazy"
           className="mx-auto mb-4 max-h-64 object-contain transform transition-transform duration-300 hover:scale-105"
         />
         <h2 className="text-2xl font-bold mb-2">{lesson.outro?.title}</h2>
