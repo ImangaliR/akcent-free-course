@@ -142,7 +142,7 @@ export const WarmupQuiz = ({ lesson, onStepComplete }) => {
         <div className="mb-4">
           <div className="flex justify-between items-center mb-2">
             <span className="text-sm text-gray-600">
-              Вопрос {currentIndex + 1} из {totalQuestions}
+              {currentIndex + 1} / {totalQuestions}
             </span>
             <span className="text-sm text-gray-600">
               {Math.round(((currentIndex + 1) / totalQuestions) * 100)}%
@@ -190,11 +190,11 @@ export const WarmupQuiz = ({ lesson, onStepComplete }) => {
         <img
           src={memeData?.src}
           alt="meme"
-          className="mx-auto mb-4 max-h-44 object-contain transform transition-transform duration-300 hover:scale-105"
+          className="mx-auto mb-4 max-h-64 object-contain transform transition-transform duration-300 hover:scale-105"
         />
 
         <h3
-          className={`text-xl font-bold ${
+          className={`text-xl md:text-2xl font-bold ${
             lastCorrect ? "text-green-600" : "text-red-600"
           } animate-pulse`}
         >
@@ -203,7 +203,7 @@ export const WarmupQuiz = ({ lesson, onStepComplete }) => {
 
         <div className="mt-6">
           <div className="text-sm text-gray-500 mb-2">
-            Следующий вопрос через...
+            Келесі сұраққа өтілуде...
           </div>
           <div className="flex justify-center space-x-1">
             <div className="w-2 h-2 bg-[#9C45FF] rounded-full animate-bounce"></div>
@@ -241,7 +241,7 @@ export const WarmupQuiz = ({ lesson, onStepComplete }) => {
           onClick={handleFinish}
           className="px-6 py-3 bg-[#9C45FF] text-white rounded-lg hover:bg-[#7E2AD9] transition-all duration-300 hover:scale-105 transform"
         >
-          {lesson.outro?.buttonText || "Перейти дальше"}
+          {lesson.outro?.buttonText || "Келесі сұрақ"}
         </button>
       </div>
     );
