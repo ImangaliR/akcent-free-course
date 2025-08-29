@@ -5,7 +5,12 @@ export const WarmupQuestionRenderer = ({
   isSubmitted,
 }) => {
   return (
-    <div className="bg-white rounded-2xl p-6  pt-8 md:pt-0 shadow-md text-center">
+    <div className="bg-white rounded-2xl p-6 pt-8 md:pt-4 shadow-md text-center">
+      <img
+        src={question?.media}
+        alt="questions image"
+        className="mx-auto mb-4 max-h-64 object-contain rounded-2xl"
+      />
       <h3 className="text-xl font-semibold text-gray-800 mb-6 transform transition-all duration-500">
         {question.question}
       </h3>
