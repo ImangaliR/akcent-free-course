@@ -68,29 +68,41 @@
   "positiveMemes": [
     { "src": "/content/media/memes/111222.jpg", "text": "Жарайсың!" },
     { "src": "/content/media/memes/wow.jpg", "text": "Неткен ақылдысың!" },
-    { "src": "/memes/yes3.jpg", "text": "Керемет! 🚀" },
-    { "src": "/memes/yes4.jpg", "text": "Тек қана алға! 💪" },
-    { "src": "/memes/yes5.jpg", "text": "Бәрекелді! ⭐" },
+    { "src": "/content/media/memes/success1.jpg", "text": "Керемет! 🚀" },
+    { "src": "/content/media/memes/success3.jpg", "text": "Тек қана алға! 💪" },
+    { "src": "/content/media/memes/success2.jpg", "text": "Бәрекелді! ⭐" },
     {
-      "src": "/content/media/memes/yes11.jpg",
+      "src": "/content/media/memes/success5.jpg",
       "text": "Тамаша! 🔥"
     },
-    { "src": "/content/media/memes/yes12.jpg", "text": "👏 Браво, мықтысың!" },
     {
-      "src": "/content/media/memes/yes13.jpg",
+      "src": "/content/media/memes/success7.jpg",
+      "text": "👏 Браво, мықтысың!"
+    },
+    {
+      "src": "/content/media/memes/success8.jpg",
       "text": "🌟 Орыс тілі саған оңай!"
     }
   ],
   "negativeMemes": [
-    { "src": "/memes/no1.jpg", "text": "Ойбу, қателестіңіз 😅" },
-    { "src": "/memes/no2.jpg", "text": "Жоқ, дұрыс емес 🙃" },
-    { "src": "/memes/no3.jpg", "text": "Эх, қайта көріңіз 💭" },
-    { "src": "/memes/no4.jpg", "text": "Қате ❌" },
-    { "src": "/memes/no5.jpg", "text": "Ол емес 😔" },
-    { "src": "/content/media/memes/no11.jpg", "text": "Уф, сәл қателестің 🙈" },
-    { "src": "/content/media/memes/no12.jpg", "text": "Жақсылап ойлан! 🤔" },
     {
-      "src": "/content/media/memes/no13.jpg",
+      "src": "/content/media/memes/wrong2.jpg",
+      "text": "Ойбу, қателестіңіз 😅"
+    },
+    { "src": "/content/media/memes/wrong3.jpg", "text": "Жоқ, дұрыс емес 🙃" },
+    {
+      "src": "/content/media/memes/wrong4.jpg",
+      "text": "Эх, қайта көріңіз 💭"
+    },
+    { "src": "/content/media/memes/wrong5.jpg", "text": "Қате ❌" },
+    { "src": "/content/media/memes/wrong6.jpg", "text": "Ол емес 😔" },
+    {
+      "src": "/content/media/memes/wrong7.jpg",
+      "text": "Уф, сәл қателестің 🙈"
+    },
+    { "src": "/content/media/memes/wrong8.jpg", "text": "Жақсылап ойлан! 🤔" },
+    {
+      "src": "/content/media/memes/wrong9.jpg",
       "text": "😅 Бұл жолы болмады, бірақ сенің қолыңнан келеді!"
     }
   ],
