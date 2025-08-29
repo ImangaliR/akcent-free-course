@@ -32,6 +32,14 @@ export const WarmupQuiz = ({ lesson, onStepComplete }) => {
 
     const correct = idx === questions[currentIndex].correctIndex;
     setLastCorrect(correct);
+    // Обновляем счётчики мемов ДО перехода в режим мема
+    setMemeIndex((prev) => {
+      if (correct) {
+        return { ...prev, pos: prev.pos + 1 };
+      } else {
+        return { ...prev, neg: prev.neg + 1 };
+      }
+    });
 
     setAnswers((prev) => [
       ...prev,
@@ -161,21 +169,20 @@ export const WarmupQuiz = ({ lesson, onStepComplete }) => {
   }
 
   if (mode === "meme") {
-    let memeData;
-    if (lastCorrect) {
-      memeData =
-        lesson.positiveMemes[memeIndex.pos % lesson.positiveMemes.length];
-      if (memeIndex.pos < lesson.positiveMemes.length) {
-        setMemeIndex((prev) => ({ ...prev, pos: prev.pos + 1 }));
-      }
-    } else {
-      memeData =
-        lesson.negativeMemes[memeIndex.neg % lesson.negativeMemes.length];
-      if (memeIndex.neg < lesson.negativeMemes.length) {
-        setMemeIndex((prev) => ({ ...prev, neg: prev.neg + 1 }));
-      }
-    }
+    const posLen = lesson.positiveMemes?.length || 0;
+    const negLen = lesson.negativeMemes?.length || 0;
 
+    const displayIdx = lastCorrect
+      ? posLen > 0
+        ? (memeIndex.pos - 1) % posLen
+        : 0
+      : negLen > 0
+      ? (memeIndex.neg - 1) % negLen
+      : 0;
+
+    const memeData = lastCorrect
+      ? lesson.positiveMemes[displayIdx]
+      : lesson.negativeMemes[displayIdx];
     return (
       <div
         className={`flex-1 flex flex-col justify-center bg-white rounded-2xl p-6 text-center shadow-md ${getAnimationClasses()}`}
@@ -185,12 +192,11 @@ export const WarmupQuiz = ({ lesson, onStepComplete }) => {
           alt="meme"
           className="mx-auto mb-4 max-h-44 object-contain transform transition-transform duration-300 hover:scale-105"
         />
+
         <h3
-          className={`text-xl font-bold transition-colors duration-500 ${
-            lastCorrect
-              ? "text-green-600 animate-pulse"
-              : "text-red-600 animate-pulse"
-          }`}
+          className={`text-xl font-bold ${
+            lastCorrect ? "text-green-600" : "text-red-600"
+          } animate-pulse`}
         >
           {memeData?.text}
         </h3>
@@ -217,20 +223,12 @@ export const WarmupQuiz = ({ lesson, onStepComplete }) => {
 
   if (mode === "outro") {
     const score = answers.filter((a) => a.correct).length;
-    const percentage = Math.round((score / totalQuestions) * 100);
 
     return (
       <div
         className={`flex-1 flex flex-col justify-center bg-white rounded-2xl p-6 text-center shadow-md ${getAnimationClasses()}`}
       >
-        <div className="mb-6">
-          <div className="w-24 h-24 mx-auto rounded-full bg-[#9C45FF] flex items-center justify-center text-white text-3xl font-bold mb-4 transform transition-all duration-500 animate-pulse">
-            {percentage}%
-          </div>
-          <div className="text-lg text-gray-600 mb-2">
-            Правильных ответов: {score} из {totalQuestions}
-          </div>
-        </div>
+        <div className="mb-6"></div>
 
         <img
           src={lesson.outro?.image}

@@ -40,8 +40,8 @@
     }
   ],
   "positiveMemes": [
-    { "src": "/content/media/memes/111222.jpg", "text": "Верно! 🔥" },
-    { "src": "/memes/yes2.jpg", "text": "Красавчик 👌" },
+    { "src": "/content/media/memes/111222.jpg", "text": "Жарайсың" },
+    { "src": "/content/media/memes/wow.jpg", "text": "Неткен ақылдысың" },
     { "src": "/memes/yes3.jpg", "text": "Отлично! 🚀" },
     { "src": "/memes/yes4.jpg", "text": "Так держать 💪" },
     { "src": "/memes/yes5.jpg", "text": "Умница! ⭐" }
@@ -55,7 +55,7 @@
   ],
   "memeDurMs": 3000,
   "outro": {
-    "image": "/images/warmup-outro.jpg",
+    "image": "/content/media/memes/Timmy.jpg",
     "title": "Прогрев завершён!",
     "text": "Молодец! Теперь ты готов к основным урокам 🎓",
     "buttonText": "Перейти к курсу"
