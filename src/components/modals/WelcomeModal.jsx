@@ -100,9 +100,7 @@ const LevelWifiIcon = ({ level }) => {
             className={`w-1.5 rounded-sm ${
               isActive ? "bg-[#9C45FF]" : "bg-gray-300"
             }`}
-            style={{
-              height: `${6 + i * 4}px`,
-            }}
+            style={{ height: `${6 + i * 4}px` }}
           />
         );
       })}
@@ -115,7 +113,6 @@ const QuestionStep = ({ stepData, onSelect, selectedValue }) => (
     {stepData.options.map((option, index) => {
       const isLevel = option.id?.startsWith("lvl_");
       const numberIcons = ["①", "②", "③", "④", "⑤"];
-
       const isSelected = selectedValue === option.value;
 
       return (
@@ -291,6 +288,7 @@ export const WelcomeModal = () => {
   const [formData, setFormData] = useState({
     goal: "",
     level: "",
+    painPoint: "", // ✅ ensure present
     age: "",
     name: "",
     surname: "",
@@ -381,14 +379,7 @@ export const WelcomeModal = () => {
           aria-hidden="true"
         />
 
-        <div
-          className="
-            relative w-[92vw] max-w-[800px]
-            sm:w-[800px] sm:h-[600px]
-            transform overflow-hidden rounded-2xl bg-white text-left align-middle shadow-2xl transition-all
-            flex flex-col
-          "
-        >
+        <div className="relative w-[92vw] max-w-[800px] sm:w-[800px] sm:h-[600px] transform overflow-hidden rounded-2xl bg-white text-left align-middle shadow-2xl transition-all flex flex-col">
           <div className="flex-1 overflow-hidden p-5 sm:p-8 flex flex-col">
             <div className="h-2 bg-gray-200 rounded-full mb-4">
               <div
@@ -509,7 +500,7 @@ export const WelcomeModal = () => {
                       <path
                         className="opacity-75"
                         fill="currentColor"
-                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938л3-2.647z"
+                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                       />
                     </svg>
                     Сақтау...
