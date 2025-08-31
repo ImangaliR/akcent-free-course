@@ -16,7 +16,7 @@ export const WarmupQuiz = ({ lesson, onStepComplete }) => {
 
   const questions = lesson.questions || [];
   const totalQuestions = questions.length;
-  const memeDurMs = lesson.memeDurMs || 3000;
+  const memeDurMs = lesson.memeDurMs || 1000;
 
   // Reset entering animation when mode changes
   useEffect(() => {

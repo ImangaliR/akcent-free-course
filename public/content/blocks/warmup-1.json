@@ -41,7 +41,7 @@
       "question": "Орыс тілінде неше әріп бар?",
       "options": ["31", "32", "33", "30"],
       "correctIndex": 2,
-      "media": "/content/media/images/warmup5.png"
+      "media": "/content/media/images/warmup5.jpg"
     },
     {
       "id": "q6",
@@ -91,7 +91,7 @@
     },
     { "src": "/content/media/memes/wrong3.jpg", "text": "Жоқ, дұрыс емес 🙃" },
     {
-      "src": "/content/media/memes/wrong4.jpg",
+      "src": "/content/media/memes/wrong10.jpg",
       "text": "Эх, қайта көріңіз 💭"
     },
     { "src": "/content/media/memes/wrong5.jpg", "text": "Қате ❌" },
@@ -106,7 +106,7 @@
       "text": "😅 Бұл жолы болмады, бірақ сенің қолыңнан келеді!"
     }
   ],
-  "memeDurMs": 3000,
+  "memeDurMs": 1000,
   "outro": {
     "image": "/content/media/memes/Timmy.jpg",
     "title": "Тест аяқталды!",
