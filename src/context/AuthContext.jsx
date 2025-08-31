@@ -70,31 +70,37 @@ export const AuthProvider = ({ children }) => {
 
   const completeWelcome = async (welcomeData) => {
     try {
-      // Отправляем данные на сервер
+      const payload = {
+        questions: {
+          goal: welcomeData.goal || null,
+          level: welcomeData.level || null,
+          painPoint: welcomeData.painPoint || null,
+        },
+        age: Number(welcomeData.age) || null,
+        name: (welcomeData.name || "").trim() || null,
+        surname: (welcomeData.surname || "").trim() || null,
+        email: welcomeData.email || user?.email || null,
+      };
+
       const response = await fetch(
         `https://us-central1-akcent-course.cloudfunctions.net/api/user?token=${token}`,
         {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            questions: welcomeData.questions,
-            age: welcomeData.age,
-            email: welcomeData.email || user?.email,
-          }),
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
         }
       );
 
-      if (response.ok) {
-        const updatedUser = await response.json();
-        setUser(updatedUser.user);
-        setShowWelcomeModal(false);
-        localStorage.setItem("hasSeenWelcome", "true");
-        return { success: true };
-      } else {
-        throw new Error("Деректерді сақтау барысында қате туындады");
+      if (!response.ok) {
+        const msg = await response.text();
+        throw new Error(msg || "Деректерді сақтау барысында қате туындады");
       }
+
+      const updatedUser = await response.json();
+      setUser(updatedUser.user ?? { ...(user ?? {}), ...payload });
+      setShowWelcomeModal(false);
+      localStorage.setItem("hasSeenWelcome", "true");
+      return { success: true };
     } catch (error) {
       console.error("Failed to complete welcome:", error);
       return { success: false, error: error.message };

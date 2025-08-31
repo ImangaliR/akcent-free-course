@@ -12,7 +12,7 @@ const UserProgress = ({ data }) => {
             Пользователь не найден.
           </p>
           <Link
-            to="/admin/users"
+            to="/adminqwertyuiop/users"
             className="mt-4 inline-block text-blue-600 hover:text-blue-800 transition-colors"
           >
             &larr; Вернуться к списку пользователей

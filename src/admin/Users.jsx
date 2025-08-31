@@ -14,7 +14,7 @@ const Users = ({ users, storage }) => {
 
   // === Настройка "все блоки" ===
   // Считаем, что пользователь прошёл все блоки, если у него 13 или 14 завершённых.
-  const ALL_COMPLETE_COUNTS = useMemo(() => new Set([13, 14]), []);
+  const ALL_COMPLETE_COUNTS = useMemo(() => new Set([13, 14, 15]), []);
 
   // Проверка наличия прогресса у пользователя
   const hasProgress = (userId) => {
@@ -181,7 +181,7 @@ const Users = ({ users, storage }) => {
           <div className="text-lg font-semibold">{stats.zeroBlocks}</div>
         </div>
         <div className="p-3 rounded-lg bg-gray-50 border border-gray-200">
-          <div className="text-xs text-gray-500">Все блоки (13/14)</div>
+          <div className="text-xs text-gray-500">Все блоки (13/14/15)</div>
           <div className="text-lg font-semibold">{stats.allBlocks}</div>
         </div>
       </div>
@@ -217,6 +217,7 @@ const Users = ({ users, storage }) => {
           <tbody className="bg-white divide-y divide-gray-200">
             {userKeys.map((key, index) => {
               const user = users[key];
+              console.log(users);
               const userHasProgress = hasProgress(key);
               const completedBlocks = getCompletedBlocksCount(key);
 
